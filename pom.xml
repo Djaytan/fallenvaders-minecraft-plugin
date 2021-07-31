@@ -79,9 +79,6 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>${project.basedir}/src/main/java/</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/java/</testSourceDirectory>
-        <directory>${project.basedir}/target/</directory>
         <resources>
             <resource>
                 <directory>${project.basedir}/src/main/resources/</directory>
