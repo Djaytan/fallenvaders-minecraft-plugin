@@ -11,6 +11,6 @@
     <artifactId>minecraft-plugin</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>minecraft-plugin</name>
+    <name>MC-Plugin</name>
     <description>Entry point of the Minecraft plugin</description>
 </project>
