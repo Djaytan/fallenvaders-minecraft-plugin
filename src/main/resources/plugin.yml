@@ -1,6 +1,0 @@
-name: ${project.name}
-version: ${project.version}
-api-version: 1.17
-description: ${project.description}
-authors: [Voltariuss]
-main: fr.fallenvaders.minecraft.mc_fallenvaders.FallenVadersPlugin

@@ -27,6 +27,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
+        <minecraft.api.version>1.17</minecraft.api.version>
     </properties>
 
     <modules>
