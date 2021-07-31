@@ -103,5 +103,6 @@
 
     <modules>
         <module>minecraft-enhancer</module>
+        <module>minecraft-plugin</module>
     </modules>
 </project>
