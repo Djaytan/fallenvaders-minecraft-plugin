@@ -21,11 +21,19 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <java.version>16</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
     </properties>
+
+    <modules>
+        <module>mc-fallenvaders-core</module>
+        <module>minecraft-enhancer</module>
+        <module>minecraft-plugin</module>
+    </modules>
 
     <repositories>
         <repository>
@@ -100,9 +108,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <modules>
-        <module>minecraft-enhancer</module>
-        <module>minecraft-plugin</module>
-    </modules>
 </project>
