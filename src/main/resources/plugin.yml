@@ -1,0 +1,5 @@
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
+authors: [Voltariuss]
+main: fr.fallenvaders.minecraft.mcfallenvaders.FallenVadersPlugin
