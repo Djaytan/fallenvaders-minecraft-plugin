@@ -1,4 +1,4 @@
-package fr.fallenvaders.minecraft.mcfallenvaders;
+package fr.fallenvaders.minecraft.mc_fallenvaders;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
