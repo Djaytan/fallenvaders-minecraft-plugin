@@ -32,7 +32,6 @@
     <modules>
         <module>mc-fallenvaders-core</module>
         <module>minecraft-enhancer</module>
-        <module>minecraft-plugin</module>
     </modules>
 
     <repositories>
