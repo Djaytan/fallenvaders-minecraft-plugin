@@ -4,9 +4,3 @@ api-version: ${minecraft.api.version}
 description: ${project.description}
 depend: [ FallenVaders-Core, ProtocolLib ]
 main: fr.fallenvaders.minecraft.mc_enhancer.McEnhancerPlugin
-
-commands:
-    ping:
-        aliases: [ ms ]
-        description: Test de connexion.
-        usage: /ping [player]

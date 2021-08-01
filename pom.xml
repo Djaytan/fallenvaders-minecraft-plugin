@@ -33,7 +33,7 @@
     <modules>
         <module>mc-fallenvaders-core</module>
         <module>mc-fallenvaders-libs</module>
-        <module>minecraft-enhancer</module>
+        <module>mc-enhancer</module>
         <module>simple-dev-api</module>
     </modules>
 
