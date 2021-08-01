@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>mc-fallenvaders-libs</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <name>FallenVaders-Libs</name>
     <description>MC-FallenVaders plugin which embarks external libraries (Guice, Hibernate, ...)</description>
