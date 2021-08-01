@@ -13,4 +13,13 @@
 
     <name>MC-Enhancer</name>
     <description>Overlay of some vanilla Minecraft functionalities</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>fr.fallenvaders.minecraft</groupId>
+            <artifactId>mc-fallenvaders-libs</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
