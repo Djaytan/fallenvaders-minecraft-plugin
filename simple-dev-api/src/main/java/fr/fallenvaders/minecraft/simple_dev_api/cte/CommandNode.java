@@ -3,6 +3,7 @@ package fr.fallenvaders.minecraft.simple_dev_api.cte;
 import com.google.common.collect.Lists;
 import fr.fallenvaders.minecraft.simple_dev_api.MessageLevel;
 import fr.fallenvaders.minecraft.simple_dev_api.UtilsAPI;
+import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.CommandPermissionNotFoundException;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -27,7 +28,7 @@ public class CommandNode {
     private String description;
     private CommandNodeExecutor executor;
     private String specificPermission;
-    private ArrayList<CommandNode> childs = new ArrayList<>();
+    private final ArrayList<CommandNode> children = new ArrayList<>();
 
     /////
     // CONSTRUCTEURS
@@ -86,7 +87,7 @@ public class CommandNode {
      * @return True si le noeud n'a pas de fils, false sinon
      */
     public boolean isLeaf() {
-        return getChilds().isEmpty();
+        return getChildren().isEmpty();
     }
 
     /**
@@ -96,7 +97,7 @@ public class CommandNode {
      * sinon
      */
     public boolean isNextNodeInputArg() {
-        return !getChilds().isEmpty() && getFirstChild().getArgument().isInputArg();
+        return !getChildren().isEmpty() && getFirstChild().getArgument().isInputArg();
     }
 
     /**
@@ -147,7 +148,7 @@ public class CommandNode {
      * @param command La commande Bukkit associée au noeud, non null
      * @return La permission associée au noeud de la commande, non null
      */
-    public String getPermission(Command command) {
+    public String getPermission(Command command) throws CommandPermissionNotFoundException {
         ArrayList<String> args = new ArrayList<>();
         CommandNode currentNode = this;
 
@@ -160,10 +161,14 @@ public class CommandNode {
             currentNode = currentNode.getParent();
         }
         // On construit la permission à partir des arguments récupérés
-        StringBuilder sb = new StringBuilder(command.getPermission());
+        String permission = command.getPermission();
+        if (permission == null) {
+            throw new CommandPermissionNotFoundException();
+        }
+        StringBuilder sb = new StringBuilder(permission);
 
         for (int i = args.size() - 1; i >= 0; i--) {
-            sb.append("." + args.get(i));
+            sb.append(".").append(args.get(i));
         }
         return sb.toString();
     }
@@ -217,7 +222,7 @@ public class CommandNode {
      * @return Le premier fils, peut être null
      */
     public CommandNode getFirstChild() {
-        return getChilds().get(0);
+        return getChildren().get(0);
     }
 
     /**
@@ -226,7 +231,7 @@ public class CommandNode {
      * @return True si le noeud possède des fils, false sinon
      */
     public boolean hasChild() {
-        return !getChilds().isEmpty();
+        return !getChildren().isEmpty();
     }
 
     /**
@@ -239,7 +244,7 @@ public class CommandNode {
         CommandNode child = null;
 
         if (!isLeaf()) {
-            Iterator<CommandNode> iterator = getChilds().iterator();
+            Iterator<CommandNode> iterator = getChildren().iterator();
 
             while (iterator.hasNext() && child == null) {
                 CommandNode node = iterator.next();
@@ -273,7 +278,7 @@ public class CommandNode {
      * @return True si le noeud spécifié est un fils, false sinon
      */
     public boolean hasChild(CommandNode commandNode) {
-        return getChildWithTypeArg(commandNode.getArgument().getType().getLabel()) != null ? true : false;
+        return getChildWithTypeArg(commandNode.getArgument().getType().getLabel()) != null;
     }
 
     /////
@@ -290,7 +295,7 @@ public class CommandNode {
      */
     public void sendHelpMessage(CommandSender sender, String label, int page) {
         // On détermine le nombre de pages d'aide
-        int nbPages = (int) Math.ceil(getChilds().size() / (double) NB_ELEM_PER_HELP_PAGE);
+        int nbPages = (int) Math.ceil(getChildren().size() / (double) NB_ELEM_PER_HELP_PAGE);
 
         // On ajuste le numéro de page si nécessaire
         if (page < 1) {
@@ -305,9 +310,9 @@ public class CommandNode {
 
         // Envoie d'un message d'utilisation pour chaque commande de la page
         for (int i = NB_ELEM_PER_HELP_PAGE * (page - 1); i < NB_ELEM_PER_HELP_PAGE * page
-            && i < getChilds().size(); i++) {
+            && i < getChildren().size(); i++) {
             UtilsAPI.sendSystemMessage(MessageLevel.NORMAL, sender, "§a§l%s %s", UtilsAPI.CARAC_ARROW,
-                getChilds().get(i).getUtils(label, true));
+                getChildren().get(i).getUtils(label, true));
         }
 
         // Si il y a plusieurs pages d'aide, on envoie l'aide pour changer de
@@ -368,13 +373,13 @@ public class CommandNode {
         // On complète le message d'utilisation avec les arguments des noeuds
         // fils tant que le parcours correspond à celui d'une branche (1 noeud
         // fils uniquement)
-        while (currentNode.getChilds().size() == 1) {
+        while (currentNode.getChildren().size() == 1) {
             currentNode = currentNode.getFirstChild();
             sj.add(getArgumentUsage(currentNode));
         }
         // On retourne le message d'utilisation avec ou sans description avec
         // indication si il s'agit de la forme finale de la commande ou non
-        return sj.toString() + (!currentNode.getChilds().isEmpty() ? " §b..." : "") + ChatColor.GOLD
+        return sj + (!currentNode.getChildren().isEmpty() ? " §b..." : "") + ChatColor.GOLD
             + (withDescription ? "\n  " + ChatColor.YELLOW + currentNode.getDescription() : "");
     }
 
@@ -385,7 +390,7 @@ public class CommandNode {
      * @return L'indication d'usage de l'argument, non null
      */
     public String getArgumentUsage(CommandNode node) {
-        String usage = "";
+        String usage;
 
         // On vérifie si l'argument du noeud correspond à une saisie ou non en
         // prenant en compte si il s'agit d'un argument obligatoire ou non
@@ -490,7 +495,7 @@ public class CommandNode {
      *
      * @return La liste des enfants du noeud, non null
      */
-    public ArrayList<CommandNode> getChilds() {
-        return childs;
+    public ArrayList<CommandNode> getChildren() {
+        return children;
     }
 }

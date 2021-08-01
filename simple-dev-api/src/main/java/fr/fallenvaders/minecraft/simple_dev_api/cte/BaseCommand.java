@@ -2,6 +2,7 @@ package fr.fallenvaders.minecraft.simple_dev_api.cte;
 
 import fr.fallenvaders.minecraft.simple_dev_api.MessageLevel;
 import fr.fallenvaders.minecraft.simple_dev_api.UtilsAPI;
+import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.CommandNotFoundException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,15 +27,15 @@ public abstract class BaseCommand implements CommandExecutor {
      * @param cmdLabel Le label de la commande, non null
      */
     public BaseCommand(String cmdLabel) {
-        CommandNodeExecutor dce = new CommandNodeExecutor() {
-
-            @Override
-            public void execute(CommandSender sender, Command cmd, String label, String[] args) throws Exception {
-                int page = args.length == 2 ? Integer.parseInt(args[1]) : 1;
-                getCmdTreeExecutor().getRoot().sendHelpMessage(sender, label, page);
-            }
+        CommandNodeExecutor dce = (sender, cmd, label, args) -> {
+            int page = args.length == 2 ? Integer.parseInt(args[1]) : 1;
+            getCmdTreeExecutor().getRoot().sendHelpMessage(sender, label, page);
         };
-        setCmdTreeExecutor(new CommandTreeExecutor(cmdLabel));
+        try {
+            setCmdTreeExecutor(new CommandTreeExecutor(cmdLabel));
+        } catch (CommandNotFoundException e) {
+            e.printStackTrace();
+        }
         getCmdTreeExecutor().getRoot().setExecutor(dce);
     }
 
@@ -49,7 +50,8 @@ public abstract class BaseCommand implements CommandExecutor {
      */
     @Override
     public final boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        if (sender.hasPermission(cmd.getPermission())) {
+        String permission = cmd.getPermission();
+        if (permission != null && sender.hasPermission(cmd.getPermission())) {
             getCmdTreeExecutor().checkCommand(sender, cmd, label, args);
         } else {
             UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, UtilsAPI.PERMISSION_MISSING);

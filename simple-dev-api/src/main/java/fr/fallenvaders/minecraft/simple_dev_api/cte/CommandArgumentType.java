@@ -18,36 +18,22 @@ public class CommandArgumentType {
      * terme, toute saisie est acceptée (type d'argument par défaut à utiliser
      * donc).
      */
-    public static final CommandArgumentType STRING = new CommandArgumentType("saisie", new CommandArgumentChecker() {
-
-        @Override
-        public void check(String arg) {
-        }
+    public static final CommandArgumentType STRING = new CommandArgumentType("saisie", arg -> {
     });
 
     /**
      * Définit le type d'argument à un nombre.
      */
-    public static final CommandArgumentType NUMBER = new CommandArgumentType("nombre", new CommandArgumentChecker() {
-
-        @Override
-        public void check(String arg) throws NumberFormatException {
-            Integer.parseInt(arg);
-        }
-    });
+    public static final CommandArgumentType NUMBER = new CommandArgumentType("nombre", Integer::parseInt);
 
     /**
      * Définit le type d'argument à un joueur connecté.
      */
-    public static final CommandArgumentType ONLINE_PLAYER = new CommandArgumentType("joueur", new CommandArgumentChecker() {
+    public static final CommandArgumentType ONLINE_PLAYER = new CommandArgumentType("joueur", arg -> {
+        Player player = Bukkit.getPlayer(arg);
 
-        @Override
-        public void check(String arg) throws CommandException {
-            Player player = Bukkit.getPlayer(arg);
-
-            if (player == null) {
-                throw new CommandException(UtilsAPI.PLAYER_NOT_FOUND);
-            }
+        if (player == null) {
+            throw new CommandException(UtilsAPI.PLAYER_NOT_FOUND);
         }
     });
 

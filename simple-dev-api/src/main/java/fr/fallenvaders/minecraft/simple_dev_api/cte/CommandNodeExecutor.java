@@ -20,5 +20,5 @@ public interface CommandNodeExecutor {
      * @param args   La liste des arguments de la commande à exécuter, non null
      * @throws Exception Si une erreur est détectée
      */
-    public void execute(CommandSender sender, Command cmd, String label, String[] args) throws Exception;
+    void execute(CommandSender sender, Command cmd, String label, String[] args) throws Exception;
 }

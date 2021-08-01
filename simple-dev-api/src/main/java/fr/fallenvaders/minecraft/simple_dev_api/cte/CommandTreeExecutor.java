@@ -4,11 +4,13 @@ import com.google.common.collect.Lists;
 import fr.fallenvaders.minecraft.simple_dev_api.MessageLevel;
 import fr.fallenvaders.minecraft.simple_dev_api.UtilsAPI;
 import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.CommandException;
+import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.CommandNotFoundException;
 import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.InvalidArgumentsCommandException;
 import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.InvalidCommandException;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -45,8 +47,12 @@ public class CommandTreeExecutor {
      *
      * @param cmdLabel Le label de la commande, non null
      */
-    public CommandTreeExecutor(String cmdLabel) {
-        setRoot(new CommandNode(null, new CommandArgument(cmdLabel), Bukkit.getPluginCommand(cmdLabel).getDescription(),
+    public CommandTreeExecutor(String cmdLabel) throws CommandNotFoundException {
+        PluginCommand pluginCommand = Bukkit.getPluginCommand(cmdLabel);
+        if (pluginCommand == null) {
+            throw new CommandNotFoundException(cmdLabel);
+        }
+        setRoot(new CommandNode(null, new CommandArgument(cmdLabel), pluginCommand.getDescription(),
             null, null));
     }
 
@@ -113,11 +119,9 @@ public class CommandTreeExecutor {
         // l'arbre
         // d'exécution
         CommandNode currentNode = getRoot();
-        Iterator<CommandNode> iterator = Arrays.asList(cmds).iterator();
 
         // On parcourt la liste des noeuds
-        while (iterator.hasNext()) {
-            CommandNode subCmdNode = iterator.next();
+        for (CommandNode subCmdNode : cmds) {
             // On tente de récupérer le noeud correspondant à celui parcouru
             // actuellement
             // dans la liste
@@ -132,7 +136,7 @@ public class CommandTreeExecutor {
             // Enfin, on ajoute le noeud à la liste des noeuds fils du noeud
             // courant et
             // actualise ce dernier avec ce nouveau noeud fils
-            currentNode.getChilds().add(cmdNode);
+            currentNode.getChildren().add(cmdNode);
             currentNode = cmdNode;
         }
 
@@ -260,22 +264,23 @@ public class CommandTreeExecutor {
                 // Si la commande est valide, on vérifie la possession des
                 // permissions
                 // nécessaires par l'émetteur de la commande
-                if (sender.hasPermission(cmdNode.getPermission(cmd)) && cmdNode.hasSpecificPermission()
-                    ? sender.hasPermission(cmdNode.getSpecificPermission()) : true) {
-                    try {
-                        executeCommand(cmdNode, sender, cmd, label, args);
-                    } catch (NumberFormatException e) {
-                        UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, UtilsAPI.NUMBER_FORMAT_INVALIDE);
-                    } catch (InvalidArgumentsCommandException e) {
-                        UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, UtilsAPI.COMMAND_INPUT_ARGUMENT_WRONG);
-                    } catch (CommandException e) {
-                        UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, e.getMessage());
-                    } catch (Exception e) {
-                        UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, UtilsAPI.INTERNAL_EXCEPTION);
-                        e.printStackTrace();
+                try {
+                    if (!sender.hasPermission(cmdNode.getPermission(cmd)) || !cmdNode.hasSpecificPermission() || sender.hasPermission(cmdNode.getSpecificPermission())) {
+                        try {
+                            executeCommand(cmdNode, sender, cmd, label, args);
+                        } catch (NumberFormatException e) {
+                            UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, UtilsAPI.NUMBER_FORMAT_INVALIDE);
+                        } catch (InvalidArgumentsCommandException e) {
+                            UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, UtilsAPI.COMMAND_INPUT_ARGUMENT_WRONG);
+                        } catch (CommandException e) {
+                            UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, e.getMessage());
+                        }
+                    } else {
+                        UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, UtilsAPI.PERMISSION_MISSING);
                     }
-                } else {
-                    UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, UtilsAPI.PERMISSION_MISSING);
+                } catch (Exception e) {
+                    UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, UtilsAPI.INTERNAL_EXCEPTION);
+                    e.printStackTrace();
                 }
             } else {
                 UtilsAPI.sendSystemMessage(MessageLevel.ERROR, sender, UtilsAPI.COMMAND_WRONG);

@@ -13,7 +13,7 @@ public class CommandArgument {
 
     private CommandArgumentType type;
     private boolean isRequired;
-    private ArrayList<String> alias = new ArrayList<>();
+    private final ArrayList<String> alias = new ArrayList<>();
 
     /**
      * Constructeur d'un argument de saisie

@@ -12,7 +12,6 @@ public interface CommandArgumentChecker {
      * Vérifie la validité des données saisies pour l'argument associé.
      *
      * @param arg L'argument associé, non null
-     * @return True si les données saisies sont valides, false sinon
      */
-    public void check(String arg) throws Exception;
+    void check(String arg) throws Exception;
 }
