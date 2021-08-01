@@ -3,4 +3,4 @@ version: ${project.version}
 api-version: ${minecraft.api.version}
 description: ${project.description}
 depend: [ ProtocolLib ]
-main: fr.fallenvaders.minecraft.core.FallenVadersCorePlugin
+main: fr.fallenvaders.minecraft.libs.FallenVadersLibsPlugin
