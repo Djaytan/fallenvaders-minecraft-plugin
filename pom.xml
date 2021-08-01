@@ -34,9 +34,10 @@
     </properties>
 
     <modules>
+        <module>justice-hands</module>
+        <module>mc-enhancer</module>
         <module>mc-fallenvaders-core</module>
         <module>mc-fallenvaders-libs</module>
-        <module>mc-enhancer</module>
         <module>simple-dev-api</module>
     </modules>
 
