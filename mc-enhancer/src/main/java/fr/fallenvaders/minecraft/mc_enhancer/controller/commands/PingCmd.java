@@ -16,7 +16,7 @@ public class PingCmd implements CommandExecutor {
       @NotNull String[] strings) {
     if (commandSender instanceof Player) {
       Player player = (Player) commandSender;
-      String ping = Integer.toString(player.getPing());
+      String ping = Integer.toString(player.spigot().getPing());
       player.sendMessage("Votre ping : " + ping);
     } else {
       commandSender.sendMessage("Vous devez être un joueur pour pouvoir exécuter cette commande.");
