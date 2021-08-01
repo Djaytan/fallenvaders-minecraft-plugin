@@ -2,5 +2,5 @@ name: ${project.name}
 version: ${project.version}
 api-version: ${minecraft.api.version}
 description: ${project.description}
-depend: [ ProtocolLib ]
+depend: [ FallenVaders-Libs, SimpleDevAPI ]
 main: fr.fallenvaders.minecraft.core.FallenVadersCorePlugin

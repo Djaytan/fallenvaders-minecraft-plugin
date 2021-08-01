@@ -2,5 +2,5 @@ name: ${project.name}
 version: ${project.version}
 api-version: ${minecraft.api.version}
 description: ${project.description}
-depend: [ FallenVaders-Core, ProtocolLib ]
+depend: [ FallenVaders-Libs, FallenVaders-Core, ProtocolLib, SimpleDevAPI ]
 main: fr.fallenvaders.minecraft.mc_enhancer.McEnhancerPlugin
