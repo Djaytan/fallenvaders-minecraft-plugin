@@ -35,6 +35,7 @@
 
     <modules>
         <module>justice-hands</module>
+        <module>mail-box</module>
         <module>mc-enhancer</module>
         <module>mc-fallenvaders-core</module>
         <module>mc-fallenvaders-libs</module>
