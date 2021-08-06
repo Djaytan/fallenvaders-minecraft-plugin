@@ -2,4 +2,10 @@ name: ${project.name}
 version: ${project.version}
 api-version: ${minecraft.api.version}
 description: ${project.description}
-main: fr.fallenvaders.minecraft.mini_events.MiniEventsPlugin
+author: Glynix
+main: ${project.groupId}.mini_events.MiniEventsPlugin
+
+commands:
+    event:
+        permission: admin.event
+        description: Gestion des événements.

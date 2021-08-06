@@ -14,12 +14,12 @@
     <name>MiniEvents</name>
     <description>Mini events plugin</description>
 
-    <dependencies>
+    <!--<dependencies>
         <dependency>
             <groupId>fr.fallenvaders.minecraft</groupId>
             <artifactId>mc-fallenvaders-libs</artifactId>
             <version>0.1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-    </dependencies>
+    </dependencies>-->
 </project>
