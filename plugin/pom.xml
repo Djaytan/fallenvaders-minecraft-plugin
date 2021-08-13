@@ -17,8 +17,8 @@
     <description>Minecraft plugin for FallenVaders server</description>
 
     <properties>
-        <minecraft.api.version>1.17</minecraft.api.version>
-        <plugin.jar.name>${project.name}-${project.version}.MC-${minecraft.api.version}</plugin.jar.name>
+        <minecraft.api.version>1.17.1</minecraft.api.version>
+        <plugin.jar.name>${project.name}-${project.version}</plugin.jar.name>
     </properties>
 
     <modules>
@@ -46,7 +46,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <version>${minecraft.api.version}-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -76,7 +76,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <finalName>${project.jar.name}</finalName>
+                    <finalName>${plugin.jar.name}</finalName>
                 </configuration>
             </plugin>
         </plugins>
