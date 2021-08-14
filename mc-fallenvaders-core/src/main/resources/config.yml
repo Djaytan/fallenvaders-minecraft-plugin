@@ -1,0 +1,24 @@
+plugin_prefix: "&l&6FightSession &f>> &r"
+lang_file: "FR_fr"
+
+fight_time: 30
+
+timer_options:
+   display_mode: "bossbar" # Or: none
+   refresh_mode: "ticks" # Or: seconds
+   time_format: "#0.00" # Or: #0.0 or #0
+   bossbar_display_otions:
+      color: "yellow"
+      style: "segmented_10"
+
+AllowChorus: true
+AllowEnderpearls: true
+
+action_on_leave: "kill_player" #Or: "drop_inventory_in_chest" or "drop_inventory_in_world" or "destroy_inventory" or "none"
+
+message_levels:
+  info: "&e"
+  notification: "&a"
+  warning: "&c"
+  faillure: "&c"
+  error: "&4"
