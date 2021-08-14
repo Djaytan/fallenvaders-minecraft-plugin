@@ -1,6 +1,6 @@
 package fr.fallenvaders.minecraft.core.fight_session;
 
-import fr.fallenvaders.minecraft.core.FallenVadersCorePlugin;
+import fr.fallenvaders.minecraft.core.FallenVadersCore;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -11,9 +11,9 @@ public class Bar {
 
     public static void init() {
         color = BarColor.valueOf(
-            FallenVadersCorePlugin.main.getConfig().getString("timer_options.bossbar_display_otions.color").toUpperCase());
+            FallenVadersCore.main.getConfig().getString("timer_options.bossbar_display_otions.color").toUpperCase());
         style = BarStyle.valueOf(
-            FallenVadersCorePlugin.main
+            FallenVadersCore.main
                 .getConfig().getString("timer_options.bossbar_display_otions.style").toUpperCase());
 
     }

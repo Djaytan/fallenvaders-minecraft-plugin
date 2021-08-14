@@ -2,7 +2,7 @@ package fr.fallenvaders.minecraft.core.fight_session.utils;
 
 import org.bukkit.command.CommandSender;
 
-import fr.fallenvaders.minecraft.core.FallenVadersCorePlugin;
+import fr.fallenvaders.minecraft.core.FallenVadersCore;
 
 
 /**
@@ -10,7 +10,7 @@ import fr.fallenvaders.minecraft.core.FallenVadersCorePlugin;
  */
 public class MessageUtils {
 
-    public static String PLUGIN_PREFIX = FallenVadersCorePlugin.main
+    public static String PLUGIN_PREFIX = FallenVadersCore.main
         .getConfig().getString("plugin_prefix").replaceAll("&", "§");
 
     public static void sendMessage(CommandSender target, MessageLevel level, String msg) {
@@ -29,7 +29,7 @@ public class MessageUtils {
     }
 
     public static void reload() {
-        PLUGIN_PREFIX = FallenVadersCorePlugin.main
+        PLUGIN_PREFIX = FallenVadersCore.main
             .getConfig().getString("plugin_prefix").replaceAll("&", "§");
 
     }

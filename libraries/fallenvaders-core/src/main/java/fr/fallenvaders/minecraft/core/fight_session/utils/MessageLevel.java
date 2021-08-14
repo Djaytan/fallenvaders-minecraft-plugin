@@ -1,6 +1,6 @@
 package fr.fallenvaders.minecraft.core.fight_session.utils;
 
-import fr.fallenvaders.minecraft.core.FallenVadersCorePlugin;
+import fr.fallenvaders.minecraft.core.FallenVadersCore;
 
 /**
  * Le niveau des messages (info, notification, warning, faillure & error) <br>
@@ -8,13 +8,13 @@ import fr.fallenvaders.minecraft.core.FallenVadersCorePlugin;
  */
 public enum MessageLevel {
 
-    INFO(FallenVadersCorePlugin.main
-        .getConfig().getString("message_levels.info")), NOTIFICATION(FallenVadersCorePlugin.main
+    INFO(FallenVadersCore.main
+        .getConfig().getString("message_levels.info")), NOTIFICATION(FallenVadersCore.main
         .getConfig().getString("message_levels.notification")),
-    WARNING(FallenVadersCorePlugin.main
-        .getConfig().getString("message_levels.warning")), FAILLURE(FallenVadersCorePlugin.main
+    WARNING(FallenVadersCore.main
+        .getConfig().getString("message_levels.warning")), FAILLURE(FallenVadersCore.main
         .getConfig().getString("message_levels.faillure")),
-    ERROR(FallenVadersCorePlugin.main
+    ERROR(FallenVadersCore.main
         .getConfig().getString("message_levels.error"));
 
     private String color = "§f";
@@ -35,7 +35,7 @@ public enum MessageLevel {
 
     public static void refresh() {
         for (MessageLevel e : values()) {
-            e.color = FallenVadersCorePlugin.main
+            e.color = FallenVadersCore.main
                 .getConfig().getString("message_levels." + e.name().toLowerCase()).replace("&", "§");
         }
     }

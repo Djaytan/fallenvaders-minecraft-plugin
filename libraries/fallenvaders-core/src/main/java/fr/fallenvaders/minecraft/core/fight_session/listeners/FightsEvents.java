@@ -28,7 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 
 import fr.fallenvaders.minecraft.core.fight_session.FightSession;
-import fr.fallenvaders.minecraft.core.FallenVadersCorePlugin;
+import fr.fallenvaders.minecraft.core.FallenVadersCore;
 
 import fr.fallenvaders.minecraft.core.fight_session.PluginController;
 import fr.fallenvaders.minecraft.core.fight_session.utils.MessageLevel;
@@ -57,19 +57,19 @@ public class FightsEvents implements Listener {
     private static String action_on_leave = "kill_player";
 
     public static void initFightVars() {
-        allowChorus = FallenVadersCorePlugin.main.getConfig().getBoolean("AllowChorus");
-        allowEnderpearls = FallenVadersCorePlugin.main
+        allowChorus = FallenVadersCore.main.getConfig().getBoolean("AllowChorus");
+        allowEnderpearls = FallenVadersCore.main
             .getConfig().getBoolean("AllowEnderpearls");
 
-        timer_options__display_mode = FallenVadersCorePlugin.main
+        timer_options__display_mode = FallenVadersCore.main
             .getConfig().getString("timer_options.display_mode");
-        timer_options__refresh_mode = FallenVadersCorePlugin.main
+        timer_options__refresh_mode = FallenVadersCore.main
             .getConfig().getString("timer_options.refresh_mode");
 
-        timer_options__time_format = FallenVadersCorePlugin.main
+        timer_options__time_format = FallenVadersCore.main
             .getConfig().getString("timer_options.time_format");
 
-        action_on_leave = FallenVadersCorePlugin.main
+        action_on_leave = FallenVadersCore.main
             .getConfig().getString("action_on_leave");
 
     }
@@ -263,13 +263,13 @@ public class FightsEvents implements Listener {
             FightSession playerCombat = PluginController.getSessionManager().getSession(player.getUniqueId());
 
             if (playerCombat != null) { // joueur deja en combat, reinitialise le combat
-                playerCombat.setTime((double) FallenVadersCorePlugin.main
+                playerCombat.setTime((double) FallenVadersCore.main
                     .getConfig().getInt("fight_time"));
                 playerCombat.addTarget(target);
 
             } else { // crée un nouveau combat et le lance
                 FightSession combat = new FightSession(player, target,
-                    (double) FallenVadersCorePlugin.main
+                    (double) FallenVadersCore.main
                         .getConfig().getInt("fight_time")); // create a new fight
 
                 combat.setTimerDisplayMode(timer_options__display_mode);

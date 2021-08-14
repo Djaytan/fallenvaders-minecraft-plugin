@@ -7,18 +7,18 @@ import java.util.logging.Level;
 
 import org.apache.commons.lang.StringUtils;
 
-import fr.fallenvaders.minecraft.core.FallenVadersCorePlugin;
+import fr.fallenvaders.minecraft.core.FallenVadersCore;
 
 
 /**
  * Gère les fichier de message externalisées. (Lang)
  */
 public class LangManager extends ConfigController {
-    private static String FOLDER_PATH = FallenVadersCorePlugin.main
+    private static String FOLDER_PATH = FallenVadersCore.main
         .getDataFolder() + File.separator + "lang";
-    private static String CFG_NAME = FallenVadersCorePlugin.main
+    private static String CFG_NAME = FallenVadersCore.main
         .getConfig().getString("lang_file") + ".yml";
-    private static String DEFAULT_RESSOURCE = FallenVadersCorePlugin.main
+    private static String DEFAULT_RESSOURCE = FallenVadersCore.main
         .getConfig().getString("lang_file") + ".yml";
 
     public LangManager() {
@@ -35,21 +35,21 @@ public class LangManager extends ConfigController {
      * @return l'instance de LangManager utilisé
      */
     public static LangManager loadDefaults() {
-        LangManager FR_fr = new LangManager(FallenVadersCorePlugin.main
+        LangManager FR_fr = new LangManager(FallenVadersCore.main
             .getDataFolder() + File.separator + "lang", "FR_fr.yml",
             "FR_fr.yml");
         FR_fr.saveDefault();
 
-        LangManager EN_en = new LangManager(FallenVadersCorePlugin.main
+        LangManager EN_en = new LangManager(FallenVadersCore.main
             .getDataFolder() + File.separator + "lang", "EN_en.yml",
             "EN_en.yml");
         EN_en.saveDefault();
 
-        LangManager defaultLangManager = new LangManager(FallenVadersCorePlugin.main
+        LangManager defaultLangManager = new LangManager(FallenVadersCore.main
             .getDataFolder() + File.separator + "lang",
-            FallenVadersCorePlugin.main
+            FallenVadersCore.main
                 .getConfig().getString("lang_file") + ".yml",
-            FallenVadersCorePlugin.main
+            FallenVadersCore.main
                 .getConfig().getString("lang_file") + ".yml");
         defaultLangManager.load();
         return defaultLangManager;
@@ -99,11 +99,11 @@ public class LangManager extends ConfigController {
     @Override
     protected void onLoad() {
         if (configuration != null) {
-            FallenVadersCorePlugin.main
+            FallenVadersCore.main
                 .getLogger().log(Level.INFO, "Lang file \"" + CFG_NAME + "\" loaded.");
 
         } else {
-            FallenVadersCorePlugin.main
+            FallenVadersCore.main
                 .getLogger().log(Level.SEVERE,
                     "Can't load the lang file \"" + CFG_NAME + "\". The default lang file will be used.");
         }
@@ -116,11 +116,11 @@ public class LangManager extends ConfigController {
 
     @Override
     public void load() {
-        FOLDER_PATH = FallenVadersCorePlugin.main
+        FOLDER_PATH = FallenVadersCore.main
             .getDataFolder() + File.separator + "lang";
-        CFG_NAME = FallenVadersCorePlugin.main
+        CFG_NAME = FallenVadersCore.main
             .getConfig().getString("lang_file") + ".yml";
-        DEFAULT_RESSOURCE = FallenVadersCorePlugin.main
+        DEFAULT_RESSOURCE = FallenVadersCore.main
             .getConfig().getString("lang_file") + ".yml";
 
         super.setFolderPath(FOLDER_PATH);

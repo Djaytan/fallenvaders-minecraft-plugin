@@ -4,14 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import fr.fallenvaders.minecraft.core.FallenVadersCorePlugin;
+import fr.fallenvaders.minecraft.core.FallenVadersCore;
 
 
 /**
@@ -100,12 +99,12 @@ public abstract class ConfigController {
                 file.createNewFile();
 
             } catch (IOException e) {
-                FallenVadersCorePlugin.main.getLogger().log(Level.SEVERE,
+                FallenVadersCore.main.getLogger().log(Level.SEVERE,
                     "Could not create config to " + file.getName() + " to " + file.getPath());
                 e.printStackTrace();
             }
 
-            InputStream customClassStream = FallenVadersCorePlugin.main
+            InputStream customClassStream = FallenVadersCore.main
                 .getResource(this.defaultRessource);
             InputStreamReader strR = new InputStreamReader(customClassStream, StandardCharsets.UTF_8);
             YamlConfiguration newConfig = YamlConfiguration.loadConfiguration(strR);
@@ -114,7 +113,7 @@ public abstract class ConfigController {
                 newConfig.save(file);
 
             } catch (IOException e) {
-                FallenVadersCorePlugin.main
+                FallenVadersCore.main
                     .getLogger().log(Level.SEVERE, "Could not save config: " + newConfig.getName());
                 e.printStackTrace();
             }
