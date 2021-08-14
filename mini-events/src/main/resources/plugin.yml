@@ -1,5 +1,0 @@
-name: ${project.name}
-version: ${project.version}
-api-version: ${minecraft.api.version}
-description: ${project.description}
-main: fr.fallenvaders.minecraft.mini_events.MiniEventsPlugin
