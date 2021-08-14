@@ -9,11 +9,54 @@
     </parent>
 
     <artifactId>plugin</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>FallenVadersPlugin</name>
     <description>Minecraft plugin for FallenVaders server</description>
 
     <properties>
         <plugin.jar.name>${project.name}-${project.version}</plugin.jar.name>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>fr.fallenvaders.minecraft</groupId>
+            <artifactId>commons</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.fallenvaders.minecraft</groupId>
+            <artifactId>fallenvaders-core</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.fallenvaders.minecraft</groupId>
+            <artifactId>justice-hands</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.fallenvaders.minecraft</groupId>
+            <artifactId>mail-box</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.fallenvaders.minecraft</groupId>
+            <artifactId>minecraft-enhancer</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.fallenvaders.minecraft</groupId>
+            <artifactId>mini-events</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
