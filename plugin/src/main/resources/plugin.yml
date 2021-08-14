@@ -12,6 +12,12 @@ commands:
         description: Test de connexion.
     mailbox:
         description: commande du plugin mailbox.
+    fightsession:
+        description: Principal command.
+        aliases:
+            - fight
+            - fights
+            - fs
 
 permissions:
     mailbox.admin:
@@ -130,3 +136,29 @@ permissions:
     mailbox.send.standard:
         description: Permission d'effectuer un envoie.
         default: true
+
+    fightsession.group.admin:
+        description: All permissions of the plugin.
+        op: true
+        children:
+            fightsession.reload: true
+            fightsession.help: true
+            fightsession.time: true
+            fightsession.targets: true
+
+    fightsession.group.player:
+        description: Permissions help, targets and time (for players).
+        default: true
+        children:
+            fightsession.help: true
+            fightsession.time: true
+            fightsession.targets: true
+
+    fightsession.reload:
+        description: Needed to reload the plugin.
+    fightsession.help:
+        description: Needed to view the help (/help) message.
+    fightsession.time:
+        description: Needed to view the time left when in fight.
+    fightsession.targets:
+        description: Needed to view the targets when in fight.
