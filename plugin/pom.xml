@@ -66,7 +66,6 @@
         <dependency>
             <groupId>fr.minuskube.inv</groupId>
             <artifactId>smart-invs</artifactId>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
