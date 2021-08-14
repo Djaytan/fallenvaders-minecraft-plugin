@@ -28,6 +28,9 @@ commands:
     mt:
         description: ModeratorTools (Outils de modération)
         aliases: modtools
+    event:
+        permission: admin.event
+        description: Gestion des événements.
 
 permissions:
     mailbox.admin:

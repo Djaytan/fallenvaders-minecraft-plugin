@@ -11,19 +11,19 @@ import org.bukkit.inventory.Inventory;
 import fr.fallenvaders.minecraft.mini_events.GameName;
 
 public class ArgTELEPORT {
-	public static void ArgTeleport(Player player) {
-		Inventory inv = Bukkit.createInventory(null, 9, "§0Menu des événements");
-		List<GameName> gameNames = new ArrayList<>(Arrays.asList(GameName.values()));
-		gameNames.remove(GameName.NONE);
+    public static void ArgTeleport(Player player) {
+        Inventory inv = Bukkit.createInventory(null, 9, "§0Menu des événements");
+        List<GameName> gameNames = new ArrayList<>(Arrays.asList(GameName.values()));
+        gameNames.remove(GameName.NONE);
 
-		for (int i = 0; i < gameNames.size(); i++) {
-			GameName gameName = gameNames.get(i);
-			inv.setItem(i, GameName.getVisualItem(gameName));
-		}
-		
-		player.openInventory(inv);
+        for (int i = 0; i < gameNames.size(); i++) {
+            GameName gameName = gameNames.get(i);
+            inv.setItem(i, GameName.getVisualItem(gameName));
+        }
 
-	}
+        player.openInventory(inv);
+
+    }
 
 	/*private static ItemStack getSpecificItem(Material material, int damage, boolean enchant, String customName) {
 		if (damage < 0)

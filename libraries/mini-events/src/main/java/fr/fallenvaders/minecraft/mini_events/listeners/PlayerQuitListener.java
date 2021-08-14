@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.fallenvaders.minecraft.mini_events.GameState;
-import fr.fallenvaders.minecraft.mini_events.MiniEventsPlugin;
+import fr.fallenvaders.minecraft.mini_events.MiniEvents;
 import fr.fallenvaders.minecraft.mini_events.events.GetEventWorld;
 import fr.fallenvaders.minecraft.mini_events.events.PlayerElimination;
 import fr.fallenvaders.minecraft.mini_events.events.PlayerRemaining;
@@ -17,65 +17,59 @@ import fr.fallenvaders.minecraft.mini_events.events.WhoIsWinner;
 
 public class PlayerQuitListener implements Listener {
 
-	private MiniEventsPlugin main;
+    ////////////////////////////////////////////////////
+    // Lorsqu'un joueur se deconnecte on vérifie si il
+    // est dans la liste des participants.
+    //
+    // On le met ensuite dans la liste des déconnectés.
+    ////////////////////////////////////////////////////
 
-	public PlayerQuitListener(MiniEventsPlugin main) {
-		this.main = main;
-	}
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        GameState state = MiniEvents.getGame().getGameState();
 
-	////////////////////////////////////////////////////
-	// Lorsqu'un joueur se deconnecte on vérifie si il
-	// est dans la liste des participants.
-	//
-	// On le met ensuite dans la liste des déconnectés.
-	////////////////////////////////////////////////////
+        Player player = event.getPlayer();
+        UUID playerUUID = player.getUniqueId();
 
-	@EventHandler
-	public void onQuit(PlayerQuitEvent event) {
-		GameState state = main.getGameState();
+        if (state == GameState.WAITING || state == GameState.STARTING || state == GameState.PLAYING
+            || state == GameState.FINISH) {
+            if (MiniEvents.getGame().getParticipants().contains(playerUUID)) {
 
-		Player player = event.getPlayer();
-		UUID playerUUID = player.getUniqueId();
+                Player disconnectedPlayer = Bukkit.getPlayer(playerUUID);
 
-		if (state == GameState.WAITING || state == GameState.STARTING || state == GameState.PLAYING
-				|| state == GameState.FINISH) {
-			if (main.getParticipants().contains(playerUUID)) {
+                MiniEvents.getGame().getLeaveDuringEvent().add(playerUUID); // On l'ajoute dans liste des déconnectés.
+                MiniEvents.getGame().getParticipants().remove(playerUUID); // On le supprime de la liste des participants.
 
-				Player disconnectedPlayer = Bukkit.getPlayer(playerUUID);
+                // Le joueur s'est déconnecté quand l'événement était en WAITING.
+                if (state == GameState.WAITING) {
+                    String eventName = MiniEvents.getGame().getGameName().getRealName().toLowerCase();
+                    Integer maxPlayers = MiniEvents.PLUGIN.getConfig().getInt("config-event." + eventName + ".players.max-players");
 
-				main.getLeaveDuringEvent().add(playerUUID); // On l'ajoute dans liste des déconnectés.
-				main.getParticipants().remove(playerUUID); // On le supprime de la liste des participants.
+                    // Broadcast d'annonce, annonçant que le joueur a quitté l'événement.
+                    Bukkit.broadcastMessage(disconnectedPlayer.getName() + "§7 s'est déconnecté §7(§c"
+                        + MiniEvents.getGame().getParticipants().size() + "§7/§c" + maxPlayers + "§7).");
+                }
 
-				// Le joueur s'est déconnecté quand l'événement était en WAITING.
-				if (state == GameState.WAITING) {
-					String eventName = main.getGameName().getRealName().toLowerCase();
-					Integer maxPlayers = main.getConfig().getInt("config-event." + eventName + ".players.max-players");
+                // Le joueur s'est déconnecté quand l'événement était en STARTING ou PLAYING.
+                if (state == GameState.PLAYING || state == GameState.STARTING) {
+                    // Envoit à tous les joueurs présent dans le monde des événements, le
+                    // message d'élimination du joueur qui s'est déconnecté.
+                    for (Player pls : Bukkit.getServer().getOnlinePlayers()) {
+                        if (pls.getWorld().getName().equalsIgnoreCase(GetEventWorld.getName())) {
+                            PlayerElimination.EventElimationMessageQuit(pls, disconnectedPlayer);
+                        }
+                    }
+                    // On retire le joueur des participants.
+                    MiniEvents.getGame().getParticipants().remove(player.getUniqueId());
+                    // Indique le nombre de joueur restant.
+                    PlayerRemaining.PlayerLeft();
 
-					// Broadcast d'annonce, annonçant que le joueur a quitté l'événement.
-					Bukkit.broadcastMessage(disconnectedPlayer.getName() + "§7 s'est déconnecté §7(§c"
-							+ main.getParticipants().size() + "§7/§c" + maxPlayers + "§7).");
-				}
-
-				// Le joueur s'est déconnecté quand l'événement était en STARTING ou PLAYING.
-				if (state == GameState.PLAYING || state == GameState.STARTING) {
-					// Envoit à tous les joueurs présent dans le monde des événements, le
-					// message d'élimination du joueur qui s'est déconnecté.
-					for (Player pls : Bukkit.getServer().getOnlinePlayers()) {
-						if (pls.getWorld().getName().equalsIgnoreCase(GetEventWorld.getName(main))) {
-							PlayerElimination.EventElimationMessageQuit(pls, disconnectedPlayer, main);
-						}
-					}
-					// On retire le joueur des participants.
-					main.getParticipants().remove(player.getUniqueId());
-					// Indique le nombre de joueur restant.
-					PlayerRemaining.PlayerLeft(main);
-					
-					if (state == GameState.PLAYING) {
-						// Après sa déconnexion, nous regardons si il y a un gagnant dans la partie.
-						WhoIsWinner.getWinner(main.getParticipants(), main);
-					}
-				}
-			}
-		}
-	}
+                    if (state == GameState.PLAYING) {
+                        // Après sa déconnexion, nous regardons si il y a un gagnant dans la partie.
+                        WhoIsWinner.getWinner(MiniEvents.getGame().getParticipants());
+                    }
+                }
+            }
+        }
+    }
 }
