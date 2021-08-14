@@ -1,22 +1,17 @@
 package fr.fallenvaders.minecraft.justice_hands.keyskeeper.listeners;
 
-import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
-import fr.fallenvaders.minecraft.justicehands.JusticeHandsPlugin;
-import fr.fallenvaders.minecraft.justicehands.criminalrecords.objects.CJSanction;
+import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanction;
 import fr.fallenvaders.minecraft.justice_hands.keyskeeper.KeysKeeperBot;
-import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
-
-import java.util.List;
 
 public class PlayerLoginListener implements Listener {
 
 
     // On vérifie lors du processus de login, si le joueur est ban
     @EventHandler
-    public void PlayerLoginEvent(PlayerLoginEvent e){
+    public void PlayerLoginEvent(PlayerLoginEvent e) {
 
         // On récupère la ban le plus long
         CJSanction playerLongestBan = KeysKeeperBot.getPlayerLongestBan(e.getPlayer());
@@ -26,7 +21,7 @@ public class PlayerLoginListener implements Listener {
             e.allow();
         }
         // Si le joueur à un ban définif, on le kick
-        else if (playerLongestBan.getTSExpireDate() == null){
+        else if (playerLongestBan.getTSExpireDate() == null) {
             System.out.println("Ban définif detecté : " + playerLongestBan.getID());
 
         }
@@ -34,8 +29,7 @@ public class PlayerLoginListener implements Listener {
         else if (playerLongestBan.getTSExpireDate().getTime() > System.currentTimeMillis()) {
             System.out.println("Ban detecté : " + playerLongestBan.getID());
 
-        }
-        else {
+        } else {
             e.allow();
         }
 

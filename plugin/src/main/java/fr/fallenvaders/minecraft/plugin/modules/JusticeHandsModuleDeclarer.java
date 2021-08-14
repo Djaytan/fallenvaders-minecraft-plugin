@@ -1,6 +1,6 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
-import fr.fallenvaders.minecraft.core.FallenVadersCore;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
 
 public class JusticeHandsModuleDeclarer extends ModuleDeclarer {
 
@@ -12,11 +12,11 @@ public class JusticeHandsModuleDeclarer extends ModuleDeclarer {
 
     @Override
     public void onEnable() {
-        FallenVadersCore.enableModule(getPlugin());
+        JusticeHands.enableModule(getPlugin());
     }
 
     @Override
     public void onDisable() {
-        FallenVadersCore.disableModule(getPlugin());
+        JusticeHands.disableModule(getPlugin());
     }
 }

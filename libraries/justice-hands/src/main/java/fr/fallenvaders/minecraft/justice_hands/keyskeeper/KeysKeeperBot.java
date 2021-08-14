@@ -3,31 +3,30 @@ package fr.fallenvaders.minecraft.justice_hands.keyskeeper;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.fallenvaders.minecraft.justicehands.criminalrecords.objects.CJSanction;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanction;
 import org.bukkit.entity.Player;
-
-import fr.fallenvaders.minecraft.justicehands.JusticeHandsPlugin;
 
 public class KeysKeeperBot {
 
-/*
- * TODO A chaque fois que le joueur parle ça fait une requete dans la base de données,
- * il va falloir que je mette en place un systeme de cache qui s'actualise toutes les 5 minutes
- * Si jamais il y a une sanction de mute il va falloir que je mette à jour ce dernier
- */
-	
-	public static Long getPlayerMuteDate(Player player) {
-		List<Long> muteDateTSList = JusticeHandsPlugin.getSqlKK().getPlayerMutesEDLong(player);
+    /*
+     * TODO A chaque fois que le joueur parle ça fait une requete dans la base de données,
+     * il va falloir que je mette en place un systeme de cache qui s'actualise toutes les 5 minutes
+     * Si jamais il y a une sanction de mute il va falloir que je mette à jour ce dernier
+     */
 
-		Long unmuteDate = muteDateTSList
-				.stream()
-				.max(Long::compare).get();
-		
-		return unmuteDate;
-	}
+    public static Long getPlayerMuteDate(Player player) {
+        List<Long> muteDateTSList = JusticeHands.getSqlKK().getPlayerMutesEDLong(player);
+
+        Long unmuteDate = muteDateTSList
+            .stream()
+            .max(Long::compare).get();
+
+        return unmuteDate;
+    }
 
     public static CJSanction getPlayerLongestBan(Player player) {
-        List<CJSanction> playerBansList = JusticeHandsPlugin.getSqlKK().getPlayerBans(player); // Récupération de tous les bans du joueurs
+        List<CJSanction> playerBansList = JusticeHands.getSqlKK().getPlayerBans(player); // Récupération de tous les bans du joueurs
         System.out.println("Nombre de bans : " + playerBansList.size());
 
         List<Long> unbanDateTSList = new ArrayList(); // Liste des "expirationTimes" de tous les bans actif du joueur
@@ -35,9 +34,9 @@ public class KeysKeeperBot {
         for (CJSanction sanction : playerBansList) {
 
             // Bandef enregistré = le plus récent car l'ordre de recherche dans la DB a été fait en DESC
-            if (sanction.getTSExpireDate() == null){
+            if (sanction.getTSExpireDate() == null) {
                 return sanction;
-            // Enregistrement du timestamp en long dans une liste
+                // Enregistrement du timestamp en long dans une liste
             } else {
                 unbanDateTSList.add(sanction.getTSExpireDate().getTime());
             }

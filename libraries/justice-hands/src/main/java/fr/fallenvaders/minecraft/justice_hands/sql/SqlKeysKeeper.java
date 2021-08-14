@@ -8,41 +8,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import fr.fallenvaders.minecraft.justicehands.criminalrecords.objects.CJSanction;
+import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanction;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class SqlKeysKeeper {
 
-	//Englobe toutes les méthodes en lien avec KeysKepper et la base de données
-	private Connection connection;
+    //Englobe toutes les méthodes en lien avec KeysKepper et la base de données
+    private Connection connection;
 
-	// Constructeur
-	public SqlKeysKeeper(Connection connection) {
-		this.connection = connection;
-	}
+    // Constructeur
+    public SqlKeysKeeper(Connection connection) {
+        this.connection = connection;
+    }
 
-	// Permet de récupérer tous les mutes d'un joueur et enregistrer leur timestamp
-	public List<Long> getPlayerMutesEDLong(Player player) {
-		ArrayList<Long> playerMuteList = new ArrayList<>();
-		try {
-			PreparedStatement q = connection.prepareStatement("SELECT * FROM sanctions_list WHERE uuid = ? AND type = ? AND state = ?");
+    // Permet de récupérer tous les mutes d'un joueur et enregistrer leur timestamp
+    public List<Long> getPlayerMutesEDLong(Player player) {
+        ArrayList<Long> playerMuteList = new ArrayList<>();
+        try {
+            PreparedStatement q = connection.prepareStatement("SELECT * FROM sanctions_list WHERE uuid = ? AND type = ? AND state = ?");
             q.setString(1, player.getUniqueId().toString());
-			q.setString(2, "mute");
-			q.setString(3, "active");
+            q.setString(2, "mute");
+            q.setString(3, "active");
 
-			ResultSet rs = q.executeQuery();
-			while (rs.next()) {
-				Long expireDateLong = rs.getTimestamp("expiredate").getTime();
-				playerMuteList.add(expireDateLong);
-			}
-			q.close();
-			return playerMuteList;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+            ResultSet rs = q.executeQuery();
+            while (rs.next()) {
+                Long expireDateLong = rs.getTimestamp("expiredate").getTime();
+                playerMuteList.add(expireDateLong);
+            }
+            q.close();
+            return playerMuteList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public List<CJSanction> getPlayerBans(Player player) {
         ArrayList<CJSanction> playerBansList = new ArrayList<>();
