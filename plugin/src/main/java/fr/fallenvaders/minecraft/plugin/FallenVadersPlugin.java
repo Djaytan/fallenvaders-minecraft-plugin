@@ -8,14 +8,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class FallenVadersPlugin extends JavaPlugin {
 
+    private ModuleRegister moduleRegister;
+
     @Override
     public void onEnable() {
         try {
             ModuleRegisterInitializer moduleInitializer = new CompleteModuleRegisterInitializer();
-            ModuleRegister moduleRegister = moduleInitializer.initialize();
+            moduleRegister = moduleInitializer.initialize();
+            moduleRegister.enableModules();
             System.out.println("FallenVaders plugin enabled.");
         } catch (ModuleRegisterException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onDisable() {
+        moduleRegister.disableModules();
+        System.out.println("FallenVaders plugin disabled.");
     }
 }
