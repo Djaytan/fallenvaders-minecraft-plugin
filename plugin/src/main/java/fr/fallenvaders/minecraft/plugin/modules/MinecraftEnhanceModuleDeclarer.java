@@ -2,11 +2,11 @@ package fr.fallenvaders.minecraft.plugin.modules;
 
 import fr.fallenvaders.minecraft.mc_enhancer.controller.commands.PingCmd;
 
-public class MinecraftEnhanceModuleRegister extends ModuleRegister {
+public class MinecraftEnhanceModuleDeclarer extends ModuleDeclarer {
 
     public static final String MODULE_NAME = "minecraft-enhancer";
 
-    public MinecraftEnhanceModuleRegister() {
+    public MinecraftEnhanceModuleDeclarer() {
         super(MODULE_NAME);
     }
 
