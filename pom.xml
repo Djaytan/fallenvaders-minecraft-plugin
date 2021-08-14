@@ -30,7 +30,7 @@
     </properties>
 
     <modules>
-        <module>lib</module>
+        <module>libraries</module>
         <module>plugin</module>
     </modules>
 </project>
