@@ -2,4 +2,10 @@ name: ${project.name}
 version: ${project.version}
 api-version: ${minecraft.api.version}
 description: ${project.description}
+depend: [ ProtocolLib ]
 main: fr.fallenvaders.minecraft.plugin.FallenVadersPlugin
+
+commands:
+    ping:
+        aliases: [ ms ]
+        description: Test de connexion.

@@ -16,41 +16,52 @@
     <description>Minecraft plugin for FallenVaders server</description>
 
     <dependencies>
+        <!-- FallenVaders libraries -->
         <dependency>
             <groupId>fr.fallenvaders.minecraft</groupId>
             <artifactId>commons</artifactId>
             <version>${project.version}</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>fr.fallenvaders.minecraft</groupId>
             <artifactId>fallenvaders-core</artifactId>
             <version>${project.version}</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>fr.fallenvaders.minecraft</groupId>
             <artifactId>justice-hands</artifactId>
             <version>${project.version}</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>fr.fallenvaders.minecraft</groupId>
             <artifactId>mail-box</artifactId>
             <version>${project.version}</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>fr.fallenvaders.minecraft</groupId>
             <artifactId>minecraft-enhancer</artifactId>
             <version>${project.version}</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>fr.fallenvaders.minecraft</groupId>
             <artifactId>mini-events</artifactId>
             <version>${project.version}</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Minecraft libraries -->
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -13,4 +13,11 @@
 
     <name>MinecraftEnhancer</name>
     <description>Overlay of some vanilla Minecraft functionalities</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+        </dependency>
+    </dependencies>
 </project>
