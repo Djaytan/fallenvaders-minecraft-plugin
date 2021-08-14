@@ -1,31 +1,40 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
-import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
-import org.bukkit.plugin.java.JavaPlugin;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class ModuleRegister {
 
-    private final String moduleName;
-    private final JavaPlugin plugin;
+    private final List<ModuleDeclarer> modules;
+    private boolean hasLaunched;
 
-    public ModuleRegister(String moduleName) {
-        this.moduleName = moduleName;
-        this.plugin = JavaPlugin.getPlugin(FallenVadersPlugin.class);
+    public ModuleRegister() {
+        modules = new ArrayList<>();
     }
 
-    public void onEnable() {
-        System.out.println("Enabling of the module " + moduleName);
+    public void registerModule(ModuleDeclarer moduleDeclarer) throws ModuleRegisterException {
+        if (hasLaunched) {
+            throw new ModuleRegisterException("Module registration rejected: the module registration process has already been launched.");
+        }
+        modules.add(moduleDeclarer);
     }
 
-    public void onDisable() {
-        System.out.println("Disabling of the module " + moduleName);
+    public void enableModules() {
+        modules.forEach((module) -> {
+            module.onEnable();
+            hasLaunched = true;
+            System.out.println("Module \"" + module.getModuleName() + "\" enabled.");
+        });
     }
 
-    public final String getModuleName() {
-        return moduleName;
+    public void disableModules() {
+        modules.forEach((module) -> {
+            module.onDisable();
+            System.out.println("Module \"" + module.getModuleName() + "\" disabled.");
+        });
     }
 
-    public JavaPlugin getPlugin() {
-        return plugin;
+    public boolean hasLaunched() {
+        return hasLaunched;
     }
 }
