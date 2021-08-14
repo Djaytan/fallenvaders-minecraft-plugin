@@ -5,8 +5,9 @@ public class CompleteModuleRegisterInitializer implements ModuleRegisterInitiali
     @Override
     public ModuleRegister initialize() throws ModuleRegisterException {
         ModuleRegister register = new ModuleRegister();
-        register.registerModule(new MinecraftEnhanceModuleDeclarer());
+        register.registerModule(new FallenVadersCoreModuleDeclarer());
         register.registerModule(new MailBoxModuleDeclarer());
+        register.registerModule(new MinecraftEnhanceModuleDeclarer());
         return register;
     }
 }
