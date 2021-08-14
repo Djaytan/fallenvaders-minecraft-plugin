@@ -1,6 +1,0 @@
-name: ${project.name}
-version: ${project.version}
-api-version: ${minecraft.api.version}
-description: ${project.description}
-depend: [ FallenVaders-Libs, SimpleDevAPI ]
-main: fr.fallenvaders.minecraft.mail_box.MailBoxPlugin
