@@ -21,6 +21,9 @@ public class CH_Player extends ChatHooker {
 		this.setExecution(event -> {
 			Player ePlayer = event.getPlayer();
 			String eMessage = event.getMessage();
+
+			System.out.println(eMessage);
+
 			event.setCancelled(true);
 
 			if (eMessage.equals("#stop")) {

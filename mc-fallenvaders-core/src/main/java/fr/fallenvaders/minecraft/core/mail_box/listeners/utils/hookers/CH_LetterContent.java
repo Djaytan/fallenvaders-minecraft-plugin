@@ -8,8 +8,8 @@ import java.util.List;
 
 public class CH_LetterContent extends ChatHooker {
 
-	public CH_LetterContent(String id, String startMsg, List<String> content, InventoryBuilder parentInv, Boolean doAdd) {
-		super(id, startMsg);
+	public CH_LetterContent(String startMsg, List<String> content, InventoryBuilder parentInv, Boolean doAdd) {
+		super("MailBox_LetterContent_ChatHooker", startMsg);
 
 		this.setExecution(event -> {
 			Player ePlayer = event.getPlayer();
@@ -20,10 +20,6 @@ public class CH_LetterContent extends ChatHooker {
 				parentInv.openInventory(ePlayer);
 				this.stop();
 				return;
-			}
-			
-			if(doAdd) {
-				
 			}
 			
 			if(doAdd || content.isEmpty()) {

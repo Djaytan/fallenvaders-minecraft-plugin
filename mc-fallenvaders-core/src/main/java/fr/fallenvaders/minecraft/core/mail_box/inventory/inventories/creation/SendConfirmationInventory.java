@@ -51,7 +51,7 @@ public class SendConfirmationInventory extends ConfirmationInventoryBuilder {
 	public Consumer<InventoryClickEvent> onConfirmation(Player player, InventoryContents contents) {
 		return e -> {
 			ClickType click = e.getClick();
-			Boolean error = false;
+			boolean error = false;
 			
 			if (click == ClickType.LEFT) {
 				LetterType type = getRecipients().getPlayerList().size() > 1 ? LetterType.ANNOUNCE : LetterType.STANDARD;

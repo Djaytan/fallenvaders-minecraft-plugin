@@ -1,6 +1,6 @@
 package fr.fallenvaders.minecraft.core;
 
-import fr.fallenvaders.minecraft.core.mail_box.commands.Cmd_Mailbox;
+import fr.fallenvaders.minecraft.core.mail_box.commands.CmdMailbox;
 import fr.fallenvaders.minecraft.core.mail_box.data_manager.MailBoxController;
 import fr.fallenvaders.minecraft.core.mail_box.listeners.JoinListener;
 import fr.fallenvaders.minecraft.core.mail_box.listeners.QuitListener;
@@ -35,7 +35,7 @@ public class FallenVadersCorePlugin extends JavaPlugin {
         SQLConnection.getInstance().setJdbc(SQLConnection.SGBD_TYPE_ROOT).setHost(main.getConfig().getString("database.host")).setDatabase(main.getConfig().getString("database.database"))
             .setUser(main.getConfig().getString("database.user")).setPassword(main.getConfig().getString("database.password")).connect();
 
-        main.getCommand(Cmd_Mailbox.CMD_LABEL).setExecutor(new Cmd_Mailbox());
+        main.getCommand(CmdMailbox.CMD_LABEL).setExecutor(new CmdMailbox());
 
         if (SQLConnection.getInstance().getConnection() != null && SQLConnection.getInstance().isConnected()) {
             manager = new InventoryManager(main);

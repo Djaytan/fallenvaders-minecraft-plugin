@@ -51,7 +51,7 @@ public abstract class ChatHooker {
 
 	public void stop() {
 		this.unload(this.getTarget());
-		AsyncPlayerChatEvent.getHandlerList().unregister(this.getListener());
+        AsyncPlayerChatEvent.getHandlerList().unregister(this.getListener());
 	}
 	
 	public void load(UUID uuid) {
@@ -63,8 +63,8 @@ public abstract class ChatHooker {
 	}
 	
 	public static ChatHooker get(UUID uuid) {
-		return map.get(uuid);
-	}
+        return map.get(uuid);
+    }
 	
 	public UUID getTarget() {
 		return target;
