@@ -3,7 +3,7 @@ package fr.fallenvaders.minecraft.plugin.modules;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ModuleRegister {
+public class ModuleRegister {
 
     private final List<ModuleDeclarer> modules;
     private boolean hasLaunched;
