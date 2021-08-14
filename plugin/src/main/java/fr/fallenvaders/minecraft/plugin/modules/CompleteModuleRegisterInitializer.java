@@ -9,6 +9,7 @@ public class CompleteModuleRegisterInitializer implements ModuleRegisterInitiali
         register.registerModule(new JusticeHandsModuleDeclarer());
         register.registerModule(new MailBoxModuleDeclarer());
         register.registerModule(new MinecraftEnhanceModuleDeclarer());
+        register.registerModule(new MiniEventsModuleDeclarer());
         return register;
     }
 }
