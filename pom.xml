@@ -20,6 +20,7 @@
     </licenses>
 
     <properties>
+        <!-- General properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
@@ -27,6 +28,9 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
+
+        <!-- Specific properties -->
+        <minecraft.api.version>1.17.1</minecraft.api.version>
     </properties>
 
     <modules>

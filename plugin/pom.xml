@@ -9,4 +9,28 @@
     </parent>
 
     <artifactId>plugin</artifactId>
+    <description>Minecraft plugin for FallenVaders server</description>
+
+    <properties>
+        <plugin.jar.name>${project.name}-${project.version}</plugin.jar.name>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <finalName>${plugin.jar.name}</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources/</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
 </project>

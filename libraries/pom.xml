@@ -16,11 +16,6 @@
     <name>FallenVadersLibs</name>
     <description>Minecraft libs for FallenVaders plugin server</description>
 
-    <properties>
-        <minecraft.api.version>1.17.1</minecraft.api.version>
-        <plugin.jar.name>${project.name}-${project.version}</plugin.jar.name>
-    </properties>
-
     <modules>
         <module>commons</module>
         <module>justice-hands</module>
@@ -93,23 +88,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <finalName>${plugin.jar.name}</finalName>
-                </configuration>
-            </plugin>
-        </plugins>
-        <resources>
-            <resource>
-                <directory>${project.basedir}/src/main/resources/</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-    </build>
 </project>
