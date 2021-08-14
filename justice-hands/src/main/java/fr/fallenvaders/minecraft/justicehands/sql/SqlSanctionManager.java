@@ -9,19 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsPlugin;
 import fr.fallenvaders.minecraft.justicehands.criminalrecords.objects.CJSanction;
-//import fr.dornacraft.justicehands.sanctionmanager.SanctionCancel;
 import fr.fallenvaders.minecraft.justicehands.sanctionmanager.objects.Sanction;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 
 public class SqlSanctionManager {
 	private Connection connection;
 
-	// Constructeur
+    // Constructeur
 	public SqlSanctionManager(Connection connection) {
 		this.connection = connection;
 	}
@@ -57,7 +56,9 @@ public class SqlSanctionManager {
 			
 			// Il faut récupérer la sanction générée antérieurement pour l'ajouter dans
 			// la hashmap pour que si le modérateur ai l'envie, de pouvoir l'annuler via l'ID
-			setModLastSanctionOnMap(moderator);
+
+            //todo : a revoir
+            //setModLastSanctionOnMap(moderator);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -68,8 +69,9 @@ public class SqlSanctionManager {
 		ArrayList<CJSanction> playerSanctionList = new ArrayList<>();
 
 		try {
-			PreparedStatement q = connection.prepareStatement("SELECT * FROM sanctions_list WHERE uuid = ? ORDER BY id DESC");
+			PreparedStatement q = connection.prepareStatement("SELECT * FROM sanctions_list WHERE uuid = ? AND state = ? ORDER BY id DESC");
 			q.setString(1, player.getUniqueId().toString());
+            q.setString(2, "active");
 
 			ResultSet rs = q.executeQuery();
 			while (rs.next()) {

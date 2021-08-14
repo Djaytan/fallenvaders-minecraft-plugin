@@ -9,6 +9,12 @@ import java.util.UUID;
 
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.SanctionType;
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
+import fr.minuskube.inv.content.InventoryContents;
+import fr.minuskube.inv.content.InventoryProvider;
+import fr.minuskube.inv.content.Pagination;
+import fr.minuskube.inv.content.SlotIterator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,15 +22,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-//import fr.dornacraft.devtoolslib.smartinvs.ClickableItem;
-//import fr.dornacraft.devtoolslib.smartinvs.SmartInventory;
-//import fr.dornacraft.devtoolslib.smartinvs.content.InventoryContents;
-//import fr.dornacraft.devtoolslib.smartinvs.content.InventoryProvider;
-//import fr.dornacraft.devtoolslib.smartinvs.content.Pagination;
-//import fr.dornacraft.devtoolslib.smartinvs.content.SlotIterator;
 import fr.fallenvaders.minecraft.justicehands.criminalrecords.objects.CJSanction;
 
-/*public class InventoryCR implements InventoryProvider {
+public class InventoryCR implements InventoryProvider {
 
 	private List<CJSanction> playerAllSanctionList;
 	private String select = "all";
@@ -294,4 +294,4 @@ import fr.fallenvaders.minecraft.justicehands.criminalrecords.objects.CJSanction
 		item.setItemMeta(meta);
 		return item;
 	}
-}*/
+}

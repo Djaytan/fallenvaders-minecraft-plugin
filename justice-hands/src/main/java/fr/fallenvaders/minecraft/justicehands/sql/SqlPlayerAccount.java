@@ -42,7 +42,7 @@ public class SqlPlayerAccount {
 			q.close();
 			return hasAccount;
 		} catch (SQLException e) {
-			e.printStackTrace();
+		    e.printStackTrace();
 		}
 		return false;
 	}

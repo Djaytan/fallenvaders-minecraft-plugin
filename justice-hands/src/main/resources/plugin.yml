@@ -6,7 +6,7 @@ main: fr.fallenvaders.minecraft.justicehands.JusticeHandsPlugin
 load: STARTUP
 author: Glynix
 website: https://www.fallenvaders.fr
-#depend: [DevToolsLib]
+depend: [ FallenVaders-Libs, SimpleDevAPI ]
 
 commands:
   cr:

@@ -3,14 +3,13 @@ package fr.fallenvaders.minecraft.justicehands.criminalrecords.invmanager;
 import java.util.List;
 import java.util.UUID;
 
+import fr.minuskube.inv.InventoryManager;
+import fr.minuskube.inv.SmartInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.java.JavaPlugin;
 
-//import fr.dornacraft.devtoolslib.smartinvs.InventoryManager;
-//import fr.dornacraft.devtoolslib.smartinvs.SmartInventory;
-//import fr.dornacraft.devtoolslib.smartinvs.SmartInventory.Builder;
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsPlugin;
 import fr.fallenvaders.minecraft.justicehands.criminalrecords.objects.CJSanction;
@@ -26,11 +25,10 @@ public class InventoryBuilderCR {
 		List<CJSanction> playerAllSanctionList = JusticeHandsPlugin.getSqlSM().getPlayerSanctions(player);
 		
 		// Création de l'inventaire
-		/*
 		InventoryManager inventoryManager = new InventoryManager(JavaPlugin.getPlugin(JusticeHandsPlugin.class));
 		inventoryManager.init();
 
-		Builder builder = SmartInventory.builder();
+		SmartInventory.Builder builder = SmartInventory.builder();
 		builder.title(GeneralUtils.getPrefix("CR") + "§c" + target.getName());
 		builder.provider(new InventoryCR(playerAllSanctionList));
 		builder.id(targetUUID.toString());
@@ -39,7 +37,5 @@ public class InventoryBuilderCR {
 		builder.manager(inventoryManager);
 		SmartInventory inventory = builder.build();
 		inventory.open(player);
-		*/
-        player.sendMessage("DevToolsLibs doit être remplacé pour les inventaires");
 	}
 }

@@ -2,6 +2,7 @@ package fr.fallenvaders.minecraft.justicehands;
 
 import fr.fallenvaders.minecraft.justicehands.criminalrecords.CommandCR;
 import fr.fallenvaders.minecraft.justicehands.criminalrecords.listeners.PlayerJoinListener;
+import fr.fallenvaders.minecraft.justicehands.keyskeeper.listeners.PlayerLoginListener;
 import fr.fallenvaders.minecraft.justicehands.sanctionmanager.CategoriesList;
 import fr.fallenvaders.minecraft.justicehands.sanctionmanager.CommandSM;
 import fr.fallenvaders.minecraft.justicehands.sql.SqlConnection;
@@ -24,7 +25,7 @@ public class JusticeHandsPlugin extends JavaPlugin {
 		saveConfig();
 
 		// Connexion à la base de données
-		sql = new SqlConnection("jdbc:mysql://","localhost","dornacraft","root","");
+		sql = new SqlConnection("jdbc:mariadb://178.170.13.15:3306/justicehands","dbuser","dbuser");
 		sql.connection();
 		
 		//On donne la connection
@@ -42,13 +43,14 @@ public class JusticeHandsPlugin extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		// Déconnection del a base de données
+		// Déconnection de la base de données
 		sql.disconnect();
 	}
 
 	private void activeListeners() {
 		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
 		getServer().getPluginManager().registerEvents(new AsyncChatListener(), this);
+		getServer().getPluginManager().registerEvents(new PlayerLoginListener(), this);
 	}
 
 	private void activeCommands() {
@@ -64,9 +66,7 @@ public class JusticeHandsPlugin extends JavaPlugin {
 	public static SqlPlayerAccount getSqlPA() {
 		return sqlPA;
 	}
-	public static SqlSanctionManager getSqlSM() {
-		return sqlSM;
-	}
+	public static SqlSanctionManager getSqlSM() {return sqlSM;}
 	public static SqlKeysKeeper getSqlKK() {
 		return sqlKK;
 	}

@@ -13,8 +13,6 @@ import fr.fallenvaders.minecraft.justicehands.JusticeHandsPlugin;
 import fr.fallenvaders.minecraft.justicehands.criminalrecords.invmanager.InventoryBuilderCR;
 
 public class CommandCR implements CommandExecutor {
-
-	//TODO A changer en utilisant le plugin
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -25,14 +23,16 @@ public class CommandCR implements CommandExecutor {
 					moderator.sendMessage(GeneralUtils.getPrefix("CR") + "§cSyntaxe incomplète, il manque un argument.");
 					moderator.sendMessage("     §7/" + cmd.getName().toString().toLowerCase() + " §7<joueur>");
 				} else if (args.length == 1 && args[0] != null) {
-					if (JusticeHandsPlugin.getSqlPA().hasAccount(Bukkit.getPlayer(args[0]).getUniqueId())) {
-						UUID targetUUID = JusticeHandsPlugin.getSqlPA().getAccount(Bukkit.getPlayer(args[0]).getUniqueId());
-						
-						InventoryBuilderCR.openMainMenu(moderator, targetUUID); // Ouverture de l'inventaire SM du joueur target.
-					}
-					else {
-						moderator.sendMessage(GeneralUtils.getPrefix("CR") + "§cCe joueur ne s'est jamais connecté sur le serveur.");
-					}
+				    try {
+                        UUID playerUUID = Bukkit.getPlayer(args[0]).getUniqueId();
+                        if (JusticeHandsPlugin.getSqlPA().hasAccount(playerUUID)) {
+                            UUID targetUUID = JusticeHandsPlugin.getSqlPA().getAccount(Bukkit.getPlayer(args[0]).getUniqueId());
+
+                            InventoryBuilderCR.openMainMenu(moderator, targetUUID); // Ouverture de l'inventaire SM du joueur target.
+                        }
+                    } catch (Exception e) {
+                        moderator.sendMessage(GeneralUtils.getPrefix("CR") + "§cCe joueur ne s'est jamais connecté sur le serveur.");
+                    }
 				}
 				return true;
 			} else {

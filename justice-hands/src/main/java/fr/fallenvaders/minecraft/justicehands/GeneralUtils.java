@@ -12,14 +12,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-// Ici va se trouveer toutes les méthodes qui vont pouvoir être utiles n'importe où
+// Ici va se trouver toutes les méthodes qui vont pouvoir être utiles n'importe où
 // dans le code du plugin, comme des outils généraux.
 
 public class GeneralUtils {
 	private final static String CRPrefix = "§7[§6CriminalRecords§7] §r";
 	private final static String MTPrefix = "§7[§cModeratorTools§7] §r";
 	private final static String SMPrefix = "§7[§9SanctionManager§7] §r";
-	private final static String KKPrefix = "§7[§aKeysKeeper§7] §r";
+	private final static String KKPrefix = "§7[§4KeysKeeper§7] §r";
 	
 	// Récupère la tête du joueur entrain de se faire modérer:
 	@SuppressWarnings("deprecation")

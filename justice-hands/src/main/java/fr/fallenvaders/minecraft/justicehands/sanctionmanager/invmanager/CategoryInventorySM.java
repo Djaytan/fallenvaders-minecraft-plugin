@@ -5,6 +5,12 @@ import java.util.UUID;
 
 import fr.fallenvaders.minecraft.justicehands.sanctionmanager.CategoriesList;
 import fr.fallenvaders.minecraft.justicehands.sanctionmanager.SanctionsAlgo;
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
+import fr.minuskube.inv.content.InventoryContents;
+import fr.minuskube.inv.content.InventoryProvider;
+import fr.minuskube.inv.content.Pagination;
+import fr.minuskube.inv.content.SlotIterator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -13,18 +19,12 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-//import fr.dornacraft.devtoolslib.smartinvs.ClickableItem;
-//import fr.dornacraft.devtoolslib.smartinvs.SmartInventory;
-//import fr.dornacraft.devtoolslib.smartinvs.content.InventoryContents;
-//import fr.dornacraft.devtoolslib.smartinvs.content.InventoryProvider;
-//import fr.dornacraft.devtoolslib.smartinvs.content.Pagination;
-//import fr.dornacraft.devtoolslib.smartinvs.content.SlotIterator;
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.sanctionmanager.objects.Categorie;
 import fr.fallenvaders.minecraft.justicehands.sanctionmanager.objects.Sanction;
 
-/*public class CategoryInventorySM implements InventoryProvider {
+public class CategoryInventorySM implements InventoryProvider {
 	private Categorie currentCategorie;
 	
 	// Constructeur
@@ -66,6 +66,7 @@ import fr.fallenvaders.minecraft.justicehands.sanctionmanager.objects.Sanction;
 					if (e.isLeftClick()) {
 						if (moderator.hasPermission("justicehands.sm." + sanction.getInitialType().toLowerCase())) {
 							SanctionsAlgo.generateSanction(sanction, moderator, Bukkit.getPlayer(UUID.fromString(inventory.getId())));
+
 						} else {
 							SanctionType type = SanctionType.getType(sanction.getInitialType());
 							moderator.sendMessage(GeneralUtils.getPrefix("SM") + "§cTu n'as pas la permission d'attribuer un " + type.getVisualColor() + type.getVisualName());
@@ -118,4 +119,4 @@ import fr.fallenvaders.minecraft.justicehands.sanctionmanager.objects.Sanction;
 	}
 
 }
-*/
+

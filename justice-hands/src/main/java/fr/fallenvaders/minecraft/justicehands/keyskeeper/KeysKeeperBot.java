@@ -1,7 +1,9 @@
 package fr.fallenvaders.minecraft.justicehands.keyskeeper;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.fallenvaders.minecraft.justicehands.criminalrecords.objects.CJSanction;
 import org.bukkit.entity.Player;
 
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsPlugin;
@@ -22,5 +24,41 @@ public class KeysKeeperBot {
 				.max(Long::compare).get();
 		
 		return unmuteDate;
-	}	
+	}
+
+    public static CJSanction getPlayerLongestBan(Player player) {
+        List<CJSanction> playerBansList = JusticeHandsPlugin.getSqlKK().getPlayerBans(player); // Récupération de tous les bans du joueurs
+        System.out.println("Nombre de bans : " + playerBansList.size());
+
+        List<Long> unbanDateTSList = new ArrayList(); // Liste des "expirationTimes" de tous les bans actif du joueur
+
+        for (CJSanction sanction : playerBansList) {
+
+            // Bandef enregistré = le plus récent car l'ordre de recherche dans la DB a été fait en DESC
+            if (sanction.getTSExpireDate() == null){
+                return sanction;
+            // Enregistrement du timestamp en long dans une liste
+            } else {
+                unbanDateTSList.add(sanction.getTSExpireDate().getTime());
+            }
+        }
+
+        if (unbanDateTSList.size() > 0) {
+            Long unbanDate = unbanDateTSList.stream().max(Long::compare).get(); //Timestamp le plus éloigné de la date actuelle
+            // On retrouve la sanction avec ce timestamp le plus éloigné et on return la sanction
+            for (CJSanction sanction : playerBansList) {
+                CJSanction primarySanction; //La sanction primaire est celle qui interdit le joueur de rejoindre le serveur
+                if (sanction.getTSExpireDate().getTime() == unbanDate) {
+                    primarySanction = sanction;
+                    return primarySanction;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static void kickPlayer(Player player, CJSanction sanction) {
+
+    }
 }

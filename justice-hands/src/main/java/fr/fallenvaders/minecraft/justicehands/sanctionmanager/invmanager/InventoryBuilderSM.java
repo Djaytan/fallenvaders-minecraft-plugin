@@ -2,21 +2,20 @@ package fr.fallenvaders.minecraft.justicehands.sanctionmanager.invmanager;
 
 import java.util.UUID;
 
+import fr.minuskube.inv.InventoryManager;
+import fr.minuskube.inv.SmartInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.java.JavaPlugin;
 
-//import fr.dornacraft.devtoolslib.smartinvs.InventoryManager;
-//import fr.dornacraft.devtoolslib.smartinvs.SmartInventory;
-//import fr.dornacraft.devtoolslib.smartinvs.SmartInventory.Builder;
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsPlugin;
 import fr.fallenvaders.minecraft.justicehands.sanctionmanager.objects.Categorie;
 
 public class InventoryBuilderSM {
-/*
+
 	// Ouverture de l'inventaire des catégories
 	public static void openMainMenu(Player moderator, UUID targetUUID, FileConfiguration config) {
 		
@@ -25,14 +24,13 @@ public class InventoryBuilderSM {
 		int menuLines = config.getInt(mainMenuPath + ".lines");
 		int targetHeadLine = config.getInt(mainMenuPath + ".playerhead-line");
 		int targetHeadColum = config.getInt(mainMenuPath + ".playerhead-colum");
-		System.out.println("line: "+ targetHeadLine);
-		System.out.println("colum: "+ targetHeadColum);
+
 
 		// Création de l'inventaire
 		InventoryManager inventoryManager = new InventoryManager(JavaPlugin.getPlugin(JusticeHandsPlugin.class));
 		inventoryManager.init();
 
-		Builder builder = SmartInventory.builder();
+		SmartInventory.Builder builder = SmartInventory.builder();
 		builder.title("§7[§9" + Bukkit.getPlayer(targetUUID).getName() + "§7]" + "§7> §cMenu principal");
 		builder.provider(new MainInventorySM(targetHeadLine, targetHeadColum));
 		builder.size(menuLines, 9);
@@ -50,7 +48,7 @@ public class InventoryBuilderSM {
 		InventoryManager inventoryManager = new InventoryManager(JavaPlugin.getPlugin(JusticeHandsPlugin.class));
 		inventoryManager.init();
 
-		Builder builder = SmartInventory.builder();
+		SmartInventory.Builder builder = SmartInventory.builder();
 		builder.title(GeneralUtils.getPrefix("SM") + "§7> §c" + categorie.getName());
 		builder.provider(new CategoryInventorySM(categorie));
 		builder.size(6, 9);
@@ -59,5 +57,5 @@ public class InventoryBuilderSM {
 		builder.manager(inventoryManager);
 		SmartInventory inventory = builder.build();
 		inventory.open(moderator);
-	}*/
+	}
 }

@@ -5,19 +5,19 @@ import java.util.UUID;
 
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.sanctionmanager.CategoriesList;
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.SmartInventory;
+import fr.minuskube.inv.content.InventoryContents;
+import fr.minuskube.inv.content.InventoryProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-//import fr.dornacraft.devtoolslib.smartinvs.ClickableItem;
-//import fr.dornacraft.devtoolslib.smartinvs.SmartInventory;
-//import fr.dornacraft.devtoolslib.smartinvs.content.InventoryContents;
-//import fr.dornacraft.devtoolslib.smartinvs.content.InventoryProvider;
 import fr.fallenvaders.minecraft.justicehands.sanctionmanager.objects.Categorie;
 
-/*public class MainInventorySM implements InventoryProvider {
+public class MainInventorySM implements InventoryProvider {
 
 	private int targetHeadLine;
 	private int targetHeadColum;
@@ -56,4 +56,4 @@ import fr.fallenvaders.minecraft.justicehands.sanctionmanager.objects.Categorie;
 		item.setItemMeta(meta);
 		return item;
 	}
-}*/
+}

@@ -37,7 +37,7 @@ public class CommandSM implements CommandExecutor {
 					if (JusticeHandsPlugin.getSqlPA().hasAccount(Bukkit.getPlayer(args[0]).getUniqueId())) {
 						UUID targetUUID = JusticeHandsPlugin.getSqlPA().getAccount(Bukkit.getPlayer(args[0]).getUniqueId());
 						
-						//InventoryBuilderSM.openMainMenu(moderator, targetUUID, config); // Ouverture de l'inventaire SM du joueur target.
+						InventoryBuilderSM.openMainMenu(moderator, targetUUID, config); // Ouverture de l'inventaire SM du joueur target.
 					}
 					else {
 						moderator.sendMessage(GeneralUtils.getPrefix("SM") + "§cCe joueur ne s'est jamais connecté sur le serveur.");
