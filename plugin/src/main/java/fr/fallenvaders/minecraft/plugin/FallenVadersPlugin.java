@@ -7,11 +7,12 @@ import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FallenVadersPlugin extends JavaPlugin {
-
     private ModuleRegister moduleRegister;
 
     @Override
     public void onEnable() {
+        this.saveDefaultConfig();
+
         try {
             ModuleRegisterInitializer moduleInitializer = new CompleteModuleRegisterInitializer();
             moduleRegister = moduleInitializer.initialize();

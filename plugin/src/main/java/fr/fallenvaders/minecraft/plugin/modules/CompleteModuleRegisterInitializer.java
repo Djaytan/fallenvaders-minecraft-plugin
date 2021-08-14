@@ -6,6 +6,7 @@ public class CompleteModuleRegisterInitializer implements ModuleRegisterInitiali
     public ModuleRegister initialize() throws ModuleRegisterException {
         ModuleRegister register = new ModuleRegister();
         register.registerModule(new MinecraftEnhanceModuleDeclarer());
+        register.registerModule(new MailBoxModuleDeclarer());
         return register;
     }
 }
