@@ -31,5 +31,6 @@
 
     <modules>
         <module>lib</module>
+        <module>plugin</module>
     </modules>
 </project>
