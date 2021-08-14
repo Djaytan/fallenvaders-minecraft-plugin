@@ -8,9 +8,9 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mc-fallenvaders-core</artifactId>
+    <artifactId>fallenvaders-core</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 
-    <name>FallenVaders-Core</name>
-    <description>Core functionalities of MC-FallenVaders plugin</description>
+    <name>FallenVadersCore</name>
+    <description>Core functionalities of FallenVaders plugin</description>
 </project>

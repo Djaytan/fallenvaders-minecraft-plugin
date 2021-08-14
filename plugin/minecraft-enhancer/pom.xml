@@ -8,9 +8,9 @@
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mc-enhancer</artifactId>
+    <artifactId>minecraft-enhancer</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 
-    <name>MC-Enhancer</name>
+    <name>MinecraftEnhancer</name>
     <description>Overlay of some vanilla Minecraft functionalities</description>
 </project>
