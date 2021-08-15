@@ -6,6 +6,7 @@ import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
 import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.objects.Sanction;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 public class SanctionsAlgo {
@@ -26,16 +27,23 @@ public class SanctionsAlgo {
 
     public static void generateSanction(Sanction sanction, Player moderator, Player target) {
 
+        // Récupération de la configuration
+        FileConfiguration config = JusticeHands.PLUGIN.getConfig();
+        String pointConfigurationPath = "justicehands.sanctionmanager.points-system";
+        int muteMinPerPts = config.getInt(pointConfigurationPath + ".mute-min-points");
+        int banDayPerPts = config.getInt(pointConfigurationPath + ".ban-day-points");
+        int risingbanLimit = config.getInt(pointConfigurationPath + ".risingban-points");
+
         //Lors de l'algorithme, les points et le types de sanction peuvent être modifiés.
         //On va donc créer une nouvelle sanction identique à celle en paramètre.
         Sanction tempSanction = (Sanction) sanction.clone();
         final int targetPoints = JusticeHands.getSqlPA().getPoints(target.getUniqueId());
 
         // Permet de dire si un joueur mérite un ban au lieu d'un mute ou d'un kick
-        if (targetPoints >= 100 && !(tempSanction.getInitialType().equals("ban") || tempSanction.getInitialType().equals("bandef"))) {
+        if (targetPoints >= risingbanLimit && !(tempSanction.getInitialType().equals("ban") || tempSanction.getInitialType().equals("bandef"))) {
             tempSanction.setInitialType("risingban");
             tempSanction.setPoints(tempSanction.getPoints() * 2); //Multiplication des points par deux
-            generateBanMute(tempSanction, moderator, target);
+            generateBanMute(tempSanction, moderator, target, muteMinPerPts, banDayPerPts);
             return;
 
             // Le type de sanction est un type sans date d'expiration
@@ -45,7 +53,7 @@ public class SanctionsAlgo {
             return;
 
         } else if (tempSanction.getInitialType().equals("mute") || tempSanction.getInitialType().equals("ban")) {
-            generateBanMute(tempSanction, moderator, target);
+            generateBanMute(tempSanction, moderator, target, muteMinPerPts, banDayPerPts);
             return;
 
         } else {
@@ -55,17 +63,20 @@ public class SanctionsAlgo {
     }
 
     // Algorithme permettant la génération du temps d'expiration adéquat selon le joueur
-    private static void generateBanMute(Sanction tempSanction, Player moderator, Player target) {
+    private static void generateBanMute(Sanction tempSanction, Player moderator, Player target, int muteMinPerPts, int banDayPerPts) {
         final int targetPoints = JusticeHands.getSqlPA().getPoints(target.getUniqueId());
         final long currentTime = System.currentTimeMillis();
         final double extraTime;
 
+        final long longMin = 60l*1000l; // sec(60) * ms(1000)
+        final long longDay = 24l*60l*60l*1000l; // hour(24) * min(60) * sec(60) * ms(1000)
+
         if (tempSanction.getInitialType().equals("mute")) {
             // Points convertis en minutes (MUTE)
-            extraTime = (tempSanction.getPoints() + targetPoints) * 60l * 1000l;
+            extraTime = ((tempSanction.getPoints() + targetPoints) / Long.valueOf(muteMinPerPts)) * longMin;
         } else {
             // Points convertis en jours (BAN)
-            extraTime = ((tempSanction.getPoints() + targetPoints) / 10l) * 24l * 60l * 60l * 1000l;
+            extraTime = ((tempSanction.getPoints() + targetPoints) / Long.valueOf(banDayPerPts)) * longDay;
         }
 
         long expireTime = (long) (currentTime + extraTime);
@@ -90,16 +101,13 @@ public class SanctionsAlgo {
                 }
             } else {
                 if (sanction.getInitialType().equals("kick")) {
-                    //Link with keyskeeper
-                    target.sendMessage("kick");
+                    //nothing to do
                 } else if (sanction.getInitialType().equals("mute")) {
                     target.sendMessage(SMPrefix + "§7Tu es maintenant réduit au silence pendant §c" + GeneralUtils.timeRemaining(timeDifference) + "§7. (§8" + sanction.getReason() + "§7)");
                 } else if (sanction.getInitialType().equals("ban") || sanction.getInitialType().equals("risingban")) {
-                    //Link with keyskeeper
-                    target.sendMessage("ban");
+                    //nothing to do
                 } else if (sanction.getInitialType().equals("bandef")) {
-                    //Link with keyskeeper
-                    target.sendMessage("bandef");
+                    //nothing to do
                 }
             }
         }

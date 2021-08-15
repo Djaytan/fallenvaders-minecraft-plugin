@@ -42,15 +42,18 @@ justicehands:
         #   - mute
         #   - ban (bannissement temporaire)
         #
-        # Pour un mute, chaque point vaut 1 minute :
+        # Pour un mute,par défaut  chaque point vaut 1 minute :
         # Mute (en minutes) = points*1
         #
-        # Pour un bannissement temporaire, chaque 10 points vaut 1 jour:
+        # Pour un bannissement temporaire, par défaut chaque 10 points vaut 1 jour:
         # Ban (en jours) = points/10
         #
         # L'attribution des points ci-dessous peut se faire en réfléchissant de la sorte :
         #   Si un joueur n'as jamais eu de sanction, de combien
         #   sera la durée de sa PREMIERE sanction ?
+        #
+        # Si le joueur a un trop gros nombre de points sur son casier judiciaire,
+        # la dernière sanction qui lui sera attribué pourra se transformer en ban temporaire
         #
         # Le reste du plugin s'en charge tout seul, selon le nombre de points marqués
         # en dessous:
@@ -59,6 +62,10 @@ justicehands:
             lines: 3
             playerhead-line: 0
             playerhead-colum: 4
+        points-system:
+            mute-min-points : 1 #Combien de points vaut 1 minute de mute ? (defaut : 1)
+            ban-day-points : 10 #Combien de points vaut 1 jour de ban ? (defaut : 1)
+            risingban-points: 100 #Seuil de transformation de sanction en ban (defaut : 100)
         categories:
             Général:
                 main-line-slot: 1
