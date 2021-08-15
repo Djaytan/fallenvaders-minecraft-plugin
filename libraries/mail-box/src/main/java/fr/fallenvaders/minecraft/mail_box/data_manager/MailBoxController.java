@@ -24,14 +24,16 @@ public class MailBoxController {
 
     private static DataHolder getHolderFromDataBase(UUID uuid) {
         DataHolder res = new DataHolder(uuid, new ArrayList<>());
-        List<ItemData> itemDataList = ItemDataSQL.getInstance().find(uuid);
+        ItemDataSQL itemDataSQL = new ItemDataSQL();
+
+        List<ItemData> itemDataList = itemDataSQL.find(uuid);
         Iterator<ItemData> it = itemDataList.iterator();
-        Boolean error = false;
+        boolean error = false;
 
         while (it.hasNext() && !error) {
             ItemData itemData = it.next();
             if (itemData.isOutOfDate()) {
-                if (ItemDataSQL.getInstance().delete(itemData)) {
+                if (itemDataSQL.delete(itemData)) {
                     it.remove();
 
                 } else {
@@ -39,8 +41,8 @@ public class MailBoxController {
                 }
             }
         }
-
-        List<LetterData> letterDataList = LetterDataSQL.getInstance().find(uuid);
+        LetterDataSQL letterDataSQL = new LetterDataSQL();
+        List<LetterData> letterDataList = letterDataSQL.find(uuid);
 
         if (!error && itemDataList != null && letterDataList != null) {
             List<Data> temp = new ArrayList<>();
@@ -85,7 +87,8 @@ public class MailBoxController {
 
     public static Boolean sendLetter(Player player, LetterData letterData) {
         boolean res = false;
-        LetterData temp = LetterDataSQL.getInstance().create(letterData);
+        LetterDataSQL letterDataSQL = new LetterDataSQL();
+        LetterData temp = letterDataSQL.create(letterData);
 
         if (temp != null) {
             DataHolder holder = DataManager.getDataHolder(temp.getOwnerUuid());
@@ -116,7 +119,8 @@ public class MailBoxController {
 
         if (letters != null && !letters.isEmpty()) {
             if (letters.size() > 1) {
-                List<LetterData> sent = LetterDataSQL.getInstance().createAll(letters);
+                LetterDataSQL letterDataSQL = new LetterDataSQL();
+                List<LetterData> sent = letterDataSQL.createAll(letters);
 
                 if (sent != null) {
                     for (LetterData letter : sent) {
@@ -154,7 +158,9 @@ public class MailBoxController {
         player.openBook(getBookView(letterData));
 
         if (letterData.getOwnerUuid().equals(player.getUniqueId())) {
-            if (LetterDataSQL.getInstance().update(letterData.getId(), letterData) != null) {
+            LetterDataSQL letterDataSQL = new LetterDataSQL();
+
+            if (letterDataSQL.update(letterData.getId(), letterData) != null) {
                 letterData.setIsRead(true);
             } else {
                 MessageUtils.sendMessage(player, MessageLevel.ERROR, LangManager.getValue("string_error_player"));
@@ -187,9 +193,10 @@ public class MailBoxController {
     }
 
     public static Boolean deleteLetter(Player player, DataHolder holder, LetterData letterData) {
-        Boolean res = false;
+        boolean res = false;
+        LetterDataSQL letterDataSQL = new LetterDataSQL();
 
-        if (LetterDataSQL.getInstance().delete(letterData)) {
+        if (letterDataSQL.delete(letterData)) {
             holder.removeData(letterData.getId());
             res = true;
 
@@ -202,9 +209,10 @@ public class MailBoxController {
     }
 
     public static Boolean deleteLetters(Player player, DataHolder holder, List<LetterData> dataList) {
-        Boolean res = false;
+        boolean res = false;
+        LetterDataSQL letterDataSQL = new LetterDataSQL();
 
-        if (LetterDataSQL.getInstance().deleteAll(dataList)) {
+        if (letterDataSQL.deleteAll(dataList)) {
             holder.removeDatas(dataList.stream().map(LetterData::getId).collect(Collectors.toList()));
             res = true;
 
@@ -222,8 +230,9 @@ public class MailBoxController {
      */
 
     public static Boolean sendItem(Player player, ItemData itemData) {
-        Boolean res = false;
-        ItemData temp = ItemDataSQL.getInstance().create(itemData);
+        boolean res = false;
+        ItemDataSQL itemDataSQL = new ItemDataSQL();
+        ItemData temp = itemDataSQL.create(itemData);
 
         if (temp != null) {
             DataHolder holder = DataManager.getDataHolder(temp.getOwnerUuid());
@@ -254,7 +263,8 @@ public class MailBoxController {
 
         if (items != null && !items.isEmpty()) {
             if (items.size() > 1) {
-                List<ItemData> sent = ItemDataSQL.getInstance().createAll(items);
+                ItemDataSQL itemDataSQL = new ItemDataSQL();
+                List<ItemData> sent = itemDataSQL.createAll(items);
 
                 if (sent != null) {
                     for (ItemData item : sent) {
@@ -289,7 +299,9 @@ public class MailBoxController {
         Boolean res = false;
 
         if (holder.getData(itemData.getId()) != null) {
-            if (ItemDataSQL.getInstance().delete(itemData)) {
+            ItemDataSQL itemDataSQL = new ItemDataSQL();
+
+            if (itemDataSQL.delete(itemData)) {
                 holder.removeData(itemData.getId());
                 res = true;
 
@@ -304,9 +316,11 @@ public class MailBoxController {
     }
 
     public static Boolean deleteItems(Player player, DataHolder holder, List<ItemData> dataList) {
-        Boolean res = false;
+        boolean res = false;
 
-        if (ItemDataSQL.getInstance().deleteAll(dataList)) {
+        ItemDataSQL itemDataSQL = new ItemDataSQL();
+
+        if (itemDataSQL.deleteAll(dataList)) {
             holder.removeDatas(dataList.stream().map(ItemData::getId).collect(Collectors.toList()));
             res = true;
 
@@ -319,7 +333,7 @@ public class MailBoxController {
     }
 
     public static Boolean recoverItem(Player player, DataHolder holder, ItemData itemData) {
-        Boolean success = false;
+        boolean success = false;
 
         if (player.getInventory().firstEmpty() >= 0) {
             Boolean t = deleteItem(player, holder, itemData);

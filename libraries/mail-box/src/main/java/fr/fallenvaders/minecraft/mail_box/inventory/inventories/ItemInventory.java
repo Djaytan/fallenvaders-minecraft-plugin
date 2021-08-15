@@ -24,172 +24,165 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ItemInventory extends InventoryBuilder {
-	private static final String TITLE = LangManager.getValue("string_menu_items");
-	private static final String CLEAN = LangManager.getValue("string_clean_inbox");
-	private static final String QUESTION_CLEAN = LangManager.getValue("question_clean_items");
-	private static final String PERMISSION_NEEDED = LangManager.getValue("string_permission_needed");
-	private static final String QUESTION_DELETE = LangManager.getValue("question_delete_item");
-	private static final String RETREIVE_ALL = LangManager.getValue("string_retreive_all");
+    private static final String TITLE = LangManager.getValue("string_menu_items");
+    private static final String CLEAN = LangManager.getValue("string_clean_inbox");
+    private static final String QUESTION_CLEAN = LangManager.getValue("question_clean_items");
+    private static final String PERMISSION_NEEDED = LangManager.getValue("string_permission_needed");
+    private static final String QUESTION_DELETE = LangManager.getValue("question_delete_item");
+    private static final String RETREIVE_ALL = LangManager.getValue("string_retreive_all");
 
-	private DataHolder dataSource;
-	private List<ItemData> toShow = new ArrayList<>();
+    private DataHolder dataSource;
+    private List<ItemData> toShow = new ArrayList<>();
 
-	public ItemInventory(DataHolder dataSource) {
-		super("MailBox_Items", "§l" + TITLE, 5);
-		this.setDataSource(dataSource);
-	}
+    public ItemInventory(DataHolder dataSource) {
+        super("MailBox_Items", "§l" + TITLE, 5);
+        this.setDataSource(dataSource);
+    }
 
-	public ItemInventory(DataHolder dataSource, InventoryBuilder parent) {
-		super("MailBox_Items", "§l" + TITLE, 5);
-		this.setDataSource(dataSource);
-		this.setParent(parent);
+    public ItemInventory(DataHolder dataSource, InventoryBuilder parent) {
+        super("MailBox_Items", "§l" + TITLE, 5);
+        this.setDataSource(dataSource);
+        this.setParent(parent);
 
-	}
+    }
 
-	private void deleteAllButton(Player player, InventoryContents contents) {
-		if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.delete.self") || player.hasPermission("mailbox.item.delete.other")) {
+    private void deleteAllButton(Player player, InventoryContents contents) {
+        if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.delete.self") || player.hasPermission("mailbox.item.delete.other")) {
 
-			contents.set(4, 6, ClickableItem.of(new ItemStackBuilder(Material.BARRIER).setName("§4§l" + CLEAN).build(), e -> {
+            contents.set(4, 6, ClickableItem.of(new ItemStackBuilder(Material.BARRIER).setName("§4§l" + CLEAN).build(), e -> {
 
-				if (e.getClick() == ClickType.LEFT) {
-					if (getToShow() != null && !getToShow().isEmpty()) {
-						if (SQLConnection.getInstance().isConnected()) {
-							DeletionDatasInventory deletionDatasInventory = new DeletionDatasInventory(this.getDataSource(), this.getToShow().stream().collect(Collectors.toList()),
-									"§4§l" + LangManager.format(QUESTION_CLEAN, this.getToShow().size()), this, true);
-							deletionDatasInventory.openInventory(player);
+                if (e.getClick() == ClickType.LEFT) {
+                    if (getToShow() != null && !getToShow().isEmpty()) {
+                        DeletionDatasInventory deletionDatasInventory = new DeletionDatasInventory(this.getDataSource(), this.getToShow().stream().collect(Collectors.toList()),
+                            "§4§l" + LangManager.format(QUESTION_CLEAN, this.getToShow().size()), this, true);
+                        deletionDatasInventory.openInventory(player);
 
-						} else {
-							MessageUtils.sendMessage(player, MessageLevel.ERROR, LangManager.getValue("string_error_player"));
-							player.closeInventory();
-							return;
-						}
+                    }
+                }
+            }));
 
-					}
-				}
-			}));
+        }
+    }
 
-		}
-	}
-
-	private void dynamicContent(Player player, InventoryContents contents) {
+    private void dynamicContent(Player player, InventoryContents contents) {
         int state = contents.property("state", 0);
         contents.setProperty("state", state + 1);
 
-        if(state % 20 != 0) {
-        	return;
+        if (state % 20 != 0) {
+            return;
         }
-        
-		this.setToShow(DataManager.getTypeData(this.getDataSource(), ItemData.class));
 
-		ClickableItem[] clickableItems = new ClickableItem[getToShow().size()];
+        this.setToShow(DataManager.getTypeData(this.getDataSource(), ItemData.class));
 
-		for (Integer index = 0; index < getToShow().size(); index++) {
-			ItemData tempData = getToShow().get(index);
+        ClickableItem[] clickableItems = new ClickableItem[getToShow().size()];
 
-			if (tempData.isOutOfDate()) {
-				if(!MailBoxController.deleteItem(player, this.getDataSource(), tempData) ) {
-					MessageUtils.sendMessage(player, MessageLevel.ERROR, LangManager.getValue("string_error_player"));
-					player.closeInventory();
-				}
-			} else {
-				clickableItems[index] = ClickableItem.of(MailBoxInventoryHandler.generateItemRepresentation(tempData), e -> {
-					ClickType clickType = e.getClick();
+        for (Integer index = 0; index < getToShow().size(); index++) {
+            ItemData tempData = getToShow().get(index);
 
-					if (clickType == ClickType.LEFT) {
-						if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.recover.self") || player.hasPermission("mailbox.item.recover.other")) {
-							MailBoxController.recoverItem(player, getDataSource(), tempData);
-					        contents.setProperty("state", 0);
-					        this.dynamicContent(player, contents);
-						} else {
-							MessageUtils.sendMessage(player, MessageLevel.ERROR, PERMISSION_NEEDED);
-						}
+            if (tempData.isOutOfDate()) {
+                if (!MailBoxController.deleteItem(player, this.getDataSource(), tempData)) {
+                    MessageUtils.sendMessage(player, MessageLevel.ERROR, LangManager.getValue("string_error_player"));
+                    player.closeInventory();
+                }
+            } else {
+                clickableItems[index] = ClickableItem.of(MailBoxInventoryHandler.generateItemRepresentation(tempData), e -> {
+                    ClickType clickType = e.getClick();
 
-					} else if (clickType == ClickType.CONTROL_DROP || clickType == ClickType.DROP) {
-						if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.delete.self") || player.hasPermission("mailbox.item.delete.other")) {
-							DeletionDataInventory inv = new DeletionDataInventory(this.getDataSource(), tempData, "§c§l" + QUESTION_DELETE, this);
-							inv.openInventory(player);
+                    if (clickType == ClickType.LEFT) {
+                        if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.recover.self") || player.hasPermission("mailbox.item.recover.other")) {
+                            MailBoxController.recoverItem(player, getDataSource(), tempData);
+                            contents.setProperty("state", 0);
+                            this.dynamicContent(player, contents);
+                        } else {
+                            MessageUtils.sendMessage(player, MessageLevel.ERROR, PERMISSION_NEEDED);
+                        }
 
-						} else {
-							MessageUtils.sendMessage(player, MessageLevel.ERROR, PERMISSION_NEEDED);
-						}
-					}
+                    } else if (clickType == ClickType.CONTROL_DROP || clickType == ClickType.DROP) {
+                        if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.delete.self") || player.hasPermission("mailbox.item.delete.other")) {
+                            DeletionDataInventory inv = new DeletionDataInventory(this.getDataSource(), tempData, "§c§l" + QUESTION_DELETE, this);
+                            inv.openInventory(player);
 
-				});
+                        } else {
+                            MessageUtils.sendMessage(player, MessageLevel.ERROR, PERMISSION_NEEDED);
+                        }
+                    }
 
-			}
-		}
+                });
 
-		Pagination pagination = contents.pagination();
-		pagination.setItems(clickableItems);
-		pagination.addToIterator(contents.newIterator(SlotIterator.Type.HORIZONTAL, 0, 0));
-	}
+            }
+        }
 
-	@Override
-	public void initializeInventory(Player player, InventoryContents contents) {
-		Pagination pagination = contents.pagination();
-		pagination.setItemsPerPage(27);
+        Pagination pagination = contents.pagination();
+        pagination.setItems(clickableItems);
+        pagination.addToIterator(contents.newIterator(SlotIterator.Type.HORIZONTAL, 0, 0));
+    }
 
-		this.dynamicContent(player, contents);
+    @Override
+    public void initializeInventory(Player player, InventoryContents contents) {
+        Pagination pagination = contents.pagination();
+        pagination.setItemsPerPage(27);
 
-		deleteAllButton(player, contents);
+        this.dynamicContent(player, contents);
 
-		contents.fillRow(3, ClickableItem.empty(new ItemStackBuilder(Material.BLACK_STAINED_GLASS_PANE).setName(" ").build()));
+        deleteAllButton(player, contents);
 
-		if (!pagination.isFirst()) {
-			contents.set(4, 1, this.previousPageItem(player, contents));
-		}
+        contents.fillRow(3, ClickableItem.empty(new ItemStackBuilder(Material.BLACK_STAINED_GLASS_PANE).setName(" ").build()));
 
-		if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.recover.self") || player.hasPermission("mailbox.item.recover.other")) {
-			contents.set(4, 2, recoverAllButton(player, contents));
-		}
+        if (!pagination.isFirst()) {
+            contents.set(4, 1, this.previousPageItem(player, contents));
+        }
 
-		if (!pagination.isLast()) {
-			contents.set(4, 7, this.nextPageItem(player, contents));
-		}
+        if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.recover.self") || player.hasPermission("mailbox.item.recover.other")) {
+            contents.set(4, 2, recoverAllButton(player, contents));
+        }
 
-	}
+        if (!pagination.isLast()) {
+            contents.set(4, 7, this.nextPageItem(player, contents));
+        }
 
-	@Override
-	public void updateInventory(Player player, InventoryContents contents) {
-		dynamicContent(player, contents);
-	}
+    }
 
-	private ClickableItem recoverAllButton(Player player, InventoryContents contents) {
-		ItemStackBuilder itemStackBuilder = new ItemStackBuilder(Material.CHEST).setName("§e§l" + RETREIVE_ALL);
+    @Override
+    public void updateInventory(Player player, InventoryContents contents) {
+        dynamicContent(player, contents);
+    }
 
-		return ClickableItem.of(itemStackBuilder.build(), e -> {
-			if (e.getClick() == ClickType.LEFT) {
-				if (getToShow() != null && !getToShow().isEmpty()) {
-					List<ItemData> dataList = getToShow();
-					dataList.sort(DataManager.descendingDateComparator().reversed());
+    private ClickableItem recoverAllButton(Player player, InventoryContents contents) {
+        ItemStackBuilder itemStackBuilder = new ItemStackBuilder(Material.CHEST).setName("§e§l" + RETREIVE_ALL);
 
-					for (ItemData itemData : dataList) {
-						if (!MailBoxController.recoverItem(player, this.getDataSource(), itemData)) {
-							break;
-						}
-					}
-					
-			        contents.setProperty("state", 0);
-			        this.dynamicContent(player, contents);
-				}
-			}
-		});
-	}
+        return ClickableItem.of(itemStackBuilder.build(), e -> {
+            if (e.getClick() == ClickType.LEFT) {
+                if (getToShow() != null && !getToShow().isEmpty()) {
+                    List<ItemData> dataList = getToShow();
+                    dataList.sort(DataManager.descendingDateComparator().reversed());
 
-	public DataHolder getDataSource() {
-		return dataSource;
-	}
+                    for (ItemData itemData : dataList) {
+                        if (!MailBoxController.recoverItem(player, this.getDataSource(), itemData)) {
+                            break;
+                        }
+                    }
 
-	public void setDataSource(DataHolder dataSource) {
-		this.dataSource = dataSource;
-	}
+                    contents.setProperty("state", 0);
+                    this.dynamicContent(player, contents);
+                }
+            }
+        });
+    }
 
-	public List<ItemData> getToShow() {
-		return toShow;
-	}
+    public DataHolder getDataSource() {
+        return dataSource;
+    }
 
-	public void setToShow(List<ItemData> toShow) {
-		this.toShow = toShow;
-	}
+    public void setDataSource(DataHolder dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public List<ItemData> getToShow() {
+        return toShow;
+    }
+
+    public void setToShow(List<ItemData> toShow) {
+        this.toShow = toShow;
+    }
 
 }
