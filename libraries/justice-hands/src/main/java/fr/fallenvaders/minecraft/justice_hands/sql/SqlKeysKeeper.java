@@ -66,7 +66,7 @@ public class SqlKeysKeeper {
                 sanction.setTSDate(rs.getTimestamp("date"));
                 sanction.setTSExpireDate(rs.getTimestamp("expiredate"));
                 sanction.setModerator(Bukkit.getPlayer(UUID.fromString(rs.getString("moderator"))));
-                sanction.setInitialType(rs.getString("type"));
+                sanction.setType(rs.getString("type"));
                 sanction.setState(rs.getString("state"));
 
                 playerBansList.add(sanction);

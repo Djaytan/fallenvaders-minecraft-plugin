@@ -84,7 +84,7 @@ public class SqlSanctionManager {
                 sanction.setTSDate(rs.getTimestamp("date"));
                 sanction.setTSExpireDate(rs.getTimestamp("expiredate"));
                 sanction.setModerator(Bukkit.getPlayer(UUID.fromString(rs.getString("moderator"))));
-                sanction.setInitialType(rs.getString("type"));
+                sanction.setType(rs.getString("type"));
                 sanction.setState(rs.getString("state"));
 
                 playerSanctionList.add(sanction);
@@ -97,14 +97,15 @@ public class SqlSanctionManager {
         return null;
     }
 
-    private void setModLastSanctionOnMap(Player moderator) {
-        CJSanction sanction = new CJSanction();
+    public CJSanction getLastSanction(Player player) {
         try {
-            PreparedStatement q = connection.prepareStatement("SELECT uuid FROM sanctions_list WHERE uuid = ? ORDER BY id DESC");
-            q.setString(1, moderator.getUniqueId().toString());
+            PreparedStatement q = connection.prepareStatement("SELECT * FROM sanctions_list WHERE uuid = ? AND state = ? ORDER BY id DESC LIMIT 0,1");
+            q.setString(1, player.getUniqueId().toString());
+            q.setString(2, "active");
 
             ResultSet rs = q.executeQuery();
-            if (rs.next()) {
+            CJSanction sanction = new CJSanction();
+            while (rs.next()) {
                 sanction.setID("#" + String.format("%05d", (rs.getInt("id"))));
                 sanction.setPlayer(Bukkit.getPlayer(UUID.fromString(rs.getString("uuid"))));
                 sanction.setName(rs.getString("name"));
@@ -113,64 +114,14 @@ public class SqlSanctionManager {
                 sanction.setTSDate(rs.getTimestamp("date"));
                 sanction.setTSExpireDate(rs.getTimestamp("expiredate"));
                 sanction.setModerator(Bukkit.getPlayer(UUID.fromString(rs.getString("moderator"))));
-                sanction.setInitialType(rs.getString("type"));
+                sanction.setType(rs.getString("type"));
                 sanction.setState(rs.getString("state"));
-                q.close();
-                //SanctionCancel.putPossibilityToCancel(sanction);
-                return;
             }
+            q.close();
+            return sanction;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return;
-    }
-
-    private void getSanction(Player moderator, String sanctionStringID) {
-        CJSanction sanction = new CJSanction();
-        StringBuilder strBuilder = new StringBuilder(sanctionStringID);
-        int sanctionID = -1;
-
-        for (int i = 0; i < strBuilder.length(); i++) {
-            if (strBuilder.charAt(i) == '#' || strBuilder.charAt(i) == '0') {
-                strBuilder.setCharAt(i, '-');
-            } else {
-                break;
-            }
-        }
-
-        try {
-            sanctionID = Integer.parseInt(strBuilder.toString());
-        } catch (Exception e) {
-            moderator.sendMessage(GeneralUtils.getPrefix("SM") + "§cLe numéro de sanction indiqué n'est pas bon.");
-        }
-
-        try {
-            PreparedStatement q = connection.prepareStatement("SELECT * FROM sanctions_list WHERE id = ? ORDER BY id DESC");
-            if (sanctionID == -1) {
-                q.close();
-                return;
-            }
-            q.setInt(1, sanctionID);
-
-            ResultSet rs = q.executeQuery();
-            if (rs.next()) {
-                sanction.setID("#" + String.format("%05d", (rs.getInt("id"))));
-                sanction.setPlayer(Bukkit.getPlayer(UUID.fromString(rs.getString("uuid"))));
-                sanction.setName(rs.getString("name"));
-                sanction.setReason(rs.getString("reason"));
-                sanction.setPoints(rs.getInt("points"));
-                sanction.setTSDate(rs.getTimestamp("date"));
-                sanction.setTSExpireDate(rs.getTimestamp("expiredate"));
-                sanction.setModerator(Bukkit.getPlayer(UUID.fromString(rs.getString("moderator"))));
-                sanction.setInitialType(rs.getString("type"));
-                sanction.setState(rs.getString("state"));
-                q.close();
-                //SanctionCancel.putPossibilityToCancel(sanction);
-                return;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return;
+        return null;
     }
 }

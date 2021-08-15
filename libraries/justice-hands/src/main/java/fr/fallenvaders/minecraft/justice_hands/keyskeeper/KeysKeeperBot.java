@@ -1,10 +1,12 @@
 package fr.fallenvaders.minecraft.justice_hands.keyskeeper;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
 import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanction;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 public class KeysKeeperBot {
@@ -18,11 +20,12 @@ public class KeysKeeperBot {
     public static Long getPlayerMuteDate(Player player) {
         List<Long> muteDateTSList = JusticeHands.getSqlKK().getPlayerMutesEDLong(player);
 
-        Long unmuteDate = muteDateTSList
-            .stream()
-            .max(Long::compare).get();
-
+        if (muteDateTSList.size() > 0) {
+            Long unmuteDate = muteDateTSList.stream().max(Long::compare).get();
         return unmuteDate;
+        }
+
+        return null;
     }
 
     public static CJSanction getPlayerLongestBan(Player player) {
@@ -58,6 +61,6 @@ public class KeysKeeperBot {
     }
 
     public static void kickPlayer(Player player, CJSanction sanction) {
-
+        player.kick(KeysKeeperComponent.ejectingMessageCpnt(sanction));
     }
 }
