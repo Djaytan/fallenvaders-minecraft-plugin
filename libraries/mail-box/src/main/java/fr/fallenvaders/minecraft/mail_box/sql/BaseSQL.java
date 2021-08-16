@@ -21,24 +21,8 @@ public abstract class BaseSQL<T extends Data> {
                 if (this.sqlConnection.commit()) {
                     res = temp;
                 }
-            }
-        }
-
-        this.sqlConnection.disconnect();
-
-        return res;
-    }
-
-    public T create(T obj, boolean autoCommit) {
-        T res = null;
-
-        if (this.sqlConnection.startTransaction()) {
-            T temp = this.onCreate(obj);
-
-            if (temp != null) {
-                if (this.sqlConnection.commit()) {
-                    res = temp;
-                }
+            } else {
+                this.sqlConnection.rollBack();
             }
         }
 
@@ -69,6 +53,8 @@ public abstract class BaseSQL<T extends Data> {
                 if (this.sqlConnection.commit()) {
                     res = temp;
                 }
+            } else {
+                this.sqlConnection.rollBack();
             }
         }
         this.sqlConnection.disconnect();
@@ -102,6 +88,8 @@ public abstract class BaseSQL<T extends Data> {
                 if (this.sqlConnection.commit()) {
                     res = temp;
                 }
+            } else {
+                this.sqlConnection.rollBack();
             }
 
         }
@@ -131,15 +119,17 @@ public abstract class BaseSQL<T extends Data> {
                 if (this.sqlConnection.commit()) {
                     res = temp;
                 }
+            } else {
+                this.sqlConnection.rollBack();
             }
         }
         this.sqlConnection.disconnect();
         return res;
     }
 
-    protected abstract Boolean onDelete(T obj);
+    protected abstract boolean onDelete(T obj);
 
-    public Boolean delete(T obj) {
+    public boolean delete(T obj) {
         boolean res = false;
 
         if (this.sqlConnection.startTransaction()) {
@@ -149,6 +139,8 @@ public abstract class BaseSQL<T extends Data> {
                     res = true;
 
                 }
+            } else {
+                this.sqlConnection.rollBack();
             }
         }
 
@@ -156,32 +148,31 @@ public abstract class BaseSQL<T extends Data> {
         return res;
     }
 
-    public Boolean deleteAll(List<T> list) {
+    public boolean deleteAll(List<T> list) {
         boolean res = false;
 
         if (this.sqlConnection.startTransaction()) {
             boolean temp = true;
 
             for (T obj : list) {
-                Boolean TTemp = this.onDelete(obj);
+                boolean TTemp = this.onDelete(obj);
 
                 if (!TTemp) {
                     temp = false;
                     break;
-
                 }
             }
 
             if (temp) {
                 if (this.sqlConnection.commit()) {
-                    res = temp;
+                    res = true;
                 }
+            } else {
+                this.sqlConnection.rollBack();
             }
         }
 
         this.sqlConnection.disconnect();
-
         return res;
     }
-
 }

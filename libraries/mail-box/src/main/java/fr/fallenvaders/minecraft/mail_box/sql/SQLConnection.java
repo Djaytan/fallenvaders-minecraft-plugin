@@ -16,7 +16,7 @@ public class SQLConnection {
     private String database;
     private String user;
     private String password;
-    private Boolean useSSL = MailBox.main.getConfig().getBoolean("database.useSSL");
+    private boolean useSSL = MailBox.main.getConfig().getBoolean("database.useSSL");
 
     public SQLConnection() {
         this.setJdbc("jdbc:mysql://");
@@ -28,7 +28,7 @@ public class SQLConnection {
         this.connect();
     }
 
-    public Boolean connect() {
+    public boolean connect() {
         boolean result = false;
         MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_connection"));
 
@@ -49,84 +49,102 @@ public class SQLConnection {
         return this.getJdbc() + this.getHost() + "/" + this.getDatabase() + "?useSSL=" + this.getUseSSL();
     }
 
-    public Boolean startTransaction() {
+    public boolean startTransaction() {
         boolean res = false;
+        Connection conn = this.getConnection();
 
-        try {
-            this.getConnection().setAutoCommit(false);
-            res = true;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return res;
-    }
-
-    public Boolean rollBack() {
-        boolean res = false;
-
-        try {
-            if (!this.getConnection().getAutoCommit()) {
-                MailBox.main.getLogger().log(Level.SEVERE, "Transaction is being rolled back");
-                this.getConnection().rollback();
+        if (conn != null) {
+            try {
+                conn.setAutoCommit(false);
                 res = true;
 
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
 
         return res;
     }
 
-    public Boolean commit() {
+    public boolean rollBack() {
         boolean res = false;
+        Connection conn = this.getConnection();
 
-        try {
-            if (!this.getConnection().getAutoCommit()) {
-                this.getConnection().commit();
-                this.getConnection().setAutoCommit(true);
+        if (conn != null) {
+            try {
+                if (!conn.getAutoCommit()) {
+                    MailBox.main.getLogger().log(Level.SEVERE, "Transaction is being rolled back");
+                    this.getConnection().rollback();
+                    res = true;
 
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-
-            res = true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            this.rollBack();
-
         }
 
+        return res;
+    }
+
+    public boolean commit() {
+        boolean res = false;
+        Connection conn = this.getConnection();
+
+        if (conn != null) {
+            try {
+                if (!conn.getAutoCommit()) {
+                    this.getConnection().commit();
+                    this.getConnection().setAutoCommit(true);
+
+                }
+
+                res = true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                this.rollBack();
+
+            }
+        }
 
         return res;
     }
 
     public void disconnect() {
-        try {
-            this.getConnection().close();
-            MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_disconnected"));
+        Connection conn = this.getConnection();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (conn != null) {
+            try {
+                conn.close();
+                MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_disconnected"));
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
-
     }
 
     public void refresh() {
-        try {
-            this.getConnection().close();
-            this.setConnection(DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword()));
+        Connection conn = this.getConnection();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (conn != null) {
+            try {
+                conn.close();
+                this.setConnection(DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword()));
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }
 
-    public Connection getConnection() throws SQLException {
-        if (this.connection == null || this.connection.isClosed()) {
-            this.connect();
+    public Connection getConnection() {
+        try {
+            if (this.connection == null || this.connection.isClosed()) {
+                this.connect();
+            }
+        } catch (SQLException ignored) {
         }
 
         return this.connection;
@@ -182,7 +200,7 @@ public class SQLConnection {
         return this;
     }
 
-    public Boolean getUseSSL() {
+    public boolean getUseSSL() {
         return useSSL;
     }
 }

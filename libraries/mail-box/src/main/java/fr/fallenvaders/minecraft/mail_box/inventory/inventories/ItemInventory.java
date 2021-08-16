@@ -1,9 +1,6 @@
 package fr.fallenvaders.minecraft.mail_box.inventory.inventories;
 
-import fr.fallenvaders.minecraft.mail_box.data_manager.DataHolder;
-import fr.fallenvaders.minecraft.mail_box.data_manager.DataManager;
-import fr.fallenvaders.minecraft.mail_box.data_manager.ItemData;
-import fr.fallenvaders.minecraft.mail_box.data_manager.MailBoxController;
+import fr.fallenvaders.minecraft.mail_box.data_manager.*;
 import fr.fallenvaders.minecraft.mail_box.inventory.MailBoxInventoryHandler;
 import fr.fallenvaders.minecraft.mail_box.inventory.builders.InventoryBuilder;
 import fr.fallenvaders.minecraft.mail_box.sql.SQLConnection;
@@ -15,13 +12,13 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.Pagination;
 import fr.minuskube.inv.content.SlotIterator;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ItemInventory extends InventoryBuilder {
     private static final String TITLE = LangManager.getValue("string_menu_items");
@@ -35,26 +32,29 @@ public class ItemInventory extends InventoryBuilder {
     private List<ItemData> toShow = new ArrayList<>();
 
     public ItemInventory(DataHolder dataSource) {
-        super("MailBox_Items", "§l" + TITLE, 5);
+        super("MailBox_Items", ChatColor.BOLD + TITLE, 5);
         this.setDataSource(dataSource);
     }
 
     public ItemInventory(DataHolder dataSource, InventoryBuilder parent) {
-        super("MailBox_Items", "§l" + TITLE, 5);
+        super("MailBox_Items", ChatColor.BOLD + TITLE, 5);
         this.setDataSource(dataSource);
         this.setParent(parent);
 
     }
 
     private void deleteAllButton(Player player, InventoryContents contents) {
-        if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.delete.self") || player.hasPermission("mailbox.item.delete.other")) {
+        boolean playerIsOwner = this.getDataSource().getOwnerUuid().equals(player.getUniqueId());
 
-            contents.set(4, 6, ClickableItem.of(new ItemStackBuilder(Material.BARRIER).setName("§4§l" + CLEAN).build(), e -> {
+
+        if (playerIsOwner && player.hasPermission("mailbox.item.delete.self") || player.hasPermission("mailbox.item.delete.other")) {
+
+            contents.set(4, 6, ClickableItem.of(new ItemStackBuilder(Material.BARRIER).setName(String.format("%s%s%S", ChatColor.DARK_RED, ChatColor.BOLD, CLEAN)).build(), e -> {
 
                 if (e.getClick() == ClickType.LEFT) {
                     if (getToShow() != null && !getToShow().isEmpty()) {
-                        DeletionDatasInventory deletionDatasInventory = new DeletionDatasInventory(this.getDataSource(), this.getToShow().stream().collect(Collectors.toList()),
-                            "§4§l" + LangManager.format(QUESTION_CLEAN, this.getToShow().size()), this, true);
+                        DeletionDatasInventory deletionDatasInventory = new DeletionDatasInventory(this.getDataSource(), new ArrayList<>(this.getToShow()),
+                            LangManager.format("%s%s" + QUESTION_CLEAN, ChatColor.DARK_RED, ChatColor.BOLD, this.getToShow().size()), this, true);
                         deletionDatasInventory.openInventory(player);
 
                     }
@@ -76,7 +76,7 @@ public class ItemInventory extends InventoryBuilder {
 
         ClickableItem[] clickableItems = new ClickableItem[getToShow().size()];
 
-        for (Integer index = 0; index < getToShow().size(); index++) {
+        for (int index = 0; index < getToShow().size(); index++) {
             ItemData tempData = getToShow().get(index);
 
             if (tempData.isOutOfDate()) {
@@ -87,9 +87,10 @@ public class ItemInventory extends InventoryBuilder {
             } else {
                 clickableItems[index] = ClickableItem.of(MailBoxInventoryHandler.generateItemRepresentation(tempData), e -> {
                     ClickType clickType = e.getClick();
+                    boolean playerIsOwner = this.getDataSource().getOwnerUuid().equals(player.getUniqueId());
 
                     if (clickType == ClickType.LEFT) {
-                        if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.recover.self") || player.hasPermission("mailbox.item.recover.other")) {
+                        if (playerIsOwner && player.hasPermission("mailbox.item.recover.self") || player.hasPermission("mailbox.item.recover.other")) {
                             MailBoxController.recoverItem(player, getDataSource(), tempData);
                             contents.setProperty("state", 0);
                             this.dynamicContent(player, contents);
@@ -98,17 +99,17 @@ public class ItemInventory extends InventoryBuilder {
                         }
 
                     } else if (clickType == ClickType.CONTROL_DROP || clickType == ClickType.DROP) {
-                        if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.delete.self") || player.hasPermission("mailbox.item.delete.other")) {
-                            DeletionDataInventory inv = new DeletionDataInventory(this.getDataSource(), tempData, "§c§l" + QUESTION_DELETE, this);
+                        if (playerIsOwner && player.hasPermission("mailbox.item.delete.self") || player.hasPermission("mailbox.item.delete.other")) {
+                            DeletionDataInventory inv = new DeletionDataInventory(
+                                this.getDataSource(), tempData,
+                                String.format("%s%s" + QUESTION_DELETE, ChatColor.RED, ChatColor.BOLD), this);
                             inv.openInventory(player);
 
                         } else {
                             MessageUtils.sendMessage(player, MessageLevel.ERROR, PERMISSION_NEEDED);
                         }
                     }
-
                 });
-
             }
         }
 
@@ -132,7 +133,9 @@ public class ItemInventory extends InventoryBuilder {
             contents.set(4, 1, this.previousPageItem(player, contents));
         }
 
-        if (this.getDataSource().getOwnerUuid().equals(player.getUniqueId()) && player.hasPermission("mailbox.item.recover.self") || player.hasPermission("mailbox.item.recover.other")) {
+        boolean playerIsOwner = this.getDataSource().getOwnerUuid().equals(player.getUniqueId());
+
+        if (playerIsOwner && player.hasPermission("mailbox.item.recover.self") || player.hasPermission("mailbox.item.recover.other")) {
             contents.set(4, 2, recoverAllButton(player, contents));
         }
 
@@ -148,7 +151,7 @@ public class ItemInventory extends InventoryBuilder {
     }
 
     private ClickableItem recoverAllButton(Player player, InventoryContents contents) {
-        ItemStackBuilder itemStackBuilder = new ItemStackBuilder(Material.CHEST).setName("§e§l" + RETREIVE_ALL);
+        ItemStackBuilder itemStackBuilder = new ItemStackBuilder(Material.CHEST).setName(String.format("%s%s" + RETREIVE_ALL, ChatColor.YELLOW, ChatColor.BOLD));
 
         return ClickableItem.of(itemStackBuilder.build(), e -> {
             if (e.getClick() == ClickType.LEFT) {

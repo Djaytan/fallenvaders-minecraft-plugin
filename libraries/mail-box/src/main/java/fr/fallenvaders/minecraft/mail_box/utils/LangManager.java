@@ -1,15 +1,16 @@
 package fr.fallenvaders.minecraft.mail_box.utils;
 
 import fr.fallenvaders.minecraft.mail_box.MailBox;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.IllegalFormatException;
 import java.util.logging.Level;
 
@@ -26,7 +27,9 @@ public class LangManager {
             fileName = "FR_fr";
         }
 
-        FileConfiguration cfg = YamlConfiguration.loadConfiguration(new File(MailBox.main.getDataFolder() + File.separator + "lang" + File.separator + fileName + ".yml"));
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(
+            new File(MailBox.main.getDataFolder() + File.separator + "lang" + File.separator + fileName + ".yml")
+        );
 
         if (cfg != null) {
             setConfiguration(cfg);
@@ -45,7 +48,7 @@ public class LangManager {
             res = String.format(getValue(str), args);
 
         } catch (IllegalFormatException e) {
-            res = str + " : §4wrong format§r";
+            res = String.format("%s%s%s%s", ChatColor.RED, str, " : wrong format", ChatColor.RESET);
         }
 
         return res;
@@ -58,7 +61,7 @@ public class LangManager {
             res = String.format(str, args);
 
         } catch (IllegalFormatException e) {
-            res = str + " : §4wrong format§r";
+            res = String.format("%s%s%s%s", ChatColor.RED, str, " : wrong format", ChatColor.RESET);
         }
 
         return res;
@@ -68,7 +71,7 @@ public class LangManager {
         String res = getConfiguration().getString(id);
 
         if (res == null || res.isEmpty()) {
-            res = id + " : §4missing translation§r";
+            res = String.format("%s%s%s%s", ChatColor.RED, id, " : missing translation", ChatColor.RESET);
         }
 
         res = res.replace(".#*", "%s");
@@ -104,7 +107,7 @@ public class LangManager {
             }
 
             InputStream customClassStream = MailBox.main.getResource("FR_fr.yml");
-            InputStreamReader strR = new InputStreamReader(customClassStream, Charset.forName("UTF-8"));
+            InputStreamReader strR = new InputStreamReader(customClassStream, StandardCharsets.UTF_8);
             newConfig = YamlConfiguration.loadConfiguration(strR);
 
             try {

@@ -1,7 +1,6 @@
 package fr.fallenvaders.minecraft.mail_box.inventory.builders;
 
 import fr.fallenvaders.minecraft.mail_box.MailBox;
-import fr.fallenvaders.minecraft.mail_box.MailBox;
 import fr.fallenvaders.minecraft.mail_box.utils.ItemStackBuilder;
 import fr.fallenvaders.minecraft.mail_box.utils.LangManager;
 import fr.minuskube.inv.ClickableItem;
@@ -11,6 +10,7 @@ import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
 import fr.minuskube.inv.content.Pagination;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -22,12 +22,12 @@ public abstract class InventoryBuilder implements InventoryProvider {
 
     private String id;
     private String title;
-    private Integer rows;
+    private int rows;
 
     private InventoryBuilder parent;
-    private Boolean showReturnButton = true;
+    private boolean showReturnButton = true;
 
-    public InventoryBuilder(String id, String title, Integer rows) {
+    public InventoryBuilder(String id, String title, int rows) {
         this.setId(id);
         this.setTitle(title);
         this.setRows(rows);
@@ -62,21 +62,28 @@ public abstract class InventoryBuilder implements InventoryProvider {
     public ClickableItem nextPageItem(Player player, InventoryContents contents) {
         Pagination pagination = contents.pagination();
         SmartInventory inventory = contents.inventory();
-        return ClickableItem.of(new ItemStackBuilder(Material.ARROW).setName("§e§l" + NEXT_PAGE).build(), e -> inventory.open(player, pagination.next().getPage()));
+        return ClickableItem.of(new ItemStackBuilder(Material.ARROW)
+                .setName(String.format("%s%s" + NEXT_PAGE, ChatColor.YELLOW, ChatColor.BOLD)).build(),
+            (e) -> inventory.open(player, pagination.next().getPage())
+        );
     }
 
     public ClickableItem previousPageItem(Player player, InventoryContents contents) {
         Pagination pagination = contents.pagination();
         SmartInventory inventory = contents.inventory();
-        return ClickableItem.of(new ItemStackBuilder(Material.ARROW).setName("§e§l" + PREVIOUS_PAGE).build(), e -> inventory.open(player, pagination.previous().getPage()));
+        return ClickableItem.of(new ItemStackBuilder(Material.ARROW)
+                .setName(String.format("%s%s" + PREVIOUS_PAGE, ChatColor.YELLOW, ChatColor.BOLD)).build(),
+            (e) -> inventory.open(player, pagination.previous().getPage())
+        );
     }
 
     public ClickableItem goBackItem(Player player) {
-        String name = this.getParent() == null ? "§c§l" + QUIT : "<- §c§l" + PREVIOUS_MENU;
-        return ClickableItem.of(new ItemStackBuilder(Material.OAK_SIGN).setName(name).build(), e -> {
-            returnToParent(player);
-
-        });
+        String name = this.getParent() == null ?
+            String.format("%s%s%s", ChatColor.YELLOW, ChatColor.BOLD, QUIT) :
+            String.format("<- %s%s%s", ChatColor.YELLOW, ChatColor.BOLD, PREVIOUS_MENU);
+        return ClickableItem.of(new ItemStackBuilder(Material.OAK_SIGN).setName(name).build(),
+            (e) -> returnToParent(player)
+        );
     }
 
     public String getId() {
@@ -95,11 +102,11 @@ public abstract class InventoryBuilder implements InventoryProvider {
         this.title = title;
     }
 
-    public Integer getRows() {
+    public int getRows() {
         return rows;
     }
 
-    protected void setRows(Integer rows) {
+    protected void setRows(int rows) {
         this.rows = rows;
     }
 
@@ -131,11 +138,11 @@ public abstract class InventoryBuilder implements InventoryProvider {
         return this;
     }
 
-    public Boolean getShowReturnButton() {
+    public boolean getShowReturnButton() {
         return this.showReturnButton;
     }
 
-    public void setShowReturnButton(Boolean showReturnButton) {
+    public void setShowReturnButton(boolean showReturnButton) {
         this.showReturnButton = showReturnButton;
     }
 

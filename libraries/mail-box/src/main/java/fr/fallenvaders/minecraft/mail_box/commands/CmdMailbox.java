@@ -40,8 +40,8 @@ public class CmdMailbox implements CommandExecutor {
 
                     if (player.hasPermission("mailbox.check.self")) {
                         DataHolder pHolder = MailBoxController.getDataHolder(player.getUniqueId());
-                        Integer nLetter = DataManager.getTypeData(pHolder, LetterData.class).size();
-                        Integer nItem = DataManager.getTypeData(pHolder, ItemData.class).size();
+                        int nLetter = DataManager.getTypeData(pHolder, LetterData.class).size();
+                        int nItem = DataManager.getTypeData(pHolder, ItemData.class).size();
                         MessageUtils.sendMessage(player, MessageLevel.INFO, LangManager.getValue("result_command_check_self", nLetter, nItem));
 
                     } else {
@@ -59,10 +59,12 @@ public class CmdMailbox implements CommandExecutor {
                     UUID sourceUuid = PlayerManager.getInstance().getUUID(args[1]);
 
                     if (sourceUuid != null) {
-                        if (sourceUuid.equals(player.getUniqueId()) && player.hasPermission("mailbox.check.self") || player.hasPermission("mailbox.check.other")) {
+                        boolean playerIsOwner = sourceUuid.equals(player.getUniqueId());
+
+                        if (playerIsOwner && player.hasPermission("mailbox.check.self") || player.hasPermission("mailbox.check.other")) {
                             DataHolder sHolder = MailBoxController.getDataHolder(sourceUuid);
-                            Integer nLetter = DataManager.getTypeData(sHolder, LetterData.class).size();
-                            Integer nItem = DataManager.getTypeData(sHolder, ItemData.class).size();
+                            int nLetter = DataManager.getTypeData(sHolder, LetterData.class).size();
+                            int nItem = DataManager.getTypeData(sHolder, ItemData.class).size();
 
                             if (sourceUuid.equals(player.getUniqueId())) {
                                 MessageUtils.sendMessage(player, MessageLevel.INFO, LangManager.getValue("result_command_check_self", nLetter, nItem));
@@ -84,7 +86,9 @@ public class CmdMailbox implements CommandExecutor {
                     UUID sourceUuid = PlayerManager.getInstance().getUUID(args[1]);
 
                     if (sourceUuid != null) {
-                        if (sourceUuid.equals(player.getUniqueId()) && player.hasPermission("mailbox.openmenu.self") || player.hasPermission("mailbox.openmenu.other")) {
+                        boolean playerIsOwner = sourceUuid.equals(player.getUniqueId());
+
+                        if (playerIsOwner && player.hasPermission("mailbox.openmenu.self") || player.hasPermission("mailbox.openmenu.other")) {
                             MailBoxInventory inv = new MailBoxInventory(MailBoxController.getDataHolder(sourceUuid));
                             inv.openInventory(player);
 

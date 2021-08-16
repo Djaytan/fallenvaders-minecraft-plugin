@@ -18,7 +18,7 @@ public class DataHolder {
 		return listData;
 	}
 
-	private void setDataList(List<Data> dataList) {
+	public void setDataList(List<Data> dataList) {
 		listData = dataList;
 	}
 

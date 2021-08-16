@@ -6,6 +6,7 @@ import fr.fallenvaders.minecraft.mail_box.data_manager.LetterType;
 import fr.fallenvaders.minecraft.mail_box.data_manager.factories.DataFactory;
 import org.apache.commons.lang.StringUtils;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,17 +21,27 @@ public class LetterDataSQL extends BaseSQL<LetterData> {
     public LetterDataSQL() {
         super();
         super.sqlConnection = new SQLConnection();
+        Connection conn = this.sqlConnection.getConnection();
 
-        try {
-            PreparedStatement query = this.sqlConnection.getConnection()
-                .prepareStatement("CREATE TABLE IF NOT EXISTS	" + TABLE_NAME + " (id BIGINT, uuid VARCHAR(255), type VARCHAR(255), content TEXT, isRead BOOLEAN DEFAULT '0', PRIMARY KEY(id))");
-            query.executeUpdate();
-            query.close();
+        if (conn != null) {
+            PreparedStatement query = null;
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                query = conn.prepareStatement("CREATE TABLE IF NOT EXISTS	" + TABLE_NAME
+                    + " (id BIGINT, uuid VARCHAR(255), type VARCHAR(255), content TEXT, isRead BOOLEAN DEFAULT '0', PRIMARY KEY(id))");
+                query.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (query != null) {
+                        query.close();
+                    }
+                } catch (SQLException ignored) {
+                }
+            }
         }
-
     }
 
     /**
@@ -61,119 +72,151 @@ public class LetterDataSQL extends BaseSQL<LetterData> {
     @Override
     protected LetterData onCreate(LetterData obj) {
         LetterData res = null;
-        LetterData temp = obj.clone();
+        Connection conn = this.sqlConnection.getConnection();
 
-        Data data = new DataSQL(this.sqlConnection).onCreate(temp);
+        if (conn != null) {
+            LetterData temp = obj.clone();
+            Data data = new DataSQL(this.sqlConnection).onCreate(temp);
 
-        if (data != null) {
-            temp.setId(data.getId());
-            temp.setCreationDate(data.getCreationDate());
+            if (data != null) {
+                temp.setId(data.getId());
+                temp.setCreationDate(data.getCreationDate());
+                PreparedStatement query = null;
 
-            try {
-                PreparedStatement query = this.sqlConnection.getConnection().prepareStatement("INSERT INTO " + TABLE_NAME + " VALUES(?, ?, ?, ?, ?)");
-                query.setLong(1, temp.getId());
-                query.setString(2, obj.getOwnerUuid().toString());
-                query.setString(3, temp.getLetterType().name());
-                query.setString(4, toText(temp.getContent()));
-                query.setBoolean(5, temp.getIsRead());
+                try {
+                    query = conn.prepareStatement("INSERT INTO " + TABLE_NAME + " VALUES(?, ?, ?, ?, ?)");
+                    query.setLong(1, temp.getId());
+                    query.setString(2, obj.getOwnerUuid().toString());
+                    query.setString(3, temp.getLetterType().name());
+                    query.setString(4, toText(temp.getContent()));
+                    query.setBoolean(5, temp.getIsRead());
 
-                query.execute();
-                query.close();
+                    query.execute();
 
-                res = temp;
+                    res = temp;
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (query != null) {
+                            query.close();
+                        }
+                    } catch (SQLException ignored) {
+                    }
+                }
             }
         }
-
         return res;
     }
 
     @Override
     protected List<LetterData> onFind(UUID uuid) {
         List<LetterData> res = null;
-        List<LetterData> temp = new ArrayList<>();
-        List<Data> dataList = new DataSQL(this.sqlConnection).onFind(uuid);
+        Connection conn = this.sqlConnection.getConnection();
 
-        if (dataList != null) {
-            try {
-                PreparedStatement query = this.sqlConnection.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE uuid = ?");
-                query.setString(1, uuid.toString());
-                ResultSet resultset = query.executeQuery();
+        if (conn != null) {
+            List<LetterData> temp = new ArrayList<>();
+            List<Data> dataList = new DataSQL(this.sqlConnection).onFind(uuid);
 
-                while (resultset.next()) {
-                    LetterType type = LetterType.valueOf(resultset.getString("type"));
-                    List<String> content = fromText(resultset.getString("content"));
-                    Boolean isRead = resultset.getBoolean("isRead");
-                    Long id = resultset.getLong("id");
+            if (dataList != null) {
+                PreparedStatement query = null;
 
-                    Data tData = dataList.stream().filter(e -> e.getId().equals(id)).findAny().orElse(new DataFactory());
+                try {
+                    query = conn.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE uuid = ?");
+                    query.setString(1, uuid.toString());
+                    ResultSet resultSet = query.executeQuery();
 
-                    temp.add(new LetterData(tData, type, content, isRead));
+                    while (resultSet.next()) {
+                        LetterType type = LetterType.valueOf(resultSet.getString("type"));
+                        List<String> content = fromText(resultSet.getString("content"));
+                        boolean isRead = resultSet.getBoolean("isRead");
+                        Long id = resultSet.getLong("id");
+                        Data tData = dataList.stream().filter(e -> e.getId().equals(id)).findAny().orElse(new DataFactory());
+                        temp.add(new LetterData(tData, type, content, isRead));
 
+                    }
+                    res = temp;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (query != null) {
+                            query.close();
+                        }
+                    } catch (SQLException ignored) {
+                    }
                 }
-
-                query.close();
-
-                res = temp;
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
-
         return res;
     }
 
     @Override
     protected LetterData onUpdate(Long id, LetterData obj) {
         LetterData res = null;
-        LetterData temp = obj.clone();
-        Data uData = new DataSQL(this.sqlConnection).onUpdate(id, obj);
+        Connection conn = this.sqlConnection.getConnection();
 
-        if (uData != null) {
-            try {
-                PreparedStatement query = this.sqlConnection.getConnection().prepareStatement("UPDATE " + TABLE_NAME + " SET uuid = ?, content = ?, type = ?, isRead = ? WHERE id = ?");
-                query.setString(1, obj.getOwnerUuid().toString());
-                query.setString(2, toText(obj.getContent()));
-                query.setString(3, obj.getLetterType().name());
-                query.setBoolean(4, obj.getIsRead());
-                query.setLong(5, id);
+        if (conn != null) {
+            LetterData temp = obj.clone();
+            Data uData = new DataSQL(this.sqlConnection).onUpdate(id, obj);
 
-                query.executeUpdate();
-                query.close();
-                temp.setId(id);
+            if (uData != null) {
+                PreparedStatement query = null;
 
-                res = temp;
+                try {
+                    query = conn.prepareStatement("UPDATE " + TABLE_NAME + " SET uuid = ?, content = ?, type = ?, isRead = ? WHERE id = ?");
+                    query.setString(1, obj.getOwnerUuid().toString());
+                    query.setString(2, toText(obj.getContent()));
+                    query.setString(3, obj.getLetterType().name());
+                    query.setBoolean(4, obj.getIsRead());
+                    query.setLong(5, id);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+                    query.executeUpdate();
+                    temp.setId(id);
+
+                    res = temp;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (query != null) {
+                            query.close();
+                        }
+                    } catch (SQLException ignored) {
+                    }
+                }
             }
-
         }
-
         return res;
     }
 
     @Override
-    protected Boolean onDelete(LetterData obj) {
+    protected boolean onDelete(LetterData obj) {
         boolean res = false;
+        Connection conn = this.sqlConnection.getConnection();
 
-        if (new DataSQL(this.sqlConnection).onDelete(obj)) {
-            try {
-                PreparedStatement query = this.sqlConnection.getConnection().prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE id = ?");
-                query.setLong(1, obj.getId());
-                query.execute();
-                query.close();
-                res = true;
+        if (conn != null) {
+            if (new DataSQL(this.sqlConnection).onDelete(obj)) {
+                PreparedStatement query = null;
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+                try {
+                    query = conn.prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE id = ?");
+                    query.setLong(1, obj.getId());
+                    query.execute();
+                    res = true;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (query != null) {
+                            query.close();
+                        }
+                    } catch (SQLException ignored) {
+                    }
+                }
             }
         }
-
         return res;
     }
-
 }

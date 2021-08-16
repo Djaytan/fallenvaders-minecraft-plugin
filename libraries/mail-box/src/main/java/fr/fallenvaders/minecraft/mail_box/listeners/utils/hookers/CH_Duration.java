@@ -31,7 +31,7 @@ public class CH_Duration extends ChatHooker {
             Duration dur = transform(eMessage);
 
             if (dur != null) {
-                if (sb.toString() != null && !sb.toString().isEmpty()) {
+                if (!sb.toString().isEmpty()) {
                     sb.delete(0, sb.length());
 
                 }
@@ -68,7 +68,7 @@ public class CH_Duration extends ChatHooker {
 
             res = Duration.parse(strD);
 
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException ignored) {
 
         }
         return res;

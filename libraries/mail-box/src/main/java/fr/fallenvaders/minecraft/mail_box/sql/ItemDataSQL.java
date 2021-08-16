@@ -11,6 +11,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,18 +26,27 @@ public class ItemDataSQL extends BaseSQL<ItemData> {
     public ItemDataSQL() {
         super();
         super.sqlConnection = new SQLConnection();
+        Connection conn = this.sqlConnection.getConnection();
+        PreparedStatement query = null;
 
-        try {
-            PreparedStatement query = this.sqlConnection.getConnection()
-                .prepareStatement("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id BIGINT, uuid VARCHAR(255), durationInSeconds BIGINT, itemStack TEXT, PRIMARY KEY(id))");
-            query.executeUpdate();
-            query.close();
+        if (conn != null) {
+            try {
+                query = this.sqlConnection.getConnection()
+                    .prepareStatement("CREATE TABLE IF NOT EXISTS " + TABLE_NAME
+                        + " (id BIGINT, uuid VARCHAR(255), durationInSeconds BIGINT, itemStack TEXT, PRIMARY KEY(id))");
+                query.executeUpdate();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (query != null) {
+                        query.close();
+                    }
+                } catch (SQLException ignored) {
+                }
+            }
         }
-
-
     }
 
     /**
@@ -78,121 +88,157 @@ public class ItemDataSQL extends BaseSQL<ItemData> {
         return res;
     }
 
-    /*
-     * table name format ?: - [id: int] [uuid: String] [duration: Long] [itemStack:
-     * String(?)]
-     *
-     */
-
     @Override
     protected ItemData onCreate(ItemData obj) {
         ItemData res = null;
-        ItemData temp = obj.clone();
-        DataSQL dataSQL = new DataSQL(this.sqlConnection);
-        Data data = dataSQL.onCreate(temp);
+        Connection conn = this.sqlConnection.getConnection();
 
-        if (data != null) {
-            temp.setId(data.getId());
-            temp.setCreationDate(data.getCreationDate());
+        if (conn != null) {
+            ItemData temp = obj.clone();
+            DataSQL dataSQL = new DataSQL(this.sqlConnection);
+            Data data = dataSQL.onCreate(temp);
 
-            try {
-                PreparedStatement query = this.sqlConnection.getConnection().prepareStatement("INSERT INTO " + TABLE_NAME + " (id, uuid, durationInSeconds, itemStack) VALUES(?, ?, ?, ?)");
-                query.setLong(1, temp.getId());
-                query.setString(2, temp.getOwnerUuid().toString());
-                query.setLong(3, temp.getDuration().getSeconds());
-                query.setString(4, toBase64(temp.getItem()));
+            if (data != null) {
+                temp.setId(data.getId());
+                temp.setCreationDate(data.getCreationDate());
+                PreparedStatement query = null;
 
-                query.execute();
-                query.close();
+                try {
+                    query = conn.prepareStatement("INSERT INTO " + TABLE_NAME + " (id, uuid, durationInSeconds, itemStack) VALUES(?, ?, ?, ?)");
+                    query.setLong(1, temp.getId());
+                    query.setString(2, temp.getOwnerUuid().toString());
+                    query.setLong(3, temp.getDuration().getSeconds());
+                    query.setString(4, toBase64(temp.getItem()));
+                    query.execute();
 
-                res = temp;
+                    res = temp;
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (query != null) {
+                            query.close();
+                        }
+                    } catch (SQLException ignored) {
+                    }
+                }
             }
-
         }
-
         return res;
     }
 
     @Override
     protected List<ItemData> onFind(UUID uuid) {
         List<ItemData> res = null;
-        List<ItemData> temp = new ArrayList<>();
-        List<Data> dataList = new DataSQL(this.sqlConnection).onFind(uuid);
+        Connection conn = this.sqlConnection.getConnection();
 
-        if (dataList != null) {
-            try {
-                PreparedStatement query = this.sqlConnection.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE uuid = ?");
-                query.setString(1, uuid.toString());
-                ResultSet resultset = query.executeQuery();
 
-                while (resultset.next()) {
-                    ItemStack itemstack = fromBase64(resultset.getString("itemStack"));
-                    Duration duration = Duration.ofSeconds(resultset.getLong("durationInSeconds"));
-                    Long id = resultset.getLong("id");
-                    Data tData = dataList.stream().filter(e -> e.getId().equals(id)).findAny().orElse(new DataFactory());
-                    temp.add(new ItemData(tData, itemstack, duration));
+        if (conn != null) {
+            List<ItemData> temp = new ArrayList<>();
+            List<Data> dataList = new DataSQL(this.sqlConnection).onFind(uuid);
 
+            if (dataList != null) {
+                PreparedStatement query = null;
+
+                try {
+                    query = conn.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE uuid = ?");
+                    query.setString(1, uuid.toString());
+                    ResultSet resultSet = query.executeQuery();
+
+                    while (resultSet.next()) {
+                        ItemStack itemstack = fromBase64(resultSet.getString("itemStack"));
+                        Duration duration = Duration.ofSeconds(resultSet.getLong("durationInSeconds"));
+                        Long id = resultSet.getLong("id");
+                        Data tData = dataList.stream().filter(e -> e.getId().equals(id)).findAny().orElse(new DataFactory());
+                        temp.add(new ItemData(tData, itemstack, duration));
+
+                    }
+
+                    res = temp;
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (query != null) {
+                            query.close();
+                        }
+                    } catch (SQLException ignored) {
+                    }
                 }
-
-                query.close();
-                res = temp;
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
-
         return res;
     }
 
     @Override
     protected ItemData onUpdate(Long id, ItemData obj) {
         ItemData res = null;
-        ItemData temp = obj.clone();
-        Data uData = new DataSQL(this.sqlConnection).onUpdate(id, obj);
+        Connection conn = this.sqlConnection.getConnection();
 
-        if (uData != null) {
-            try {
-                PreparedStatement query = this.sqlConnection.getConnection().prepareStatement("UPDATE " + TABLE_NAME + " SET uuid = ?, itemStack = ?, durationInSeconds = ? WHERE id = ?");
-                query.setString(1, obj.getOwnerUuid().toString());
-                query.setString(2, toBase64(obj.getItem()));
-                query.setLong(3, obj.getDuration().toMillis() / 1000);
-                query.setLong(4, obj.getId());
-                query.executeUpdate();
-                query.close();
-                temp.setId(id);
+        if (conn != null) {
+            ItemData temp = obj.clone();
+            Data uData = new DataSQL(this.sqlConnection).onUpdate(id, obj);
 
-                res = temp;
+            if (uData != null) {
+                PreparedStatement query = null;
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+                try {
+                    query = conn.prepareStatement("UPDATE " + TABLE_NAME + " SET uuid = ?, itemStack = ?, durationInSeconds = ? WHERE id = ?");
+                    query.setString(1, obj.getOwnerUuid().toString());
+                    query.setString(2, toBase64(obj.getItem()));
+                    query.setLong(3, obj.getDuration().toMillis() / 1000);
+                    query.setLong(4, obj.getId());
+                    query.executeUpdate();
+
+                    temp.setId(id);
+
+                    res = temp;
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (query != null) {
+                            query.close();
+                        }
+                    } catch (SQLException ignored) {
+                    }
+                }
             }
-
         }
-
         return res;
     }
 
     @Override
-    protected Boolean onDelete(ItemData obj) {
+    protected boolean onDelete(ItemData obj) {
         boolean res = false;
+        Connection conn = this.sqlConnection.getConnection();
 
-        if (new DataSQL(this.sqlConnection).onDelete(obj)) {
-            try {
-                PreparedStatement query = this.sqlConnection.getConnection().prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE id = ?");
-                query.setLong(1, obj.getId());
-                query.execute();
-                query.close();
-                res = true;
+        if (conn != null) {
+            if (new DataSQL(this.sqlConnection).onDelete(obj)) {
+                PreparedStatement query = null;
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+                try {
+                    query = conn.prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE id = ?");
+                    query.setLong(1, obj.getId());
+                    query.execute();
+
+                    res = true;
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (query != null) {
+                            query.close();
+                        }
+                    } catch (SQLException ignored) {
+                    }
+                }
             }
         }
-
         return res;
     }
 }

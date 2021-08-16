@@ -14,6 +14,7 @@ import fr.fallenvaders.minecraft.mail_box.utils.MessageLevel;
 import fr.fallenvaders.minecraft.mail_box.utils.MessageUtils;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.content.InventoryContents;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -53,7 +54,7 @@ public class CreationInventory extends InventoryBuilder {
     private StringBuilder strDuration = new StringBuilder(DEFAULT_DURATION_STR);
 
     public CreationInventory() {
-        super(ID, "§l" + INVENTORY_NAME, 4);
+        super(ID, ChatColor.BOLD + INVENTORY_NAME, 4);
 
     }
 
@@ -76,31 +77,35 @@ public class CreationInventory extends InventoryBuilder {
     }
 
     private void targetsButton(Player player, InventoryContents contents) {
-        contents.set(1, 6, ClickableItem.of(new ItemStackBuilder(Material.PLAYER_HEAD).setName("§e§l" + RECIPIENTS + ":").setLore(this.getRecipients().getPreviewLore()).build(), e -> {
-            ClickType click = e.getClick();
+        contents.set(1, 6, ClickableItem.of(new ItemStackBuilder(Material.PLAYER_HEAD)
+                .setName(String.format("%s%s" + RECIPIENTS + ":", ChatColor.YELLOW, ChatColor.BOLD)).setLore(this.getRecipients().getPreviewLore()).build(),
+            (e) -> {
+                ClickType click = e.getClick();
 
-            if (click == ClickType.LEFT) {
-                if (player.hasPermission("mailbox.send.announce")) {
-                    PlayerSelectionInventory selector = new PlayerSelectionInventory(this.getRecipients(), "§l" + TARGET_SELECTION + ":", this);
-                    selector.setFilterMode(false);
-                    selector.openInventory(player);
+                if (click == ClickType.LEFT) {
+                    if (player.hasPermission("mailbox.send.announce")) {
+                        PlayerSelectionInventory selector = new PlayerSelectionInventory(this.getRecipients(), ChatColor.BOLD + TARGET_SELECTION + ":", this);
+                        selector.setFilterMode(false);
+                        selector.openInventory(player);
 
-                } else {
-                    ChatHooker chCheck = new CH_Player(this.getRecipients(), this);
-                    player.closeInventory();
-                    chCheck.start(player);
+                    } else {
+                        ChatHooker chCheck = new CH_Player(this.getRecipients(), this);
+                        player.closeInventory();
+                        chCheck.start(player);
+                    }
+                } else if (click == ClickType.DROP || click == ClickType.CONTROL_DROP) {
+                    this.getRecipients().clear();
+                    this.targetsButton(player, contents);
                 }
-            } else if (click == ClickType.DROP || click == ClickType.CONTROL_DROP) {
-                this.getRecipients().clear();
-                this.targetsButton(player, contents);
-            }
 
-        }));
+            }
+        ));
     }
 
     private void objectButton(Player player, InventoryContents contents) {
-        contents.set(1, 2, ClickableItem.of(new ItemStackBuilder(Material.WHITE_BANNER).setName("§e§l" + OBJECT + ":").addAutoFormatingLore(this.getObject().toString(), 35).build(),
-            e -> {
+        contents.set(1, 2, ClickableItem.of(new ItemStackBuilder(Material.WHITE_BANNER)
+                .setName(String.format("%s%s" + OBJECT + ":", ChatColor.YELLOW, ChatColor.BOLD)).addAutoFormatingLore(this.getObject().toString(), 35).build(),
+            (e) -> {
                 ClickType click = e.getClick();
 
                 if (click == ClickType.LEFT || click == ClickType.RIGHT) {
@@ -119,18 +124,19 @@ public class CreationInventory extends InventoryBuilder {
                     this.setObject("");
                     objectButton(player, contents);
                 }
-            }));
+            }
+        ));
     }
 
     private void messageButton(Player player, InventoryContents contents) {
         contents.set(1, 3,
-            ClickableItem.of(new ItemStackBuilder(Material.WRITABLE_BOOK).setName("§e§l" + MESSAGE + ":")
-                .addAutoFormatingLores(this.getMessage().isEmpty() ? Arrays.asList(new String[]{MESSAGE_EMPTY}) : this.getMessage(), 35)
+            ClickableItem.of(new ItemStackBuilder(Material.WRITABLE_BOOK).setName(String.format("%s%s" + MESSAGE + ":", ChatColor.YELLOW, ChatColor.BOLD))
+                .addAutoFormatingLores(this.getMessage().isEmpty() ? List.of(MESSAGE_EMPTY) : this.getMessage(), 35)
                 .addAutoFormatingLore(LangManager.getValue("string_creation_message_help"), 35).build(), e -> {
                 ClickType click = e.getClick();
 
                 if (click == ClickType.LEFT || click == ClickType.RIGHT) {
-                    Integer msgSize = this.getMessage().toString().length() - this.getMessage().size() - 3;
+                    int msgSize = this.getMessage().toString().length() - this.getMessage().size() - 3;
 
                     if (msgSize < 700) {
                         if (click == ClickType.LEFT) {
@@ -145,7 +151,7 @@ public class CreationInventory extends InventoryBuilder {
                                 MessageUtils.sendMessage(player, MessageLevel.ERROR, LangManager.getValue("string_end_last_entry_first"));
                             }
 
-                        } else if (click == ClickType.RIGHT) {
+                        } else {
                             player.closeInventory();
                             CH_LetterContent ch = new CH_LetterContent(CH_MESSAGE_START, this.getMessage(), this, true);
                             ch.start(player);
@@ -162,7 +168,7 @@ public class CreationInventory extends InventoryBuilder {
     }
 
     private void resetButton(Player player, InventoryContents contents) {
-        contents.set(3, 4, ClickableItem.of(new ItemStackBuilder(Material.BARRIER).setName("§c§l" + RESET).build(), e -> {
+        contents.set(3, 4, ClickableItem.of(new ItemStackBuilder(Material.BARRIER).setName(String.format("%s%s" + RESET, ChatColor.RED, ChatColor.BOLD)).build(), e -> {
             ClickType click = e.getClick();
 
             if (click == ClickType.LEFT) {
@@ -177,7 +183,9 @@ public class CreationInventory extends InventoryBuilder {
             ItemStack toShow = this.getItem();
 
             if (toShow == null) {
-                toShow = new ItemStackBuilder(this.getItem() == null ? Material.ITEM_FRAME : this.getItem().getType()).setName("§e§l" + ITEM).addAutoFormatingLore(ADD_ITEMSTACK, 35)
+                toShow = new ItemStackBuilder(this.getItem() == null ? Material.ITEM_FRAME : this.getItem().getType())
+                    .setName(String.format("%s%s" + ITEM, ChatColor.YELLOW, ChatColor.BOLD))
+                    .addAutoFormatingLore(ADD_ITEMSTACK, 35)
                     .addAutoFormatingLore(DELETE_ITEM, 35).build();
             }
 
@@ -205,7 +213,7 @@ public class CreationInventory extends InventoryBuilder {
     }
 
     private void clockButton(Player player, InventoryContents contents) {
-        contents.set(1, 5, ClickableItem.of(new ItemStackBuilder(Material.CLOCK).setName("§e§l" + DURATION).addLore(getStrDuration().toString()).build(), e -> {
+        contents.set(1, 5, ClickableItem.of(new ItemStackBuilder(Material.CLOCK).setName(String.format("%s%s" + DURATION, ChatColor.YELLOW, ChatColor.BOLD)).addLore(getStrDuration().toString()).build(), e -> {
             ClickType click = e.getClick();
             ChatHooker chCheck = ChatHooker.get(player.getUniqueId());
 
@@ -223,22 +231,28 @@ public class CreationInventory extends InventoryBuilder {
     }
 
     private void sendButton(Player player, InventoryContents contents) {
-        contents.set(3, 8, ClickableItem.of(new ItemStackBuilder(Material.FEATHER).setName("§e§l" + SEND).build(), e -> {
+        contents.set(3, 8, ClickableItem.of(new ItemStackBuilder(Material.FEATHER).setName(String.format("%s%s" + SEND, ChatColor.YELLOW, ChatColor.BOLD)).build(),
+            (e) -> {
+                if (!this.getRecipients().isEmpty()) {
+                    if (!this.getMessage().isEmpty() || this.getItem() != null) {
+                        ClickType click = e.getClick();
 
-            if (!this.getRecipients().isEmpty()) {
-                if (!this.getMessage().isEmpty() || this.getItem() != null) {
-                    ClickType click = e.getClick();
+                        if (click == ClickType.LEFT) {
+                            Duration duration = Duration.ofSeconds(0);
 
-                    if (click == ClickType.LEFT) {
-                        SendConfirmationInventory sendInv = new SendConfirmationInventory(this, this.getRecipients(), this.getObject().toString(), this.getMessage(),
-                            getStrDuration().toString().equals(DEFAULT_DURATION_STR) ? Duration.ofSeconds(0) : CH_Duration.transform(getStrDuration().toString()), this.getItem());
-                        sendInv.openInventory(player);
+                            if (!getStrDuration().toString().equals(DEFAULT_DURATION_STR)) {
+                                CH_Duration.transform(getStrDuration().toString());
+                            }
 
+                            SendConfirmationInventory sendInv = new SendConfirmationInventory(
+                                this, this.getRecipients(), this.getObject().toString(), this.getMessage(), duration, this.getItem()
+                            );
+                            sendInv.openInventory(player);
+                        }
                     }
                 }
             }
-        }));
-
+        ));
     }
 
     @Override

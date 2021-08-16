@@ -8,9 +8,9 @@ public class LetterData extends Data {
 
 	private List<String> content = new ArrayList<>();
 	private LetterType letterType = LetterType.STANDARD;
-	private Boolean isRead = false;
+	private boolean isRead = false;
 
-	protected LetterData(UUID uuid, String author, String object, LetterType letterType, List<String> content, Boolean isRead) {
+	protected LetterData(UUID uuid, String author, String object, LetterType letterType, List<String> content, boolean isRead) {
 		super(uuid, author, object);
 		this.setLetterType(letterType);
 		this.setContent(content);
@@ -18,7 +18,7 @@ public class LetterData extends Data {
 		
 	}
 	
-	public LetterData(Data data, LetterType type, List<String> content, Boolean isRead) {
+	public LetterData(Data data, LetterType type, List<String> content, boolean isRead) {
 		super(data.getId(), data.getOwnerUuid(), data.getAuthor(), data.getObject(), data.getCreationDate());
 		this.setCreationDate(data.getCreationDate());
 		this.setLetterType(type);
@@ -47,11 +47,11 @@ public class LetterData extends Data {
 		this.letterType = letterType;
 	}
 
-	public Boolean getIsRead() {
+	public boolean getIsRead() {
 		return isRead;
 	}
 
-	public void setIsRead(Boolean isRead) {
+	public void setIsRead(boolean isRead) {
 		this.isRead = isRead;
 	}
 	

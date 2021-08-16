@@ -29,18 +29,18 @@ public class PlayerInfoSQL {
     }
 
     public PlayerInfo tryRegister(Player player) {
-        PlayerInfo PI = new PlayerInfo(player);
-        Integer check = this.check(PI);
+        PlayerInfo playerInfo = new PlayerInfo(player);
+        int check = this.check(playerInfo);
 
         if (check == -1) {
-            this.create(PI);
+            this.create(playerInfo);
 
         } else if (check == 0) {
-            this.update(PI);
+            this.update(playerInfo);
 
         }
 
-        return PI;
+        return playerInfo;
     }
 
     public List<PlayerInfo> getAll() {
@@ -65,7 +65,6 @@ public class PlayerInfoSQL {
             e.printStackTrace();
 
         }
-
 
         return res;
     }
@@ -94,24 +93,22 @@ public class PlayerInfoSQL {
      * @param obj
      * @return -1: n'existe pas<br> 0: existe mais pas a jour<br> 1: existe tout est bon
      */
-    public Integer check(PlayerInfo obj) {
+    public int check(PlayerInfo obj) {
         int res = -1;
 
         try {
             PreparedStatement query = this.sqlConnection.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE uuid = ? ");
             query.setString(1, obj.getUuid().toString());
-            ResultSet resultset = query.executeQuery();
+            ResultSet resultSet = query.executeQuery();
 
-            if (resultset.next()) {
-                if (resultset.getString("name").equals(obj.getName())) {
+            if (resultSet.next()) {
+                if (resultSet.getString("name").equals(obj.getName())) {
                     res = 1;
 
                 } else {
                     res = 0;
                 }
-
             }
-
             query.close();
 
         } catch (SQLException e) {
@@ -152,5 +149,4 @@ public class PlayerInfoSQL {
             e.printStackTrace();
         }
     }
-
 }

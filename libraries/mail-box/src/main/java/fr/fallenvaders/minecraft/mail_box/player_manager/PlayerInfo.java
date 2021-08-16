@@ -34,7 +34,7 @@ public class PlayerInfo {
         this.name = name;
     }
 
-    public Boolean isComplete() {
+    public boolean isComplete() {
         return this.getName() != null && this.getUuid() != null;
     }
 
@@ -48,7 +48,6 @@ public class PlayerInfo {
             }
 
         }
-
 
         return res;
     }

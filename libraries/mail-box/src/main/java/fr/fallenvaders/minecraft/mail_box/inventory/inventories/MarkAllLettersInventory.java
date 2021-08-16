@@ -4,11 +4,11 @@ import fr.fallenvaders.minecraft.mail_box.data_manager.LetterData;
 import fr.fallenvaders.minecraft.mail_box.inventory.builders.ConfirmationInventoryBuilder;
 import fr.fallenvaders.minecraft.mail_box.inventory.builders.InventoryBuilder;
 import fr.fallenvaders.minecraft.mail_box.sql.LetterDataSQL;
-import fr.fallenvaders.minecraft.mail_box.sql.SQLConnection;
 import fr.fallenvaders.minecraft.mail_box.utils.LangManager;
 import fr.fallenvaders.minecraft.mail_box.utils.MessageLevel;
 import fr.fallenvaders.minecraft.mail_box.utils.MessageUtils;
 import fr.minuskube.inv.content.InventoryContents;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -22,7 +22,7 @@ public class MarkAllLettersInventory extends ConfirmationInventoryBuilder {
     private List<LetterData> dataList = new ArrayList<>();
 
     public MarkAllLettersInventory(List<LetterData> dataList, InventoryBuilder parent) {
-        super(SUB_ID, "§l" + LangManager.format(MARK_ALL_2, dataList.size()));
+        super(SUB_ID, ChatColor.BOLD + LangManager.format(MARK_ALL_2, dataList.size()));
         super.setParent(parent);
         this.dataList = dataList;
     }

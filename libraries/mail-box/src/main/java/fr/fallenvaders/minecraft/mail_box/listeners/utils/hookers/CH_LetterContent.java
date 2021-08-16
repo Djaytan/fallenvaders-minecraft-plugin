@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CH_LetterContent extends ChatHooker {
 
-	public CH_LetterContent(String startMsg, List<String> content, InventoryBuilder parentInv, Boolean doAdd) {
+	public CH_LetterContent(String startMsg, List<String> content, InventoryBuilder parentInv, boolean doAdd) {
 		super("MailBox_LetterContent_ChatHooker", startMsg);
 
 		this.setExecution(event -> {
