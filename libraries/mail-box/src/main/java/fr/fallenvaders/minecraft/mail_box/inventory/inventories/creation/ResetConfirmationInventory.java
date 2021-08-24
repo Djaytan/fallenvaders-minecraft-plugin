@@ -4,6 +4,7 @@ import fr.fallenvaders.minecraft.mail_box.inventory.builders.ConfirmationInvento
 import fr.fallenvaders.minecraft.mail_box.inventory.builders.InventoryBuilder;
 import fr.fallenvaders.minecraft.mail_box.utils.LangManager;
 import fr.minuskube.inv.content.InventoryContents;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -15,7 +16,7 @@ public class ResetConfirmationInventory extends ConfirmationInventoryBuilder {
 	private static final String RESET = LangManager.getValue("string_reset_creation");
 	
 	public ResetConfirmationInventory(InventoryBuilder parent) {
-		super("reset_creation_inventory", "§l" + RESET);
+		super("reset_creation_inventory", ChatColor.BOLD + RESET);
 		super.setParent(parent);
 	}
 

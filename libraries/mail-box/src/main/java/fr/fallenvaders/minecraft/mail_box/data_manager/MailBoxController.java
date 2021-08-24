@@ -7,6 +7,7 @@ import fr.fallenvaders.minecraft.mail_box.utils.LangManager;
 import fr.fallenvaders.minecraft.mail_box.utils.MessageLevel;
 import fr.fallenvaders.minecraft.mail_box.utils.MessageUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +15,6 @@ import org.bukkit.inventory.meta.BookMeta;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,32 +24,29 @@ public class MailBoxController {
 
     private static DataHolder getHolderFromDataBase(UUID uuid) {
         DataHolder res = new DataHolder(uuid, new ArrayList<>());
-        List<ItemData> itemDataList = ItemDataSQL.getInstance().find(uuid);
-        Iterator<ItemData> it = itemDataList.iterator();
-        Boolean error = false;
+        ItemDataSQL itemDataSQL = new ItemDataSQL();
+        List<ItemData> itemDataList = itemDataSQL.find(uuid);
+        List<Data> temp = new ArrayList<>();
 
-        while (it.hasNext() && !error) {
-            ItemData itemData = it.next();
-            if (itemData.isOutOfDate()) {
-                if (ItemDataSQL.getInstance().delete(itemData)) {
-                    it.remove();
-
-                } else {
-                    error = true;
-                }
+        if (itemDataList != null) {
+            List<ItemData> outOfDateItems = itemDataList.stream().filter(ItemData::isOutOfDate).toList();
+            if (outOfDateItems.size() > 0) {
+                itemDataSQL.deleteAll(outOfDateItems);
             }
-        }
+            itemDataList.removeAll(outOfDateItems);
 
-        List<LetterData> letterDataList = LetterDataSQL.getInstance().find(uuid);
-
-        if (!error && itemDataList != null && letterDataList != null) {
-            List<Data> temp = new ArrayList<>();
             temp.addAll(itemDataList);
-            temp.addAll(letterDataList);
-
-            res = new DataHolder(uuid, temp);
-
         }
+
+        LetterDataSQL letterDataSQL = new LetterDataSQL();
+        List<LetterData> letterDataList = letterDataSQL.find(uuid);
+
+        if (letterDataList != null) {
+            temp.addAll(letterDataList);
+        }
+
+        res.setDataList(temp);
+
         return res;
     }
 
@@ -73,7 +70,6 @@ public class MailBoxController {
         if (res == null) {
             res = getHolderFromDataBase(uuid);
         }
-
         return res;
     }
 
@@ -83,9 +79,10 @@ public class MailBoxController {
      *
      */
 
-    public static Boolean sendLetter(Player player, LetterData letterData) {
+    public static boolean sendLetter(Player player, LetterData letterData) {
         boolean res = false;
-        LetterData temp = LetterDataSQL.getInstance().create(letterData);
+        LetterDataSQL letterDataSQL = new LetterDataSQL();
+        LetterData temp = letterDataSQL.create(letterData);
 
         if (temp != null) {
             DataHolder holder = DataManager.getDataHolder(temp.getOwnerUuid());
@@ -100,7 +97,6 @@ public class MailBoxController {
                 MessageUtils.sendMessage(recipient, MessageLevel.NOTIFICATION, LangManager.getValue("string_receive_letter_notification", letterData.getAuthor()));
 
             }
-
             res = true;
         } else {
             MessageUtils.sendMessage(player, MessageLevel.ERROR, LangManager.getValue("string_error_player"));
@@ -108,15 +104,15 @@ public class MailBoxController {
         }
 
         return res;
-
     }
 
-    public static Boolean sendLetters(Player player, List<LetterData> letters) {
-        Boolean res = false;
+    public static boolean sendLetters(Player player, List<LetterData> letters) {
+        boolean res = false;
 
         if (letters != null && !letters.isEmpty()) {
             if (letters.size() > 1) {
-                List<LetterData> sent = LetterDataSQL.getInstance().createAll(letters);
+                LetterDataSQL letterDataSQL = new LetterDataSQL();
+                List<LetterData> sent = letterDataSQL.createAll(letters);
 
                 if (sent != null) {
                     for (LetterData letter : sent) {
@@ -133,7 +129,6 @@ public class MailBoxController {
                             MessageUtils.sendMessage(recipient, MessageLevel.NOTIFICATION, LangManager.getValue("string_receive_letter_notification", letter.getAuthor()));
                         }
                     }
-
                     res = true;
 
                 } else {
@@ -143,10 +138,8 @@ public class MailBoxController {
 
             } else {
                 res = sendLetter(player, letters.get(0));
-
             }
         }
-
         return res;
     }
 
@@ -154,7 +147,9 @@ public class MailBoxController {
         player.openBook(getBookView(letterData));
 
         if (letterData.getOwnerUuid().equals(player.getUniqueId())) {
-            if (LetterDataSQL.getInstance().update(letterData.getId(), letterData) != null) {
+            LetterDataSQL letterDataSQL = new LetterDataSQL();
+
+            if (letterDataSQL.update(letterData.getId(), letterData) != null) {
                 letterData.setIsRead(true);
             } else {
                 MessageUtils.sendMessage(player, MessageLevel.ERROR, LangManager.getValue("string_error_player"));
@@ -164,12 +159,12 @@ public class MailBoxController {
 
     private static ItemStack getBookView(LetterData letterData) {
         StringBuilder letterHead = new StringBuilder();
-        letterHead.append(String.format("§l%s:§r %s\n", LangManager.getValue("string_author"), letterData.getAuthor()));
+        letterHead.append(String.format("%s%s:%s %s\n", ChatColor.BOLD, LangManager.getValue("string_author"), ChatColor.RESET, letterData.getAuthor()));
 
         SimpleDateFormat sdf = new SimpleDateFormat(LangManager.getValue("string_date_format"));
 
-        letterHead.append(String.format("§l%s:§r %s\n", LangManager.getValue("string_reception_date"), sdf.format(letterData.getCreationDate())));
-        letterHead.append(String.format("§l%s:§r %s\n", LangManager.getValue("string_object"), letterData.getObject()));
+        letterHead.append(String.format("%s%s:%s %s\n", ChatColor.BOLD, LangManager.getValue("string_reception_date"), ChatColor.RESET, sdf.format(letterData.getCreationDate())));
+        letterHead.append(String.format("%s%s:%s %s\n", ChatColor.BOLD, LangManager.getValue("string_object"), ChatColor.RESET, letterData.getObject()));
 
         ItemStack book = new ItemStackBuilder(Material.WRITTEN_BOOK).build();
         BookMeta bookMeta = (BookMeta) book.getItemMeta();
@@ -186,10 +181,11 @@ public class MailBoxController {
         return book;
     }
 
-    public static Boolean deleteLetter(Player player, DataHolder holder, LetterData letterData) {
-        Boolean res = false;
+    public static boolean deleteLetter(Player player, DataHolder holder, LetterData letterData) {
+        boolean res = false;
+        LetterDataSQL letterDataSQL = new LetterDataSQL();
 
-        if (LetterDataSQL.getInstance().delete(letterData)) {
+        if (letterDataSQL.delete(letterData)) {
             holder.removeData(letterData.getId());
             res = true;
 
@@ -201,10 +197,11 @@ public class MailBoxController {
         return res;
     }
 
-    public static Boolean deleteLetters(Player player, DataHolder holder, List<LetterData> dataList) {
-        Boolean res = false;
+    public static boolean deleteLetters(Player player, DataHolder holder, List<LetterData> dataList) {
+        boolean res = false;
+        LetterDataSQL letterDataSQL = new LetterDataSQL();
 
-        if (LetterDataSQL.getInstance().deleteAll(dataList)) {
+        if (letterDataSQL.deleteAll(dataList)) {
             holder.removeDatas(dataList.stream().map(LetterData::getId).collect(Collectors.toList()));
             res = true;
 
@@ -221,9 +218,10 @@ public class MailBoxController {
      * Items
      */
 
-    public static Boolean sendItem(Player player, ItemData itemData) {
-        Boolean res = false;
-        ItemData temp = ItemDataSQL.getInstance().create(itemData);
+    public static boolean sendItem(Player player, ItemData itemData) {
+        boolean res = false;
+        ItemDataSQL itemDataSQL = new ItemDataSQL();
+        ItemData temp = itemDataSQL.create(itemData);
 
         if (temp != null) {
             DataHolder holder = DataManager.getDataHolder(temp.getOwnerUuid());
@@ -234,8 +232,7 @@ public class MailBoxController {
 
             Player recipient = Bukkit.getPlayer(itemData.getOwnerUuid());
             if (recipient != null) {
-                MessageUtils.sendMessage(recipient, MessageLevel.NOTIFICATION, LangManager.getValue("string_receive_letter_notification", itemData.getAuthor()));
-
+                MessageUtils.sendMessage(recipient, MessageLevel.NOTIFICATION, LangManager.getValue("string_receive_item_notification", itemData.getAuthor()));
             }
 
             res = true;
@@ -249,12 +246,13 @@ public class MailBoxController {
 
     }
 
-    public static Boolean sendItems(Player player, List<ItemData> items) {
-        Boolean res = false;
+    public static boolean sendItems(Player player, List<ItemData> items) {
+        boolean res = false;
 
         if (items != null && !items.isEmpty()) {
             if (items.size() > 1) {
-                List<ItemData> sent = ItemDataSQL.getInstance().createAll(items);
+                ItemDataSQL itemDataSQL = new ItemDataSQL();
+                List<ItemData> sent = itemDataSQL.createAll(items);
 
                 if (sent != null) {
                     for (ItemData item : sent) {
@@ -267,7 +265,12 @@ public class MailBoxController {
                         // notification
                         Player recipient = Bukkit.getPlayer(item.getOwnerUuid());
                         if (recipient != null) {
-                            MessageUtils.sendMessage(recipient, MessageLevel.NOTIFICATION, LangManager.getValue("string_receive_item_notification", item.getAuthor()));
+                            MessageUtils
+                                .sendMessage(
+                                    recipient,
+                                    MessageLevel.NOTIFICATION,
+                                    LangManager.getValue("string_receive_item_notification", item.getAuthor())
+                                );
                         }
                     }
                     res = true;
@@ -285,11 +288,13 @@ public class MailBoxController {
         return res;
     }
 
-    public static Boolean deleteItem(Player player, DataHolder holder, ItemData itemData) {
-        Boolean res = false;
+    public static boolean deleteItem(Player player, DataHolder holder, ItemData itemData) {
+        boolean res = false;
 
         if (holder.getData(itemData.getId()) != null) {
-            if (ItemDataSQL.getInstance().delete(itemData)) {
+            ItemDataSQL itemDataSQL = new ItemDataSQL();
+
+            if (itemDataSQL.delete(itemData)) {
                 holder.removeData(itemData.getId());
                 res = true;
 
@@ -303,10 +308,12 @@ public class MailBoxController {
         return res;
     }
 
-    public static Boolean deleteItems(Player player, DataHolder holder, List<ItemData> dataList) {
-        Boolean res = false;
+    public static boolean deleteItems(Player player, DataHolder holder, List<ItemData> dataList) {
+        boolean res = false;
 
-        if (ItemDataSQL.getInstance().deleteAll(dataList)) {
+        ItemDataSQL itemDataSQL = new ItemDataSQL();
+
+        if (itemDataSQL.deleteAll(dataList)) {
             holder.removeDatas(dataList.stream().map(ItemData::getId).collect(Collectors.toList()));
             res = true;
 
@@ -318,11 +325,11 @@ public class MailBoxController {
         return res;
     }
 
-    public static Boolean recoverItem(Player player, DataHolder holder, ItemData itemData) {
-        Boolean success = false;
+    public static boolean recoverItem(Player player, DataHolder holder, ItemData itemData) {
+        boolean success = false;
 
         if (player.getInventory().firstEmpty() >= 0) {
-            Boolean t = deleteItem(player, holder, itemData);
+            boolean t = deleteItem(player, holder, itemData);
 
             if (t) {
                 player.getInventory().addItem(itemData.getItem());
@@ -344,8 +351,8 @@ public class MailBoxController {
      * generic
      */
 
-    public static Boolean deleteData(Player player, DataHolder holder, Data data) {
-        Boolean res = false;
+    public static boolean deleteData(Player player, DataHolder holder, Data data) {
+        boolean res = false;
 
         if (data instanceof ItemData) {
             res = deleteItem(player, holder, (ItemData) data);
@@ -357,8 +364,8 @@ public class MailBoxController {
         return res;
     }
 
-    public static Boolean deleteDatas(Player player, DataHolder holder, List<Data> dataList) {
-        Boolean res = true;
+    public static boolean deleteDatas(Player player, DataHolder holder, List<Data> dataList) {
+        boolean res = true;
         List<ItemData> itemDataList = new ArrayList<>();
         List<LetterData> letterDataList = new ArrayList<>();
 
@@ -372,7 +379,7 @@ public class MailBoxController {
             }
         }
 
-        if (res && !itemDataList.isEmpty()) {
+        if (!itemDataList.isEmpty()) {
             res = deleteItems(player, holder, itemDataList);
         }
 

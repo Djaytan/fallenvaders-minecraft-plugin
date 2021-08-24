@@ -17,92 +17,92 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class DeletionDatasInventory extends ConfirmationInventoryBuilder {
-	public static final String INVENTORY_SUB_ID = "deleteItems";
+    public static final String INVENTORY_SUB_ID = "deleteItems";
 
-	private DataHolder dataSource;
-	private List<Data> dataList = new ArrayList<>();
-	private Boolean doUpdate = false;
+    private DataHolder dataSource;
+    private List<Data> dataList = new ArrayList<>();
+    private boolean doUpdate = false;
 
-	public DeletionDatasInventory(DataHolder dataSource, List<Data> dataList, String inventoryTitle, InventoryBuilder parent, Boolean doUpdate) {
-		super(INVENTORY_SUB_ID, inventoryTitle);
-		this.setDataSource(dataSource);
-		this.setDataList(dataList);
-		this.setParent(parent);
-		this.doUpdate = doUpdate;
-	}
+    public DeletionDatasInventory(DataHolder dataSource, List<Data> dataList, String inventoryTitle, InventoryBuilder parent, boolean doUpdate) {
+        super(INVENTORY_SUB_ID, inventoryTitle);
+        this.setDataSource(dataSource);
+        this.setDataList(dataList);
+        this.setParent(parent);
+        this.doUpdate = doUpdate;
+    }
 
-	@Override
-	public Consumer<InventoryClickEvent> onConfirmation(Player player, InventoryContents contents) {
-		return e -> {
-			if (e.getClick() == ClickType.LEFT) {
+    @Override
+    public Consumer<InventoryClickEvent> onConfirmation(Player player, InventoryContents contents) {
+        return e -> {
+            if (e.getClick() == ClickType.LEFT) {
 
-				if (MailBoxController.deleteDatas(player, this.getDataSource(), getDataList() ) )  {
-					this.returnToParent(player);
+                if (MailBoxController.deleteDatas(player, this.getDataSource(), getDataList())) {
+                    this.returnToParent(player);
 
-				} else {
-					player.closeInventory();
-				}
-			}
-		};
-	}
+                } else {
+                    player.closeInventory();
+                }
+            }
+        };
+    }
 
-	@Override
-	public Consumer<InventoryClickEvent> onAnnulation(Player player, InventoryContents contents) {
-		return null;
-	}
+    @Override
+    public Consumer<InventoryClickEvent> onAnnulation(Player player, InventoryContents contents) {
+        return null;
+    }
 
-	@Override
-	public void onUpdate(Player player, InventoryContents contents) {
+    @Override
+    public void onUpdate(Player player, InventoryContents contents) {
         int state = contents.property("state", 0);
         contents.setProperty("state", state + 1);
 
-        if(state % 20 != 0) {
-        	return;
+        if (state % 20 != 0) {
+            return;
         }
-		
-		if (this.doUpdate) {
-			Iterator<Data> it = this.getDataList().iterator();
 
-			while (it.hasNext()) {
-				Data data = it.next();
+        if (this.doUpdate) {
+            Iterator<Data> it = this.getDataList().iterator();
 
-				if (data != null) {
-					if (data instanceof ItemData) {
-						ItemData tempData = (ItemData) data;
+            while (it.hasNext()) {
+                Data data = it.next();
 
-						if (tempData.isOutOfDate()) {
-							if (MailBoxController.deleteItem(player, this.getDataSource(), tempData)) {
-								if (this.getDataList().isEmpty()) {
-									this.returnToParent(player);
+                if (data != null) {
+                    if (data instanceof ItemData) {
+                        ItemData tempData = (ItemData) data;
 
-								}
-							} else {
-								player.closeInventory();
-							}
-							it.remove();
+                        if (tempData.isOutOfDate()) {
+                            if (MailBoxController.deleteItem(player, this.getDataSource(), tempData)) {
+                                if (this.getDataList().isEmpty()) {
+                                    this.returnToParent(player);
 
-						}
-					}
-				} else {
-					it.remove();
-				}
-			}
-		}
-	}
+                                }
+                            } else {
+                                player.closeInventory();
+                            }
+                            it.remove();
 
-	public DataHolder getDataSource() {
-		return this.dataSource;
-	}
+                        }
+                    }
+                } else {
+                    it.remove();
+                }
+            }
+        }
+    }
 
-	private void setDataSource(DataHolder holder) {
-		this.dataSource = holder;
-	}
+    public DataHolder getDataSource() {
+        return this.dataSource;
+    }
 
-	public List<Data> getDataList() {
-		return dataList;
-	}
+    private void setDataSource(DataHolder holder) {
+        this.dataSource = holder;
+    }
 
-	public void setDataList(List<Data> dataList) {
-		this.dataList = dataList;
-	}
+    public List<Data> getDataList() {
+        return dataList;
+    }
+
+    public void setDataList(List<Data> dataList) {
+        this.dataList = dataList;
+    }
 }

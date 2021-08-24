@@ -10,189 +10,197 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 
 public class SQLConnection {
-	public static final String SGBD_TYPE_ROOT = "jdbc:mysql://";
-	private static final SQLConnection INSTANCE = new SQLConnection();
+    private Connection connection;
+    private String jdbc;
+    private String host;
+    private String database;
+    private String user;
+    private String password;
+    private boolean useSSL = MailBox.main.getConfig().getBoolean("database.useSSL");
 
-	private Connection connection;
-	private String jdbc;
-	private String host;
-	private String database;
-	private String user;
-	private String password;
-	private Boolean useSSL = MailBox.main.getConfig().getBoolean("database.useSSL");
+    public SQLConnection() {
+        this.setJdbc("jdbc:mysql://");
+        this.setHost(MailBox.main.getConfig().getString("database.host"));
+        this.setDatabase(MailBox.main.getConfig().getString("database.database"));
+        this.setUser(MailBox.main.getConfig().getString("database.user"));
+        this.setPassword(MailBox.main.getConfig().getString("database.password"));
 
-	public static SQLConnection getInstance() {
-		return INSTANCE;
-	}
+        this.connect();
+    }
 
-	public void connect() {
-		MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_connection"));
+    public boolean connect() {
+        boolean result = false;
+        MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_connection"));
 
-		try {
-			this.setConnection(DriverManager.getConnection(getUrl(), getUser(), getPassword()));
-			MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_connected"));
+        try {
+            this.setConnection(DriverManager.getConnection(getUrl(), getUser(), getPassword()));
+            MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_connected"));
 
-		} catch (SQLException e) {
-			MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_impossible_to_connect"));
-		}
-	}
+            result = true;
 
-	private String getUrl() {
-		return this.getJdbc() + this.getHost() + "/" + this.getDatabase() + "?useSSL=" + this.getUseSSL();
-	}
+        } catch (SQLException e) {
+            MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_impossible_to_connect"));
+        }
 
-	public Boolean startTransaction() {
-		Boolean res = false;
-		if (this.isConnected()) {
-			try {
-				this.getConnection().setAutoCommit(false);
-				res = true;
+        return result;
+    }
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+    private String getUrl() {
+        return this.getJdbc() + this.getHost() + "/" + this.getDatabase() + "?useSSL=" + this.getUseSSL();
+    }
 
-		return res;
-	}
+    public boolean startTransaction() {
+        boolean res = false;
+        Connection conn = this.getConnection();
 
-	public Boolean rollBack() {
-		Boolean res = false;
+        if (conn != null) {
+            try {
+                conn.setAutoCommit(false);
+                res = true;
 
-		if (this.isConnected()) {
-			try {
-				if (!this.getConnection().getAutoCommit()) {
-					MailBox.main.getLogger().log(Level.SEVERE, "Transaction is being rolled back");
-					this.getConnection().rollback();
-					res = true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+        return res;
+    }
 
-		return res;
-	}
+    public boolean rollBack() {
+        boolean res = false;
+        Connection conn = this.getConnection();
 
-	public Boolean commit() {
-		Boolean res = false;
+        if (conn != null) {
+            try {
+                if (!conn.getAutoCommit()) {
+                    MailBox.main.getLogger().log(Level.SEVERE, "Transaction is being rolled back");
+                    this.getConnection().rollback();
+                    res = true;
 
-		if (this.isConnected()) {
-			try {
-				if(!this.getConnection().getAutoCommit() ) {
-					this.getConnection().commit();
-					this.getConnection().setAutoCommit(true);
-					
-				}
-				
-				res = true;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				this.rollBack();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
-			}
-		}
+        return res;
+    }
 
-		return res;
-	}
+    public boolean commit() {
+        boolean res = false;
+        Connection conn = this.getConnection();
 
-	public void disconnect() {
-		if (this.isConnected()) {
-			try {
-				this.getConnection().close();
-				MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_disconnected"));
+        if (conn != null) {
+            try {
+                if (!conn.getAutoCommit()) {
+                    this.getConnection().commit();
+                    this.getConnection().setAutoCommit(true);
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+                }
 
-	public void refresh() {
-		if (this.isConnected()) {
-			try {
-				this.getConnection().close();
-				this.setConnection(DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword()));
+                res = true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                this.rollBack();
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+            }
+        }
 
-		}
-	}
+        return res;
+    }
 
-	public Boolean isConnected() {
-		boolean res = false;
-		
-		try {
-			PreparedStatement query = this.getConnection().prepareStatement("SELECT 1");
-			query.executeQuery();
-			query.close();
-			res = true;
+    public void disconnect() {
+        Connection conn = this.getConnection();
 
-		} catch (Exception exception) {
-			MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_connexion_error") );
-		}
-		
-		return res;
-	}
+        if (conn != null) {
+            try {
+                conn.close();
+                MailBox.main.getLogger().log(Level.INFO, LangManager.getValue("string_sql_disconnected"));
 
-	public Connection getConnection() {
-		return this.connection;
-	}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-	private SQLConnection setConnection(Connection connection) {
-		this.connection = connection;
-		return this;
-	}
+        }
+    }
 
-	public String getJdbc() {
-		return this.jdbc;
-	}
+    public void refresh() {
+        Connection conn = this.getConnection();
 
-	public SQLConnection setJdbc(String jdbc) {
-		this.jdbc = jdbc;
-		return this;
-	}
+        if (conn != null) {
+            try {
+                conn.close();
+                this.setConnection(DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword()));
 
-	public String getHost() {
-		return this.host;
-	}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
-	public SQLConnection setHost(String host) {
-		this.host = host;
-		return this;
-	}
+    }
 
-	public String getDatabase() {
-		return this.database;
-	}
+    public Connection getConnection() {
+        try {
+            if (this.connection == null || this.connection.isClosed()) {
+                this.connect();
+            }
+        } catch (SQLException ignored) {
+        }
 
-	public SQLConnection setDatabase(String database) {
-		this.database = database;
-		return this;
-	}
+        return this.connection;
+    }
 
-	public String getUser() {
-		return this.user;
-	}
+    private SQLConnection setConnection(Connection connection) {
+        this.connection = connection;
+        return this;
+    }
 
-	public SQLConnection setUser(String user) {
-		this.user = user;
-		return this;
-	}
+    public String getJdbc() {
+        return this.jdbc;
+    }
 
-	public String getPassword() {
-		return this.password;
-	}
+    public SQLConnection setJdbc(String jdbc) {
+        this.jdbc = jdbc;
+        return this;
+    }
 
-	public SQLConnection setPassword(String password) {
-		this.password = password;
-		return this;
-	}
+    public String getHost() {
+        return this.host;
+    }
 
-	public Boolean getUseSSL() {
-		return useSSL;
-	}
+    public SQLConnection setHost(String host) {
+        this.host = host;
+        return this;
+    }
+
+    public String getDatabase() {
+        return this.database;
+    }
+
+    public SQLConnection setDatabase(String database) {
+        this.database = database;
+        return this;
+    }
+
+    public String getUser() {
+        return this.user;
+    }
+
+    public SQLConnection setUser(String user) {
+        this.user = user;
+        return this;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public SQLConnection setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public boolean getUseSSL() {
+        return useSSL;
+    }
 }
