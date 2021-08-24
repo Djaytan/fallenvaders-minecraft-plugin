@@ -24,8 +24,8 @@ public class ItemData extends Data {
 		
 	}
 	
-	public Boolean isOutOfDate() {
-		Boolean res = false;
+	public boolean isOutOfDate() {
+		boolean res = false;
 		
 		if(!this.getDuration().isZero() ) {
 			LocalDateTime date = this.getCreationDate().toLocalDateTime();
@@ -55,8 +55,7 @@ public class ItemData extends Data {
 
 	public ItemData clone() {
 		Data data = super.clone();
-		ItemData res = new ItemData(data, this.getItem(), this.getDuration());
-		return res;
+		return new ItemData(data, this.getItem(), this.getDuration());
 	}
 
 }

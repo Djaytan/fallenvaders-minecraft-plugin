@@ -18,7 +18,7 @@ public class DeletionDataInventory extends ConfirmationInventoryBuilder {
 
 	private DataHolder dataSource;
 	private Data data;
-	private Boolean update = false;
+	private boolean update = false;
 
 	public DeletionDataInventory(DataHolder dataSource, Data data, String InventoryTitle, InventoryBuilder parent) {
 		super(INVENTORY_SUB_ID, InventoryTitle);

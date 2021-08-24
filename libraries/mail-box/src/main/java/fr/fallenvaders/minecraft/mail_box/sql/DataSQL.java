@@ -10,128 +10,175 @@ import java.util.List;
 import java.util.UUID;
 
 public class DataSQL extends BaseSQL<Data> {
-	protected final String TABLE_NAME = "MailBox_Data";
-	private static final DataSQL INSTANCE = new DataSQL();
+    protected final String TABLE_NAME = "MailBox_Data";
 
-	public static DataSQL getInstance() {
-		return INSTANCE;
-	}
+    public DataSQL(SQLConnection sqlConnection) {
+        super.sqlConnection = sqlConnection;
+        Connection conn = this.sqlConnection.getConnection();
+        PreparedStatement query = null;
 
-	public DataSQL() {
-		if (this.getSqlConnection().isConnected()) {
-			try {
-				PreparedStatement query = this.getSqlConnection().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS	" + TABLE_NAME
-						+ " (id BIGINT NOT NULL AUTO_INCREMENT, uuid VARCHAR(255), author VARCHAR(255), object VARCHAR(255), creationDate TIMESTAMP, PRIMARY KEY(id))");
-				query.executeUpdate();
-				query.close();
+        if (conn != null) {
+            try {
+                query = conn.prepareStatement("CREATE TABLE IF NOT EXISTS	" + TABLE_NAME
+                    + " (id BIGINT NOT NULL AUTO_INCREMENT, uuid VARCHAR(255), author VARCHAR(255), object VARCHAR(255), creationDate TIMESTAMP, PRIMARY KEY(id))");
+                query.executeUpdate();
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (query != null) {
+                        query.close();
+                    }
+                } catch (SQLException ignored) {
+                }
+            }
+        }
+    }
 
-	@Override
-	protected Data onCreate(Data obj) {
-		Data res = null;
-		Data temp = obj.clone();
-		temp.setCreationDate(Timestamp.from(Instant.now()));
+    @Override
+    protected Data onCreate(Data obj) {
+        Data res = null;
+        Connection conn = this.sqlConnection.getConnection();
 
-		try {
-			PreparedStatement query = this.getSqlConnection().getConnection().prepareStatement("INSERT INTO " + TABLE_NAME + " (uuid, author, object, creationDate) VALUES(?, ?, ?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
-			query.setString(1, temp.getOwnerUuid().toString());
-			query.setString(2, temp.getAuthor());
-			query.setString(3, temp.getObject());
-			query.setTimestamp(4, temp.getCreationDate());
+        if (conn != null) {
+            Data temp = obj.clone();
+            temp.setCreationDate(Timestamp.from(Instant.now()));
+            PreparedStatement query = null;
 
-			query.execute();
+            try {
+                query = conn.prepareStatement("INSERT INTO " + TABLE_NAME + " (uuid, author, object, creationDate) VALUES(?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+                query.setString(1, temp.getOwnerUuid().toString());
+                query.setString(2, temp.getAuthor());
+                query.setString(3, temp.getObject());
+                query.setTimestamp(4, temp.getCreationDate());
 
-			ResultSet tableKeys = query.getGeneratedKeys();
-			if (tableKeys.next()) {
-				temp.setId(tableKeys.getLong(1));
-			}
+                query.execute();
 
-			query.close();
-			res = temp;
+                ResultSet tableKeys = query.getGeneratedKeys();
+                if (tableKeys.next()) {
+                    temp.setId(tableKeys.getLong(1));
+                }
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+                res = temp;
 
-		return res;
-	}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (query != null) {
+                        query.close();
+                    }
+                } catch (SQLException ignored) {
+                }
+            }
+        }
+        return res;
+    }
 
-	@Override
-	protected List<Data> onFind(UUID uuid) {
-		List<Data> res = null;
-		List<Data> temp = new ArrayList<>();
+    @Override
+    protected List<Data> onFind(UUID uuid) {
+        List<Data> res = null;
+        Connection conn = this.sqlConnection.getConnection();
 
-		try {
-			PreparedStatement query = this.getSqlConnection().getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE uuid = ?");
-			query.setString(1, uuid.toString());
-			ResultSet resultset = query.executeQuery();
+        if (conn != null) {
+            List<Data> temp = new ArrayList<>();
+            PreparedStatement query = null;
 
-			while (resultset.next()) {
-				Long id = resultset.getLong("id");
-				String author = resultset.getString("author");
-				String object = resultset.getString("object");
-				Timestamp creationDate = resultset.getTimestamp("creationDate");
+            try {
+                query = conn.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE uuid = ?");
+                query.setString(1, uuid.toString());
+                ResultSet resultSet = query.executeQuery();
 
-				temp.add(new DataFactory(id, uuid, author, object, creationDate));
-			}
-			query.close();
-			res = temp;
+                while (resultSet.next()) {
+                    Long id = resultSet.getLong("id");
+                    String author = resultSet.getString("author");
+                    String object = resultSet.getString("object");
+                    Timestamp creationDate = resultSet.getTimestamp("creationDate");
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+                    temp.add(new DataFactory(id, uuid, author, object, creationDate));
+                }
 
-		return res;
-	}
+                res = temp;
 
-	@Override
-	protected Data onUpdate(Long id, Data obj) {
-		Data res = null;
-		Data temp = obj.clone();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (query != null) {
+                        query.close();
+                    }
+                } catch (SQLException ignored) {
+                }
+            }
+        }
 
-		try {
-			PreparedStatement query = this.getSqlConnection().getConnection().prepareStatement("UPDATE " + TABLE_NAME + " SET uuid = ?, author = ?, object = ?, creationDate = ? WHERE id = ?");
-			query.setString(1, obj.getOwnerUuid().toString());
-			query.setString(2, obj.getAuthor());
-			query.setString(3, obj.getObject());
-			query.setTimestamp(4, obj.getCreationDate());
-			query.setLong(5, id);
+        return res;
+    }
 
-			query.executeUpdate();
-			query.close();
+    @Override
+    protected Data onUpdate(Long id, Data obj) {
+        Data res = null;
+        Connection conn = this.sqlConnection.getConnection();
 
-			temp.setId(id);
-			res = temp;
+        if (conn != null) {
+            Data temp = obj.clone();
+            PreparedStatement query = null;
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+            try {
+                query = conn.prepareStatement("UPDATE " + TABLE_NAME + " SET uuid = ?, author = ?, object = ?, creationDate = ? WHERE id = ?");
+                query.setString(1, obj.getOwnerUuid().toString());
+                query.setString(2, obj.getAuthor());
+                query.setString(3, obj.getObject());
+                query.setTimestamp(4, obj.getCreationDate());
+                query.setLong(5, id);
 
-		return res;
-	}
+                query.executeUpdate();
+                temp.setId(id);
 
-	@Override
-	protected Boolean onDelete(Data obj) {
-		Boolean res = false;
+                res = temp;
 
-		try {
-			PreparedStatement query = this.getSqlConnection().getConnection().prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE id = ?");
-			query.setLong(1, obj.getId());
-			query.execute();
-			query.close();
-			res = true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (query != null) {
+                        query.close();
+                    }
+                } catch (SQLException ignored) {
+                }
+            }
+        }
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+        return res;
+    }
 
-		return res;
-	}
+    @Override
+    protected boolean onDelete(Data obj) {
+        boolean res = false;
+        Connection conn = this.sqlConnection.getConnection();
 
+        if (conn != null) {
+            PreparedStatement query = null;
+
+            try {
+                query = conn.prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE id = ?");
+                query.setLong(1, obj.getId());
+                query.execute();
+                res = true;
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (query != null) {
+                        query.close();
+                    }
+                } catch (SQLException ignored) {
+                }
+            }
+        }
+        return res;
+    }
 }
