@@ -92,3 +92,13 @@ If you success, you may obtain this message in `test-server-remote-debug`'s outp
 ```
 Connected to the target VM, address: 'localhost:5005', transport: 'socket'
 ```
+
+If you launch server in wrong order, you may obtain this error message:
+```
+ERROR: transport error 202: connect failed: Connection refused
+ERROR: JDWP Transport dt_socket failed to initialize, TRANSPORT_INIT(510)
+JDWP exit error AGENT_ERROR_TRANSPORT_INIT(197): No transports initialized [t:\workspace\open\src\jdk.jdwp.agent\share\native\libjdwp\debugInit.c:734]
+```
+
+***Note:** If you want to start the server without the remote debug, you
+must run `test-server` instead of `test-server (debug)`.*
