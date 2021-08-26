@@ -39,7 +39,7 @@ for debug setup section.*
 > Configuration name: *test-server*  
 > Classpath (or -cp): *test-server*  
 > Main class: *fr.fallenvaders.minecraft.test_server.FallenVadersTestServer*  
-> Working directory: *path\to\mc-fallenvaders\test-server*
+> Working directory: *path\to\mc-fallenvaders\test-server*  
 > Shorten command line: *JAR manifest*
 
 ## Debug mode
