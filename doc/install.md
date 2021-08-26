@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-For process installation, you must have installed in your environment these
+To process installation, you must have installed in your environment these
 following programs:
 * [Java 16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) or above
 * [Maven 3](https://maven.apache.org/download.cgi#)
@@ -18,16 +18,16 @@ Then run the compilation command presented below.
 
 ## Compile project
 
-After each code update, run this command:
+After each code update or for project initialization, run this command:
 ```shell
 $ mvn clean install
 ```
 
 ## Launch server
 
-For launching the test server, you have two options:
+To launch the test server, you have two options:
 * Running from the corresponding script (`start.bat` on Windows, `start.sh` on Linux)
-* Launch a configuration from your IDE
+* Launch a configuration from your IDE (recommended)
 
 ### Launch server from IDE configuration
 
