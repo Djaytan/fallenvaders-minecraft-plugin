@@ -42,12 +42,28 @@ for debug setup section.*
 > Working directory: *path\to\mc-fallenvaders\test-server*  
 > Shorten command line: *JAR manifest*
 
+You may obtain something like this:  
+![Launch config](img/install_launch_config.jpg)
+
+***Important:** It's recommended to deactivate the auto-build of the IDE. Because we
+use Maven as compiler, the default build is useless, may fail and take time before
+the launch.*
+
+For achieve this, click on "Modify options" and the mark the option "Do not build before run".
+You can see the screen below:  
+![Do not build before launch](img/install_deactive_build_at_launch.jpg)
+
+***Note:** If you want to conserve the behavior of build before run, just add a Maven
+before task.*
+
 ## Debug mode
 
 For debug mode, it's recommended to clone the previously created launch configuration
 and rename it "test-server (debug)".
 Then, add to "Program arguments" this one: `debug`. It tells the test-server
 to run in debug mode.
+You should obtain something like this:  
+![Launch config in debug mode](img/install_launch_config_debug_mode.jpg)
 
 Then, create a "Remote JVM Debug" launch config with these params:
 
@@ -63,6 +79,9 @@ You may obtain a generated "Command line arguments for JVM" like this one:
 ```
 -agentlib:jdwp=transport=dt_socket,server=n,address=DESKTOP-TOT51U5:5005,suspend=y,onthrow=<FQ exception class name>,onuncaught=<y/n>
 ```
+
+The result must be similar as this one:  
+![Remote launch config](img/install_remote_debug_launch_config.jpg)
 
 Now, you can run by pressing on the hammer button.
 
