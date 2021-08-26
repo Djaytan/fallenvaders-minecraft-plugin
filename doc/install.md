@@ -79,4 +79,10 @@ The result must be similar as this one:
 Now, you can run by pressing on the hammer button.
 
 ***Important:** First, run the `test-server-remote-debug`, then only after run
-the `test-server` launch config.*
+the `test-server` launch config. If you don't do that, you may obtain this error:*
+
+```
+ERROR: transport error 202: connect failed: Connection refused
+ERROR: JDWP Transport dt_socket failed to initialize, TRANSPORT_INIT(510)
+JDWP exit error AGENT_ERROR_TRANSPORT_INIT(197): No transports initialized [debugInit.c:750]
+```
