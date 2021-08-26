@@ -63,6 +63,9 @@ stop it through the IDE's stop button it will not work.*
 
 Debug mode allow you to place breakpoint and browse your code step by step, see variables values in live, etc.
 
+This is an illustration of the expected result:  
+![Debug mode illustration](img/debug_mode.jpg)
+
 For activate it, first it's recommended to clone the previously created launch configuration
 and rename it "test-server (debug)".
 Then, add to "Program arguments" this one: `debug`. It tells the test-server
