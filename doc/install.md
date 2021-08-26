@@ -58,14 +58,7 @@ before task.*
 
 ## Debug mode
 
-For debug mode, it's recommended to clone the previously created launch configuration
-and rename it "test-server (debug)".
-Then, add to "Program arguments" this one: `debug`. It tells the test-server
-to run in debug mode.
-You should obtain something like this:  
-![Launch config in debug mode](img/install_launch_config_debug_mode.jpg)
-
-Then, create a "Remote JVM Debug" launch config with these params:
+For debug mode, create a "Remote JVM Debug" launch config with these params:
 
 > Configuration name: *test-server-remote-debug*  
 > Debugger mode: *Listen to remote JVM*  
@@ -86,4 +79,4 @@ The result must be similar as this one:
 Now, you can run by pressing on the hammer button.
 
 ***Important:** First, run the `test-server-remote-debug`, then only after run
-the `test-server (debug)` launch config.*
+the `test-server` launch config.*
