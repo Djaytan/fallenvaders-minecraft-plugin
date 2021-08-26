@@ -31,6 +31,11 @@ For launching the test server, you have two options:
 
 ### Launch server from IDE configuration
 
+***Warning:** the following information match correctly with Intellij IDEA that
+we recommend to use for this project. If this is not your case, you should find
+by yourself the specific steps to follow for your IDE without promise to success
+for debug setup section.*
+
 > Configuration name: *test-server*  
 > Classpath (or -cp): *test-server*  
 > Main class: *fr.fallenvaders.minecraft.test_server.FallenVadersTestServer*  
