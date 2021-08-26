@@ -3,7 +3,6 @@ package fr.fallenvaders.minecraft.test_server;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class FallenVadersTestServer {
 
@@ -21,8 +20,28 @@ public class FallenVadersTestServer {
         "nogui"
     };
 
+    public static final String[] DEBUG_SERVER_LAUNCH_COMMAND = new String[]{
+        "java",
+        "-server",
+        "-Xms512M",
+        "-Xmx2G",
+        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005",
+        "-jar",
+        SERVER_JAR_NAME,
+        "nogui"
+    };
+
     public static void main(String[] args) {
-        ProcessBuilder pb = new ProcessBuilder(SERVER_LAUNCH_COMMAND);
+        String[] serverLaunchCommand = SERVER_LAUNCH_COMMAND;
+        if (args.length > 0) {
+            if ("debug".equalsIgnoreCase(args[0])) {
+                serverLaunchCommand = DEBUG_SERVER_LAUNCH_COMMAND;
+            } else {
+                LOGGER.severe("Wrong program arguments: only \"debug\" is allowed.");
+                System.exit(-1);
+            }
+        }
+        ProcessBuilder pb = new ProcessBuilder(serverLaunchCommand);
         pb.directory(new File("server/"));
         pb.inheritIO();
         try {
