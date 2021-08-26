@@ -56,8 +56,8 @@ You can see the screen below:
 ***Note:** If you want to conserve the behavior of build before run, just add a Maven
 before task.*
 
-***Note 2: For stopping the server, enter `stop` in the server console. If you try to
-stop it through the IDE's stop button it will not work.***
+***Note 2:** For stopping the server, enter `stop` in the server console. If you try to
+stop it through the IDE's stop button it will not work.*
 
 ## Debug mode
 
