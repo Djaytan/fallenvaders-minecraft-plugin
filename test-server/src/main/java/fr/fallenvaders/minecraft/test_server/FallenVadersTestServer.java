@@ -25,7 +25,7 @@ public class FallenVadersTestServer {
         "-server",
         "-Xms512M",
         "-Xmx2G",
-        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005",
+        "-agentlib:jdwp=transport=dt_socket,server=n,suspend=n,address=5005",
         "-jar",
         SERVER_JAR_NAME,
         "nogui"
