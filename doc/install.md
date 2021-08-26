@@ -88,8 +88,7 @@ Now, you can run by pressing on the hammer button.
 ***Important:** First, run the `test-server-remote-debug`, then only after run
 the `test-server (debug)` launch config.*
 
+If you success, you may obtain this message in `test-server-remote-debug`'s output console:
 ```
-ERROR: transport error 202: connect failed: Connection refused
-ERROR: JDWP Transport dt_socket failed to initialize, TRANSPORT_INIT(510)
-JDWP exit error AGENT_ERROR_TRANSPORT_INIT(197): No transports initialized [debugInit.c:750]
+Connected to the target VM, address: 'localhost:5005', transport: 'socket'
 ```
