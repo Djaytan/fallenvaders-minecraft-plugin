@@ -49,7 +49,7 @@ You may obtain something like this:
 use Maven as compiler, the default build is useless, may fail and take time before
 the launch.*
 
-For achieve this, click on "Modify options" and the mark the option "Do not build before run".
+For achieve this, click on "Modify options" and then mark the option "Do not build before run".
 You can see the screen below:  
 ![Do not build before launch](img/install_deactive_build_at_launch.jpg)
 
