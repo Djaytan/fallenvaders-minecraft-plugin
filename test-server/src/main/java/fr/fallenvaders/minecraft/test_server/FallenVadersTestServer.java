@@ -15,16 +15,6 @@ public class FallenVadersTestServer {
         "-server",
         "-Xms512M",
         "-Xmx2G",
-        "-jar",
-        SERVER_JAR_NAME,
-        "nogui"
-    };
-
-    public static final String[] DEBUG_SERVER_LAUNCH_COMMAND = new String[]{
-        "java",
-        "-server",
-        "-Xms512M",
-        "-Xmx2G",
         "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005",
         "-jar",
         SERVER_JAR_NAME,
@@ -32,16 +22,7 @@ public class FallenVadersTestServer {
     };
 
     public static void main(String[] args) {
-        String[] serverLaunchCommand = SERVER_LAUNCH_COMMAND;
-        if (args.length > 0) {
-            if ("debug".equalsIgnoreCase(args[0])) {
-                serverLaunchCommand = DEBUG_SERVER_LAUNCH_COMMAND;
-            } else {
-                LOGGER.severe("Wrong program arguments: only \"debug\" is allowed.");
-                System.exit(-1);
-            }
-        }
-        ProcessBuilder pb = new ProcessBuilder(serverLaunchCommand);
+        ProcessBuilder pb = new ProcessBuilder(SERVER_LAUNCH_COMMAND);
         pb.directory(new File("server/"));
         pb.inheritIO();
         try {
