@@ -14,58 +14,60 @@ import java.util.Date;
 import java.util.Locale;
 
 public class KeysKeeperComponent {
+  public static final String DAYTIME_PATTERN = "dd/MM/yyyy HH:mm:ss";
+  public static final SimpleDateFormat SDF =
+      new SimpleDateFormat(DAYTIME_PATTERN, new Locale("fr", "FR"));
 
-    public static Component ejectingMessageCpnt(CJSanction sanction) {
+  public static Component ejectingMessageCpnt(CJSanction sanction) {
+    String date = SDF.format(sanction.getTSDate().getTime());
 
-        final Component cpnt = LegacyComponentSerializer.legacyAmpersand().deserialize(
-            String.format(GeneralUtils.getPrefix("kk") +
-                        "\n§cVous avez été éjecté du serveur pour la raison suivante : " +
-                        "\n§7ID de Sanction : " + sanction.getID() + "§f - §7" + sanction.getName() +
-                        "\n" +
-                        "\n§cLa réalité de cette infraction a été établie, conformément au réglèment du serveur" +
-                        "\nque vous avez précédement lu et approuvé." +
-                        "\n§eCette sanction vous apportera donc §7" + sanction.getPoints() + " points de sanction §eet sera enregistrée dans " +
-                        "\nvotre casier judiciaire." +
-                        "\n§7Date de l'infraction : " + new Date(sanction.getTSDate().getTime())
-                )
-            );
-        return cpnt;
-    }
+    final Component cpnt =
+        LegacyComponentSerializer.legacyAmpersand()
+            .deserialize(
+                String.format(
+                    "%s\n§cVous avez été éjecté du serveur pour la raison suivante : \n§7ID de Sanction : %s§f - §7%s\n\n§cLa réalité de cette infraction a été établie, conformément au réglèment du serveur\nque vous avez précédement lu et approuvé.\n§eCette sanction vous apportera donc §7%d points de sanction §eet sera enregistrée dans \nvotre casier judiciaire.\n§7Date de l'infraction : %s",
+                    GeneralUtils.getPrefix("kk"),
+                    sanction.getID(),
+                    sanction.getName(),
+                    sanction.getPoints(),
+                    date));
 
-    public static Component loginBanMessage(CJSanction sanction) {
-        String pattern = "dd/MM/yyyy HH:mm:ss";
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern, new Locale("fr", "FR"));
-        String date = sdf.format(sanction.getTSDate().getTime());
-        String expireDate = sdf.format(sanction.getTSExpireDate().getTime());
+    return cpnt;
+  }
 
+  public static Component loginBanMessage(CJSanction sanction) {
+    String date = SDF.format(sanction.getTSDate().getTime());
+    String expireDate = SDF.format(sanction.getTSExpireDate().getTime());
 
-        final Component cpnt = LegacyComponentSerializer.legacyAmpersand().deserialize(
-            String.format(GeneralUtils.getPrefix("kk") +
-                "\n§cVous avez été banni temporairement du serveur pour la raison suivante : " +
-                "\n" +
-                "\n§bID de Sanction : §7" + sanction.getID() + "§b - §7" + sanction.getName() +
-                "\n§bRaison : §7" + sanction.getReason() +
-                "\n§bDate : §7" + date + " §b- §7" + expireDate +
-                "\n§bTemps restant : §7" + GeneralUtils.timeRemaining(sanction.getTSExpireDate().getTime()-System.currentTimeMillis())
-            )
-        );
-        return cpnt;
-    }
+    final Component cpnt =
+        LegacyComponentSerializer.legacyAmpersand()
+            .deserialize(
+                String.format(
+                    "%s\n§cVous avez été banni temporairement du serveur pour la raison suivante : \n\n§bID de Sanction : §7%s§b - §7%s\n§bRaison : §7%s\n§bDate : §7%s §b- §7%s\n§bTemps restant : §7%s",
+                    GeneralUtils.getPrefix("kk"),
+                    sanction.getID(),
+                    sanction.getName(),
+                    sanction.getReason(),
+                    date,
+                    expireDate,
+                    GeneralUtils.timeRemaining(
+                        sanction.getTSExpireDate().getTime() - System.currentTimeMillis())));
+    return cpnt;
+  }
 
-    public static Component loginBanDefMessage(CJSanction sanction) {
-        String pattern = "dd/MM/yyyy HH:mm:ss";
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern, new Locale("fr", "FR"));
-        String date = sdf.format(sanction.getTSDate().getTime());
+  public static Component loginBanDefMessage(CJSanction sanction) {
+    String date = SDF.format(sanction.getTSDate().getTime());
 
-        final Component cpnt = LegacyComponentSerializer.legacyAmpersand().deserialize(
-            String.format(GeneralUtils.getPrefix("kk") +
-                "\n§cVous avez été banni définitivement du serveur pour la raison suivante : " +
-                "\n" +
-                "\n§bID de Sanction : §7" + sanction.getID() + "§b - §7" + sanction.getName() +
-                "\n§bRaison : §7" + sanction.getReason() +
-                "\n§bDate : §7" + date
-            )
-        );
-        return cpnt;
-    }
+      final Component cpnt =
+          LegacyComponentSerializer.legacyAmpersand()
+              .deserialize(
+                  String.format(
+                      "%s\n§cVous avez été banni définitivement du serveur pour la raison suivante : \n\n§bID de Sanction : §7%s§b - §7%s\n§bRaison : §7%s\n§bDate : §7%s",
+                      GeneralUtils.getPrefix("kk"),
+                      sanction.getID(),
+                      sanction.getName(),
+                      sanction.getReason(),
+                      date));
+      return cpnt;
+  }
 }

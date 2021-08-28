@@ -12,25 +12,23 @@ public class PlayerLoginListener implements Listener {
 
     // On vérifie lors du processus de login, si le joueur est ban
     @EventHandler
-    public void PlayerLoginEvent(PlayerLoginEvent e) {
+    public void PlayerLoginEvent(PlayerLoginEvent ple) {
+        try {
+            CJSanction playerActiveBan = KeysKeeperBot.getPlayerActiveBan(ple.getPlayer());
 
-        // On récupère la ban le plus long
-        CJSanction playerLongestBan = KeysKeeperBot.getPlayerLongestBan(e.getPlayer());
+            boolean isBanDef = false;
+            if ("bandef".equals(playerActiveBan.getType())) {
+                isBanDef = true;
+            }
 
-        // Si la fonction précedence n'a trouvé aucun ban venant du joueur, on le laisse passer
-        if (playerLongestBan == null) {
-            e.allow();
-        }
-        // Si le joueur à un ban, on le kick
-        else if (playerLongestBan.getTSExpireDate() == null) {
-            e.disallow(PlayerLoginEvent.Result.KICK_BANNED, KeysKeeperComponent.loginBanDefMessage(playerLongestBan));
-        }
-        else if (playerLongestBan.getTSExpireDate().getTime() > System.currentTimeMillis()) {
-            e.disallow(PlayerLoginEvent.Result.KICK_BANNED, KeysKeeperComponent.loginBanMessage(playerLongestBan));
-        }
-        else {
-            e.allow();
-        }
+            if (isBanDef) {
+                ple.disallow(PlayerLoginEvent.Result.KICK_BANNED, KeysKeeperComponent.loginBanDefMessage(playerActiveBan));
+            } else {
+                ple.disallow(PlayerLoginEvent.Result.KICK_BANNED, KeysKeeperComponent.loginBanMessage(playerActiveBan));
+            }
+        } catch (NullPointerException e) {
+            //Si la fonction playerActiveBan retourne un null, le joueur n'a pas de ban actif
+            return;
+        };
     }
-
 }

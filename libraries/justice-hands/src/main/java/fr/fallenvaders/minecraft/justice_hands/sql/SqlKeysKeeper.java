@@ -12,6 +12,8 @@ import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanctio
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
+
 public class SqlKeysKeeper {
 
     //Englobe toutes les méthodes en lien avec KeysKepper et la base de données
@@ -23,6 +25,7 @@ public class SqlKeysKeeper {
     }
 
     // Permet de récupérer tous les mutes d'un joueur et enregistrer leur timestamp
+    @Nullable
     public List<Long> getPlayerMutesEDLong(Player player) {
         ArrayList<Long> playerMuteList = new ArrayList<>();
         try {
@@ -44,6 +47,7 @@ public class SqlKeysKeeper {
         return null;
     }
 
+    @Nullable
     public List<CJSanction> getPlayerBans(Player player) {
         ArrayList<CJSanction> playerBansList = new ArrayList<>();
 

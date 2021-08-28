@@ -16,6 +16,8 @@ import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.objects.Sanction;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
+
 
 public class SqlSanctionManager {
     private Connection connection;
@@ -65,6 +67,7 @@ public class SqlSanctionManager {
         }
     }
 
+    @Nullable
     public List<CJSanction> getPlayerSanctions(Player player) {
         ArrayList<CJSanction> playerSanctionList = new ArrayList<>();
 
@@ -97,6 +100,7 @@ public class SqlSanctionManager {
         return null;
     }
 
+    @Nullable
     public CJSanction getLastSanction(Player player) {
         try {
             PreparedStatement q = connection.prepareStatement("SELECT * FROM sanctions_list WHERE uuid = ? AND state = ? ORDER BY id DESC LIMIT 0,1");
@@ -105,18 +109,19 @@ public class SqlSanctionManager {
 
             ResultSet rs = q.executeQuery();
             CJSanction sanction = new CJSanction();
-            while (rs.next()) {
-                sanction.setID("#" + String.format("%05d", (rs.getInt("id"))));
-                sanction.setPlayer(Bukkit.getPlayer(UUID.fromString(rs.getString("uuid"))));
-                sanction.setName(rs.getString("name"));
-                sanction.setReason(rs.getString("reason"));
-                sanction.setPoints(rs.getInt("points"));
-                sanction.setTSDate(rs.getTimestamp("date"));
-                sanction.setTSExpireDate(rs.getTimestamp("expiredate"));
-                sanction.setModerator(Bukkit.getPlayer(UUID.fromString(rs.getString("moderator"))));
-                sanction.setType(rs.getString("type"));
-                sanction.setState(rs.getString("state"));
-            }
+
+            rs.first();
+            sanction.setID("#" + String.format("%05d", (rs.getInt("id"))));
+            sanction.setPlayer(Bukkit.getPlayer(UUID.fromString(rs.getString("uuid"))));
+            sanction.setName(rs.getString("name"));
+            sanction.setReason(rs.getString("reason"));
+            sanction.setPoints(rs.getInt("points"));
+            sanction.setTSDate(rs.getTimestamp("date"));
+            sanction.setTSExpireDate(rs.getTimestamp("expiredate"));
+            sanction.setModerator(Bukkit.getPlayer(UUID.fromString(rs.getString("moderator"))));
+            sanction.setType(rs.getString("type"));
+            sanction.setState(rs.getString("state"));
+
             q.close();
             return sanction;
         } catch (SQLException e) {
