@@ -11,11 +11,10 @@ import org.bukkit.entity.Player;
 
 public class SanctionsAlgo {
 
-    public static final FileConfiguration CONFIG = JusticeHands.PLUGIN.getConfig();
     public static final String CFG_PATH_POINT = "justicehands.sanctionmanager.points-system";
-    public static final int CFG_MUTE_MIN_POINT = CONFIG.getInt(CFG_PATH_POINT + ".mute-min-points");
-    public static final int CFG_BAN_DAY_POINT = CONFIG.getInt(CFG_PATH_POINT + ".ban-day-points");
-    public static final int CFG_RISINGBAN_LIMIT = CONFIG.getInt(CFG_PATH_POINT + ".risingban-points");
+    public static final String CFG_PATH_MUTE_MIN_POINT = CFG_PATH_POINT + ".mute-min-points";
+    public static final String CFG_PATH_BAN_DAY_POINT = CFG_PATH_POINT + ".ban-day-points";
+    public static final String CFG_PATH_RISINGBAN_LIMIT = CFG_PATH_POINT + ".risingban-points";
     public static final long LONG_MIN_IN_MS = 60l * 1000l; // sec(60) * ms(1000)
     public static final long LONG_DAY_IN_MS = 24l * 60l * 60l * 1000l; // hour(24) * min(60) * sec(60) * ms(1000)
 
@@ -28,12 +27,16 @@ public class SanctionsAlgo {
      * Cette algorithme va gérer la création de la sanction par rapport aux
      * ancienne sanction du joueur mais aussi par rapport à son nombre de points actuel
      *
-     * TODO, il va falloire créer le systeme qui permet de perdre 1 points tous les jours (par exemple), le
+     * TODO, il va falloir créer le systeme qui permet de perdre 1 points tous les jours (par exemple), le
      * joueur perdra des points succéssivement chaque jours si il est sage et qu'il ne fait
      * aucune violation du réglèment. (Permet de se racheter)
      */
 
     public static void generateSanction(Sanction sanction, Player moderator, Player target) {
+        final FileConfiguration CONFIG = JusticeHands.PLUGIN.getConfig();
+        final int CFG_MUTE_MIN_POINT = CONFIG.getInt(CFG_PATH_MUTE_MIN_POINT);
+        final int CFG_BAN_DAY_POINT = CONFIG.getInt(CFG_PATH_BAN_DAY_POINT);
+        final int CFG_RISINGBAN_LIMIT = CONFIG.getInt(CFG_PATH_RISINGBAN_LIMIT);
 
         // Lors de l'algorithme, les points et le types de sanction peuvent être modifiés.
         // On va donc créer une nouvelle sanction identique à celle en paramètre.
