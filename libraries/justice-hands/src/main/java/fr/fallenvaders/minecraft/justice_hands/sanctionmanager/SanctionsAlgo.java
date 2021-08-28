@@ -16,8 +16,8 @@ public class SanctionsAlgo {
     public static final int CFG_MUTE_MIN_POINT = CONFIG.getInt(CFG_PATH_POINT + ".mute-min-points");
     public static final int CFG_BAN_DAY_POINT = CONFIG.getInt(CFG_PATH_POINT + ".ban-day-points");
     public static final int CFG_RISINGBAN_LIMIT = CONFIG.getInt(CFG_PATH_POINT + ".risingban-points");
-    public static final long LONG_MIN = 60l * 1000l; // sec(60) * ms(1000)
-    public static final long LONG_DAY = 24l * 60l * 60l * 1000l; // hour(24) * min(60) * sec(60) * ms(1000)
+    public static final long LONG_MIN_IN_MS = 60l * 1000l; // sec(60) * ms(1000)
+    public static final long LONG_DAY_IN_MS = 24l * 60l * 60l * 1000l; // hour(24) * min(60) * sec(60) * ms(1000)
 
     /*
      * Echelle de sanctions: Points <-> Temps :
@@ -83,11 +83,11 @@ public class SanctionsAlgo {
         if (tempSanction.getInitialType().equals("mute")) {
             // Points convertis en minutes (MUTE)
             extraTime =
-                ((tempSanction.getPoints() + targetPoints) / Long.valueOf(muteMinPerPts)) * LONG_MIN;
+                ((tempSanction.getPoints() + targetPoints) / Long.valueOf(muteMinPerPts)) * LONG_MIN_IN_MS;
         } else {
             // Points convertis en jours (BAN)
             extraTime =
-                ((tempSanction.getPoints() + targetPoints) / Long.valueOf(banDayPerPts)) * LONG_DAY;
+                ((tempSanction.getPoints() + targetPoints) / Long.valueOf(banDayPerPts)) * LONG_DAY_IN_MS;
         }
 
         long expireTime = (long) (currentTime + extraTime);
