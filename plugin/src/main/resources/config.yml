@@ -42,7 +42,7 @@ justicehands:
         #   - mute
         #   - ban (bannissement temporaire)
         #
-        # Pour un mute,par défaut  chaque point vaut 1 minute :
+        # Pour un mute, par défaut  chaque point vaut 1 minute :
         # Mute (en minutes) = points*1
         #
         # Pour un bannissement temporaire, par défaut chaque 10 points vaut 1 jour:
