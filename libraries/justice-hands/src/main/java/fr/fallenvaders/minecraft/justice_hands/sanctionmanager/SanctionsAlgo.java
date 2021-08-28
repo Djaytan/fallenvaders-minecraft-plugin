@@ -13,8 +13,8 @@ public class SanctionsAlgo {
 
     public static final FileConfiguration CONFIG = JusticeHands.PLUGIN.getConfig();
     public static final String CFG_PATH_POINT = "justicehands.sanctionmanager.points-system";
-    public static final int CFG_PATH_MUTE_MIN_POINT = CONFIG.getInt(CFG_PATH_POINT + ".mute-min-points");
-    public static final int CFG_PATH_BAN_DAY_POINT = CONFIG.getInt(CFG_PATH_POINT + ".ban-day-points");
+    public static final int CFG_MUTE_MIN_POINT = CONFIG.getInt(CFG_PATH_POINT + ".mute-min-points");
+    public static final int CFG_BAN_DAY_POINT = CONFIG.getInt(CFG_PATH_POINT + ".ban-day-points");
     public static final int CFG_RISINGBAN_LIMIT = CONFIG.getInt(CFG_PATH_POINT + ".risingban-points");
     public static final long LONG_MIN = 60l * 1000l; // sec(60) * ms(1000)
     public static final long LONG_DAY = 24l * 60l * 60l * 1000l; // hour(24) * min(60) * sec(60) * ms(1000)
@@ -47,7 +47,7 @@ public class SanctionsAlgo {
             tempSanction.setInitialType("risingban");
             tempSanction.setPoints(tempSanction.getPoints() * 2); // Multiplication des points par deux
             generateBanMute(
-                tempSanction, moderator, target, CFG_PATH_MUTE_MIN_POINT, CFG_PATH_BAN_DAY_POINT);
+                tempSanction, moderator, target, CFG_MUTE_MIN_POINT, CFG_BAN_DAY_POINT);
             return;
 
             // Le type de sanction est un type sans date d'expiration
@@ -61,7 +61,7 @@ public class SanctionsAlgo {
         } else if (tempSanction.getInitialType().equals("mute")
             || tempSanction.getInitialType().equals("ban")) {
             generateBanMute(
-                tempSanction, moderator, target, CFG_PATH_MUTE_MIN_POINT, CFG_PATH_BAN_DAY_POINT);
+                tempSanction, moderator, target, CFG_MUTE_MIN_POINT, CFG_BAN_DAY_POINT);
             return;
 
         } else {
