@@ -4,11 +4,14 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
+import fr.fallenvaders.minecraft.justice_hands.keyskeeper.KeysKeeperBot;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CategoriesList;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.SanctionsAlgo;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.objects.Categorie;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.objects.Sanction;
+import fr.fallenvaders.minecraft.justice_hands.sql.SqlSanctionManager;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
@@ -31,10 +34,12 @@ public class CategoryInventorySM implements InventoryProvider {
         this.currentCategorie = currentCategorie;
     }
 
+
     @Override
     public void init(Player moderator, InventoryContents contents) {
         SmartInventory inventory = contents.inventory();
-        contents.set(0, 0, ClickableItem.empty(GeneralUtils.getTargetHead(Bukkit.getPlayer(UUID.fromString(inventory.getId())))));
+        Player player = Bukkit.getPlayer(UUID.fromString(inventory.getId()));
+        contents.set(0, 0, ClickableItem.empty(GeneralUtils.getTargetHead(player)));
         contents.fillRow(1, ClickableItem.empty(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1)));
         for (Categorie categorie : CategoriesList.getCategoriesList()) {
 
@@ -49,7 +54,7 @@ public class CategoryInventorySM implements InventoryProvider {
                 if (e.isLeftClick()) {
                     this.currentCategorie = categorie;
                     init(moderator, contents);
-                    InventoryBuilderSM.openCategoryMenu(categorie, moderator, Bukkit.getPlayer(UUID.fromString(inventory.getId())));
+                    InventoryBuilderSM.openCategoryMenu(categorie, moderator, player);
                 }
             }));
         }
@@ -64,8 +69,8 @@ public class CategoryInventorySM implements InventoryProvider {
                 sanctions[i] = ClickableItem.of(getSanctionItem(sanction), e -> {
                     if (e.isLeftClick()) {
                         if (moderator.hasPermission("justicehands.sm." + sanction.getInitialType().toLowerCase())) {
-                            SanctionsAlgo.generateSanction(sanction, moderator, Bukkit.getPlayer(UUID.fromString(inventory.getId())));
-
+                            SanctionsAlgo.generateSanction(sanction, moderator, player);
+                            KeysKeeperBot.kickPlayer(player, JusticeHands.getSqlSM().getLastSanction(player));
                         } else {
                             SanctionType type = SanctionType.getType(sanction.getInitialType());
                             moderator.sendMessage(GeneralUtils.getPrefix("SM") + "§cTu n'as pas la permission d'attribuer un " + type.getVisualColor() + type.getVisualName());

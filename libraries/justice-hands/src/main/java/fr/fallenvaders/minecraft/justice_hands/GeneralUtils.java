@@ -43,7 +43,6 @@ public class GeneralUtils {
             Date lastPlayed = new Date(target.getLastPlayed());
             lores.add("§7Dernière déconnexion : §f" + sdf.format(lastPlayed));
         }
-        lores.add("§7Banni: §f" + getState(target.isBanned()));
         headMeta.setLore(lores);
         targetHead.setItemMeta(headMeta);
 

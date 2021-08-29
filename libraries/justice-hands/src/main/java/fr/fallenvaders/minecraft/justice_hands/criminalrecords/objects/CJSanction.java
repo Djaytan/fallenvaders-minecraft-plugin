@@ -38,7 +38,7 @@ public class CJSanction {
         this.sanctionPoints = sanctionPoints;
     }
 
-    public void setInitialType(String sanctionType) {
+    public void setType(String sanctionType) {
         this.sanctionType = sanctionType;
     }
 
@@ -79,7 +79,7 @@ public class CJSanction {
         return sanctionPoints;
     }
 
-    public String getInitialType() {
+    public String getType() {
         return sanctionType;
     }
 

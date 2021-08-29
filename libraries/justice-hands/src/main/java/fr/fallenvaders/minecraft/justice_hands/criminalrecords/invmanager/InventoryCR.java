@@ -56,19 +56,19 @@ public class InventoryCR implements InventoryProvider {
         int nbrTotalCanceled = 0;
         for (CJSanction sanction : playerAllSanctionList) {
             if (!sanction.getState().equals("delete")) {
-                if (sanction.getInitialType().contains("ban")) {
+                if (sanction.getType().contains("ban")) {
                     nbrBans++;
                     if (sanction.getState().equals("cancel")) {
                         nbrBansCanceled++;
                     }
                 }
-                if (sanction.getInitialType().equals("mute")) {
+                if (sanction.getType().equals("mute")) {
                     nbrMutes++;
                     if (sanction.getState().equals("cancel")) {
                         nbrMutesCanceled++;
                     }
                 }
-                if (sanction.getInitialType().equals("kick")) {
+                if (sanction.getType().equals("kick")) {
                     nbrKicks++;
                     if (sanction.getState().equals("cancel")) {
                         nbrKicksCanceled++;
@@ -126,15 +126,15 @@ public class InventoryCR implements InventoryProvider {
                     if (select.equals("all")) {
                         selectedSanctions.add(sanction);
                     } else if (select.equals("mute")) {
-                        if (sanction.getInitialType().equals("mute")) {
+                        if (sanction.getType().equals("mute")) {
                             selectedSanctions.add(sanction);
                         }
                     } else if (select.equals("kick")) {
-                        if (sanction.getInitialType().equals("kick")) {
+                        if (sanction.getType().equals("kick")) {
                             selectedSanctions.add(sanction);
                         }
                     } else if (select.equals("ban")) {
-                        if (sanction.getInitialType().contains("ban")) {
+                        if (sanction.getType().contains("ban")) {
                             selectedSanctions.add(sanction);
                         }
                     }
@@ -285,7 +285,7 @@ public class InventoryCR implements InventoryProvider {
 
         }
 
-        SanctionType type = SanctionType.getType(sanction.getInitialType());
+        SanctionType type = SanctionType.getType(sanction.getType());
         if (!sanction.getState().equals("cancel")) {
             item.setType(type.getClayColor());
             meta.setDisplayName(type.getVisualColor() + type.getVisualName() + ChatColor.GRAY + sdf.format((Date) sanction.getTSDate()));

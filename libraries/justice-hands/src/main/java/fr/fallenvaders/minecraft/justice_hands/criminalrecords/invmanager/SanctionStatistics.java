@@ -28,13 +28,13 @@ public class SanctionStatistics {
             for (CJSanction sanction : playerAllSanctionList) {
                 if (!(sanction.getState().equals("cancel") || sanction.getState().equals("delete"))) {
                     // Type : ban, bandef, risingban
-                    if (sanction.getInitialType().contains("ban")) {
+                    if (sanction.getType().contains("ban")) {
                         bansList.add(sanction);
                         // Type : mute
-                    } else if (sanction.getInitialType().equals("mute")) {
+                    } else if (sanction.getType().equals("mute")) {
                         mutesList.add(sanction);
                         // Type : kick
-                    } else if (sanction.getInitialType().equals("kick")) {
+                    } else if (sanction.getType().equals("kick")) {
                         kicksList.add(sanction);
                     }
                     activeSanctionList.add(sanction);
@@ -80,7 +80,7 @@ public class SanctionStatistics {
             CJSanction lastSanction = playerAllSanctionList.get(0);
             lastSanctionID = lastSanction.getID();
             lastSanctionDate = sdf.format(lastSanction.getTSDate());
-            lastSanctionType = (SanctionType.getType(lastSanction.getInitialType()).getVisualColor() + SanctionType.getType(lastSanction.getInitialType()).getVisualName());
+            lastSanctionType = (SanctionType.getType(lastSanction.getType()).getVisualColor() + SanctionType.getType(lastSanction.getType()).getVisualName());
         }
 
         // Récupération premiere et dernière sanction de chaque type (Valeurs par défaut)

@@ -22,7 +22,7 @@ public class SqlConnection {
             try {
                 Class.forName("org.mariadb.jdbc.Driver");
                 connection = DriverManager.getConnection(url, user, pass);
-                System.out.println("[Fallenvaders] Base de données connectée");
+                System.out.println("[JusticeHands] Base de données connectée");
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -87,7 +87,7 @@ public class SqlConnection {
         if (isConnected()) {
             try {
                 connection.close();
-                System.out.println("[Fallenvaders] Base de données déconnectée");
+                System.out.println("[JusticeHands] Base de données déconnectée");
             } catch (SQLException e) {
                 e.printStackTrace();
             }

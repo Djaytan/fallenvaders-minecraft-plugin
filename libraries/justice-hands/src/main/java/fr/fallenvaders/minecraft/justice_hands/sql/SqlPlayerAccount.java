@@ -1,5 +1,6 @@
 package fr.fallenvaders.minecraft.justice_hands.sql;
 
+import javax.annotation.Nullable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,6 +49,7 @@ public class SqlPlayerAccount {
     }
 
     // Récupération du compte
+    @Nullable
     public UUID getAccount(UUID playerUUID) {
         try {
             PreparedStatement q = connection.prepareStatement("SELECT uuid FROM players_points WHERE uuid = ?");
