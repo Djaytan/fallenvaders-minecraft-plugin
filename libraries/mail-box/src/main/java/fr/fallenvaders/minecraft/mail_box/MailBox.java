@@ -25,28 +25,19 @@ public class MailBox {
     public static void activateModule(JavaPlugin javaPlugin) {
         main = javaPlugin;
 
-        main.getLogger().log(Level.SEVERE, "Test");
-
         LangManager.load();
-
-        SQLConnection.getInstance().setJdbc(SQLConnection.SGBD_TYPE_ROOT).setHost(main.getConfig().getString("database.host")).setDatabase(main.getConfig().getString("database.database"))
-            .setUser(main.getConfig().getString("database.user")).setPassword(main.getConfig().getString("database.password")).connect();
 
         main.getCommand(CmdMailbox.CMD_LABEL).setExecutor(new CmdMailbox());
 
-        if (SQLConnection.getInstance().getConnection() != null && SQLConnection.getInstance().isConnected()) {
-            manager = new InventoryManager(main);
-            manager.init();
-            PlayerManager.getInstance().init();
-            MailBoxController.initialize();
+
+        manager = new InventoryManager(main);
+        manager.init();
+        PlayerManager.getInstance().init();
+        MailBoxController.initialize();
 
 
-            main.getServer().getPluginManager().registerEvents(new JoinListener(), main);
-            main.getServer().getPluginManager().registerEvents(new QuitListener(), main);
+        main.getServer().getPluginManager().registerEvents(new JoinListener(), main);
+        main.getServer().getPluginManager().registerEvents(new QuitListener(), main);
 
-        } else {
-            main.getLogger().log(Level.SEVERE, LangManager.getValue("connection_needed"));
-
-        }
     }
 }

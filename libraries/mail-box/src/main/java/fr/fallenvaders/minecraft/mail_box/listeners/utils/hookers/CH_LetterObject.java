@@ -4,8 +4,6 @@ import fr.fallenvaders.minecraft.mail_box.inventory.builders.InventoryBuilder;
 import fr.fallenvaders.minecraft.mail_box.listeners.utils.ChatHooker;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-
 public class CH_LetterObject extends ChatHooker {
 
     public CH_LetterObject(String startMsg, StringBuilder object, InventoryBuilder parentInv) {

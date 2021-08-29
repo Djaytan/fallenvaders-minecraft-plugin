@@ -36,6 +36,7 @@
     <modules>
         <module>libraries</module>
         <module>plugin</module>
+        <module>test-server</module>
     </modules>
 
     <repositories>

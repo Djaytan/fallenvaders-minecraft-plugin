@@ -7,164 +7,172 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class BaseSQL<T extends Data> {
-	private static final SQLConnection sqlConnection = SQLConnection.getInstance();
+    protected SQLConnection sqlConnection;
 
-	protected SQLConnection getSqlConnection() {
-		return sqlConnection;
-	}
+    protected abstract T onCreate(T obj);
 
-	protected abstract T onCreate(T obj);
+    public T create(T obj) {
+        T res = null;
 
-	public T create(T obj) {
-		T res = null;
+        if (this.sqlConnection.startTransaction()) {
+            T temp = this.onCreate(obj);
 
-		if (this.getSqlConnection().startTransaction()) {
-			T temp = this.onCreate(obj);
+            if (temp != null) {
+                if (this.sqlConnection.commit()) {
+                    res = temp;
+                }
+            } else {
+                this.sqlConnection.rollBack();
+            }
+        }
 
-			if (temp != null) {
-				if (this.getSqlConnection().commit()) {
-					res = temp;
-				}
-			}
-		}
+        this.sqlConnection.disconnect();
 
-		return res;
-	}
+        return res;
+    }
 
-	public List<T> createAll(List<T> list) {
-		List<T> res = null;
+    public List<T> createAll(List<T> list) {
+        List<T> res = null;
 
-		if (this.getSqlConnection().startTransaction()) {
-			List<T> temp = new ArrayList<>();
+        if (this.sqlConnection.startTransaction()) {
+            List<T> temp = new ArrayList<>();
 
-			for (T obj : list) {
-				T TTemp = this.onCreate(obj);
+            for (T obj : list) {
+                T TTemp = this.onCreate(obj);
 
-				if (TTemp == null) {
-					temp = null;
-					break;
+                if (TTemp == null) {
+                    temp = null;
+                    break;
 
-				} else {
-					temp.add(TTemp);
-				}
-			}
+                } else {
+                    temp.add(TTemp);
+                }
+            }
 
-			if (temp != null) {
-				if (this.getSqlConnection().commit()) {
-					res = temp;
-				}
-			}
-		}
+            if (temp != null) {
+                if (this.sqlConnection.commit()) {
+                    res = temp;
+                }
+            } else {
+                this.sqlConnection.rollBack();
+            }
+        }
+        this.sqlConnection.disconnect();
+        return res;
+    }
 
-		return res;
-	}
+    protected abstract List<T> onFind(UUID uuid);
 
-	protected abstract List<T> onFind(UUID uuid);
+    public List<T> find(UUID uuid) {
+        List<T> res = null;
 
-	public List<T> find(UUID uuid) {
-		List<T> res = null;
+        List<T> temp = this.onFind(uuid);
 
-		if (this.getSqlConnection().isConnected()) {
-			List<T> temp = this.onFind(uuid);
+        if (temp != null) {
+            res = temp;
+        }
+        this.sqlConnection.disconnect();
 
-			if (temp != null) {
-				res = temp;
-			}
+        return res;
+    }
 
-		}
+    protected abstract T onUpdate(Long id, T obj);
 
-		return res;
-	}
+    public T update(Long id, T obj) {
+        T res = null;
 
-	protected abstract T onUpdate(Long id, T obj);
+        if (this.sqlConnection.startTransaction()) {
+            T temp = this.onUpdate(id, obj);
 
-	public T update(Long id, T obj) {
-		T res = null;
+            if (temp != null) {
+                if (this.sqlConnection.commit()) {
+                    res = temp;
+                }
+            } else {
+                this.sqlConnection.rollBack();
+            }
 
-		if (this.getSqlConnection().startTransaction()) {
-			T temp = this.onUpdate(id, obj);
+        }
+        this.sqlConnection.disconnect();
+        return res;
+    }
 
-			if (temp != null) {
-				if (this.getSqlConnection().commit()) {
-					res = temp;
-				}
-			}
+    public List<T> updateAll(List<T> list) {
+        List<T> res = null;
 
-		}
+        if (this.sqlConnection.startTransaction()) {
+            List<T> temp = new ArrayList<>();
 
-		return res;
-	}
+            for (T obj : list) {
+                T tTemp = this.onUpdate(obj.getId(), obj);
 
-	public List<T> updateAll(List<T> list) {
-		List<T> res = null;
+                if (tTemp != null) {
+                    temp.add(tTemp);
 
-		if (this.getSqlConnection().startTransaction()) {
-			List<T> temp = new ArrayList<>();
+                } else {
+                    temp = null;
+                    break;
+                }
+            }
 
-			for (T obj : list) {
-				T tTemp = this.onUpdate(obj.getId(), obj);
+            if (temp != null) {
+                if (this.sqlConnection.commit()) {
+                    res = temp;
+                }
+            } else {
+                this.sqlConnection.rollBack();
+            }
+        }
+        this.sqlConnection.disconnect();
+        return res;
+    }
 
-				if (tTemp != null) {
-					temp.add(tTemp);
+    protected abstract boolean onDelete(T obj);
 
-				} else {
-					temp = null;
-					break;
-				}
-			}
+    public boolean delete(T obj) {
+        boolean res = false;
 
-			if (temp != null) {
-				if (this.getSqlConnection().commit()) {
-					res = temp;
-				}
-			}
-		}
+        if (this.sqlConnection.startTransaction()) {
 
-		return res;
-	}
+            if (this.onDelete(obj)) {
+                if (this.sqlConnection.commit()) {
+                    res = true;
 
-	protected abstract Boolean onDelete(T obj);
+                }
+            } else {
+                this.sqlConnection.rollBack();
+            }
+        }
 
-	public Boolean delete(T obj) {
-		Boolean res = false;
+        this.sqlConnection.disconnect();
+        return res;
+    }
 
-		if (this.getSqlConnection().startTransaction()) {
+    public boolean deleteAll(List<T> list) {
+        boolean res = false;
 
-			if (this.onDelete(obj)) {
+        if (this.sqlConnection.startTransaction()) {
+            boolean temp = true;
 
-				if (this.getSqlConnection().commit()) {
-					res = true;
+            for (T obj : list) {
+                boolean TTemp = this.onDelete(obj);
 
-				}
-			}
-		}
-		return res;
-	}
+                if (!TTemp) {
+                    temp = false;
+                    break;
+                }
+            }
 
-	public Boolean deleteAll(List<T> list) {
-		Boolean res = false;
+            if (temp) {
+                if (this.sqlConnection.commit()) {
+                    res = true;
+                }
+            } else {
+                this.sqlConnection.rollBack();
+            }
+        }
 
-		if (this.getSqlConnection().startTransaction()) {
-			Boolean temp = true;
-
-			for (T obj : list) {
-				Boolean TTemp = this.onDelete(obj);
-
-				if (!TTemp) {
-					temp = false;
-					break;
-
-				}
-			}
-
-			if (temp) {
-				if (this.getSqlConnection().commit()) {
-					res = temp;
-				}
-			}
-		}
-
-		return res;
-	}
-
+        this.sqlConnection.disconnect();
+        return res;
+    }
 }

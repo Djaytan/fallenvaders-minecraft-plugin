@@ -5,4 +5,6 @@
 
 Minecraft plugin for FallenVaders server.
 
+## Installation
 
+For this section, navigate through [here](doc/install.md).
