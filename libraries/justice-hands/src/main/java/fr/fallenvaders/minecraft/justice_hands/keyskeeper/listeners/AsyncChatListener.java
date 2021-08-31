@@ -16,8 +16,6 @@ public class AsyncChatListener implements Listener {
         if (unmuteDate > System.currentTimeMillis()) {
             e.getPlayer().sendMessage(GeneralUtils.getPrefix("kk") + "§cTu ne peux pas parler, tu es réduit au silence pendant encore §b" + GeneralUtils.timeRemaining(unmuteDate - System.currentTimeMillis()) + "§c.");
             e.setCancelled(true);
-        } else {
-            e.setCancelled(false);
         }
     }
 }

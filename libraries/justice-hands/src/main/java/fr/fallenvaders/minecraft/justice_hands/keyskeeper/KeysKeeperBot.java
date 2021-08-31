@@ -1,11 +1,17 @@
 package fr.fallenvaders.minecraft.justice_hands.keyskeeper;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
 import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanction;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nullable;
 
 public class KeysKeeperBot {
 
@@ -15,17 +21,18 @@ public class KeysKeeperBot {
      * Si jamais il y a une sanction de mute il va falloir que je mette à jour ce dernier
      */
 
+    @NotNull
     public static Long getPlayerMuteDate(Player player) {
         List<Long> muteDateTSList = JusticeHands.getSqlKK().getPlayerMutesEDLong(player);
-
-        Long unmuteDate = muteDateTSList
-            .stream()
-            .max(Long::compare).get();
-
-        return unmuteDate;
+        try {
+            return muteDateTSList.stream().max(Long::compare).get();
+        } catch (NoSuchElementException e) {
+            return 0l;
+        }
     }
 
-    public static CJSanction getPlayerLongestBan(Player player) {
+    @Nullable
+    public static CJSanction getPlayerActiveBan(Player player) {
         List<CJSanction> playerBansList = JusticeHands.getSqlKK().getPlayerBans(player); // Récupération de tous les bans du joueurs
         System.out.println("Nombre de bans : " + playerBansList.size());
 
@@ -48,8 +55,13 @@ public class KeysKeeperBot {
             for (CJSanction sanction : playerBansList) {
                 CJSanction primarySanction; //La sanction primaire est celle qui interdit le joueur de rejoindre le serveur
                 if (sanction.getTSExpireDate().getTime() == unbanDate) {
+                  if (sanction.getTSExpireDate().getTime() > System.currentTimeMillis()) { //Vérifie si la sanction est toujours active
                     primarySanction = sanction;
                     return primarySanction;
+                  }
+                  else {
+                      return null;
+                  }
                 }
             }
         }
@@ -58,6 +70,8 @@ public class KeysKeeperBot {
     }
 
     public static void kickPlayer(Player player, CJSanction sanction) {
-
+        if (!"mute".equals(sanction.getType())) {
+            player.kick(KeysKeeperComponent.ejectingMessageCpnt(sanction));
+        }
     }
 }
