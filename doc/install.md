@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-For process installation, you must have installed in your environment these
+To process installation, you must have installed in your environment these
 following programs:
 * [Java 16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) or above
 * [Maven 3](https://maven.apache.org/download.cgi#)
@@ -18,16 +18,16 @@ Then run the compilation command presented below.
 
 ## Compile project
 
-After each code update, run this command:
+After each code update or for project initialization, run this command:
 ```shell
 $ mvn clean install
 ```
 
 ## Launch server
 
-For launching the test server, you have two options:
+To launch the test server, you have two options:
 * Running from the corresponding script (`start.bat` on Windows, `start.sh` on Linux)
-* Launch a configuration from your IDE
+* Launch a configuration from your IDE (recommended)
 
 ### Launch server from IDE configuration
 
@@ -56,12 +56,17 @@ You can see the screen below:
 ***Note:** If you want to conserve the behavior of build before run, just add a Maven
 before task.*
 
-***Note 2: For stopping the server, enter `stop` in the server console. If you try to
-stop it through the IDE's stop button it will not work.***
+***Note 2:** For stopping the server, enter `stop` in the server console. If you try to
+stop it through the IDE's stop button it will not work.*
 
 ## Debug mode
 
-For debug mode, it's recommended to clone the previously created launch configuration
+Debug mode allow you to place breakpoint and browse your code step by step, see variables values in live, etc.
+
+This is an illustration of the expected result:  
+![Debug mode illustration](img/debug_mode.jpg)
+
+For activate it, first it's recommended to clone the previously created launch configuration
 and rename it "test-server (debug)".
 Then, add to "Program arguments" this one: `debug`. It tells the test-server
 to run in debug mode.
