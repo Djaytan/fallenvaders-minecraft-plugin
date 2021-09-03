@@ -5,11 +5,11 @@
     <parent>
         <artifactId>libraries</artifactId>
         <groupId>fr.fallenvaders.minecraft</groupId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
     </parent>
 
     <artifactId>mini-events</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 
     <name>MiniEvents</name>
     <description>Mini events plugin</description>
