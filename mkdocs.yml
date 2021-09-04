@@ -1,1 +1,3 @@
 site_name: MC-FallenVaders - Documentation
+theme:
+  name: material
