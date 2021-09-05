@@ -5,6 +5,8 @@ jobs:
     docker:
       - image: cimg/openjdk:16.0
       - image: circleci/python:3.6.4
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
     steps:
       - checkout
       - run:
