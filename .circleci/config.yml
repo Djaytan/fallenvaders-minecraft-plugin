@@ -12,7 +12,7 @@ jobs:
       - run:
           name: Doc
           command: |
-            sudo apt install python3
+            sudo apt install python-pip
             sudo pip install mkdocs-material
       - run:
           name: Build
