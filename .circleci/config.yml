@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Install mkdocs
-          command: pip3 install mkdocs-material
+          command: python3 --version
       - run:
           name: Doc
           command: mkdocs gh-deploy --force
