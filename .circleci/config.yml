@@ -8,6 +8,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install mkdocs
+          command: pip install mkdocs-material
+      - run:
           name: Doc
           command: mkdocs gh-deploy --force
       - run:
