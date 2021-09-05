@@ -1,15 +1,19 @@
 version: 2.1
 
+machine:
+  python:
+    version: 3.9.7
+
+dependencies:
+  pre:
+    - pip install mkdocs-material
+
 jobs:
   build-and-test:
     docker:
       - image: cimg/openjdk:16.0
-      - image: cimg/python:3.9.7
     steps:
       - checkout
-      - run:
-          name: Mkdoc install
-          command: pip install mkdocs-material
       - run:
           name: Build
           command: mvn -B -DskipTests clean package
