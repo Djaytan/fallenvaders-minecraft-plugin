@@ -1,18 +1,20 @@
 version: 2.1
 
+environment:
+  PIPENV_VENV_IN_PROJECT: true
+
 jobs:
   build-and-test:
     docker:
       - image: cimg/openjdk:16.0
       - image: circleci/python:3.6.4
-        environment:
-          PIPENV_VENV_IN_PROJECT: true
     steps:
       - checkout
-      - run: pip3 install mkdocs-material
       - run:
           name: Doc
-          command: mkdocs gh-deploy --force
+          command: |
+            sudo pip install mkdocs-material
+            mkdocs gh-deploy --force
       - run:
           name: Build
           command: mvn -B -DskipTests clean package
