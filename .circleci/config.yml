@@ -9,8 +9,7 @@ jobs:
           PIPENV_VENV_IN_PROJECT: true
     steps:
       - checkout
-      - run: brew install pyenv
-      - run: pip install mkdocs-material
+      - run: pip3 install mkdocs-material
       - run:
           name: Doc
           command: mkdocs gh-deploy --force
