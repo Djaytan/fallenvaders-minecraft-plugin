@@ -1,0 +1,10 @@
+version: 2.1
+
+jobs:
+  ignore:
+    steps:
+      - run: echo "Build ignored."
+      
+workflows:
+  main:
+    - ignore
