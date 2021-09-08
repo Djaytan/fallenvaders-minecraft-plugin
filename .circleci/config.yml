@@ -2,9 +2,15 @@ version: 2.1
 
 jobs:
   ignore:
+    docker:
+      - image: cimg/openjdk:16.0
     steps:
       - run: echo "Build ignored."
       
 workflows:
   main:
-    - ignore
+    jobs:
+      - ignore:
+          filters:
+            branches:
+              only: test
