@@ -10,13 +10,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Doc
-          command: |
-            sudo apt update
-            sudo apt install python3 python3-pip
-            sudo pip install mkdocs-material
-            mkdocs gh-deploy --force
-      - run:
           name: Build
           command: mvn -B -DskipTests clean package
       - run:
@@ -25,9 +18,32 @@ jobs:
       - run:
           name: Test
           command: mvn test
+  deploy-doc:
+    docker:
+      - image: circleci/python:3.9.7
+    steps:
+      - checkout
+      - run:
+          name: Install Python and Pip
+          command: |
+            sudo apt update
+            sudo apt install python3 python3-pip
+      - run:
+          name: Install MkDocs
+          command: sudo pip install mkdocs-material
+      - run:
+          name: Deploy doc
+          command: mkdocs gh-deploy --force
 
 workflows:
   main:
     jobs:
       - build-and-test:
+          filters:
+            branches:
+              ignore: gh-pages
           context: SonarCloud
+      - deploy-doc:
+          filters:
+            branches:
+              only: master
