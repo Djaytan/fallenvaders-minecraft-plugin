@@ -4,9 +4,9 @@
 
 To process installation, you must have installed in your environment these
 following programs:
-* [Java 16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) or above
-* [Maven 3](https://maven.apache.org/download.cgi#)
-* An IDE *([IntelliJ IDEA](https://www.jetbrains.com/fr-fr/idea/) recommended)*
+- [Java 16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html) or above
+- [Maven 3](https://maven.apache.org/download.cgi#)
+- An IDE *([IntelliJ IDEA](https://www.jetbrains.com/fr-fr/idea/) recommended)*
 
 ## Initialization
 
@@ -26,8 +26,8 @@ $ mvn clean install
 ## Launch server
 
 To launch the test server, you have two options:
-* Running from the corresponding script (`start.bat` on Windows, `start.sh` on Linux)
-* Launch a configuration from your IDE (recommended)
+- Running from the corresponding script (`start.bat` on Windows, `start.sh` on Linux)
+- Launch a configuration from your IDE (recommended)
 
 ### Launch server from IDE configuration
 
