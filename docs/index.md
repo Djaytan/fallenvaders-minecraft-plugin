@@ -13,4 +13,5 @@ This documentation is managed with mkdocs. When you apply changes in the doc,
 commit and push them, the website [http://doc.fallenvaders.fr]() is automatically
 updated.
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+If you want to test the building and the rendering of the documentation in local,
+you can configure yur environment through [this link](https://www.mkdocs.org/getting-started/).
