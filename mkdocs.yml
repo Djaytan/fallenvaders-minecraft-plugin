@@ -1,3 +1,7 @@
 site_name: MC-FallenVaders - Documentation
 theme:
   name: material
+nav:
+  - 'Home': 'index.md'
+  - 'Getting Started':
+      - 'Installation': 'install.md'
