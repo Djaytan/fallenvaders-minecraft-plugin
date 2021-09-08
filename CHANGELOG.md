@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - FightSession: prevents disconnections during fights and limits some usage
       in this context (e.g. deactive enderpearl usage).
 - Setup a Minecraft test server with debug mode option.
+- Use [google-java-format](https://google.github.io/styleguide/javaguide.html) for code style guideline.
 - Setup CircleCI CI/CD platform.
 - Setup project with Maven as dependencies manager, builder with multi-modules.
 - Start following [SemVer](https://semver.org) properly.
