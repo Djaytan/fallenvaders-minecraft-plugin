@@ -1,4 +1,4 @@
-# MC-FallenVaders - wiki
+# MC-FallenVaders - Wiki
 
 Welcome to the wiki of the MC-FallenVaders project! You will find a set of useful
 information which will help you during your developments. Don't hesitate to consult
