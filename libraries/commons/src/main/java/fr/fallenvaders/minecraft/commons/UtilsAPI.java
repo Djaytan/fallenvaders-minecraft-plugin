@@ -1,4 +1,4 @@
-package fr.fallenvaders.minecraft.simple_dev_api;
+package fr.fallenvaders.minecraft.commons;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

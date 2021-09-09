@@ -1,8 +1,8 @@
-package fr.fallenvaders.minecraft.simple_dev_api.cte;
+package fr.fallenvaders.minecraft.commons.cte;
 
-import fr.fallenvaders.minecraft.simple_dev_api.MessageLevel;
-import fr.fallenvaders.minecraft.simple_dev_api.UtilsAPI;
-import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.CommandNotFoundException;
+import fr.fallenvaders.minecraft.commons.MessageLevel;
+import fr.fallenvaders.minecraft.commons.UtilsAPI;
+import fr.fallenvaders.minecraft.commons.cte.exceptions.CommandNotFoundException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

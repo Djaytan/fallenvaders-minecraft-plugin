@@ -1,12 +1,12 @@
-package fr.fallenvaders.minecraft.simple_dev_api.cte;
+package fr.fallenvaders.minecraft.commons.cte;
 
 import com.google.common.collect.Lists;
-import fr.fallenvaders.minecraft.simple_dev_api.MessageLevel;
-import fr.fallenvaders.minecraft.simple_dev_api.UtilsAPI;
-import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.CommandException;
-import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.CommandNotFoundException;
-import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.InvalidArgumentsCommandException;
-import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.InvalidCommandException;
+import fr.fallenvaders.minecraft.commons.MessageLevel;
+import fr.fallenvaders.minecraft.commons.UtilsAPI;
+import fr.fallenvaders.minecraft.commons.cte.exceptions.CommandException;
+import fr.fallenvaders.minecraft.commons.cte.exceptions.CommandNotFoundException;
+import fr.fallenvaders.minecraft.commons.cte.exceptions.InvalidArgumentsCommandException;
+import fr.fallenvaders.minecraft.commons.cte.exceptions.InvalidCommandException;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
