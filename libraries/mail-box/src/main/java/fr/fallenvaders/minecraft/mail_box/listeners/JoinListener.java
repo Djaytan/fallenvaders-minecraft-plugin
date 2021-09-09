@@ -9,17 +9,16 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
  * Charge en mémoire les données des joueurs lors de leurs connexion
- * @author Bletrazer
  *
+ * @author Bletrazer
  */
 public class JoinListener implements Listener {
 
-	@EventHandler
-	private void onJoin(PlayerJoinEvent event) {
-		Player player = event.getPlayer();
-		MailBoxController.load(player.getUniqueId());
-		
-		PlayerManager.getInstance().load(player);
-	}
-	
+  @EventHandler
+  private void onJoin(PlayerJoinEvent event) {
+    Player player = event.getPlayer();
+    MailBoxController.load(player.getUniqueId());
+
+    PlayerManager.getInstance().load(player);
+  }
 }

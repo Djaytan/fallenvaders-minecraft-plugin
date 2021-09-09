@@ -7,14 +7,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
-    /*
-     * onJoin(), lorsque le joueur se connecte, on lui créer
-     * un compte si il en a pas déja un.
-     */
+  /*
+   * onJoin(), lorsque le joueur se connecte, on lui créer
+   * un compte si il en a pas déja un.
+   */
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        JusticeHands.getSqlPA().createAccount(player.getUniqueId());
-    }
+  @EventHandler
+  public void onJoin(PlayerJoinEvent event) {
+    Player player = event.getPlayer();
+    JusticeHands.getSqlPA().createAccount(player.getUniqueId());
+  }
 }

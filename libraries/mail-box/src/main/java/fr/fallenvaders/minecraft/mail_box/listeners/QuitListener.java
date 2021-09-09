@@ -8,16 +8,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  * Décharge de la mémoire les données des joueurs lors de leurs déconnexion
- * @author Bletrazer
  *
+ * @author Bletrazer
  */
 public class QuitListener implements Listener {
-	
-	@EventHandler
-	private void onQuit(PlayerQuitEvent event) {
-		Player player = event.getPlayer();
-		MailBoxController.unload(player.getUniqueId());
-		
-	}
-	
+
+  @EventHandler
+  private void onQuit(PlayerQuitEvent event) {
+    Player player = event.getPlayer();
+    MailBoxController.unload(player.getUniqueId());
+  }
 }

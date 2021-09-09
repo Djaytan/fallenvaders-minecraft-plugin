@@ -9,36 +9,41 @@ import org.bukkit.entity.Player;
 
 public class Bar {
 
-    public static void init() {
-        color = BarColor.valueOf(
-            FallenVadersCore.main.getConfig().getString("timer_options.bossbar_display_otions.color").toUpperCase());
-        style = BarStyle.valueOf(
+  public static void init() {
+    color =
+        BarColor.valueOf(
             FallenVadersCore.main
-                .getConfig().getString("timer_options.bossbar_display_otions.style").toUpperCase());
+                .getConfig()
+                .getString("timer_options.bossbar_display_otions.color")
+                .toUpperCase());
+    style =
+        BarStyle.valueOf(
+            FallenVadersCore.main
+                .getConfig()
+                .getString("timer_options.bossbar_display_otions.style")
+                .toUpperCase());
+  }
 
-    }
+  private BossBar bar;
+  private String title = "Empty title";
+  private static BarColor color = BarColor.BLUE;
+  private static BarStyle style = BarStyle.SOLID;
 
-    private BossBar bar;
-    private String title = "Empty title";
-    private static BarColor color = BarColor.BLUE;
-    private static BarStyle style = BarStyle.SOLID;
+  public Bar() {
+    bar = Bukkit.createBossBar(title, color, style);
+  }
 
-    public Bar() {
-        bar = Bukkit.createBossBar(title, color, style);
-    }
+  public void startDisplay(Player player) {
+    bar.setVisible(true);
+    bar.addPlayer(player);
+  }
 
-    public void startDisplay(Player player) {
-        bar.setVisible(true);
-        bar.addPlayer(player);
-    }
+  public void stopDisplay() {
+    bar.setVisible(false);
+    bar.removeAll();
+  }
 
-    public void stopDisplay() {
-        bar.setVisible(false);
-        bar.removeAll();
-    }
-
-    public BossBar getBar() {
-        return bar;
-    }
-
+  public BossBar getBar() {
+    return bar;
+  }
 }

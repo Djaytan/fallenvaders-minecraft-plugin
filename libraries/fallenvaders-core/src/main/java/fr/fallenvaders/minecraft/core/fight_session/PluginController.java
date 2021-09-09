@@ -6,37 +6,33 @@ import fr.fallenvaders.minecraft.core.fight_session.utils.MessageLevel;
 import fr.fallenvaders.minecraft.core.fight_session.utils.MessageUtils;
 import fr.fallenvaders.minecraft.core.fight_session.utils.config.LangManager;
 
-/**
- * Controller du plugin
- */
+/** Controller du plugin */
 public class PluginController {
 
-    private static LangManager langManager = new LangManager();
-    private static SessionManager sessionManager = new SessionManager();
+  private static LangManager langManager = new LangManager();
+  private static SessionManager sessionManager = new SessionManager();
 
-    public static LangManager getLangManager() {
-        return langManager;
-    }
+  public static LangManager getLangManager() {
+    return langManager;
+  }
 
-    public static SessionManager getSessionManager() {
-        return sessionManager;
-    }
+  public static SessionManager getSessionManager() {
+    return sessionManager;
+  }
 
-    public static void init() {
-        langManager = LangManager.loadDefaults();
-        FightsEvents.initFightVars();
-        Bar.init();
-    }
+  public static void init() {
+    langManager = LangManager.loadDefaults();
+    FightsEvents.initFightVars();
+    Bar.init();
+  }
 
-    public static void reloadPlugin() {
-        FallenVadersCore.main.reloadConfig();
-        FightsEvents.initFightVars();
-        Bar.init();
-        MessageUtils.reload();
-        langManager.load();
-        MessageLevel.refresh();
-        sessionManager.stopAll();
-
-    }
-
+  public static void reloadPlugin() {
+    FallenVadersCore.main.reloadConfig();
+    FightsEvents.initFightVars();
+    Bar.init();
+    MessageUtils.reload();
+    langManager.load();
+    MessageLevel.refresh();
+    sessionManager.stopAll();
+  }
 }

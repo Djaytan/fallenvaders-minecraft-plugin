@@ -8,10 +8,10 @@ package fr.fallenvaders.minecraft.simple_dev_api.cte;
  */
 public interface CommandArgumentChecker {
 
-    /**
-     * Vérifie la validité des données saisies pour l'argument associé.
-     *
-     * @param arg L'argument associé, non null
-     */
-    void check(String arg) throws Exception;
+  /**
+   * Vérifie la validité des données saisies pour l'argument associé.
+   *
+   * @param arg L'argument associé, non null
+   */
+  void check(String arg) throws Exception;
 }

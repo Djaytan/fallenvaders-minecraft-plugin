@@ -1,8 +1,8 @@
 package fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects;
 
-import java.sql.Timestamp;
-
 import org.bukkit.entity.Player;
+
+import java.sql.Timestamp;
 
 /*
  *  Cet objet est une sanction provenant du casier judiciaire du joueur,
@@ -11,113 +11,124 @@ import org.bukkit.entity.Player;
  */
 
 public class CJSanction {
-    private String sanctionName;
-    private String sanctionReason;
-    private int sanctionPoints;
-    private String sanctionType;
-    private Player sanctionModerator;
-    private String sanctionID;
-    private Timestamp sanctionTS;
-    private Timestamp sanctionETS;
-    private Player sanctionPlayer;
-    private String sanctionState;
 
-    public CJSanction() {
-    }
+  private String sanctionName;
+  private String sanctionReason;
+  private int sanctionPoints;
+  private String sanctionType;
+  private Player sanctionModerator;
+  private String sanctionID;
+  private Timestamp sanctionTS;
+  private Timestamp sanctionETS;
+  private Player sanctionPlayer;
+  private String sanctionState;
 
-    // *** MUTATEURS ***//
-    public void setName(String sanctionName) {
-        this.sanctionName = sanctionName;
-    }
+  public CJSanction() {}
 
-    public void setReason(String sanctionReason) {
-        this.sanctionReason = sanctionReason;
-    }
+  // *** MUTATEURS ***//
+  public void setName(String sanctionName) {
+    this.sanctionName = sanctionName;
+  }
 
-    public void setPoints(int sanctionPoints) {
-        this.sanctionPoints = sanctionPoints;
-    }
+  public void setReason(String sanctionReason) {
+    this.sanctionReason = sanctionReason;
+  }
 
-    public void setType(String sanctionType) {
-        this.sanctionType = sanctionType;
-    }
+  public void setPoints(int sanctionPoints) {
+    this.sanctionPoints = sanctionPoints;
+  }
 
-    public void setModerator(Player sanctionModerator) {
-        this.sanctionModerator = sanctionModerator;
-    }
+  public void setType(String sanctionType) {
+    this.sanctionType = sanctionType;
+  }
 
-    public void setID(String sanctionID) {
-        this.sanctionID = sanctionID;
-    }
+  public void setModerator(Player sanctionModerator) {
+    this.sanctionModerator = sanctionModerator;
+  }
 
-    public void setTSDate(Timestamp sanctionTS) {
-        this.sanctionTS = sanctionTS;
-    }
+  public void setID(String sanctionID) {
+    this.sanctionID = sanctionID;
+  }
 
-    public void setTSExpireDate(Timestamp sanctionETS) {
-        this.sanctionETS = sanctionETS;
-    }
+  public void setTSDate(Timestamp sanctionTS) {
+    this.sanctionTS = sanctionTS;
+  }
 
-    public void setPlayer(Player sanctionPlayer) {
-        this.sanctionPlayer = sanctionPlayer;
-    }
+  public void setTSExpireDate(Timestamp sanctionETS) {
+    this.sanctionETS = sanctionETS;
+  }
 
-    public void setState(String sanctionState) {
-        this.sanctionState = sanctionState;
-    }
+  public void setPlayer(Player sanctionPlayer) {
+    this.sanctionPlayer = sanctionPlayer;
+  }
 
-    // *** ACCESSEURS ***//
-    public String getName() {
-        return sanctionName;
-    }
+  public void setState(String sanctionState) {
+    this.sanctionState = sanctionState;
+  }
 
-    public String getReason() {
-        return sanctionReason;
-    }
+  // *** ACCESSEURS ***//
+  public String getName() {
+    return sanctionName;
+  }
 
-    public int getPoints() {
-        return sanctionPoints;
-    }
+  public String getReason() {
+    return sanctionReason;
+  }
 
-    public String getType() {
-        return sanctionType;
-    }
+  public int getPoints() {
+    return sanctionPoints;
+  }
 
-    public Player getModerator() {
-        return this.sanctionModerator;
-    }
+  public String getType() {
+    return sanctionType;
+  }
 
-    public String getID() {
-        return this.sanctionID;
-    }
+  public Player getModerator() {
+    return this.sanctionModerator;
+  }
 
-    public Timestamp getTSDate() {
-        return this.sanctionTS;
-    }
+  public String getID() {
+    return this.sanctionID;
+  }
 
-    public Timestamp getTSExpireDate() {
-        return this.sanctionETS;
-    }
+  public Timestamp getTSDate() {
+    return this.sanctionTS;
+  }
 
-    public Player getPlayer() {
-        return this.sanctionPlayer;
-    }
+  public Timestamp getTSExpireDate() {
+    return this.sanctionETS;
+  }
 
-    public String getState() {
-        return this.sanctionState;
-    }
+  public Player getPlayer() {
+    return this.sanctionPlayer;
+  }
 
-    @Override
-    public String toString() {
-        return "[{sanctionName=" + this.sanctionName +
-            "},{sanctionReason=" + this.sanctionReason +
-            "},{sanctionPoints=" + this.sanctionPoints +
-            "},{sanctionType=" + this.sanctionType +
-            "},{sanctionModerator=" + this.sanctionModerator +
-            "},{sanctionID=" + this.sanctionID +
-            "},{sanctionTS=" + this.sanctionTS +
-            "},{sanctionETS=" + this.sanctionETS +
-            "},{sanctionPlayer" + this.sanctionPlayer +
-            "},{sanctionState" + this.sanctionState + "}]";
-    }
+  public String getState() {
+    return this.sanctionState;
+  }
+
+  @Override
+  public String toString() {
+    return "[{sanctionName="
+        + this.sanctionName
+        + "},{sanctionReason="
+        + this.sanctionReason
+        + "},{sanctionPoints="
+        + this.sanctionPoints
+        + "},{sanctionType="
+        + this.sanctionType
+        + "},{sanctionModerator="
+        + this.sanctionModerator
+        + "},{sanctionID="
+        + this.sanctionID
+        + "},{sanctionTS="
+        + this.sanctionTS
+        + "},{sanctionETS="
+        + this.sanctionETS
+        + "},{sanctionPlayer"
+        + this.sanctionPlayer
+        + "},{sanctionState"
+        + this.sanctionState
+        + "}]";
+  }
 }

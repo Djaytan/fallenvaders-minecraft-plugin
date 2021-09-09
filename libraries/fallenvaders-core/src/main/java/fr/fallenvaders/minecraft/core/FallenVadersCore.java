@@ -7,20 +7,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class FallenVadersCore extends JavaPlugin {
 
-    public static JavaPlugin main;
+  public static JavaPlugin main;
 
-    public static void enableModule(JavaPlugin plugin) {
-        FallenVadersCore.main = plugin;
-        PluginController.init();
+  public static void enableModule(JavaPlugin plugin) {
+    FallenVadersCore.main = plugin;
+    PluginController.init();
 
-        //Register commands
-        plugin.getCommand(CmdFightSession.CMD_LABEL).setExecutor(new CmdFightSession());
+    // Register commands
+    plugin.getCommand(CmdFightSession.CMD_LABEL).setExecutor(new CmdFightSession());
 
-        //Register listeners
-        plugin.getServer().getPluginManager().registerEvents(new FightsEvents(), plugin);
-    }
+    // Register listeners
+    plugin.getServer().getPluginManager().registerEvents(new FightsEvents(), plugin);
+  }
 
-    public static void disableModule(JavaPlugin plugin) {
-        PluginController.getSessionManager().stopAll();
-    }
+  public static void disableModule(JavaPlugin plugin) {
+    PluginController.getSessionManager().stopAll();
+  }
 }

@@ -8,14 +8,19 @@ import org.bukkit.event.Listener;
 
 public class AsyncChatListener implements Listener {
 
-    @EventHandler
-    public void AsyncChatEvent(AsyncChatEvent e) {
-        Long unmuteDate = KeysKeeperBot.getPlayerMuteDate(e.getPlayer());
+  @EventHandler
+  public void AsyncChatEvent(AsyncChatEvent e) {
+    Long unmuteDate = KeysKeeperBot.getPlayerMuteDate(e.getPlayer());
 
-        // Vérification si le joueur peut parler
-        if (unmuteDate > System.currentTimeMillis()) {
-            e.getPlayer().sendMessage(GeneralUtils.getPrefix("kk") + "§cTu ne peux pas parler, tu es réduit au silence pendant encore §b" + GeneralUtils.timeRemaining(unmuteDate - System.currentTimeMillis()) + "§c.");
-            e.setCancelled(true);
-        }
+    // Vérification si le joueur peut parler
+    if (unmuteDate > System.currentTimeMillis()) {
+      e.getPlayer()
+          .sendMessage(
+              GeneralUtils.getPrefix("kk")
+                  + "§cTu ne peux pas parler, tu es réduit au silence pendant encore §b"
+                  + GeneralUtils.timeRemaining(unmuteDate - System.currentTimeMillis())
+                  + "§c.");
+      e.setCancelled(true);
     }
+  }
 }
