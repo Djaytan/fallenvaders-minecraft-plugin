@@ -1,4 +1,4 @@
-package fr.fallenvaders.minecraft.simple_dev_api.cte;
+package fr.fallenvaders.minecraft.commons.cte;
 
 /**
  * Classe de gestion d'un checker d'argument

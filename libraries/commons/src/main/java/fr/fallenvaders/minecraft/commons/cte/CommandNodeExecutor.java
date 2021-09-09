@@ -1,4 +1,4 @@
-package fr.fallenvaders.minecraft.simple_dev_api.cte;
+package fr.fallenvaders.minecraft.commons.cte;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

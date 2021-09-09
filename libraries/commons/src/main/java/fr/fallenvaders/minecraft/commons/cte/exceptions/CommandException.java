@@ -1,4 +1,4 @@
-package fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions;
+package fr.fallenvaders.minecraft.commons.cte.exceptions;
 
 public class CommandException extends Exception {
 

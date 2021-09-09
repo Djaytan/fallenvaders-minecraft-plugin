@@ -1,7 +1,7 @@
-package fr.fallenvaders.minecraft.simple_dev_api.cte;
+package fr.fallenvaders.minecraft.commons.cte;
 
-import fr.fallenvaders.minecraft.simple_dev_api.UtilsAPI;
-import fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions.CommandException;
+import fr.fallenvaders.minecraft.commons.UtilsAPI;
+import fr.fallenvaders.minecraft.commons.cte.exceptions.CommandException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

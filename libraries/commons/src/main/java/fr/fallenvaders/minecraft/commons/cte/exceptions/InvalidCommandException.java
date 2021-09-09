@@ -1,6 +1,6 @@
-package fr.fallenvaders.minecraft.simple_dev_api.cte.exceptions;
+package fr.fallenvaders.minecraft.commons.cte.exceptions;
 
-import fr.fallenvaders.minecraft.simple_dev_api.cte.CommandNode;
+import fr.fallenvaders.minecraft.commons.cte.CommandNode;
 
 /**
  * Classe de gestion d'une exception concernant une commande invalide
