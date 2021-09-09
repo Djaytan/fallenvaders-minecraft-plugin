@@ -16,17 +16,14 @@ public class PlayerInfoSQL {
   private final SQLConnection sqlConnection = new SQLConnection();
 
   public PlayerInfoSQL() {
-    try {
-      PreparedStatement query =
-          this.sqlConnection
-              .getConnection()
-              .prepareStatement(
-                  "CREATE TABLE IF NOT EXISTS	"
-                      + TABLE_NAME
-                      + " (uuid VARCHAR(255), name VARCHAR(255))");
+    try (PreparedStatement query =
+        this.sqlConnection
+            .getConnection()
+            .prepareStatement(
+                "CREATE TABLE IF NOT EXISTS	"
+                    + TABLE_NAME
+                    + " (uuid VARCHAR(255), name VARCHAR(255))")) {
       query.executeUpdate();
-      query.close();
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -49,9 +46,8 @@ public class PlayerInfoSQL {
   public List<PlayerInfo> getAll() {
     List<PlayerInfo> res = new ArrayList<>();
 
-    try {
-      PreparedStatement query =
-          this.sqlConnection.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME);
+    try (PreparedStatement query =
+        this.sqlConnection.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME)) {
       ResultSet rs = query.executeQuery();
 
       while (rs.next()) {
@@ -62,9 +58,6 @@ public class PlayerInfoSQL {
 
         res.add(playerInfo);
       }
-
-      query.close();
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -75,18 +68,15 @@ public class PlayerInfoSQL {
   public PlayerInfo create(PlayerInfo obj) {
     PlayerInfo res = null;
 
-    try {
-      PreparedStatement query =
-          this.sqlConnection
-              .getConnection()
-              .prepareStatement("INSERT INTO " + TABLE_NAME + " (uuid, name) VALUES(?, ?)");
+    try (PreparedStatement query =
+        this.sqlConnection
+            .getConnection()
+            .prepareStatement("INSERT INTO " + TABLE_NAME + " (uuid, name) VALUES(?, ?)")) {
       query.setString(1, obj.getUuid().toString());
       query.setString(2, obj.getName());
 
       query.execute();
-      query.close();
       res = obj;
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -103,11 +93,10 @@ public class PlayerInfoSQL {
   public int check(PlayerInfo obj) {
     int res = -1;
 
-    try {
-      PreparedStatement query =
-          this.sqlConnection
-              .getConnection()
-              .prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE uuid = ? ");
+    try (PreparedStatement query =
+        this.sqlConnection
+            .getConnection()
+            .prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE uuid = ? ")) {
       query.setString(1, obj.getUuid().toString());
       ResultSet resultSet = query.executeQuery();
 
@@ -119,8 +108,6 @@ public class PlayerInfoSQL {
           res = 0;
         }
       }
-      query.close();
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -131,18 +118,15 @@ public class PlayerInfoSQL {
   public PlayerInfo update(PlayerInfo obj) {
     PlayerInfo res = null;
 
-    try {
-      PreparedStatement query =
-          this.sqlConnection
-              .getConnection()
-              .prepareStatement("UPDATE " + TABLE_NAME + " SET name = ? WHERE id = ?");
+    try (PreparedStatement query =
+        this.sqlConnection
+            .getConnection()
+            .prepareStatement("UPDATE " + TABLE_NAME + " SET name = ? WHERE id = ?")) {
       query.setString(1, obj.getName());
       query.setString(2, obj.getUuid().toString());
 
       query.executeUpdate();
-      query.close();
       res = obj;
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -151,15 +135,12 @@ public class PlayerInfoSQL {
   }
 
   public void delete(PlayerInfo obj) {
-    try {
-      PreparedStatement query =
-          this.sqlConnection
-              .getConnection()
-              .prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE uuid = ?");
+    try (PreparedStatement query =
+        this.sqlConnection
+            .getConnection()
+            .prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE uuid = ?")) {
       query.setString(1, obj.getUuid().toString());
       query.execute();
-      query.close();
-
     } catch (SQLException e) {
       e.printStackTrace();
     }

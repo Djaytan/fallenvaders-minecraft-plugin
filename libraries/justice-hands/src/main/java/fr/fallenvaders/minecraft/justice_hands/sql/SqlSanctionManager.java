@@ -26,39 +26,34 @@ public class SqlSanctionManager {
     int currentPoints = JusticeHands.getSqlPA().getPoints(target.getUniqueId());
     int targetNewPoints = currentPoints + sanction.getPoints();
 
-    try {
+    try (PreparedStatement q =
+           connection.prepareStatement(
+             "INSERT INTO sanctions_list(uuid,name,reason,points,expiredate,moderator,type) VALUES (?,?,?,?,?,?,?)")) {
       // Ajoute la sanction à la liste des sanctions dans la base de données
-      PreparedStatement q =
-          connection.prepareStatement(
-              "INSERT INTO sanctions_list(uuid,name,reason,points,expiredate,moderator,type) VALUES (?,?,?,?,?,?,?)");
       q.setString(1, target.getUniqueId().toString());
       q.setString(2, sanction.getName());
       q.setString(3, sanction.getReason());
       q.setInt(4, sanction.getPoints());
-      if (expireDate == null) {
-        q.setTimestamp(5, null);
-      } else {
-        q.setTimestamp(5, expireDate);
-      }
+      q.setTimestamp(5, expireDate);
       q.setString(6, moderator.getUniqueId().toString());
       q.setString(7, sanction.getInitialType());
       q.execute();
-      q.close();
+    } catch (Exception e) {
+     e.printStackTrace();
+    }
 
+    try (PreparedStatement q =
+           connection.prepareStatement("UPDATE players_points SET points = ? WHERE uuid = ?")) {
       // Ajoute le nombre de point de la sanction au joueur sanctionné
-      PreparedStatement rs =
-          connection.prepareStatement("UPDATE players_points SET points = ? WHERE uuid = ?");
-      rs.setInt(1, targetNewPoints);
-      rs.setString(2, target.getUniqueId().toString());
-      rs.executeUpdate();
-      rs.close();
+      q.setInt(1, targetNewPoints);
+      q.setString(2, target.getUniqueId().toString());
+      q.executeUpdate();
 
       // Il faut récupérer la sanction générée antérieurement pour l'ajouter dans
       // la hashmap pour que si le modérateur ai l'envie, de pouvoir l'annuler via l'ID
 
       // todo : a revoir
       // setModLastSanctionOnMap(moderator);
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -68,10 +63,9 @@ public class SqlSanctionManager {
   public List<CJSanction> getPlayerSanctions(Player player) {
     ArrayList<CJSanction> playerSanctionList = new ArrayList<>();
 
-    try {
-      PreparedStatement q =
-          connection.prepareStatement(
-              "SELECT * FROM sanctions_list WHERE uuid = ? AND state = ? ORDER BY id DESC");
+    try (PreparedStatement q =
+           connection.prepareStatement(
+             "SELECT * FROM sanctions_list WHERE uuid = ? AND state = ? ORDER BY id DESC")) {
       q.setString(1, player.getUniqueId().toString());
       q.setString(2, "active");
 
@@ -91,7 +85,6 @@ public class SqlSanctionManager {
 
         playerSanctionList.add(sanction);
       }
-      q.close();
       return playerSanctionList;
     } catch (SQLException e) {
       e.printStackTrace();
@@ -101,10 +94,9 @@ public class SqlSanctionManager {
 
   @Nullable
   public CJSanction getLastSanction(Player player) {
-    try {
-      PreparedStatement q =
-          connection.prepareStatement(
-              "SELECT * FROM sanctions_list WHERE uuid = ? AND state = ? ORDER BY id DESC LIMIT 0,1");
+    try (PreparedStatement q =
+           connection.prepareStatement(
+             "SELECT * FROM sanctions_list WHERE uuid = ? AND state = ? ORDER BY id DESC LIMIT 0,1")) {
       q.setString(1, player.getUniqueId().toString());
       q.setString(2, "active");
 
@@ -122,8 +114,6 @@ public class SqlSanctionManager {
       sanction.setModerator(Bukkit.getPlayer(UUID.fromString(rs.getString("moderator"))));
       sanction.setType(rs.getString("type"));
       sanction.setState(rs.getString("state"));
-
-      q.close();
       return sanction;
     } catch (SQLException e) {
       e.printStackTrace();

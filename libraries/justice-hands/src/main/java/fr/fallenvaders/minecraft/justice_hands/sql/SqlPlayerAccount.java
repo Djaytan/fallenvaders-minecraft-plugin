@@ -21,13 +21,11 @@ public class SqlPlayerAccount {
   // Création d'un compte
   public void createAccount(UUID playerUUID) {
     if (!hasAccount(playerUUID)) {
-      try {
-        PreparedStatement q =
-            connection.prepareStatement("INSERT INTO players_points(uuid,points) VALUES (?,?)");
+      try (PreparedStatement q =
+             connection.prepareStatement("INSERT INTO players_points(uuid,points) VALUES (?,?)")) {
         q.setString(1, playerUUID.toString());
         q.setInt(2, 0);
         q.execute();
-        q.close();
       } catch (SQLException e) {
         e.printStackTrace();
       }
@@ -36,13 +34,11 @@ public class SqlPlayerAccount {
 
   // Vérification d'un compte déjà existant
   public boolean hasAccount(UUID playerUUID) {
-    try {
-      PreparedStatement q =
-          connection.prepareStatement("SELECT uuid FROM players_points WHERE uuid = ?");
+    try (PreparedStatement q =
+           connection.prepareStatement("SELECT uuid FROM players_points WHERE uuid = ?")) {
       q.setString(1, playerUUID.toString());
       ResultSet resultat = q.executeQuery();
       boolean hasAccount = resultat.next();
-      q.close();
       return hasAccount;
     } catch (SQLException e) {
       e.printStackTrace();
@@ -53,13 +49,11 @@ public class SqlPlayerAccount {
   // Récupération du compte
   @Nullable
   public UUID getAccount(UUID playerUUID) {
-    try {
-      PreparedStatement q =
-          connection.prepareStatement("SELECT uuid FROM players_points WHERE uuid = ?");
+    try (PreparedStatement q =
+           connection.prepareStatement("SELECT uuid FROM players_points WHERE uuid = ?")) {
       q.setString(1, playerUUID.toString());
       ResultSet rs = q.executeQuery();
-
-      while (rs.next()) {
+      if (rs.first()) {
         return playerUUID;
       }
     } catch (SQLException e) {
@@ -70,9 +64,8 @@ public class SqlPlayerAccount {
 
   // Récupération du nombre de points du joueur
   public int getPoints(UUID playerUUID) {
-    try {
-      PreparedStatement q =
-          connection.prepareStatement("SELECT points FROM players_points WHERE uuid = ?");
+    try (PreparedStatement q =
+           connection.prepareStatement("SELECT points FROM players_points WHERE uuid = ?")) {
       q.setString(1, playerUUID.toString());
 
       int points = 0;
@@ -82,7 +75,6 @@ public class SqlPlayerAccount {
         points = rs.getInt("points");
       }
 
-      q.close();
       return points;
 
     } catch (SQLException e) {

@@ -35,28 +35,29 @@ public class SqlConnection {
     if (isConnected()) {
       try {
         DatabaseMetaData md = connection.getMetaData();
-        PreparedStatement q;
         boolean exists;
 
         // Création de la table : "players_points" si elle n'existe pas
         exists = md.getTables(null, null, "players_points", null).next();
         if (!exists) {
-          q =
+          try (PreparedStatement q =
               connection.prepareStatement(
                   "CREATE TABLE `players_points` (\n"
                       + "\t`uuid` CHAR(255) NOT NULL,\n"
                       + "\t`points` INT NOT NULL DEFAULT 0\n"
                       + ")\n"
                       + "COLLATE='utf8_general_ci'\n"
-                      + ";\n");
-          q.execute();
-          q.close();
+                      + ";\n")) {
+            q.execute();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
 
         // Création de la table : "sanctions_list" si elle n'existe pas
         exists = md.getTables(null, null, "sanctions_list", null).next();
         if (!exists) {
-          q =
+          try (PreparedStatement q =
               connection.prepareStatement(
                   "CREATE TABLE `sanctions_list` (\n"
                       + "\t`id` INT(255) UNSIGNED NOT NULL AUTO_INCREMENT,\n"
@@ -74,11 +75,12 @@ public class SqlConnection {
                       + "COLLATE='utf8_general_ci'\n"
                       + "ENGINE=InnoDB\n"
                       + "AUTO_INCREMENT=1\n"
-                      + ";");
-          q.execute();
-          q.close();
+                      + ";")) {
+            q.execute();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
-
       } catch (SQLException e) {
         e.printStackTrace();
       }

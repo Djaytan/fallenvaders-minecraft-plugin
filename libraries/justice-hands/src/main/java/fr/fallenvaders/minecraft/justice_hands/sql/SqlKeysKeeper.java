@@ -27,10 +27,9 @@ public class SqlKeysKeeper {
   @Nullable
   public List<Long> getPlayerMutesEDLong(Player player) {
     ArrayList<Long> playerMuteList = new ArrayList<>();
-    try {
-      PreparedStatement q =
-          connection.prepareStatement(
-              "SELECT * FROM sanctions_list WHERE uuid = ? AND type = ? AND state = ?");
+    try (PreparedStatement q =
+        connection.prepareStatement(
+            "SELECT * FROM sanctions_list WHERE uuid = ? AND type = ? AND state = ?")) {
       q.setString(1, player.getUniqueId().toString());
       q.setString(2, "mute");
       q.setString(3, "active");
@@ -40,7 +39,6 @@ public class SqlKeysKeeper {
         Long expireDateLong = rs.getTimestamp("expiredate").getTime();
         playerMuteList.add(expireDateLong);
       }
-      q.close();
       return playerMuteList;
     } catch (SQLException e) {
       e.printStackTrace();
@@ -52,10 +50,9 @@ public class SqlKeysKeeper {
   public List<CJSanction> getPlayerBans(Player player) {
     ArrayList<CJSanction> playerBansList = new ArrayList<>();
 
-    try {
-      PreparedStatement q =
-          connection.prepareStatement(
-              "SELECT * FROM sanctions_list WHERE uuid = ? AND (type = ? OR type = ? OR type = ?) AND state = ? ORDER BY id DESC");
+    try (PreparedStatement q =
+        connection.prepareStatement(
+            "SELECT * FROM sanctions_list WHERE uuid = ? AND (type = ? OR type = ? OR type = ?) AND state = ? ORDER BY id DESC")) {
       q.setString(1, player.getUniqueId().toString());
       q.setString(2, "risingban");
       q.setString(3, "ban");
@@ -78,7 +75,6 @@ public class SqlKeysKeeper {
 
         playerBansList.add(sanction);
       }
-      q.close();
       return playerBansList;
     } catch (SQLException e) {
       e.printStackTrace();
