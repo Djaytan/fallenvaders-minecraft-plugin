@@ -51,21 +51,15 @@ public class SanctionsAlgo {
       tempSanction.setInitialType("risingban");
       tempSanction.setPoints(tempSanction.getPoints() * 2); // Multiplication des points par deux
       generateBanMute(tempSanction, moderator, target, CFG_MUTE_MIN_POINT, CFG_BAN_DAY_POINT);
-      return;
-
       // Le type de sanction est un type sans date d'expiration
     } else if (tempSanction.getInitialType().equals("kick")
         || tempSanction.getInitialType().equals("bandef")) {
       JusticeHands.getSqlSM().addSanction(target, moderator, tempSanction, null);
       sendAlertMsg(
           target, tempSanction, GeneralUtils.getPrefix("SM"), System.currentTimeMillis(), 0);
-      return;
-
     } else if (tempSanction.getInitialType().equals("mute")
         || tempSanction.getInitialType().equals("ban")) {
       generateBanMute(tempSanction, moderator, target, CFG_MUTE_MIN_POINT, CFG_BAN_DAY_POINT);
-      return;
-
     } else {
       moderator.sendMessage(
           GeneralUtils.getPrefix("SM")
@@ -85,12 +79,12 @@ public class SanctionsAlgo {
     if (tempSanction.getInitialType().equals("mute")) {
       // Points convertis en minutes (MUTE)
       extraTime =
-          ((tempSanction.getPoints() + targetPoints) / Long.valueOf(muteMinPerPts))
+          ((tempSanction.getPoints() + targetPoints) / (double) muteMinPerPts)
               * LONG_MIN_IN_MS;
     } else {
       // Points convertis en jours (BAN)
       extraTime =
-          ((tempSanction.getPoints() + targetPoints) / Long.valueOf(banDayPerPts)) * LONG_DAY_IN_MS;
+          ((tempSanction.getPoints() + targetPoints) / (double) banDayPerPts) * LONG_DAY_IN_MS;
     }
 
     long expireTime = (long) (currentTime + extraTime);
