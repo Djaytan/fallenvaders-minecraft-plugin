@@ -3,14 +3,9 @@ package fr.fallenvaders.minecraft.justice_hands.keyskeeper;
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
 import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanction;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class KeysKeeperComponent {
@@ -58,16 +53,16 @@ public class KeysKeeperComponent {
   public static Component loginBanDefMessage(CJSanction sanction) {
     String date = SDF.format(sanction.getTSDate().getTime());
 
-      final Component cpnt =
-          LegacyComponentSerializer.legacyAmpersand()
-              .deserialize(
-                  String.format(
-                      "%s\n§cVous avez été banni définitivement du serveur pour la raison suivante : \n\n§bID de Sanction : §7%s§b - §7%s\n§bRaison : §7%s\n§bDate : §7%s",
-                      GeneralUtils.getPrefix("kk"),
-                      sanction.getID(),
-                      sanction.getName(),
-                      sanction.getReason(),
-                      date));
-      return cpnt;
+    final Component cpnt =
+        LegacyComponentSerializer.legacyAmpersand()
+            .deserialize(
+                String.format(
+                    "%s\n§cVous avez été banni définitivement du serveur pour la raison suivante : \n\n§bID de Sanction : §7%s§b - §7%s\n§bRaison : §7%s\n§bDate : §7%s",
+                    GeneralUtils.getPrefix("kk"),
+                    sanction.getID(),
+                    sanction.getName(),
+                    sanction.getReason(),
+                    date));
+    return cpnt;
   }
 }

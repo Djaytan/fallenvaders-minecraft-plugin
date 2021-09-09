@@ -6,60 +6,67 @@ import java.util.UUID;
 
 public class LetterData extends Data {
 
-	private List<String> content = new ArrayList<>();
-	private LetterType letterType = LetterType.STANDARD;
-	private boolean isRead = false;
+  private List<String> content = new ArrayList<>();
+  private LetterType letterType = LetterType.STANDARD;
+  private boolean isRead = false;
 
-	protected LetterData(UUID uuid, String author, String object, LetterType letterType, List<String> content, boolean isRead) {
-		super(uuid, author, object);
-		this.setLetterType(letterType);
-		this.setContent(content);
-		this.setIsRead(isRead);
-		
-	}
-	
-	public LetterData(Data data, LetterType type, List<String> content, boolean isRead) {
-		super(data.getId(), data.getOwnerUuid(), data.getAuthor(), data.getObject(), data.getCreationDate());
-		this.setCreationDate(data.getCreationDate());
-		this.setLetterType(type);
-		this.setContent(content);
-		this.setIsRead(isRead);
-		
-	}
-	
-	protected LetterData() {
-		
-	}
+  protected LetterData(
+      UUID uuid,
+      String author,
+      String object,
+      LetterType letterType,
+      List<String> content,
+      boolean isRead) {
+    super(uuid, author, object);
+    this.setLetterType(letterType);
+    this.setContent(content);
+    this.setIsRead(isRead);
+  }
 
-	public List<String> getContent() {
-		return content;
-	}
+  public LetterData(Data data, LetterType type, List<String> content, boolean isRead) {
+    super(
+        data.getId(),
+        data.getOwnerUuid(),
+        data.getAuthor(),
+        data.getObject(),
+        data.getCreationDate());
+    this.setCreationDate(data.getCreationDate());
+    this.setLetterType(type);
+    this.setContent(content);
+    this.setIsRead(isRead);
+  }
 
-	public void setContent(List<String> content) {
-		this.content = content;
-	}
+  protected LetterData() {}
 
-	public LetterType getLetterType() {
-		return this.letterType;
-	}
+  public List<String> getContent() {
+    return content;
+  }
 
-	public void setLetterType(LetterType letterType) {
-		this.letterType = letterType;
-	}
+  public void setContent(List<String> content) {
+    this.content = content;
+  }
 
-	public boolean getIsRead() {
-		return isRead;
-	}
+  public LetterType getLetterType() {
+    return this.letterType;
+  }
 
-	public void setIsRead(boolean isRead) {
-		this.isRead = isRead;
-	}
-	
-	@Override
-	public LetterData clone() {
-		Data tempData = super.clone();
-		LetterData res =  new LetterData(tempData, this.getLetterType(), this.getContent(), this.getIsRead());
-		return res;
-	}
+  public void setLetterType(LetterType letterType) {
+    this.letterType = letterType;
+  }
 
+  public boolean getIsRead() {
+    return isRead;
+  }
+
+  public void setIsRead(boolean isRead) {
+    this.isRead = isRead;
+  }
+
+  @Override
+  public LetterData clone() {
+    Data tempData = super.clone();
+    LetterData res =
+        new LetterData(tempData, this.getLetterType(), this.getContent(), this.getIsRead());
+    return res;
+  }
 }

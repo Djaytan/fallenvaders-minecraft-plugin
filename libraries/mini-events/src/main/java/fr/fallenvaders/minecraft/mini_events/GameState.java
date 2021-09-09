@@ -6,5 +6,9 @@ package fr.fallenvaders.minecraft.mini_events;
 // le plugin retournera à l'identique les nom ci-dessous.
 
 public enum GameState {
-    NOTSTARTED, WAITING, STARTING, PLAYING, FINISH;
+  NOTSTARTED,
+  WAITING,
+  STARTING,
+  PLAYING,
+  FINISH;
 }

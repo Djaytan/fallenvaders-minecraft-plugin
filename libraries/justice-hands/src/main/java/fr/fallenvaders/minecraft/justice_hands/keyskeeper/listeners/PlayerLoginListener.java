@@ -9,26 +9,30 @@ import org.bukkit.event.player.PlayerLoginEvent;
 
 public class PlayerLoginListener implements Listener {
 
+  // On vérifie lors du processus de login, si le joueur est ban
+  @EventHandler
+  public void PlayerLoginEvent(PlayerLoginEvent ple) {
+    try {
+      CJSanction playerActiveBan = KeysKeeperBot.getPlayerActiveBan(ple.getPlayer());
 
-    // On vérifie lors du processus de login, si le joueur est ban
-    @EventHandler
-    public void PlayerLoginEvent(PlayerLoginEvent ple) {
-        try {
-            CJSanction playerActiveBan = KeysKeeperBot.getPlayerActiveBan(ple.getPlayer());
+      boolean isBanDef = false;
+      if ("bandef".equals(playerActiveBan.getType())) {
+        isBanDef = true;
+      }
 
-            boolean isBanDef = false;
-            if ("bandef".equals(playerActiveBan.getType())) {
-                isBanDef = true;
-            }
-
-            if (isBanDef) {
-                ple.disallow(PlayerLoginEvent.Result.KICK_BANNED, KeysKeeperComponent.loginBanDefMessage(playerActiveBan));
-            } else {
-                ple.disallow(PlayerLoginEvent.Result.KICK_BANNED, KeysKeeperComponent.loginBanMessage(playerActiveBan));
-            }
-        } catch (NullPointerException e) {
-            //Si la fonction playerActiveBan retourne un null, le joueur n'a pas de ban actif
-            return;
-        };
+      if (isBanDef) {
+        ple.disallow(
+            PlayerLoginEvent.Result.KICK_BANNED,
+            KeysKeeperComponent.loginBanDefMessage(playerActiveBan));
+      } else {
+        ple.disallow(
+            PlayerLoginEvent.Result.KICK_BANNED,
+            KeysKeeperComponent.loginBanMessage(playerActiveBan));
+      }
+    } catch (NullPointerException e) {
+      // Si la fonction playerActiveBan retourne un null, le joueur n'a pas de ban actif
+      return;
     }
+    ;
+  }
 }

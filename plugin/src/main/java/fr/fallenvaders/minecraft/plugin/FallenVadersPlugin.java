@@ -7,25 +7,25 @@ import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FallenVadersPlugin extends JavaPlugin {
-    private ModuleRegister moduleRegister;
+  private ModuleRegister moduleRegister;
 
-    @Override
-    public void onEnable() {
-        this.saveDefaultConfig();
+  @Override
+  public void onEnable() {
+    this.saveDefaultConfig();
 
-        try {
-            ModuleRegisterInitializer moduleInitializer = new CompleteModuleRegisterInitializer();
-            moduleRegister = moduleInitializer.initialize();
-            moduleRegister.enableModules();
-            System.out.println("FallenVaders plugin enabled.");
-        } catch (ModuleRegisterException e) {
-            e.printStackTrace();
-        }
+    try {
+      ModuleRegisterInitializer moduleInitializer = new CompleteModuleRegisterInitializer();
+      moduleRegister = moduleInitializer.initialize();
+      moduleRegister.enableModules();
+      System.out.println("FallenVaders plugin enabled.");
+    } catch (ModuleRegisterException e) {
+      e.printStackTrace();
     }
+  }
 
-    @Override
-    public void onDisable() {
-        moduleRegister.disableModules();
-        System.out.println("FallenVaders plugin disabled.");
-    }
+  @Override
+  public void onDisable() {
+    moduleRegister.disableModules();
+    System.out.println("FallenVaders plugin disabled.");
+  }
 }

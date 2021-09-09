@@ -14,75 +14,74 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import java.util.function.Consumer;
 
 public class DeletionDataInventory extends ConfirmationInventoryBuilder {
-	public static final String INVENTORY_SUB_ID = "deleteItem";
+  public static final String INVENTORY_SUB_ID = "deleteItem";
 
-	private DataHolder dataSource;
-	private Data data;
-	private boolean update = false;
+  private DataHolder dataSource;
+  private Data data;
+  private boolean update = false;
 
-	public DeletionDataInventory(DataHolder dataSource, Data data, String InventoryTitle, InventoryBuilder parent) {
-		super(INVENTORY_SUB_ID, InventoryTitle);
-		this.setDataSource(dataSource);
-		this.setData(data);
-		this.setParent(parent);
-		if (data instanceof ItemData) {
-			update = true;
-		}
-	}
+  public DeletionDataInventory(
+      DataHolder dataSource, Data data, String InventoryTitle, InventoryBuilder parent) {
+    super(INVENTORY_SUB_ID, InventoryTitle);
+    this.setDataSource(dataSource);
+    this.setData(data);
+    this.setParent(parent);
+    if (data instanceof ItemData) {
+      update = true;
+    }
+  }
 
-	@Override
-	public Consumer<InventoryClickEvent> onConfirmation(Player player, InventoryContents contents) {
-		return e -> {
-			if (e.getClick() == ClickType.LEFT) {
-				if (MailBoxController.deleteData(player, this.getDataSource(), this.getData())) {
-					this.returnToParent(player);
+  @Override
+  public Consumer<InventoryClickEvent> onConfirmation(Player player, InventoryContents contents) {
+    return e -> {
+      if (e.getClick() == ClickType.LEFT) {
+        if (MailBoxController.deleteData(player, this.getDataSource(), this.getData())) {
+          this.returnToParent(player);
 
-				} else {
-					player.closeInventory();
-				}
-			}
-
-		};
-	}
-
-	@Override
-	public Consumer<InventoryClickEvent> onAnnulation(Player player, InventoryContents contents) {
-		return null;
-	}
-
-	@Override
-	public void onUpdate(Player player, InventoryContents contents) {
-        int state = contents.property("state", 0);
-        contents.setProperty("state", state + 1);
-
-        if(state % 20 != 0) {
-        	return;
+        } else {
+          player.closeInventory();
         }
-        
-		if (update) {
-			ItemData tempData = (ItemData) this.getData();
+      }
+    };
+  }
 
-			if (tempData.isOutOfDate()) {
-				MailBoxController.deleteItem(player, this.getDataSource(), tempData);
-				returnToParent(player);
-			}
-		}
-	}
+  @Override
+  public Consumer<InventoryClickEvent> onAnnulation(Player player, InventoryContents contents) {
+    return null;
+  }
 
-	public Data getData() {
-		return data;
-	}
+  @Override
+  public void onUpdate(Player player, InventoryContents contents) {
+    int state = contents.property("state", 0);
+    contents.setProperty("state", state + 1);
 
-	public void setData(Data data) {
-		this.data = data;
-	}
+    if (state % 20 != 0) {
+      return;
+    }
 
-	public DataHolder getDataSource() {
-		return dataSource;
-	}
+    if (update) {
+      ItemData tempData = (ItemData) this.getData();
 
-	public void setDataSource(DataHolder dataSource) {
-		this.dataSource = dataSource;
-	}
+      if (tempData.isOutOfDate()) {
+        MailBoxController.deleteItem(player, this.getDataSource(), tempData);
+        returnToParent(player);
+      }
+    }
+  }
 
+  public Data getData() {
+    return data;
+  }
+
+  public void setData(Data data) {
+    this.data = data;
+  }
+
+  public DataHolder getDataSource() {
+    return dataSource;
+  }
+
+  public void setDataSource(DataHolder dataSource) {
+    this.dataSource = dataSource;
+  }
 }

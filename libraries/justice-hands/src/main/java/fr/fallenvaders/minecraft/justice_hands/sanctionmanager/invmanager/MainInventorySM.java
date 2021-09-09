@@ -1,8 +1,5 @@
 package fr.fallenvaders.minecraft.justice_hands.sanctionmanager.invmanager;
 
-import java.util.Arrays;
-import java.util.UUID;
-
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CategoriesList;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.objects.Categorie;
@@ -16,43 +13,60 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.UUID;
+
 public class MainInventorySM implements InventoryProvider {
 
-    private int targetHeadLine;
-    private int targetHeadColum;
+  private int targetHeadLine;
+  private int targetHeadColum;
 
-    // Constructeur
-    public MainInventorySM(int targetHeadLine, int targetHeadColum) {
-        this.targetHeadLine = targetHeadLine;
-        this.targetHeadColum = targetHeadColum;
-    }
+  // Constructeur
+  public MainInventorySM(int targetHeadLine, int targetHeadColum) {
+    this.targetHeadLine = targetHeadLine;
+    this.targetHeadColum = targetHeadColum;
+  }
 
-    @Override
-    public void init(Player moderator, InventoryContents contents) {
-        SmartInventory inventory = contents.inventory();
-        contents.set(targetHeadLine, targetHeadColum, ClickableItem.empty(GeneralUtils.getTargetHead(Bukkit.getPlayer(UUID.fromString(inventory.getId())))));
-        for (Categorie categorie : CategoriesList.getCategoriesList()) {
-            contents.set(categorie.getLineSlot(), categorie.getColumSlot(), ClickableItem.of(getCategoryItem(categorie), e -> {
+  @Override
+  public void init(Player moderator, InventoryContents contents) {
+    SmartInventory inventory = contents.inventory();
+    contents.set(
+        targetHeadLine,
+        targetHeadColum,
+        ClickableItem.empty(
+            GeneralUtils.getTargetHead(Bukkit.getPlayer(UUID.fromString(inventory.getId())))));
+    for (Categorie categorie : CategoriesList.getCategoriesList()) {
+      contents.set(
+          categorie.getLineSlot(),
+          categorie.getColumSlot(),
+          ClickableItem.of(
+              getCategoryItem(categorie),
+              e -> {
                 if (e.isLeftClick() || e.isRightClick() || e.isShiftClick()) {
-                    InventoryBuilderSM.openCategoryMenu(categorie, moderator, Bukkit.getPlayer(UUID.fromString(inventory.getId())));
+                  InventoryBuilderSM.openCategoryMenu(
+                      categorie, moderator, Bukkit.getPlayer(UUID.fromString(inventory.getId())));
                 }
-            }));
-            contents.set(targetHeadLine, targetHeadColum, ClickableItem.empty(GeneralUtils.getTargetHead(Bukkit.getPlayer(UUID.fromString(inventory.getId())))));
-        }
+              }));
+      contents.set(
+          targetHeadLine,
+          targetHeadColum,
+          ClickableItem.empty(
+              GeneralUtils.getTargetHead(Bukkit.getPlayer(UUID.fromString(inventory.getId())))));
     }
+  }
 
-    @Override
-    public void update(Player player, InventoryContents contents) {
-        // NOTHING TO DO
-    }
+  @Override
+  public void update(Player player, InventoryContents contents) {
+    // NOTHING TO DO
+  }
 
-    // Récupèration de l'item représentatif d'une catégorie
-    private static ItemStack getCategoryItem(Categorie categorie) {
-        ItemStack item = new ItemStack(Material.CHEST);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§4Catégorie: §c" + categorie.getName());
-        meta.setLore(Arrays.asList("", categorie.getDesc()));
-        item.setItemMeta(meta);
-        return item;
-    }
+  // Récupèration de l'item représentatif d'une catégorie
+  private static ItemStack getCategoryItem(Categorie categorie) {
+    ItemStack item = new ItemStack(Material.CHEST);
+    ItemMeta meta = item.getItemMeta();
+    meta.setDisplayName("§4Catégorie: §c" + categorie.getName());
+    meta.setLore(Arrays.asList("", categorie.getDesc()));
+    item.setItemMeta(meta);
+    return item;
+  }
 }

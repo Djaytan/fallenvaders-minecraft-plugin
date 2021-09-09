@@ -14,53 +14,61 @@ import java.text.SimpleDateFormat;
 
 public class MailBoxInventoryHandler {
 
-    public static ItemStack generateItemRepresentation(Data data) {
-        ItemStack res = null;
+  public static ItemStack generateItemRepresentation(Data data) {
+    ItemStack res = null;
 
-        if (data instanceof ItemData) {
-            res = generateItemDataRepresentation((ItemData) data);
+    if (data instanceof ItemData) {
+      res = generateItemDataRepresentation((ItemData) data);
 
-        } else if (data instanceof LetterData) {
-            res = generateLetterDataRepresentation((LetterData) data);
-        }
-
-
-        return res;
+    } else if (data instanceof LetterData) {
+      res = generateLetterDataRepresentation((LetterData) data);
     }
 
-    private static ItemStack generateItemDataRepresentation(ItemData data) {
-        return data.getItem();
-    }
+    return res;
+  }
 
-    private static ItemStack generateLetterDataRepresentation(LetterData data) {
-        SimpleDateFormat sdf = new SimpleDateFormat(LangManager.getValue("string_date_format"));
-        ItemStackBuilder itemGenerator = new ItemStackBuilder(data.getLetterType().getMaterial())
+  private static ItemStack generateItemDataRepresentation(ItemData data) {
+    return data.getItem();
+  }
+
+  private static ItemStack generateLetterDataRepresentation(LetterData data) {
+    SimpleDateFormat sdf = new SimpleDateFormat(LangManager.getValue("string_date_format"));
+    ItemStackBuilder itemGenerator =
+        new ItemStackBuilder(data.getLetterType().getMaterial())
             .setLoreFormat(ChatColor.WHITE.toString())
             .addAutoFormatingLore(
                 String.format(
                     "%s%s" + LangManager.getValue("string_object") + ":%s%s " + data.getObject(),
-                    ChatColor.YELLOW, ChatColor.BOLD, ChatColor.RESET, ChatColor.WHITE),
-                35
-            )
+                    ChatColor.YELLOW,
+                    ChatColor.BOLD,
+                    ChatColor.RESET,
+                    ChatColor.WHITE),
+                35)
             .addAutoFormatingLore(
                 String.format(
                     "%s%s" + LangManager.getValue("string_author") + ":%s%s " + data.getAuthor(),
-                    ChatColor.YELLOW, ChatColor.BOLD, ChatColor.RESET, ChatColor.WHITE),
-                35
-            )
+                    ChatColor.YELLOW,
+                    ChatColor.BOLD,
+                    ChatColor.RESET,
+                    ChatColor.WHITE),
+                35)
             .addAutoFormatingLore(
                 String.format(
-                    "%s%s" + LangManager.getValue("string_reception_date") + ":%s%s " + sdf.format(data.getCreationDate()),
-                    ChatColor.YELLOW, ChatColor.BOLD, ChatColor.RESET, ChatColor.WHITE),
-                35
-            )
+                    "%s%s"
+                        + LangManager.getValue("string_reception_date")
+                        + ":%s%s "
+                        + sdf.format(data.getCreationDate()),
+                    ChatColor.YELLOW,
+                    ChatColor.BOLD,
+                    ChatColor.RESET,
+                    ChatColor.WHITE),
+                35)
             .addLore(" ");
 
-        if (!data.getIsRead()) {
-            itemGenerator.enchant(Enchantment.ARROW_FIRE, 1).addFlag(ItemFlag.HIDE_ENCHANTS);
-        }
-
-        return itemGenerator.build();
+    if (!data.getIsRead()) {
+      itemGenerator.enchant(Enchantment.ARROW_FIRE, 1).addFlag(ItemFlag.HIDE_ENCHANTS);
     }
 
+    return itemGenerator.build();
+  }
 }
