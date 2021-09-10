@@ -1,8 +1,11 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import com.google.inject.Singleton;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class ModuleRegister {
 
   private final List<ModuleDeclarer> modules;
