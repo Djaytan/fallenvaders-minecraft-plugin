@@ -54,6 +54,7 @@ class ModuleRegisterTest {
     Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
     moduleRegister.enableModules();
     Assertions.assertEquals(1, enableStack);
+    Assertions.assertTrue(moduleRegister.hasLaunched());
   }
 
   @Test
@@ -67,6 +68,7 @@ class ModuleRegisterTest {
     moduleRegister.enableModules();
     moduleRegister.disableModules();
     Assertions.assertEquals(1, disableStack);
+    Assertions.assertTrue(moduleRegister.hasLaunched());
   }
 
   @Test
@@ -83,6 +85,7 @@ class ModuleRegisterTest {
     moduleRegister.disableModules();
     Assertions.assertEquals(1, enableStack);
     Assertions.assertEquals(1, disableStack);
+    Assertions.assertTrue(moduleRegister.hasLaunched());
   }
 
   @Test
@@ -103,6 +106,7 @@ class ModuleRegisterTest {
     moduleRegister.disableModules();
     Assertions.assertEquals(3, enableStack);
     Assertions.assertEquals(3, disableStack);
+    Assertions.assertTrue(moduleRegister.hasLaunched());
   }
 
   private ModuleDeclarer createWithoutBehaviorModuleDeclarer(@NotNull String moduleName) {
