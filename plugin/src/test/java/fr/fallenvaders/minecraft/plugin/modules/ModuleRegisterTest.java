@@ -17,14 +17,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class ModuleRegisterTest {
 
   private ModuleRegister moduleRegister;
-  private boolean isEnableRan;
-  private boolean isDisableRan;
+  private int enableStack;
+  private int disableStack;
 
   @BeforeEach
   void setUp() {
     moduleRegister = new ModuleRegister();
-    isEnableRan = false;
-    isDisableRan = false;
+    enableStack = 0;
+    disableStack = 0;
   }
 
   @Test
@@ -35,8 +35,8 @@ class ModuleRegisterTest {
   }
 
   @Test
-  @DisplayName("Register a module declarer")
-  void registerModuleDeclarer() {
+  @DisplayName("Register a module")
+  void registerModule() {
     String moduleName = "test-module";
     ModuleDeclarer moduleDeclarer = createWithoutBehaviorModuleDeclarer(moduleName);
     Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
@@ -45,44 +45,64 @@ class ModuleRegisterTest {
   }
 
   @Test
-  @DisplayName("Enable one module declarer")
-  void enableOneModuleDeclarer() {
-    Assertions.assertFalse(isEnableRan);
+  @DisplayName("Enable one module")
+  void enableOneModule() {
+    Assertions.assertEquals(0, enableStack);
     String moduleName = "test-module";
-    Runnable onEnable = () -> isEnableRan = true;
+    Runnable onEnable = () -> enableStack++;
     ModuleDeclarer moduleDeclarer = createModuleDeclarer(moduleName, onEnable, null);
     Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
     moduleRegister.enableModules();
-    Assertions.assertTrue(isEnableRan);
+    Assertions.assertEquals(1, enableStack);
   }
 
   @Test
-  @DisplayName("Disable one module declarer")
-  void disableOneModuleDeclarer() {
-    Assertions.assertFalse(isDisableRan);
+  @DisplayName("Disable one module")
+  void disableOneModule() {
+    Assertions.assertEquals(0, disableStack);
     String moduleName = "test-module";
-    Runnable onDisable = () -> isDisableRan = true;
+    Runnable onDisable = () -> disableStack++;
     ModuleDeclarer moduleDeclarer = createModuleDeclarer(moduleName, null, onDisable);
     Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
     moduleRegister.enableModules();
     moduleRegister.disableModules();
-    Assertions.assertTrue(isDisableRan);
+    Assertions.assertEquals(1, disableStack);
   }
 
   @Test
-  @DisplayName("Enable then disable one module declarer")
-  void enableThenDisableOneModuleDeclarer() {
-    Assertions.assertFalse(isEnableRan);
-    Assertions.assertFalse(isDisableRan);
+  @DisplayName("Enable then disable one module")
+  void enableThenDisableOneModule() {
+    Assertions.assertEquals(0, enableStack);
+    Assertions.assertEquals(0, disableStack);
     String moduleName = "test-module";
-    Runnable onEnable = () -> isEnableRan = true;
-    Runnable onDisable = () -> isDisableRan = true;
+    Runnable onEnable = () -> enableStack++;
+    Runnable onDisable = () -> disableStack++;
     ModuleDeclarer moduleDeclarer = createModuleDeclarer(moduleName, onEnable, onDisable);
     Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
     moduleRegister.enableModules();
     moduleRegister.disableModules();
-    Assertions.assertTrue(isEnableRan);
-    Assertions.assertTrue(isDisableRan);
+    Assertions.assertEquals(1, enableStack);
+    Assertions.assertEquals(1, disableStack);
+  }
+
+  @Test
+  @DisplayName("Enable then disable several modules")
+  void enableThenDisableSeveralModules() {
+    Assertions.assertEquals(0, enableStack);
+    Assertions.assertEquals(0, disableStack);
+    String moduleName = "test-module";
+    Runnable onEnable = () -> enableStack++;
+    Runnable onDisable = () -> disableStack++;
+    ModuleDeclarer moduleDeclarer1 = createModuleDeclarer(moduleName, onEnable, onDisable);
+    ModuleDeclarer moduleDeclarer2 = createModuleDeclarer(moduleName, onEnable, onDisable);
+    ModuleDeclarer moduleDeclarer3 = createModuleDeclarer(moduleName, onEnable, onDisable);
+    Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer1));
+    Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer2));
+    Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer3));
+    moduleRegister.enableModules();
+    moduleRegister.disableModules();
+    Assertions.assertEquals(3, enableStack);
+    Assertions.assertEquals(3, disableStack);
   }
 
   private ModuleDeclarer createWithoutBehaviorModuleDeclarer(@NotNull String moduleName) {
