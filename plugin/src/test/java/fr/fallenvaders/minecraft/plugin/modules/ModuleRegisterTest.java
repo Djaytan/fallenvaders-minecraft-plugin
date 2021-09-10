@@ -33,21 +33,23 @@ class ModuleRegisterTest {
     // TODO: make it better when Guice will be setup
     Mockito.when(JavaPlugin.getPlugin(FallenVadersPlugin.class)).thenReturn(null);
     String moduleName = "test-module";
-    ModuleDeclarer moduleDeclarer = new ModuleDeclarer(moduleName) {
-      @Override
-      public void onEnable() {
-        // nothing to test here
-      }
+    ModuleDeclarer moduleDeclarer =
+        new ModuleDeclarer(moduleName) {
+          @Override
+          public void onEnable() {
+            // nothing to test here
+          }
 
-      @Override
-      public void onDisable() {
-        // nothing to test here
-      }
-    };
-      Assertions.assertDoesNotThrow(() -> {
-        moduleRegister.registerModule(moduleDeclarer);
-      });
-      Assertions.assertEquals(1, moduleRegister.getModules().size());
-      Assertions.assertEquals(moduleName, moduleRegister.getModules().get(0).getModuleName());
+          @Override
+          public void onDisable() {
+            // nothing to test here
+          }
+        };
+    Assertions.assertDoesNotThrow(
+        () -> {
+          moduleRegister.registerModule(moduleDeclarer);
+        });
+    Assertions.assertEquals(1, moduleRegister.getModules().size());
+    Assertions.assertEquals(moduleName, moduleRegister.getModules().get(0).getModuleName());
   }
 }
