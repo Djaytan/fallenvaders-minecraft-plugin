@@ -69,6 +69,22 @@ class ModuleRegisterTest {
     Assertions.assertTrue(isDisableRan);
   }
 
+  @Test
+  @DisplayName("Enable then disable one module declarer")
+  void enableThenDisableOneModuleDeclarer() {
+    Assertions.assertFalse(isEnableRan);
+    Assertions.assertFalse(isDisableRan);
+    String moduleName = "test-module";
+    Runnable onEnable = () -> isEnableRan = true;
+    Runnable onDisable = () -> isDisableRan = true;
+    ModuleDeclarer moduleDeclarer = createModuleDeclarer(moduleName, onEnable, onDisable);
+    Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
+    moduleRegister.enableModules();
+    moduleRegister.disableModules();
+    Assertions.assertTrue(isEnableRan);
+    Assertions.assertTrue(isDisableRan);
+  }
+
   private ModuleDeclarer createWithoutBehaviorModuleDeclarer(@NotNull String moduleName) {
     return createModuleDeclarer(moduleName, null, null);
   }
