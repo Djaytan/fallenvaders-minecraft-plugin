@@ -40,4 +40,9 @@ public class ModuleRegister {
   public boolean hasLaunched() {
     return hasLaunched;
   }
+
+  public List<ModuleDeclarer> getModules() {
+    // TODO: return clone version of the list
+    return modules;
+  }
 }
