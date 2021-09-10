@@ -27,7 +27,11 @@ public class JusticeHands extends JavaPlugin {
     plugin.saveConfig();
 
     // Connexion à la base de données
-    sql = new SqlConnection("jdbc:mariadb://178.170.13.15:3306/justicehands", "dbuser", "dbuser");
+    String database = PLUGIN.getConfig().getString("database.database");
+    String host = PLUGIN.getConfig().getString("database.host");
+    String user = PLUGIN.getConfig().getString("database.user");
+    String password = PLUGIN.getConfig().getString("database.password");
+    sql = new SqlConnection("jdbc:mariadb://" + host + ":3306/" + database, user, password);
     sql.connection();
 
     // On donne la connection
