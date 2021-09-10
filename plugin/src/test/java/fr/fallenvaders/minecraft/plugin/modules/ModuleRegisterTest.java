@@ -109,6 +109,18 @@ class ModuleRegisterTest {
     Assertions.assertTrue(moduleRegister.hasLaunched());
   }
 
+  @Test
+  @DisplayName("Register module after launch throw exception")
+  void registerModuleAfterLaunchThrowException() {
+    String moduleName = "test-module";
+    ModuleDeclarer moduleDeclarer1 = createWithoutBehaviorModuleDeclarer(moduleName);
+    Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer1));
+    moduleRegister.enableModules();
+    Assertions.assertTrue(moduleRegister.hasLaunched());
+    ModuleDeclarer moduleDeclarer2 = createWithoutBehaviorModuleDeclarer(moduleName);
+    Assertions.assertThrows(ModuleRegisterException.class, () -> moduleRegister.registerModule(moduleDeclarer2));
+  }
+
   private ModuleDeclarer createWithoutBehaviorModuleDeclarer(@NotNull String moduleName) {
     return createModuleDeclarer(moduleName, null, null);
   }
