@@ -24,6 +24,5 @@ public class FallenVadersInjector {
     Module module = new FallenVadersModule();
     Injector injector = Guice.createInjector(module);
     injector.injectMembers(plugin);
-    injector.injectMembers(new ModuleRegister());
   }
 }
