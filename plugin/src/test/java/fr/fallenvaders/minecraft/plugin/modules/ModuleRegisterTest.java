@@ -47,6 +47,7 @@ class ModuleRegisterTest {
   @Test
   @DisplayName("Enable one module declarer")
   void enableOneModuleDeclarer() {
+    Assertions.assertFalse(isEnableRan);
     String moduleName = "test-module";
     Runnable onEnable = () -> isEnableRan = true;
     ModuleDeclarer moduleDeclarer = createModuleDeclarer(moduleName, onEnable, null);
@@ -58,6 +59,7 @@ class ModuleRegisterTest {
   @Test
   @DisplayName("Disable one module declarer")
   void disableOneModuleDeclarer() {
+    Assertions.assertFalse(isDisableRan);
     String moduleName = "test-module";
     Runnable onDisable = () -> isDisableRan = true;
     ModuleDeclarer moduleDeclarer = createModuleDeclarer(moduleName, null, onDisable);
