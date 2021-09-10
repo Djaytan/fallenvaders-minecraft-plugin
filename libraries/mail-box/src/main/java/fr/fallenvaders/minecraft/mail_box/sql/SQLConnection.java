@@ -40,7 +40,7 @@ public class SQLConnection {
     } catch (SQLException e) {
       MailBox.main
           .getLogger()
-          .log(Level.INFO, LangManager.getValue("string_sql_impossible_to_connect"));
+          .log(Level.INFO, LangManager.getValue("string_sql_impossible_to_connect"), e);
     }
 
     return result;
