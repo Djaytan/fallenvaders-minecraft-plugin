@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Setup JUnit 5 and Mockito and add first tests.
+- Code refactoring with google-java-format style and fixes some bugs reported by SonarQube.
 - Create the CHANGELOG based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Add an MkDocs website for the project Wiki.
 - Setup SonarQube for code quality analyzes.
