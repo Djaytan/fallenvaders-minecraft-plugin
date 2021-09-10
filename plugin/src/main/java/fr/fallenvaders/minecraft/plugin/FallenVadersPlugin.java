@@ -9,6 +9,8 @@ import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterException;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Level;
+
 @Singleton
 public class FallenVadersPlugin extends JavaPlugin {
 
@@ -25,16 +27,16 @@ public class FallenVadersPlugin extends JavaPlugin {
       ModuleRegisterInitializer moduleInitializer = new CompleteModuleRegisterInitializer();
       moduleRegister = moduleInitializer.initialize();
       moduleRegister.enableModules();
-      System.out.println("FallenVaders plugin enabled.");
+      getLogger().info("FallenVaders plugin enabled.");
     } catch (ModuleRegisterException e) {
       // TODO: better error management
-      e.printStackTrace();
+      getLogger().log(Level.SEVERE, "An error has occurred during modules registration.", e);
     }
   }
 
   @Override
   public void onDisable() {
     moduleRegister.disableModules();
-    System.out.println("FallenVaders plugin disabled.");
+    getLogger().info("FallenVaders plugin disabled.");
   }
 }
