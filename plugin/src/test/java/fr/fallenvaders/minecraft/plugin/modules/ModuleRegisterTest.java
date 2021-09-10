@@ -18,11 +18,13 @@ class ModuleRegisterTest {
 
   private ModuleRegister moduleRegister;
   private boolean isEnableRan;
+  private boolean isDisableRan;
 
   @BeforeEach
   void setUp() {
     moduleRegister = new ModuleRegister();
     isEnableRan = false;
+    isDisableRan = false;
   }
 
   @Test
@@ -51,6 +53,18 @@ class ModuleRegisterTest {
     Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
     moduleRegister.enableModules();
     Assertions.assertTrue(isEnableRan);
+  }
+
+  @Test
+  @DisplayName("Disable one module declarer")
+  void disableOneModuleDeclarer() {
+    String moduleName = "test-module";
+    Runnable onDisable = () -> isDisableRan = true;
+    ModuleDeclarer moduleDeclarer = createModuleDeclarer(moduleName, null, onDisable);
+    Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
+    moduleRegister.enableModules();
+    moduleRegister.disableModules();
+    Assertions.assertTrue(isDisableRan);
   }
 
   private ModuleDeclarer createWithoutBehaviorModuleDeclarer(@NotNull String moduleName) {
