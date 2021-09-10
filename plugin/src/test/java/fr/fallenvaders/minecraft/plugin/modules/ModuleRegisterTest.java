@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -30,10 +31,12 @@ class ModuleRegisterTest {
   @Test
   @DisplayName("Register a module declarer")
   void registerModuleDeclarer() {
-    // TODO: make it better when Guice will be setup
-    Mockito.when(JavaPlugin.getPlugin(FallenVadersPlugin.class)).thenReturn(null);
     String moduleName = "test-module";
-    ModuleDeclarer moduleDeclarer =
+    ModuleDeclarer moduleDeclarer;
+    // TODO: make it better when Guice will be setup by refactoring the source main code
+    try (MockedStatic<JavaPlugin> javaPlugin = Mockito.mockStatic(JavaPlugin.class)) {
+      javaPlugin.when(() -> JavaPlugin.getPlugin(FallenVadersPlugin.class)).thenReturn(null);
+      moduleDeclarer =
         new ModuleDeclarer(moduleName) {
           @Override
           public void onEnable() {
@@ -45,10 +48,8 @@ class ModuleRegisterTest {
             // nothing to test here
           }
         };
-    Assertions.assertDoesNotThrow(
-        () -> {
-          moduleRegister.registerModule(moduleDeclarer);
-        });
+    }
+    Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
     Assertions.assertEquals(1, moduleRegister.getModules().size());
     Assertions.assertEquals(moduleName, moduleRegister.getModules().get(0).getModuleName());
   }
