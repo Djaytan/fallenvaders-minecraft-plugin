@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add an MkDocs website for the project Wiki.
 - Setup SonarQube for code quality analyzes.
 
+### Fixed
+- Fix database connection issue in JusticeHands (cause: static credentials in code)
+
 ## [0.1.0] - 2021-08-28
 ### Added
 - Update and import Dornacraft's plugins sources code:
