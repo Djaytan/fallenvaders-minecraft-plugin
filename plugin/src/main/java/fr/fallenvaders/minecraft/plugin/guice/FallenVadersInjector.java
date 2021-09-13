@@ -4,7 +4,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleRegister;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -16,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 public class FallenVadersInjector {
 
   /**
-   * Injects dependencies through Guice.
+   * Injects dependencies through Guice to existing instances (e.g. {@link FallenVadersPlugin}.
    *
    * @param plugin The unique {@link FallenVadersPlugin} instance to inject.
    */
@@ -24,6 +23,5 @@ public class FallenVadersInjector {
     Module module = new FallenVadersModule();
     Injector injector = Guice.createInjector(module);
     injector.injectMembers(plugin);
-    injector.injectMembers(plugin.getLogger());
   }
 }
