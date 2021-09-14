@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 0.2.0
  */
 public class FallenVadersInjector {
+
   /**
    * Injects dependencies through Guice to existing instances (e.g. {@link FallenVadersPlugin}.
    *
