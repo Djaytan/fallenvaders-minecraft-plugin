@@ -13,8 +13,12 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.logging.Logger;
+
 @ExtendWith(MockitoExtension.class)
 class ModuleRegisterTest {
+
+  private static final Logger logger = Logger.getAnonymousLogger();
 
   private ModuleRegister moduleRegister;
   private int enableStack;
@@ -22,7 +26,7 @@ class ModuleRegisterTest {
 
   @BeforeEach
   void setUp() {
-    moduleRegister = new ModuleRegister();
+    moduleRegister = new ModuleRegister(logger);
     enableStack = 0;
     disableStack = 0;
   }
@@ -118,7 +122,8 @@ class ModuleRegisterTest {
     moduleRegister.enableModules();
     Assertions.assertTrue(moduleRegister.hasLaunched());
     ModuleDeclarer moduleDeclarer2 = createWithoutBehaviorModuleDeclarer(moduleName);
-    Assertions.assertThrows(ModuleRegisterException.class, () -> moduleRegister.registerModule(moduleDeclarer2));
+    Assertions.assertThrows(
+        ModuleRegisterException.class, () -> moduleRegister.registerModule(moduleDeclarer2));
   }
 
   private ModuleDeclarer createWithoutBehaviorModuleDeclarer(@NotNull String moduleName) {
@@ -126,9 +131,7 @@ class ModuleRegisterTest {
   }
 
   private ModuleDeclarer createModuleDeclarer(
-      @NotNull String moduleName,
-      @Nullable Runnable onEnable,
-      @Nullable Runnable onDisable) {
+      @NotNull String moduleName, @Nullable Runnable onEnable, @Nullable Runnable onDisable) {
     ModuleDeclarer moduleDeclarer;
     // TODO: make it better when Guice will be setup by refactoring the source main code
     try (MockedStatic<JavaPlugin> javaPlugin = Mockito.mockStatic(JavaPlugin.class)) {
