@@ -3,7 +3,6 @@ package fr.fallenvaders.minecraft.plugin.modules;
 import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-// TODO: rename to FVModule
 public abstract class ModuleDeclarer {
 
   private final String moduleName;
