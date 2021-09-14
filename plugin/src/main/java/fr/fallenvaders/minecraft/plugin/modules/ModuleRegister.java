@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: rename to ModuleRegisterService & create ModuleRegisterContainer
 @Singleton
 public class ModuleRegister {
 
