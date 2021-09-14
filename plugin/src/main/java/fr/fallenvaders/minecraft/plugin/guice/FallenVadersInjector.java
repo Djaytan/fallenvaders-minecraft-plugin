@@ -19,7 +19,7 @@ public class FallenVadersInjector {
    * @param plugin The unique {@link FallenVadersPlugin} instance where to inject dependencies.
    */
   public void inject(@NotNull FallenVadersPlugin plugin) {
-    Module module = new FallenVadersModule();
+    Module module = new FallenVadersModule(plugin);
     Injector injector = Guice.createInjector(module);
     injector.injectMembers(plugin);
   }
