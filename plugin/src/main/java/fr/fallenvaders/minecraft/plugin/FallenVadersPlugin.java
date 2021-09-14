@@ -18,6 +18,7 @@ public class FallenVadersPlugin extends JavaPlugin {
 
   @Override
   public void onEnable() {
+    // Guice setup
     FallenVadersInjector fvInjector = new FallenVadersInjector();
     fvInjector.inject(this);
 
