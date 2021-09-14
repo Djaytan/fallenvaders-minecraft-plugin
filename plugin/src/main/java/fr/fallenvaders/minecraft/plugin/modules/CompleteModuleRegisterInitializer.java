@@ -1,10 +1,10 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import fr.fallenvaders.minecraft.plugin.modules.declarers.*;
 import org.jetbrains.annotations.NotNull;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.Objects;
 import java.util.logging.Logger;
 

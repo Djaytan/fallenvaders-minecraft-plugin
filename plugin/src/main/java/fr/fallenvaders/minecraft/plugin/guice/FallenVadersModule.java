@@ -2,10 +2,12 @@ package fr.fallenvaders.minecraft.plugin.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
+import fr.fallenvaders.minecraft.plugin.modules.CompleteModuleRegisterInitializer;
+import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Singleton;
 import java.util.logging.Logger;
 
 /**
@@ -24,6 +26,7 @@ public class FallenVadersModule extends AbstractModule {
   @Override
   public void configure() {
     bind(JavaPlugin.class).to(FallenVadersPlugin.class);
+    bind(ModuleRegisterInitializer.class).to(CompleteModuleRegisterInitializer.class);
   }
 
   @Provides

@@ -1,19 +1,19 @@
 package fr.fallenvaders.minecraft.plugin;
 
-import com.google.inject.Inject;
 import fr.fallenvaders.minecraft.plugin.guice.FallenVadersInjector;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleRegister;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterException;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.logging.Level;
 
 @Singleton
 public class FallenVadersPlugin extends JavaPlugin {
 
-  @Inject private ModuleRegisterInitializer moduleRegisterInitializer;
+  @Inject private ModuleRegisterInitializer moduleRegInit;
   @Inject private ModuleRegister moduleRegister;
 
   @Override
@@ -27,7 +27,7 @@ public class FallenVadersPlugin extends JavaPlugin {
 
     // Initializes modules
     try {
-      moduleRegisterInitializer.initialize();
+      moduleRegInit.initialize();
       moduleRegister.enableModules();
       getLogger().info("FallenVaders plugin successfully enabled.");
     } catch (ModuleRegisterException e) {
