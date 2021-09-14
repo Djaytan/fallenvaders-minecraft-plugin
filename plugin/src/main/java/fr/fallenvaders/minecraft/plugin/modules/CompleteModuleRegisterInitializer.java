@@ -1,15 +1,36 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
-public class CompleteModuleRegisterInitializer implements ModuleRegisterInitializer {
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+import java.util.logging.Logger;
+
+@Singleton
+public final class CompleteModuleRegisterInitializer implements ModuleRegisterInitializer {
+
+  private final Logger logger;
+  private final ModuleRegister moduleRegister;
+
+  @Inject
+  public CompleteModuleRegisterInitializer(@NotNull Logger logger, @NotNull ModuleRegister moduleRegister) {
+    Objects.requireNonNull(logger);
+    Objects.requireNonNull(moduleRegister);
+
+    this.logger = logger;
+    this.moduleRegister = moduleRegister;
+  }
 
   @Override
   public ModuleRegister initialize() throws ModuleRegisterException {
-    ModuleRegister register = new ModuleRegister();
-    register.registerModule(new FallenVadersCoreModuleDeclarer());
-    register.registerModule(new JusticeHandsModuleDeclarer());
-    register.registerModule(new MailBoxModuleDeclarer());
-    register.registerModule(new MinecraftEnhanceModuleDeclarer());
-    register.registerModule(new MiniEventsModuleDeclarer());
-    return register;
+    logger.info("Start modules registration.");
+    moduleRegister.registerModule(new FallenVadersCoreModuleDeclarer());
+    moduleRegister.registerModule(new JusticeHandsModuleDeclarer());
+    moduleRegister.registerModule(new MailBoxModuleDeclarer());
+    moduleRegister.registerModule(new MinecraftEnhanceModuleDeclarer());
+    moduleRegister.registerModule(new MiniEventsModuleDeclarer());
+    logger.info("Modules registration done.");
+    return moduleRegister;
   }
 }
