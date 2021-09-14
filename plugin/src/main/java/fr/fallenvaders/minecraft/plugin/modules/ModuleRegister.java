@@ -1,19 +1,24 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 // TODO: rename to ModuleRegisterService & create ModuleRegisterContainer
 @Singleton
 public class ModuleRegister {
 
-  private final List<ModuleDeclarer> modules;
-  private boolean hasLaunched;
+  private final Logger logger;
 
-  public ModuleRegister() {
-    modules = new ArrayList<>();
+  private final List<ModuleDeclarer> modules = new ArrayList<>();
+  private boolean hasLaunched = false;
+
+  @Inject
+  public ModuleRegister(Logger logger) {
+    this.logger = logger;
   }
 
   public void registerModule(ModuleDeclarer moduleDeclarer) throws ModuleRegisterException {
@@ -29,7 +34,7 @@ public class ModuleRegister {
         (module) -> {
           module.onEnable();
           hasLaunched = true;
-          System.out.println("Module \"" + module.getModuleName() + "\" enabled.");
+          logger.info("Module \"" + module.getModuleName() + "\" enabled.");
         });
   }
 
@@ -37,7 +42,7 @@ public class ModuleRegister {
     modules.forEach(
         (module) -> {
           module.onDisable();
-          System.out.println("Module \"" + module.getModuleName() + "\" disabled.");
+          logger.info("Module \"" + module.getModuleName() + "\" disabled.");
         });
   }
 
