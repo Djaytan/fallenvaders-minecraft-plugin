@@ -1,6 +1,7 @@
-package fr.fallenvaders.minecraft.plugin.modules;
+package fr.fallenvaders.minecraft.plugin.modules.declarers;
 
 import fr.fallenvaders.minecraft.mc_enhancer.controller.commands.PingCmd;
+import fr.fallenvaders.minecraft.plugin.modules.ModuleDeclarer;
 
 public class MinecraftEnhanceModuleDeclarer extends ModuleDeclarer {
 

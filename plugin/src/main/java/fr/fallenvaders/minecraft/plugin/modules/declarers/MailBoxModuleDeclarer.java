@@ -1,6 +1,7 @@
-package fr.fallenvaders.minecraft.plugin.modules;
+package fr.fallenvaders.minecraft.plugin.modules.declarers;
 
 import fr.fallenvaders.minecraft.mail_box.MailBox;
+import fr.fallenvaders.minecraft.plugin.modules.ModuleDeclarer;
 
 public class MailBoxModuleDeclarer extends ModuleDeclarer {
 

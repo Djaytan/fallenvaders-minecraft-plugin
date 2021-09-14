@@ -1,4 +1,6 @@
-package fr.fallenvaders.minecraft.plugin.modules;
+package fr.fallenvaders.minecraft.plugin.modules.declarers;
+
+import fr.fallenvaders.minecraft.plugin.modules.ModuleDeclarer;
 
 public class MiniEventsModuleDeclarer extends ModuleDeclarer {
 
