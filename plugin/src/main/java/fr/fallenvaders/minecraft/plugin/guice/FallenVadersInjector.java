@@ -13,11 +13,10 @@ import org.jetbrains.annotations.NotNull;
  * @since 0.2.0
  */
 public class FallenVadersInjector {
-
   /**
    * Injects dependencies through Guice to existing instances (e.g. {@link FallenVadersPlugin}.
    *
-   * @param plugin The unique {@link FallenVadersPlugin} instance to inject.
+   * @param plugin The unique {@link FallenVadersPlugin} instance where to inject dependencies.
    */
   public void inject(@NotNull FallenVadersPlugin plugin) {
     Module module = new FallenVadersModule();
