@@ -23,7 +23,7 @@ public final class CompleteModuleRegisterInitializer implements ModuleRegisterIn
   }
 
   @Override
-  public ModuleRegister initialize() throws ModuleRegisterException {
+  public void initialize() throws ModuleRegisterException {
     logger.info("Start modules registration.");
     moduleRegister.registerModule(new FallenVadersCoreModuleDeclarer());
     moduleRegister.registerModule(new JusticeHandsModuleDeclarer());
@@ -31,6 +31,5 @@ public final class CompleteModuleRegisterInitializer implements ModuleRegisterIn
     moduleRegister.registerModule(new MinecraftEnhanceModuleDeclarer());
     moduleRegister.registerModule(new MiniEventsModuleDeclarer());
     logger.info("Modules registration done.");
-    return moduleRegister;
   }
 }

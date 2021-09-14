@@ -26,7 +26,7 @@ public class FallenVadersPlugin extends JavaPlugin {
 
     try {
       ModuleRegisterInitializer moduleInitializer = new CompleteModuleRegisterInitializer();
-      moduleRegister = moduleInitializer.initialize();
+      moduleInitializer.initialize();
       moduleRegister.enableModules();
       getLogger().info("FallenVaders plugin enabled.");
     } catch (ModuleRegisterException e) {

@@ -8,5 +8,5 @@ import javax.inject.Singleton;
 @ImplementedBy(CompleteModuleRegisterInitializer.class)
 public interface ModuleRegisterInitializer {
 
-  ModuleRegister initialize() throws ModuleRegisterException;
+  void initialize() throws ModuleRegisterException;
 }
