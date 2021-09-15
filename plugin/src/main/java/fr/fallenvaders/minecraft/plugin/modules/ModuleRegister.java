@@ -1,11 +1,13 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 // TODO: rename to ModuleRegisterService & create ModuleRegisterContainer
 @Singleton
@@ -17,12 +19,15 @@ public class ModuleRegister {
   private boolean hasLaunched = false;
 
   @Inject
-  public ModuleRegister(Logger logger) {
+  public ModuleRegister(@NotNull Logger logger) {
+    Objects.requireNonNull(logger);
+
     this.logger = logger;
   }
 
-  // TODO: manage @NotNull and @Nullable annotations
-  public void registerModule(ModuleDeclarer moduleDeclarer) throws ModuleRegisterException {
+  public void registerModule(@NotNull ModuleDeclarer moduleDeclarer) throws ModuleRegisterException {
+    Objects.requireNonNull(moduleDeclarer);
+
     if (hasLaunched) {
       throw new ModuleRegisterException(
           "Module registration rejected: the module registration process has already been launched.");
@@ -51,7 +56,7 @@ public class ModuleRegister {
     return hasLaunched;
   }
 
-  public List<ModuleDeclarer> getModules() {
+  public @NotNull List<@NotNull ModuleDeclarer> getModules() {
     // TODO: return clone version of the list
     return modules;
   }

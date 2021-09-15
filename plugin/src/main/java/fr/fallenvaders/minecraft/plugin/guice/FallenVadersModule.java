@@ -6,7 +6,10 @@ import com.google.inject.Singleton;
 import fr.fallenvaders.minecraft.plugin.modules.CompleteModuleRegisterInitializer;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import java.util.Objects;
 
 /**
  * Guice module of the project.
@@ -18,7 +21,9 @@ public class FallenVadersModule extends AbstractModule {
 
   private final JavaPlugin plugin;
 
-  public FallenVadersModule(JavaPlugin plugin) {
+  public FallenVadersModule(@NotNull JavaPlugin plugin) {
+    Objects.requireNonNull(plugin);
+
     this.plugin = plugin;
   }
 
@@ -29,13 +34,13 @@ public class FallenVadersModule extends AbstractModule {
 
   @Provides
   @Singleton
-  public JavaPlugin providesPlugin() {
+  public @NotNull JavaPlugin providesPlugin() {
     return plugin;
   }
 
   @Provides
   @Singleton
-  public Logger getSLF4JLogger() {
+  public @NotNull Logger getSLF4JLogger() {
     return plugin.getSLF4JLogger();
   }
 }

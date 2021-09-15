@@ -6,6 +6,8 @@ import com.google.inject.Module;
 import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 /**
  * Applies Dependency Injection pattern through Guice library.
  *
@@ -20,6 +22,8 @@ public class FallenVadersInjector {
    * @param plugin The unique {@link FallenVadersPlugin} instance where to inject dependencies.
    */
   public void inject(@NotNull FallenVadersPlugin plugin) {
+    Objects.requireNonNull(plugin);
+
     Module module = new FallenVadersModule(plugin);
     Injector injector = Guice.createInjector(module);
     injector.injectMembers(plugin);
