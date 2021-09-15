@@ -9,6 +9,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * This class represents the Bukkit plugin.
+ *
+ * @author Voltariuss
+ * @since 0.1.0
+ */
 @Singleton
 public class FallenVadersPlugin extends JavaPlugin {
 

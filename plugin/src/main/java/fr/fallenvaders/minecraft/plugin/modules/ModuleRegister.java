@@ -10,6 +10,13 @@ import java.util.List;
 import java.util.Objects;
 
 // TODO: rename to ModuleRegisterService & create ModuleRegisterContainer
+
+/**
+ * This is a singleton class which manage registration of {@link ModuleDeclarer}.
+ *
+ * @author Voltariuss
+ * @since 0.1.0
+ */
 @Singleton
 public class ModuleRegister {
 
@@ -25,6 +32,13 @@ public class ModuleRegister {
     this.logger = logger;
   }
 
+  /**
+   * Registers a {@link ModuleDeclarer}. If the {@link ModuleRegister} has already been launched
+   * an exception is thrown.
+   *
+   * @param moduleDeclarer The {@link ModuleDeclarer} to register.
+   * @throws ModuleRegisterException if the {@link ModuleRegister} has already been launched.
+   */
   public void registerModule(@NotNull ModuleDeclarer moduleDeclarer) throws ModuleRegisterException {
     Objects.requireNonNull(moduleDeclarer);
 
@@ -35,6 +49,11 @@ public class ModuleRegister {
     modules.add(moduleDeclarer);
   }
 
+  /**
+   * Enables all registered {@link ModuleDeclarer} by calling the {@link ModuleDeclarer#onEnable()} method
+   * for each of them. After that, the {@link ModuleRegister} is considered has "launched" and does not accept
+   * new registrations anymore.
+   */
   public void enableModules() {
     modules.forEach(
         module -> {
@@ -44,6 +63,10 @@ public class ModuleRegister {
         });
   }
 
+  /**
+   * Disables all registered {@link ModuleDeclarer} by calling the {@link ModuleDeclarer#onDisable()} method
+   * for each of them.
+   */
   public void disableModules() {
     modules.forEach(
         module -> {
@@ -52,10 +75,20 @@ public class ModuleRegister {
         });
   }
 
+  /**
+   * Returns {@link Boolean#TRUE} if the {@link ModuleRegister} has already been launched.
+   *
+   * @return {@link Boolean#TRUE} if the {@link ModuleRegister} has already been launched.
+   */
   public boolean hasLaunched() {
     return hasLaunched;
   }
 
+  /**
+   * Returns the {@link List} of {@link ModuleDeclarer} actually successfully registered.
+   *
+   * @return the {@link List} of {@link ModuleDeclarer} actually successfully registered.
+   */
   public @NotNull List<@NotNull ModuleDeclarer> getModules() {
     // TODO: return clone version of the list
     return modules;

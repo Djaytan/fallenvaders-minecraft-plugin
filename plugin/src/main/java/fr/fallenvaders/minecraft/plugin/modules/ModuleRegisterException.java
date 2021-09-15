@@ -4,7 +4,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-// TODO: add JavaDoc to this class
+/**
+ * This exception is thrown when a problem occurs during the registration
+ * process of a module (e.g. register a module avec the {@link ModuleRegister} was launched).
+ *
+ * @author Voltariuss
+ * @since 0.1.0
+ */
 public class ModuleRegisterException extends Exception {
 
   public ModuleRegisterException(@NotNull String message) {

@@ -15,6 +15,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This is the test class of the {@link ModuleRegister} class.
+ *
+ * @author Voltariuss
+ * @since 0.2.0
+ */
 @ExtendWith(MockitoExtension.class)
 class ModuleRegisterTest {
 
