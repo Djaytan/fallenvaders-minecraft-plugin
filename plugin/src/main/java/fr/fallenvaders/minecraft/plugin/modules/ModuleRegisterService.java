@@ -17,20 +17,27 @@ import java.util.Objects;
 public class ModuleRegisterService {
 
   private final Logger logger;
+  private final ModuleDeclarerFactory moduleDeclarerFactory;
   private final ModuleRegisterContainer moduleRegisterContainer;
 
   /**
    * The constructor of the {@link ModuleRegisterService} singleton instance.
    *
    * @param logger The SLF4J project's logger instance.
+   * @param moduleDeclarerFactory The {@link ModuleDeclarer} factory.
    * @param moduleRegisterContainer The container associated to this service.
    */
   @Inject
   public ModuleRegisterService(
-      @NotNull Logger logger, @NotNull ModuleRegisterContainer moduleRegisterContainer) {
+      @NotNull Logger logger,
+      @NotNull ModuleDeclarerFactory moduleDeclarerFactory,
+      @NotNull ModuleRegisterContainer moduleRegisterContainer) {
     Objects.requireNonNull(logger);
+    Objects.requireNonNull(moduleDeclarerFactory);
+    Objects.requireNonNull(moduleRegisterContainer);
 
     this.logger = logger;
+    this.moduleDeclarerFactory = moduleDeclarerFactory;
     this.moduleRegisterContainer = moduleRegisterContainer;
   }
 
@@ -38,18 +45,19 @@ public class ModuleRegisterService {
    * Registers a {@link ModuleDeclarer}. If modules registration has already been launched, then an
    * exception is thrown.
    *
-   * @param moduleDeclarer The {@link ModuleDeclarer} to register.
+   * @param moduleEnum The module to register.
    * @throws ModuleRegisterException if modules registration has already been launched or the {@link
    *     ModuleDeclarer} is already registered.
    */
-  public void registerModule(@NotNull ModuleDeclarer moduleDeclarer)
+  public void registerModule(@NotNull ModuleEnum moduleEnum)
       throws ModuleRegisterException {
-    Objects.requireNonNull(moduleDeclarer);
+    Objects.requireNonNull(moduleEnum);
 
     if (moduleRegisterContainer.isHasLaunched()) {
       throw new ModuleRegisterException(
           "Module registration rejected: the module registration process has already been launched.");
     }
+    ModuleDeclarer moduleDeclarer = moduleDeclarerFactory.createModule(moduleEnum);
     moduleRegisterContainer.addModule(moduleDeclarer);
   }
 
