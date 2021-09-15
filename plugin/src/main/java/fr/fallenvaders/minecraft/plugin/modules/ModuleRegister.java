@@ -58,9 +58,9 @@ public class ModuleRegister {
     modules.forEach(
         module -> {
           module.onEnable();
-          hasLaunched = true;
           logger.info("Module {} enabled.", module.getModuleName());
         });
+    hasLaunched = true;
   }
 
   /**
