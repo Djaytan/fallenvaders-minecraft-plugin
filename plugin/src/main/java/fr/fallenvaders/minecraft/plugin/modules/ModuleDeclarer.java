@@ -17,14 +17,14 @@ public abstract class ModuleDeclarer {
   private final JavaPlugin javaPlugin;
 
   /* Data */
-  private final String moduleName;
+  private final ModuleEnum moduleEnum;
 
-  protected ModuleDeclarer(@NotNull JavaPlugin javaPlugin, @NotNull String moduleName) {
+  protected ModuleDeclarer(@NotNull JavaPlugin javaPlugin, @NotNull ModuleEnum moduleEnum) {
     Objects.requireNonNull(javaPlugin);
-    Objects.requireNonNull(moduleName);
+    Objects.requireNonNull(moduleEnum);
 
     this.javaPlugin = javaPlugin;
-    this.moduleName = moduleName;
+    this.moduleEnum = moduleEnum;
   }
 
   /** Executes the necessary statements to enable the targeted module. */
@@ -52,6 +52,6 @@ public abstract class ModuleDeclarer {
    */
   @NotNull
   public final String getModuleName() {
-    return moduleName;
+    return moduleEnum.getModuleName();
   }
 }

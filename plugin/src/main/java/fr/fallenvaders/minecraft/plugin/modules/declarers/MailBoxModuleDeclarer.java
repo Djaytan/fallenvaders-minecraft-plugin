@@ -2,6 +2,7 @@ package fr.fallenvaders.minecraft.plugin.modules.declarers;
 
 import fr.fallenvaders.minecraft.mail_box.MailBox;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleDeclarer;
+import fr.fallenvaders.minecraft.plugin.modules.ModuleEnum;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,15 +14,13 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MailBoxModuleDeclarer extends ModuleDeclarer {
 
-  public static final String MODULE_NAME = "mail-box";
-
   /**
    * Constructor.
    *
    * @param javaPlugin The Java Bukkit plugin.
    */
   public MailBoxModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
-    super(javaPlugin, MODULE_NAME);
+    super(javaPlugin, ModuleEnum.MAIL_BOX);
   }
 
   @Override
