@@ -16,23 +16,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is the test class of the {@link ModuleRegister} class.
+ * This is the test class of the {@link ModuleRegisterService} class.
  *
  * @author Voltariuss
  * @since 0.2.0
  */
 @ExtendWith(MockitoExtension.class)
-class ModuleRegisterTest {
+class ModuleRegisterServiceTest {
 
-  private static final Logger logger = LoggerFactory.getLogger(ModuleRegisterTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(ModuleRegisterServiceTest.class);
 
-  private ModuleRegister moduleRegister;
+  private ModuleRegisterContainer moduleRegisterContainer;
+  private ModuleRegisterService moduleRegister;
   private int enableStack;
   private int disableStack;
 
   @BeforeEach
   void setUp() {
-    moduleRegister = new ModuleRegister(logger);
+    moduleRegisterContainer = new ModuleRegisterContainer();
+    moduleRegister = new ModuleRegisterService(logger, moduleRegisterContainer);
     enableStack = 0;
     disableStack = 0;
   }
@@ -40,8 +42,8 @@ class ModuleRegisterTest {
   @Test
   @DisplayName("Init the module register")
   void isModuleRegisterWellInit() {
-    Assertions.assertFalse(moduleRegister.hasLaunched());
-    Assertions.assertTrue(moduleRegister.getModules().isEmpty());
+    Assertions.assertFalse(moduleRegisterContainer.isHasLaunched());
+    Assertions.assertTrue(moduleRegisterContainer.getModules().isEmpty());
   }
 
   @Test
@@ -50,8 +52,9 @@ class ModuleRegisterTest {
     String moduleName = "test-module";
     ModuleDeclarer moduleDeclarer = createWithoutBehaviorModuleDeclarer(moduleName);
     Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
-    Assertions.assertEquals(1, moduleRegister.getModules().size());
-    Assertions.assertEquals(moduleName, moduleRegister.getModules().get(0).getModuleName());
+    ModuleDeclarer actualModuleDeclarer = moduleRegisterContainer.getModule(moduleName);
+    Assertions.assertEquals(1, moduleRegisterContainer.getModules().size());
+    Assertions.assertEquals(moduleDeclarer, actualModuleDeclarer);
   }
 
   @Test
@@ -64,7 +67,7 @@ class ModuleRegisterTest {
     Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer));
     moduleRegister.enableModules();
     Assertions.assertEquals(1, enableStack);
-    Assertions.assertTrue(moduleRegister.hasLaunched());
+    Assertions.assertTrue(moduleRegisterContainer.isHasLaunched());
   }
 
   @Test
@@ -78,7 +81,7 @@ class ModuleRegisterTest {
     moduleRegister.enableModules();
     moduleRegister.disableModules();
     Assertions.assertEquals(1, disableStack);
-    Assertions.assertTrue(moduleRegister.hasLaunched());
+    Assertions.assertTrue(moduleRegisterContainer.isHasLaunched());
   }
 
   @Test
@@ -95,7 +98,7 @@ class ModuleRegisterTest {
     moduleRegister.disableModules();
     Assertions.assertEquals(1, enableStack);
     Assertions.assertEquals(1, disableStack);
-    Assertions.assertTrue(moduleRegister.hasLaunched());
+    Assertions.assertTrue(moduleRegisterContainer.isHasLaunched());
   }
 
   @Test
@@ -116,7 +119,7 @@ class ModuleRegisterTest {
     moduleRegister.disableModules();
     Assertions.assertEquals(3, enableStack);
     Assertions.assertEquals(3, disableStack);
-    Assertions.assertTrue(moduleRegister.hasLaunched());
+    Assertions.assertTrue(moduleRegisterContainer.isHasLaunched());
   }
 
   @Test
@@ -126,7 +129,7 @@ class ModuleRegisterTest {
     ModuleDeclarer moduleDeclarer1 = createWithoutBehaviorModuleDeclarer(moduleName);
     Assertions.assertDoesNotThrow(() -> moduleRegister.registerModule(moduleDeclarer1));
     moduleRegister.enableModules();
-    Assertions.assertTrue(moduleRegister.hasLaunched());
+    Assertions.assertTrue(moduleRegisterContainer.isHasLaunched());
     ModuleDeclarer moduleDeclarer2 = createWithoutBehaviorModuleDeclarer(moduleName);
     Assertions.assertThrows(
         ModuleRegisterException.class, () -> moduleRegister.registerModule(moduleDeclarer2));
