@@ -12,13 +12,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ExtendWith(MockitoExtension.class)
 class ModuleRegisterTest {
 
-  private static final Logger logger = Logger.getAnonymousLogger();
+  private static final Logger logger = LoggerFactory.getLogger(ModuleRegisterTest.class);
 
   private ModuleRegister moduleRegister;
   private int enableStack;

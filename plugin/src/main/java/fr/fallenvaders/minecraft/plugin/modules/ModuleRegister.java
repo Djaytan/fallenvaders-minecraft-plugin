@@ -1,10 +1,11 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import org.slf4j.Logger;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 // TODO: rename to ModuleRegisterService & create ModuleRegisterContainer
 @Singleton
@@ -20,6 +21,7 @@ public class ModuleRegister {
     this.logger = logger;
   }
 
+  // TODO: manage @NotNull and @Nullable annotations
   public void registerModule(ModuleDeclarer moduleDeclarer) throws ModuleRegisterException {
     if (hasLaunched) {
       throw new ModuleRegisterException(
@@ -30,18 +32,18 @@ public class ModuleRegister {
 
   public void enableModules() {
     modules.forEach(
-        (module) -> {
+        module -> {
           module.onEnable();
           hasLaunched = true;
-          logger.info("Module \"" + module.getModuleName() + "\" enabled.");
+          logger.info("Module {} enabled.", module.getModuleName());
         });
   }
 
   public void disableModules() {
     modules.forEach(
-        (module) -> {
+        module -> {
           module.onDisable();
-          logger.info("Module \"" + module.getModuleName() + "\" disabled.");
+          logger.info("Module {} disabled.", module.getModuleName());
         });
   }
 

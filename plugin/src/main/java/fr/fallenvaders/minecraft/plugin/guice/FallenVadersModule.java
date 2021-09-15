@@ -3,12 +3,10 @@ package fr.fallenvaders.minecraft.plugin.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
 import fr.fallenvaders.minecraft.plugin.modules.CompleteModuleRegisterInitializer;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 /**
  * Guice module of the project.
@@ -17,6 +15,7 @@ import java.util.logging.Logger;
  * @since 0.2.0
  */
 public class FallenVadersModule extends AbstractModule {
+
   private final JavaPlugin plugin;
 
   public FallenVadersModule(JavaPlugin plugin) {
@@ -25,7 +24,6 @@ public class FallenVadersModule extends AbstractModule {
 
   @Override
   public void configure() {
-    bind(JavaPlugin.class).to(FallenVadersPlugin.class);
     bind(ModuleRegisterInitializer.class).to(CompleteModuleRegisterInitializer.class);
   }
 
@@ -37,7 +35,7 @@ public class FallenVadersModule extends AbstractModule {
 
   @Provides
   @Singleton
-  public Logger providesLogger() {
-    return plugin.getLogger();
+  public Logger getSLF4JLogger() {
+    return plugin.getSLF4JLogger();
   }
 }

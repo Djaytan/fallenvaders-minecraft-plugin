@@ -2,11 +2,11 @@ package fr.fallenvaders.minecraft.plugin.modules;
 
 import fr.fallenvaders.minecraft.plugin.modules.declarers.*;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 @Singleton
 public final class CompleteModuleRegisterInitializer implements ModuleRegisterInitializer {

@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.logging.Level;
 
 @Singleton
 public class FallenVadersPlugin extends JavaPlugin {
@@ -29,16 +28,16 @@ public class FallenVadersPlugin extends JavaPlugin {
     try {
       moduleRegInit.initialize();
       moduleRegister.enableModules();
-      getLogger().info("FallenVaders plugin successfully enabled.");
+      getSLF4JLogger().info("FallenVaders plugin successfully enabled.");
     } catch (ModuleRegisterException e) {
       // TODO: better error management
-      getLogger().log(Level.SEVERE, "An error has occurred during modules registration.", e);
+      getSLF4JLogger().error("An error has occurred during modules registration.", e);
     }
   }
 
   @Override
   public void onDisable() {
     moduleRegister.disableModules();
-    getLogger().info("FallenVaders plugin disabled.");
+    getSLF4JLogger().info("FallenVaders plugin disabled.");
   }
 }
