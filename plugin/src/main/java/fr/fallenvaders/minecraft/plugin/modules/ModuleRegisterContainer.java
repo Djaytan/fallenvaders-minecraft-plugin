@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This singleton class represents the container for the {@link ModuleRegisterService}.
@@ -35,6 +36,8 @@ public class ModuleRegisterContainer {
    * @throws ModuleRegisterException if a module with the same name of the new on already exists.
    */
   public void addModule(@NotNull ModuleDeclarer module) throws ModuleRegisterException {
+    Objects.requireNonNull(module);
+
     if (!modules.contains(module)) {
       modules.add(module);
     } else {
@@ -49,7 +52,8 @@ public class ModuleRegisterContainer {
    * @param moduleName The name of the sought module.
    * @return The registered {@link ModuleDeclarer} which match with the given module's name if it exists.
    */
-  public @Nullable ModuleDeclarer getModule(@NotNull String moduleName) {
+  @Nullable
+  public ModuleDeclarer getModule(@NotNull String moduleName) {
     return modules.stream()
       .filter(module -> module.getModuleName().equals(moduleName))
       .findFirst()
@@ -61,6 +65,7 @@ public class ModuleRegisterContainer {
    *
    * @return The list of {@link ModuleDeclarer} registered.
    */
+  @NotNull
   public List<ModuleDeclarer> getModules() {
     return modules;
   }
@@ -70,7 +75,8 @@ public class ModuleRegisterContainer {
    *
    * @param modules The new list of {@link ModuleDeclarer} to register.
    */
-  public void setModules(List<ModuleDeclarer> modules) {
+  public void setModules(@NotNull List<ModuleDeclarer> modules) {
+    Objects.requireNonNull(modules);
     this.modules = modules;
   }
 

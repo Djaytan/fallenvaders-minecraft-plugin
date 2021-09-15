@@ -50,7 +50,8 @@ public abstract class ModuleDeclarer {
    *
    * @return the module's name.
    */
-  public final @NotNull String getModuleName() {
+  @NotNull
+  public final String getModuleName() {
     return moduleName;
   }
 }
