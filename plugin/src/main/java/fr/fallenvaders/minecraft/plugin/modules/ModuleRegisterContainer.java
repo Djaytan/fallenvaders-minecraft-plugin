@@ -75,16 +75,6 @@ public class ModuleRegisterContainer {
   }
 
   /**
-   * Defines the new list of {@link ModuleDeclarer} to register.
-   *
-   * @param modules The new list of {@link ModuleDeclarer} to register.
-   */
-  public void setModules(@NotNull List<ModuleDeclarer> modules) {
-    Objects.requireNonNull(modules);
-    this.modules = modules;
-  }
-
-  /**
    * Returns {@link Boolean#TRUE} if the registration has been launched.
    *
    * @return {@link Boolean#TRUE} if the registration has been launched.
