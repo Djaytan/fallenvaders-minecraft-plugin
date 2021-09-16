@@ -11,6 +11,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+/**
+ * Test class of {@link ModuleDeclarerFactory}.
+ *
+ * @author Voltariuss
+ * @since 0.2.0
+ */
 @ExtendWith(MockitoExtension.class)
 class ModuleDeclarerFactoryTest {
 
