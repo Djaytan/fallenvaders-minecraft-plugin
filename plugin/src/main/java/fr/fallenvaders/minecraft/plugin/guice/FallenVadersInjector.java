@@ -16,12 +16,14 @@ import java.util.Objects;
  */
 public class FallenVadersInjector {
 
+  private FallenVadersInjector() {}
+
   /**
    * Injects dependencies through Guice to existing instances (e.g. {@link FallenVadersPlugin}.
    *
    * @param plugin The unique {@link FallenVadersPlugin} instance where to inject dependencies.
    */
-  public void inject(@NotNull FallenVadersPlugin plugin) {
+  public static void inject(@NotNull FallenVadersPlugin plugin) {
     Objects.requireNonNull(plugin);
 
     Module module = new FallenVadersModule(plugin);
