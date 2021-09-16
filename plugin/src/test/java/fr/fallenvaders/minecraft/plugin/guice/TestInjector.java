@@ -2,7 +2,6 @@ package fr.fallenvaders.minecraft.plugin.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import fr.fallenvaders.minecraft.plugin.guice.FallenVadersModule;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
