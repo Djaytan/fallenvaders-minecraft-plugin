@@ -36,11 +36,7 @@ public class ModuleRegisterContainer {
   public void addModule(@NotNull ModuleDeclarer module) throws ModuleRegisterException {
     Objects.requireNonNull(module);
 
-    ModuleDeclarer existingModule =
-        modules.stream()
-            .filter(m -> m.getModuleName().equals(module.getModuleName()))
-            .findFirst()
-            .orElse(null);
+    ModuleDeclarer existingModule = getModule(module.getModuleName());
 
     if (existingModule == null) {
       modules.add(module);
