@@ -72,12 +72,7 @@ public final class ModuleRegisterService {
       throws ModuleRegisterException {
     Objects.requireNonNull(moduleClass);
     ModuleDeclarer moduleDeclarer = moduleDeclarerFactory.createModule(moduleClass);
-    if (moduleDeclarer != null) {
-      registerModule(moduleDeclarer);
-    } else {
-      throw new ModuleRegisterException(
-          "Something went wrong during the module declarer creation.");
-    }
+    registerModule(moduleDeclarer);
   }
 
   /**

@@ -2,7 +2,6 @@ package fr.fallenvaders.minecraft.plugin.modules;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -36,21 +35,19 @@ public final class ModuleDeclarerFactory {
    * @param moduleClass The module's class to instantiate.
    * @return a {@link ModuleDeclarer} according to the specified module's class.
    */
-  @Nullable
+  @NotNull
   public ModuleDeclarer createModule(@NotNull Class<? extends ModuleDeclarer> moduleClass)
       throws ModuleRegisterException {
     Objects.requireNonNull(moduleClass);
 
-    ModuleDeclarer moduleDeclarer;
     try {
-      moduleDeclarer = moduleClass.getDeclaredConstructor(JavaPlugin.class).newInstance(javaPlugin);
+      return moduleClass.getDeclaredConstructor(JavaPlugin.class).newInstance(javaPlugin);
     } catch (Exception e) {
       throw new ModuleRegisterException(
           String.format(
-              "Something goes wrong during the instantiation of the module class '%s'.",
+              "Something went wrong during the instantiation of the module class '%s'.",
               moduleClass.getName()),
           e);
     }
-    return moduleDeclarer;
   }
 }
