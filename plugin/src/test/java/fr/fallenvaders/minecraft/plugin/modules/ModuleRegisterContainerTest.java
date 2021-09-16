@@ -30,8 +30,8 @@ class ModuleRegisterContainerTest {
   }
 
   @Test
-  @DisplayName("Register two identical modules")
-  void registerTwoIdenticalModules() {
+  @DisplayName("Add two identical modules")
+  void addTwoIdenticalModules() {
     String moduleName = "test-module";
     ModuleDeclarer moduleDeclarer1 =
         moduleDeclarerUtils.createWithoutBehaviorModuleDeclarer(moduleName);
