@@ -2,8 +2,6 @@ package fr.fallenvaders.minecraft.plugin.modules;
 
 import fr.fallenvaders.minecraft.plugin.guice.TestInjector;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.util.Objects;
 
 /**
  * This is the test class of the {@link ModuleRegisterService} class.
@@ -30,6 +27,7 @@ class ModuleRegisterServiceTest {
 
   @Mock private JavaPlugin javaPlugin;
   @Inject private ModuleDeclarerFactory moduleDeclarerFactory;
+  @Inject private ModuleDeclarerUtils moduleDeclarerUtils;
   private ModuleRegisterContainer moduleRegisterContainer;
   private ModuleRegisterService moduleRegisterService;
   private int enableStack;
@@ -48,7 +46,8 @@ class ModuleRegisterServiceTest {
   @Test
   @DisplayName("Register a module")
   void registerModule() {
-    ModuleDeclarer moduleDeclarer = createWithoutBehaviorModuleDeclarer("test-module");
+    ModuleDeclarer moduleDeclarer =
+        moduleDeclarerUtils.createWithoutBehaviorModuleDeclarer("test-module");
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer));
     ModuleDeclarer actualModuleDeclarer = moduleRegisterContainer.getModule("test-module");
     Assertions.assertEquals(1, moduleRegisterContainer.getModules().size());
@@ -60,7 +59,8 @@ class ModuleRegisterServiceTest {
   void enableOneModule() {
     Assertions.assertEquals(0, enableStack);
     Runnable onEnable = () -> enableStack++;
-    ModuleDeclarer moduleDeclarer = createModuleDeclarer("test-module", onEnable, null);
+    ModuleDeclarer moduleDeclarer =
+        moduleDeclarerUtils.createModuleDeclarer("test-module", onEnable, null);
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer));
     moduleRegisterService.enableModules();
     Assertions.assertEquals(1, enableStack);
@@ -72,7 +72,8 @@ class ModuleRegisterServiceTest {
   void disableOneModule() {
     Assertions.assertEquals(0, disableStack);
     Runnable onDisable = () -> disableStack++;
-    ModuleDeclarer moduleDeclarer = createModuleDeclarer("test-module", null, onDisable);
+    ModuleDeclarer moduleDeclarer =
+        moduleDeclarerUtils.createModuleDeclarer("test-module", null, onDisable);
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer));
     moduleRegisterService.enableModules();
     moduleRegisterService.disableModules();
@@ -87,7 +88,8 @@ class ModuleRegisterServiceTest {
     Assertions.assertEquals(0, disableStack);
     Runnable onEnable = () -> enableStack++;
     Runnable onDisable = () -> disableStack++;
-    ModuleDeclarer moduleDeclarer = createModuleDeclarer("test-module", onEnable, onDisable);
+    ModuleDeclarer moduleDeclarer =
+        moduleDeclarerUtils.createModuleDeclarer("test-module", onEnable, onDisable);
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer));
     moduleRegisterService.enableModules();
     moduleRegisterService.disableModules();
@@ -103,9 +105,12 @@ class ModuleRegisterServiceTest {
     Assertions.assertEquals(0, disableStack);
     Runnable onEnable = () -> enableStack++;
     Runnable onDisable = () -> disableStack++;
-    ModuleDeclarer moduleDeclarer1 = createModuleDeclarer("test-module-1", onEnable, onDisable);
-    ModuleDeclarer moduleDeclarer2 = createModuleDeclarer("test-module-2", onEnable, onDisable);
-    ModuleDeclarer moduleDeclarer3 = createModuleDeclarer("test-module-3", onEnable, onDisable);
+    ModuleDeclarer moduleDeclarer1 =
+        moduleDeclarerUtils.createModuleDeclarer("test-module-1", onEnable, onDisable);
+    ModuleDeclarer moduleDeclarer2 =
+        moduleDeclarerUtils.createModuleDeclarer("test-module-2", onEnable, onDisable);
+    ModuleDeclarer moduleDeclarer3 =
+        moduleDeclarerUtils.createModuleDeclarer("test-module-3", onEnable, onDisable);
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer1));
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer2));
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer3));
@@ -119,40 +124,14 @@ class ModuleRegisterServiceTest {
   @Test
   @DisplayName("Register module after launch throw exception")
   void registerModuleAfterLaunchThrowException() {
-    ModuleDeclarer moduleDeclarer1 = createWithoutBehaviorModuleDeclarer("test-module-1");
+    ModuleDeclarer moduleDeclarer1 =
+        moduleDeclarerUtils.createWithoutBehaviorModuleDeclarer("test-module-1");
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer1));
     moduleRegisterService.enableModules();
     Assertions.assertTrue(moduleRegisterContainer.isHasLaunched());
-    ModuleDeclarer moduleDeclarer2 = createWithoutBehaviorModuleDeclarer("test-module-2");
+    ModuleDeclarer moduleDeclarer2 =
+        moduleDeclarerUtils.createWithoutBehaviorModuleDeclarer("test-module-2");
     Assertions.assertThrows(
         ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer2));
-  }
-
-  private ModuleDeclarer createWithoutBehaviorModuleDeclarer(@NotNull String moduleName) {
-    return createModuleDeclarer(moduleName, null, null);
-  }
-
-  private ModuleDeclarer createModuleDeclarer(
-      @NotNull String moduleName, @Nullable Runnable onEnable, @Nullable Runnable onDisable) {
-    Objects.requireNonNull(moduleName);
-
-    ModuleDeclarer moduleDeclarer;
-    moduleDeclarer =
-        new ModuleDeclarer(javaPlugin, moduleName) {
-          @Override
-          public void onEnable() {
-            if (onEnable != null) {
-              onEnable.run();
-            }
-          }
-
-          @Override
-          public void onDisable() {
-            if (onDisable != null) {
-              onDisable.run();
-            }
-          }
-        };
-    return moduleDeclarer;
   }
 }

@@ -1,16 +1,24 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import fr.fallenvaders.minecraft.plugin.guice.TestInjector;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
-public class ModuleRegisterContainerTest {
+import javax.inject.Inject;
 
+class ModuleRegisterContainerTest {
+
+  @Mock private JavaPlugin javaPlugin;
+  @Inject private ModuleDeclarerUtils moduleDeclarerUtils;
   private ModuleRegisterContainer moduleRegisterContainer;
 
   @BeforeEach
   void setUp() {
+    TestInjector.inject(javaPlugin, this);
     moduleRegisterContainer = new ModuleRegisterContainer();
   }
 
@@ -25,12 +33,14 @@ public class ModuleRegisterContainerTest {
   @DisplayName("Register two identical modules")
   void registerTwoIdenticalModules() {
     String moduleName = "test-module";
-    ModuleDeclarer moduleDeclarer1 = createWithoutBehaviorModuleDeclarer(moduleName);
-    ModuleDeclarer moduleDeclarer2 = createWithoutBehaviorModuleDeclarer(moduleName);
-    Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer1));
+    ModuleDeclarer moduleDeclarer1 =
+        moduleDeclarerUtils.createWithoutBehaviorModuleDeclarer(moduleName);
+    ModuleDeclarer moduleDeclarer2 =
+        moduleDeclarerUtils.createWithoutBehaviorModuleDeclarer(moduleName);
+    Assertions.assertDoesNotThrow(() -> moduleRegisterContainer.addModule(moduleDeclarer1));
     Assertions.assertThrows(
-      ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer1));
+        ModuleRegisterException.class, () -> moduleRegisterContainer.addModule(moduleDeclarer1));
     Assertions.assertThrows(
-      ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer2));
+        ModuleRegisterException.class, () -> moduleRegisterContainer.addModule(moduleDeclarer2));
   }
 }
