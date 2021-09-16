@@ -64,6 +64,11 @@
             <version>${guice.version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.5</version>
+        </dependency>
 
         <!-- Test libraries -->
         <dependency>
