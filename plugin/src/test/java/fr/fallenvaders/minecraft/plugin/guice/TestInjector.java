@@ -1,4 +1,4 @@
-package fr.fallenvaders.minecraft.plugin.modules.guice;
+package fr.fallenvaders.minecraft.plugin.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;

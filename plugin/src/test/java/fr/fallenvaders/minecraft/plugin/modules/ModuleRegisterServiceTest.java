@@ -1,7 +1,6 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
-import fr.fallenvaders.minecraft.plugin.guice.FallenVadersInjector;
-import fr.fallenvaders.minecraft.plugin.modules.guice.TestInjector;
+import fr.fallenvaders.minecraft.plugin.guice.TestInjector;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
