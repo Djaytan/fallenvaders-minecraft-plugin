@@ -1,5 +1,6 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import fr.fallenvaders.minecraft.plugin.modules.declarers.MalformedTestModuleDeclarer;
 import fr.fallenvaders.minecraft.plugin.modules.declarers.TestModuleDeclarer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.Assertions;
@@ -35,5 +36,13 @@ class ModuleDeclarerFactoryTest {
     Assertions.assertNotNull(moduleDeclarer);
     Assertions.assertEquals(TestModuleDeclarer.MODULE_NAME, moduleDeclarer.getModuleName());
     Assertions.assertSame(moduleDeclarer.getClass(), TestModuleDeclarer.class);
+  }
+
+  @Test
+  @DisplayName("Create a malformed module must throw")
+  void createMalformedModuleMustThrow() {
+    Assertions.assertThrows(
+        ModuleRegisterException.class,
+        () -> moduleDeclarerFactory.createModule(MalformedTestModuleDeclarer.class));
   }
 }
