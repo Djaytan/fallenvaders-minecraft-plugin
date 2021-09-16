@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /**
  * This is an implementation class of {@link ModuleRegisterInitializer} interface. The purpose of
- * this initializer is to assemble a full version of the plugin by injection all the existing {@link
+ * this initializer is to assemble a full version of the plugin by injecting all the existing {@link
  * ModuleDeclarer}s.
  *
  * @author Voltariuss
