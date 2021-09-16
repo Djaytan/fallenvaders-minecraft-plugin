@@ -12,6 +12,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.inject.Inject;
 
+/**
+ * Test class of {@link ModuleRegisterContainer}.
+ *
+ * @author Voltariuss
+ * @since 0.2.0
+ */
 @ExtendWith(MockitoExtension.class)
 class ModuleRegisterContainerTest {
 
