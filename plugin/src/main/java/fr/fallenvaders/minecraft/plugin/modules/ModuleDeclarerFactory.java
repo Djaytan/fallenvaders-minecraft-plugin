@@ -22,7 +22,7 @@ public class ModuleDeclarerFactory {
   /**
    * Constructor.
    *
-   * @param javaPlugin The Java Bukkit plugin.
+   * @param javaPlugin The Bukkit plugin.
    */
   @Inject
   public ModuleDeclarerFactory(@NotNull JavaPlugin javaPlugin) {

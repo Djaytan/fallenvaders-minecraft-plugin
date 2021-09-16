@@ -20,7 +20,7 @@ public class ModuleRegisterContainer {
   private List<ModuleDeclarer> modules;
   private boolean hasLaunched;
 
-  /** The constructor of the {@link ModuleRegisterContainer} singleton instance. */
+  /** Constructor. */
   public ModuleRegisterContainer() {
     modules = new ArrayList<>();
     hasLaunched = false;

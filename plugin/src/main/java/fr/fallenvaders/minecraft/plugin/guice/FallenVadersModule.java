@@ -21,6 +21,11 @@ public class FallenVadersModule extends AbstractModule {
 
   private final JavaPlugin plugin;
 
+  /**
+   * Constructor.
+   *
+   * @param plugin The Bukkit plugin.
+   */
   public FallenVadersModule(@NotNull JavaPlugin plugin) {
     Objects.requireNonNull(plugin);
 

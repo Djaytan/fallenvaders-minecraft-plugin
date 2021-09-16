@@ -5,7 +5,6 @@ import fr.fallenvaders.minecraft.plugin.modules.ModuleDeclarer;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleEnum;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 
 /**
  * This class represents the {@link ModuleDeclarer} for the "FallenVadersCore" module.
@@ -18,7 +17,7 @@ public class FallenVadersCoreModuleDeclarer extends ModuleDeclarer {
   /**
    * Constructor.
    *
-   * @param javaPlugin The Java Bukkit plugin.
+   * @param javaPlugin The Bukkit plugin.
    */
   public FallenVadersCoreModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
     super(javaPlugin, ModuleEnum.FALLEN_VADERS_CORE.getModuleName());

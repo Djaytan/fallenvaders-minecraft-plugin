@@ -17,7 +17,7 @@ public class MailBoxModuleDeclarer extends ModuleDeclarer {
   /**
    * Constructor.
    *
-   * @param javaPlugin The Java Bukkit plugin.
+   * @param javaPlugin The Bukkit plugin.
    */
   public MailBoxModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
     super(javaPlugin, ModuleEnum.MAIL_BOX.getModuleName());

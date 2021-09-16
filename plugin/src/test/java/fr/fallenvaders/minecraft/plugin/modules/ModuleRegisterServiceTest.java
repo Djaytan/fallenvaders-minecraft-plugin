@@ -3,7 +3,10 @@ package fr.fallenvaders.minecraft.plugin.modules;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -137,7 +140,7 @@ class ModuleRegisterServiceTest {
     ModuleDeclarer moduleDeclarer2 = createWithoutBehaviorModuleDeclarer(moduleName);
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer1));
     Assertions.assertThrows(
-      ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer1));
+        ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer1));
     Assertions.assertThrows(
         ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer2));
   }

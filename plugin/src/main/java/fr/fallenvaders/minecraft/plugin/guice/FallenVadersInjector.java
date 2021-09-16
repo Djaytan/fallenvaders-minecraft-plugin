@@ -16,12 +16,13 @@ import java.util.Objects;
  */
 public class FallenVadersInjector {
 
+  /** Constructor. */
   private FallenVadersInjector() {}
 
   /**
    * Injects dependencies through Guice to existing instances (e.g. {@link FallenVadersPlugin}.
    *
-   * @param plugin The unique {@link FallenVadersPlugin} instance where to inject dependencies.
+   * @param plugin The Bukkit plugin.
    */
   public static void inject(@NotNull FallenVadersPlugin plugin) {
     Objects.requireNonNull(plugin);

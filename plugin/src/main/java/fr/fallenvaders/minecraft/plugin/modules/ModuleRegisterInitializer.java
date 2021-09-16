@@ -9,9 +9,11 @@ package fr.fallenvaders.minecraft.plugin.modules;
 public interface ModuleRegisterInitializer {
 
   /**
-   * Initializes {@link ModuleRegisterService} singleton instance with {@link ModuleDeclarer} instances.
+   * Initializes {@link ModuleRegisterService} singleton instance with {@link ModuleDeclarer}
+   * instances.
    *
-   * @throws ModuleRegisterException if the initialization into the {@link ModuleRegisterService} fail.
+   * @throws ModuleRegisterException if the initialization into the {@link ModuleRegisterService}
+   *     fail.
    */
   void initialize() throws ModuleRegisterException;
 }

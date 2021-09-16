@@ -17,7 +17,7 @@ public class JusticeHandsModuleDeclarer extends ModuleDeclarer {
   /**
    * Constructor.
    *
-   * @param javaPlugin The Java Bukkit plugin.
+   * @param javaPlugin The Bukkit plugin.
    */
   public JusticeHandsModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
     super(javaPlugin, ModuleEnum.JUSTICE_HANDS.getModuleName());

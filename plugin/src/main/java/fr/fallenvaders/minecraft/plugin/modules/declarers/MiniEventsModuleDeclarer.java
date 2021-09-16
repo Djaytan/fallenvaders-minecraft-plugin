@@ -13,12 +13,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MiniEventsModuleDeclarer extends ModuleDeclarer {
 
-  public static final String MODULE_NAME = "mini-events";
-
   /**
    * Constructor.
    *
-   * @param javaPlugin The Java Bukkit plugin.
+   * @param javaPlugin The Bukkit plugin.
    */
   public MiniEventsModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
     super(javaPlugin, ModuleEnum.MINI_EVENTS.getModuleName());

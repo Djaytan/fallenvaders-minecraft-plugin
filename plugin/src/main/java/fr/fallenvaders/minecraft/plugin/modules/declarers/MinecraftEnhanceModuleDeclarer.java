@@ -14,12 +14,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MinecraftEnhanceModuleDeclarer extends ModuleDeclarer {
 
-  public static final String MODULE_NAME = "minecraft-enhancer";
-
   /**
    * Constructor.
    *
-   * @param javaPlugin The Java Bukkit plugin.
+   * @param javaPlugin The Bukkit plugin.
    */
   public MinecraftEnhanceModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
     super(javaPlugin, ModuleEnum.MINECRAFT_ENHANCE.getModuleName());

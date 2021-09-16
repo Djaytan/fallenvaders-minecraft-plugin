@@ -1,9 +1,9 @@
 package fr.fallenvaders.minecraft.plugin;
 
 import fr.fallenvaders.minecraft.plugin.guice.FallenVadersInjector;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterService;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterException;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
+import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterService;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 
@@ -39,8 +39,8 @@ public class FallenVadersPlugin extends JavaPlugin {
     } catch (ModuleRegisterException e) {
       slf4jLogger.error("An error has occurred during modules registration.", e);
     }
-    // TODO: FV-94 - better error management (catch all exceptions and allow the launch of some modules even
-    // if some other ones fail
+    // TODO: FV-94 - better error management (catch all exceptions and allow the launch of some
+    // modules even if some other ones fail
   }
 
   @Override

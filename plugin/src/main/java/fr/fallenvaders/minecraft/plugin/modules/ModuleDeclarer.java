@@ -22,7 +22,7 @@ public abstract class ModuleDeclarer {
   /**
    * Constructor.
    *
-   * @param javaPlugin The Bukkit Java plugin.
+   * @param javaPlugin The Bukkit plugin.
    * @param moduleName The name of the module.
    */
   protected ModuleDeclarer(@NotNull JavaPlugin javaPlugin, @NotNull String moduleName) {

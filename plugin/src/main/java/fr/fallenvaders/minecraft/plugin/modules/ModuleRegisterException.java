@@ -5,14 +5,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 /**
- * This exception is thrown when a problem occurs during the registration
- * process of a module (e.g. register a module avec the {@link ModuleRegisterService} was launched).
+ * This exception is thrown when a problem occurs during the registration process of a module (e.g.
+ * register a module avec the {@link ModuleRegisterService} was launched).
  *
  * @author Voltariuss
  * @since 0.1.0
  */
 public class ModuleRegisterException extends Exception {
 
+  /**
+   * Constructor.
+   *
+   * @param message The mandatory exception message.
+   */
   public ModuleRegisterException(@NotNull String message) {
     super(message);
     Objects.requireNonNull(message);

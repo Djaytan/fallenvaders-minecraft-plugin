@@ -21,6 +21,12 @@ public final class CompleteModuleRegisterInitializer implements ModuleRegisterIn
   private final Logger logger;
   private final ModuleRegisterService moduleRegisterService;
 
+  /**
+   * Constructor.
+   *
+   * @param logger The SLF4J project's logger.
+   * @param moduleRegisterService The module register service.
+   */
   @Inject
   public CompleteModuleRegisterInitializer(
       @NotNull Logger logger, @NotNull ModuleRegisterService moduleRegisterService) {

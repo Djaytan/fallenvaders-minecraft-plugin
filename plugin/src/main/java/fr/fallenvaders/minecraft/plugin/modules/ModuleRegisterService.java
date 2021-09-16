@@ -21,7 +21,7 @@ public class ModuleRegisterService {
   private final ModuleRegisterContainer moduleRegisterContainer;
 
   /**
-   * The constructor of the {@link ModuleRegisterService} singleton instance.
+   * Constructor.
    *
    * @param logger The SLF4J project's logger instance.
    * @param moduleDeclarerFactory The {@link ModuleDeclarer} factory.
