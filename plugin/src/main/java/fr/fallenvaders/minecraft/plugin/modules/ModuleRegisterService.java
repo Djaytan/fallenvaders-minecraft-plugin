@@ -14,7 +14,7 @@ import java.util.Objects;
  * @since 0.2.0
  */
 @Singleton
-public class ModuleRegisterService {
+public final class ModuleRegisterService {
 
   private final Logger logger;
   private final ModuleDeclarerFactory moduleDeclarerFactory;

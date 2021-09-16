@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Voltariuss
  * @since 0.1.0
  */
-public class FallenVadersCoreModuleDeclarer extends ModuleDeclarer {
+public final class FallenVadersCoreModuleDeclarer extends ModuleDeclarer {
 
   public static final String MODULE_NAME = "fallenvaders-core";
 

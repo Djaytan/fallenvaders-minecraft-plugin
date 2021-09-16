@@ -15,9 +15,9 @@ import java.util.Objects;
  * @since 0.2.0
  */
 @Singleton
-public class ModuleRegisterContainer {
+public final class ModuleRegisterContainer {
 
-  private List<ModuleDeclarer> modules;
+  private final List<ModuleDeclarer> modules;
   private boolean hasLaunched;
 
   /** Constructor. */

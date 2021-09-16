@@ -14,7 +14,7 @@ import java.util.Objects;
  * @author Voltariuss
  * @since 0.2.0
  */
-public class FallenVadersInjector {
+public final class FallenVadersInjector {
 
   /** Constructor. */
   private FallenVadersInjector() {}

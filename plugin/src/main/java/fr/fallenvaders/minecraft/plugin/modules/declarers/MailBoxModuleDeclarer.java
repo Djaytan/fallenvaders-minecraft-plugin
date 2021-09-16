@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  * @author bletrazer
  * @since 0.1.0
  */
-public class MailBoxModuleDeclarer extends ModuleDeclarer {
+public final class MailBoxModuleDeclarer extends ModuleDeclarer {
 
   public static final String MODULE_NAME = "mail-box";
 

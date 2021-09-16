@@ -17,7 +17,7 @@ import java.util.Objects;
  * @author Voltariuss
  * @since 0.2.0
  */
-public class FallenVadersModule extends AbstractModule {
+public final class FallenVadersModule extends AbstractModule {
 
   private final JavaPlugin plugin;
 

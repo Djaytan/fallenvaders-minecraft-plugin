@@ -15,7 +15,7 @@ import java.util.Objects;
  * @since 0.2.0
  */
 @Singleton
-public class ModuleDeclarerFactory {
+public final class ModuleDeclarerFactory {
 
   private final JavaPlugin javaPlugin;
 

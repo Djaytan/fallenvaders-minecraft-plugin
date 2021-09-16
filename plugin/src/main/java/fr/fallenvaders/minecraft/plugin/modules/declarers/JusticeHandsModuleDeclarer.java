@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Glynix
  * @since 0.1.0
  */
-public class JusticeHandsModuleDeclarer extends ModuleDeclarer {
+public final class JusticeHandsModuleDeclarer extends ModuleDeclarer {
 
   public static final String MODULE_NAME = "justice-hands";
 

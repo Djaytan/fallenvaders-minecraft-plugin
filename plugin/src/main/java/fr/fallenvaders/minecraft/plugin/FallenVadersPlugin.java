@@ -17,7 +17,7 @@ import javax.inject.Singleton;
  * @since 0.1.0
  */
 @Singleton
-public class FallenVadersPlugin extends JavaPlugin {
+public final class FallenVadersPlugin extends JavaPlugin {
 
   @Inject private ModuleRegisterInitializer moduleRegInit;
   @Inject private ModuleRegisterService moduleRegisterService;
