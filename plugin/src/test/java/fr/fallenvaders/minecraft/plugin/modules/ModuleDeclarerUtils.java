@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Objects;
 
@@ -23,6 +24,7 @@ public class ModuleDeclarerUtils {
    *
    * @param javaPlugin The mocked Bukkit plugin.
    */
+  @Inject
   public ModuleDeclarerUtils(@NotNull JavaPlugin javaPlugin) {
     Objects.requireNonNull(javaPlugin);
     this.javaPlugin = javaPlugin;
