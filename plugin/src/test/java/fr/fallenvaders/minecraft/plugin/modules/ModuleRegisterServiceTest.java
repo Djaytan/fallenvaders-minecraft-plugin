@@ -1,5 +1,7 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import fr.fallenvaders.minecraft.plugin.guice.TestInjector;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.Assertions;
@@ -9,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
@@ -23,7 +24,8 @@ import javax.inject.Inject;
 @ExtendWith(MockitoExtension.class)
 class ModuleRegisterServiceTest {
 
-  private static final Logger logger = LoggerFactory.getLogger(ModuleRegisterServiceTest.class);
+  private static final Logger logger =
+      (Logger) LoggerFactory.getLogger(ModuleRegisterServiceTest.class);
 
   @Mock private JavaPlugin javaPlugin;
   @Inject private ModuleDeclarerFactory moduleDeclarerFactory;
@@ -36,6 +38,7 @@ class ModuleRegisterServiceTest {
   @BeforeEach
   void setUp() {
     TestInjector.inject(javaPlugin, this);
+    logger.setLevel(Level.WARN);
     moduleRegisterContainer = new ModuleRegisterContainer();
     moduleRegisterService =
         new ModuleRegisterService(logger, moduleDeclarerFactory, moduleRegisterContainer);
