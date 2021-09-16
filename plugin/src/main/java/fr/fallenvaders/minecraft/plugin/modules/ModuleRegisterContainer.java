@@ -20,17 +20,15 @@ public class ModuleRegisterContainer {
   private List<ModuleDeclarer> modules;
   private boolean hasLaunched;
 
-  /**
-   * The constructor of the {@link ModuleRegisterContainer} singleton instance.
-   */
+  /** The constructor of the {@link ModuleRegisterContainer} singleton instance. */
   public ModuleRegisterContainer() {
     modules = new ArrayList<>();
     hasLaunched = false;
   }
 
   /**
-   * Adds a module in the module register. If a module with the same name of the new one exists, then
-   * the operation is cancelled and an exception is thrown.
+   * Adds a module in the module register. If a module with the same name of the new one exists,
+   * then the operation is cancelled and an exception is thrown.
    *
    * @param module The module to add into the register.
    * @throws ModuleRegisterException if a module with the same name of the new on already exists.
@@ -38,11 +36,19 @@ public class ModuleRegisterContainer {
   public void addModule(@NotNull ModuleDeclarer module) throws ModuleRegisterException {
     Objects.requireNonNull(module);
 
-    if (!modules.contains(module)) {
+    ModuleDeclarer existingModule =
+        modules.stream()
+            .filter(m -> m.getModuleName().equals(module.getModuleName()))
+            .findFirst()
+            .orElse(null);
+
+    if (existingModule == null) {
       modules.add(module);
     } else {
       throw new ModuleRegisterException(
-        String.format("The module with the name %s already exists in the register.", module.getModuleName()));
+          String.format(
+              "The module with the name %s already exists in the register.",
+              module.getModuleName()));
     }
   }
 
@@ -50,14 +56,15 @@ public class ModuleRegisterContainer {
    * Tries to find the registered {@link ModuleDeclarer} which match with the given module's name.
    *
    * @param moduleName The name of the sought module.
-   * @return The registered {@link ModuleDeclarer} which match with the given module's name if it exists.
+   * @return The registered {@link ModuleDeclarer} which match with the given module's name if it
+   *     exists.
    */
   @Nullable
   public ModuleDeclarer getModule(@NotNull String moduleName) {
     return modules.stream()
-      .filter(module -> module.getModuleName().equals(moduleName))
-      .findFirst()
-      .orElse(null);
+        .filter(module -> module.getModuleName().equals(moduleName))
+        .findFirst()
+        .orElse(null);
   }
 
   /**
@@ -92,7 +99,8 @@ public class ModuleRegisterContainer {
   /**
    * Defines if the registration has been launched or no.
    *
-   * @param hasLaunched {@link Boolean#TRUE} if the registration has been launched, {@link Boolean#FALSE} otherwise.
+   * @param hasLaunched {@link Boolean#TRUE} if the registration has been launched, {@link
+   *     Boolean#FALSE} otherwise.
    */
   public void setHasLaunched(boolean hasLaunched) {
     this.hasLaunched = hasLaunched;
