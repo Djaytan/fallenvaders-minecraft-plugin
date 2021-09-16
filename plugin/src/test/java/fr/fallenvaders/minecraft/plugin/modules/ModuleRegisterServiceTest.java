@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 
 /**
- * This is the test class of the {@link ModuleRegisterService} class.
+ * Test class of {@link ModuleRegisterService}.
  *
  * @author Voltariuss
  * @since 0.2.0
