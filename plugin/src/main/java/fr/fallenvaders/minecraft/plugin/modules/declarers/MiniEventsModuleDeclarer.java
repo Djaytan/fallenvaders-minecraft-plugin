@@ -1,7 +1,6 @@
 package fr.fallenvaders.minecraft.plugin.modules.declarers;
 
 import fr.fallenvaders.minecraft.plugin.modules.ModuleDeclarer;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleEnum;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,13 +12,15 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MiniEventsModuleDeclarer extends ModuleDeclarer {
 
+  public static final String MODULE_NAME = "mini-events";
+
   /**
    * Constructor.
    *
    * @param javaPlugin The Bukkit plugin.
    */
   public MiniEventsModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
-    super(javaPlugin, ModuleEnum.MINI_EVENTS.getModuleName());
+    super(javaPlugin, MODULE_NAME);
   }
 
   @Override

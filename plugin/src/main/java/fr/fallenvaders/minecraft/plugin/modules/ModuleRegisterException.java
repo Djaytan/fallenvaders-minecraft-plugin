@@ -22,4 +22,16 @@ public class ModuleRegisterException extends Exception {
     super(message);
     Objects.requireNonNull(message);
   }
+
+  /**
+   * Constructor.
+   *
+   * @param message The mandatory exception message.
+   * @param cause The cause exception.
+   */
+  public ModuleRegisterException(@NotNull String message, @NotNull Throwable cause) {
+    super(message, cause);
+    Objects.requireNonNull(message);
+    Objects.requireNonNull(cause);
+  }
 }

@@ -1,8 +1,8 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
-import fr.fallenvaders.minecraft.plugin.modules.declarers.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,20 +31,26 @@ public class ModuleDeclarerFactory {
   }
 
   /**
-   * Creates a {@link ModuleDeclarer} according to the specified arguments.
+   * Creates a {@link ModuleDeclarer} according to the specified module's class.
    *
-   * @param moduleEnum The module to create.
-   * @return a {@link ModuleDeclarer} according to the specified arguments.
+   * @param moduleClass The module's class to instantiate.
+   * @return a {@link ModuleDeclarer} according to the specified module's class.
    */
-  @NotNull
-  public ModuleDeclarer createModule(@NotNull ModuleEnum moduleEnum) {
-    Objects.requireNonNull(moduleEnum);
-    return switch (moduleEnum) {
-      case FALLEN_VADERS_CORE -> new FallenVadersCoreModuleDeclarer(javaPlugin);
-      case JUSTICE_HANDS -> new JusticeHandsModuleDeclarer(javaPlugin);
-      case MAIL_BOX -> new MailBoxModuleDeclarer(javaPlugin);
-      case MINECRAFT_ENHANCE -> new MinecraftEnhanceModuleDeclarer(javaPlugin);
-      case MINI_EVENTS -> new MiniEventsModuleDeclarer(javaPlugin);
-    };
+  @Nullable
+  public ModuleDeclarer createModule(@NotNull Class<? extends ModuleDeclarer> moduleClass)
+      throws ModuleRegisterException {
+    Objects.requireNonNull(moduleClass);
+
+    ModuleDeclarer moduleDeclarer;
+    try {
+      moduleDeclarer = moduleClass.getDeclaredConstructor(JavaPlugin.class).newInstance(javaPlugin);
+    } catch (Exception e) {
+      throw new ModuleRegisterException(
+          String.format(
+              "Something goes wrong during the instantiation of the module class '%s'.",
+              moduleClass.getName()),
+          e);
+    }
+    return moduleDeclarer;
   }
 }

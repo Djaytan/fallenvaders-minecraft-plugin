@@ -1,5 +1,6 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import fr.fallenvaders.minecraft.plugin.modules.declarers.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -39,11 +40,11 @@ public final class CompleteModuleRegisterInitializer implements ModuleRegisterIn
   @Override
   public void initialize() throws ModuleRegisterException {
     logger.info("Start modules registration.");
-    moduleRegisterService.registerModule(ModuleEnum.FALLEN_VADERS_CORE);
-    moduleRegisterService.registerModule(ModuleEnum.JUSTICE_HANDS);
-    moduleRegisterService.registerModule(ModuleEnum.MAIL_BOX);
-    moduleRegisterService.registerModule(ModuleEnum.MINECRAFT_ENHANCE);
-    moduleRegisterService.registerModule(ModuleEnum.MINI_EVENTS);
+    moduleRegisterService.registerModule(FallenVadersCoreModuleDeclarer.class);
+    moduleRegisterService.registerModule(JusticeHandsModuleDeclarer.class);
+    moduleRegisterService.registerModule(MailBoxModuleDeclarer.class);
+    moduleRegisterService.registerModule(MinecraftEnhancerModuleDeclarer.class);
+    moduleRegisterService.registerModule(MiniEventsModuleDeclarer.class);
     logger.info("Modules registration done.");
   }
 }

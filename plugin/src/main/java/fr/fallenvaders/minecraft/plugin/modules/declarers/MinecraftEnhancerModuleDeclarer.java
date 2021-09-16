@@ -2,7 +2,6 @@ package fr.fallenvaders.minecraft.plugin.modules.declarers;
 
 import fr.fallenvaders.minecraft.mc_enhancer.controller.commands.PingCmd;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleDeclarer;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleEnum;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,15 +11,17 @@ import org.jetbrains.annotations.NotNull;
  * @author Voltariuss
  * @since 0.1.0
  */
-public class MinecraftEnhanceModuleDeclarer extends ModuleDeclarer {
+public class MinecraftEnhancerModuleDeclarer extends ModuleDeclarer {
+
+  public static final String MODULE_NAME = "minecraft-enhancer";
 
   /**
    * Constructor.
    *
    * @param javaPlugin The Bukkit plugin.
    */
-  public MinecraftEnhanceModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
-    super(javaPlugin, ModuleEnum.MINECRAFT_ENHANCE.getModuleName());
+  public MinecraftEnhancerModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
+    super(javaPlugin, MODULE_NAME);
   }
 
   @Override
