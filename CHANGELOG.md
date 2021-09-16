@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Setup JUnit 5 and Mockito and add first tests.
+- Select SLF4J with Logback for logging.
+- Setup Guice framework and apply it in ModuleRegister program.
+- Setup JUnit 5 and Mockito and add first tests for ModuleRegister program.
 - Code refactoring with google-java-format style and fixes some bugs reported by SonarQube.
 - Create the CHANGELOG based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Add an MkDocs website for the project Wiki.
