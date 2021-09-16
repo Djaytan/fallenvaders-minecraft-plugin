@@ -21,7 +21,7 @@ public class FallenVadersCoreModuleDeclarer extends ModuleDeclarer {
    * @param javaPlugin The Java Bukkit plugin.
    */
   public FallenVadersCoreModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
-    super(javaPlugin, ModuleEnum.FALLEN_VADERS_CORE);
+    super(javaPlugin, ModuleEnum.FALLEN_VADERS_CORE.getModuleName());
   }
 
   @Override

@@ -45,20 +45,33 @@ public class ModuleRegisterService {
    * Registers a {@link ModuleDeclarer}. If modules registration has already been launched, then an
    * exception is thrown.
    *
-   * @param moduleEnum The module to register.
+   * @param moduleDeclarer The module to register.
    * @throws ModuleRegisterException if modules registration has already been launched or the {@link
    *     ModuleDeclarer} is already registered.
    */
-  public void registerModule(@NotNull ModuleEnum moduleEnum)
+  public void registerModule(@NotNull ModuleDeclarer moduleDeclarer)
       throws ModuleRegisterException {
-    Objects.requireNonNull(moduleEnum);
+    Objects.requireNonNull(moduleDeclarer);
 
     if (moduleRegisterContainer.isHasLaunched()) {
       throw new ModuleRegisterException(
           "Module registration rejected: the module registration process has already been launched.");
     }
-    ModuleDeclarer moduleDeclarer = moduleDeclarerFactory.createModule(moduleEnum);
     moduleRegisterContainer.addModule(moduleDeclarer);
+  }
+
+  /**
+   * Registers a {@link ModuleDeclarer}. If modules registration has already been launched, then an
+   * exception is thrown.
+   *
+   * @param moduleEnum The module to register.
+   * @throws ModuleRegisterException if modules registration has already been launched or the {@link
+   *     ModuleDeclarer} is already registered.
+   */
+  public void registerModule(@NotNull ModuleEnum moduleEnum) throws ModuleRegisterException {
+    Objects.requireNonNull(moduleEnum);
+    ModuleDeclarer moduleDeclarer = moduleDeclarerFactory.createModule(moduleEnum);
+    registerModule(moduleDeclarer);
   }
 
   /**

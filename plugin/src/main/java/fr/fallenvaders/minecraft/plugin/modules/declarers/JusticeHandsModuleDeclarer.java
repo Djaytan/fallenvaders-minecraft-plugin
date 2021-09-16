@@ -20,7 +20,7 @@ public class JusticeHandsModuleDeclarer extends ModuleDeclarer {
    * @param javaPlugin The Java Bukkit plugin.
    */
   public JusticeHandsModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
-    super(javaPlugin, ModuleEnum.JUSTICE_HANDS);
+    super(javaPlugin, ModuleEnum.JUSTICE_HANDS.getModuleName());
   }
 
   @Override

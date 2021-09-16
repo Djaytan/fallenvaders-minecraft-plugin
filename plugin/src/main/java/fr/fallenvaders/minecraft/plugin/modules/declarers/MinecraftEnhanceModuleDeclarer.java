@@ -22,7 +22,7 @@ public class MinecraftEnhanceModuleDeclarer extends ModuleDeclarer {
    * @param javaPlugin The Java Bukkit plugin.
    */
   public MinecraftEnhanceModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
-    super(javaPlugin, ModuleEnum.MINECRAFT_ENHANCE);
+    super(javaPlugin, ModuleEnum.MINECRAFT_ENHANCE.getModuleName());
   }
 
   @Override

@@ -21,7 +21,7 @@ public class MiniEventsModuleDeclarer extends ModuleDeclarer {
    * @param javaPlugin The Java Bukkit plugin.
    */
   public MiniEventsModuleDeclarer(@NotNull JavaPlugin javaPlugin) {
-    super(javaPlugin, ModuleEnum.MINI_EVENTS);
+    super(javaPlugin, ModuleEnum.MINI_EVENTS.getModuleName());
   }
 
   @Override

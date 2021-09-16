@@ -17,14 +17,20 @@ public abstract class ModuleDeclarer {
   private final JavaPlugin javaPlugin;
 
   /* Data */
-  private final ModuleEnum moduleEnum;
+  private final String moduleName;
 
-  protected ModuleDeclarer(@NotNull JavaPlugin javaPlugin, @NotNull ModuleEnum moduleEnum) {
+  /**
+   * Constructor.
+   *
+   * @param javaPlugin The Bukkit Java plugin.
+   * @param moduleName The name of the module.
+   */
+  protected ModuleDeclarer(@NotNull JavaPlugin javaPlugin, @NotNull String moduleName) {
     Objects.requireNonNull(javaPlugin);
-    Objects.requireNonNull(moduleEnum);
+    Objects.requireNonNull(moduleName);
 
     this.javaPlugin = javaPlugin;
-    this.moduleEnum = moduleEnum;
+    this.moduleName = moduleName;
   }
 
   /** Executes the necessary statements to enable the targeted module. */
@@ -52,6 +58,6 @@ public abstract class ModuleDeclarer {
    */
   @NotNull
   public final String getModuleName() {
-    return moduleEnum.getModuleName();
+    return moduleName;
   }
 }
