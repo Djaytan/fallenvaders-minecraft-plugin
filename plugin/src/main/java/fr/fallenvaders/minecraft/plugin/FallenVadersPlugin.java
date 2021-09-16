@@ -40,7 +40,7 @@ public final class FallenVadersPlugin extends JavaPlugin {
       slf4jLogger.error("An error has occurred during modules registration.", e);
     }
     // TODO: FV-94 - better error management (catch all exceptions and allow the launch of some
-    // modules even if some other ones fail
+    // modules even if some other ones fail)
   }
 
   @Override
