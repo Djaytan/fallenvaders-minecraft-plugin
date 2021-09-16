@@ -46,13 +46,6 @@ class ModuleRegisterServiceTest {
   }
 
   @Test
-  @DisplayName("Init the module register")
-  void isModuleRegisterWellInit() {
-    Assertions.assertFalse(moduleRegisterContainer.isHasLaunched());
-    Assertions.assertTrue(moduleRegisterContainer.getModules().isEmpty());
-  }
-
-  @Test
   @DisplayName("Register a module")
   void registerModule() {
     ModuleDeclarer moduleDeclarer = createWithoutBehaviorModuleDeclarer("test-module");
@@ -131,19 +124,6 @@ class ModuleRegisterServiceTest {
     moduleRegisterService.enableModules();
     Assertions.assertTrue(moduleRegisterContainer.isHasLaunched());
     ModuleDeclarer moduleDeclarer2 = createWithoutBehaviorModuleDeclarer("test-module-2");
-    Assertions.assertThrows(
-        ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer2));
-  }
-
-  @Test
-  @DisplayName("Register two identical modules")
-  void registerTwoIdenticalModules() {
-    String moduleName = "test-module";
-    ModuleDeclarer moduleDeclarer1 = createWithoutBehaviorModuleDeclarer(moduleName);
-    ModuleDeclarer moduleDeclarer2 = createWithoutBehaviorModuleDeclarer(moduleName);
-    Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer1));
-    Assertions.assertThrows(
-        ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer1));
     Assertions.assertThrows(
         ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer2));
   }
