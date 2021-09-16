@@ -13,9 +13,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TestInjector {
 
-  /**
-   * Constructor.
-   */
+  /** Constructor. */
   private TestInjector() {}
 
   /**
