@@ -1,5 +1,7 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import fr.fallenvaders.minecraft.plugin.guice.FallenVadersInjector;
+import fr.fallenvaders.minecraft.plugin.modules.guice.TestInjector;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import java.util.Objects;
 
 /**
@@ -27,6 +30,7 @@ class ModuleRegisterServiceTest {
   private static final Logger logger = LoggerFactory.getLogger(ModuleRegisterServiceTest.class);
 
   @Mock private JavaPlugin javaPlugin;
+  @Inject private ModuleDeclarerFactory moduleDeclarerFactory;
   private ModuleRegisterContainer moduleRegisterContainer;
   private ModuleRegisterService moduleRegisterService;
   private int enableStack;
@@ -34,7 +38,7 @@ class ModuleRegisterServiceTest {
 
   @BeforeEach
   void setUp() {
-    ModuleDeclarerFactory moduleDeclarerFactory = new ModuleDeclarerFactory(javaPlugin);
+    TestInjector.inject(javaPlugin, this);
     moduleRegisterContainer = new ModuleRegisterContainer();
     moduleRegisterService =
         new ModuleRegisterService(logger, moduleDeclarerFactory, moduleRegisterContainer);

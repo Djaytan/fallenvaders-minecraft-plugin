@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -20,11 +21,11 @@ public class FallenVadersInjector {
   private FallenVadersInjector() {}
 
   /**
-   * Injects dependencies through Guice to existing instances (e.g. {@link FallenVadersPlugin}.
+   * Injects dependencies through Guice.
    *
    * @param plugin The Bukkit plugin.
    */
-  public static void inject(@NotNull FallenVadersPlugin plugin) {
+  public static void inject(@NotNull JavaPlugin plugin) {
     Objects.requireNonNull(plugin);
 
     Module module = new FallenVadersModule(plugin);
