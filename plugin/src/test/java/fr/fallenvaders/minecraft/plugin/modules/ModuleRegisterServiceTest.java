@@ -49,10 +49,9 @@ class ModuleRegisterServiceTest {
   @Test
   @DisplayName("Register a module")
   void registerModule() {
-    String moduleName = "test-module";
-    ModuleDeclarer moduleDeclarer = createWithoutBehaviorModuleDeclarer(moduleName);
+    ModuleDeclarer moduleDeclarer = createWithoutBehaviorModuleDeclarer("test-module");
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer));
-    ModuleDeclarer actualModuleDeclarer = moduleRegisterContainer.getModule(moduleName);
+    ModuleDeclarer actualModuleDeclarer = moduleRegisterContainer.getModule("test-module");
     Assertions.assertEquals(1, moduleRegisterContainer.getModules().size());
     Assertions.assertEquals(moduleDeclarer, actualModuleDeclarer);
   }
@@ -61,9 +60,8 @@ class ModuleRegisterServiceTest {
   @DisplayName("Enable one module")
   void enableOneModule() {
     Assertions.assertEquals(0, enableStack);
-    String moduleName = "test-module";
     Runnable onEnable = () -> enableStack++;
-    ModuleDeclarer moduleDeclarer = createModuleDeclarer(moduleName, onEnable, null);
+    ModuleDeclarer moduleDeclarer = createModuleDeclarer("test-module", onEnable, null);
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer));
     moduleRegisterService.enableModules();
     Assertions.assertEquals(1, enableStack);
@@ -74,9 +72,8 @@ class ModuleRegisterServiceTest {
   @DisplayName("Disable one module")
   void disableOneModule() {
     Assertions.assertEquals(0, disableStack);
-    String moduleName = "test-module";
     Runnable onDisable = () -> disableStack++;
-    ModuleDeclarer moduleDeclarer = createModuleDeclarer(moduleName, null, onDisable);
+    ModuleDeclarer moduleDeclarer = createModuleDeclarer("test-module", null, onDisable);
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer));
     moduleRegisterService.enableModules();
     moduleRegisterService.disableModules();
@@ -89,10 +86,9 @@ class ModuleRegisterServiceTest {
   void enableThenDisableOneModule() {
     Assertions.assertEquals(0, enableStack);
     Assertions.assertEquals(0, disableStack);
-    String moduleName = "test-module";
     Runnable onEnable = () -> enableStack++;
     Runnable onDisable = () -> disableStack++;
-    ModuleDeclarer moduleDeclarer = createModuleDeclarer(moduleName, onEnable, onDisable);
+    ModuleDeclarer moduleDeclarer = createModuleDeclarer("test-module", onEnable, onDisable);
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer));
     moduleRegisterService.enableModules();
     moduleRegisterService.disableModules();
@@ -106,12 +102,11 @@ class ModuleRegisterServiceTest {
   void enableThenDisableSeveralModules() {
     Assertions.assertEquals(0, enableStack);
     Assertions.assertEquals(0, disableStack);
-    String moduleName = "test-module";
     Runnable onEnable = () -> enableStack++;
     Runnable onDisable = () -> disableStack++;
-    ModuleDeclarer moduleDeclarer1 = createModuleDeclarer(moduleName, onEnable, onDisable);
-    ModuleDeclarer moduleDeclarer2 = createModuleDeclarer(moduleName, onEnable, onDisable);
-    ModuleDeclarer moduleDeclarer3 = createModuleDeclarer(moduleName, onEnable, onDisable);
+    ModuleDeclarer moduleDeclarer1 = createModuleDeclarer("test-module-1", onEnable, onDisable);
+    ModuleDeclarer moduleDeclarer2 = createModuleDeclarer("test-module-2", onEnable, onDisable);
+    ModuleDeclarer moduleDeclarer3 = createModuleDeclarer("test-module-3", onEnable, onDisable);
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer1));
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer2));
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer3));
@@ -125,12 +120,24 @@ class ModuleRegisterServiceTest {
   @Test
   @DisplayName("Register module after launch throw exception")
   void registerModuleAfterLaunchThrowException() {
-    String moduleName = "test-module";
-    ModuleDeclarer moduleDeclarer1 = createWithoutBehaviorModuleDeclarer(moduleName);
+    ModuleDeclarer moduleDeclarer1 = createWithoutBehaviorModuleDeclarer("test-module-1");
     Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer1));
     moduleRegisterService.enableModules();
     Assertions.assertTrue(moduleRegisterContainer.isHasLaunched());
+    ModuleDeclarer moduleDeclarer2 = createWithoutBehaviorModuleDeclarer("test-module-2");
+    Assertions.assertThrows(
+        ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer2));
+  }
+
+  @Test
+  @DisplayName("Register two identical modules")
+  void registerTwoIdenticalModules() {
+    String moduleName = "test-module";
+    ModuleDeclarer moduleDeclarer1 = createWithoutBehaviorModuleDeclarer(moduleName);
     ModuleDeclarer moduleDeclarer2 = createWithoutBehaviorModuleDeclarer(moduleName);
+    Assertions.assertDoesNotThrow(() -> moduleRegisterService.registerModule(moduleDeclarer1));
+    Assertions.assertThrows(
+      ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer1));
     Assertions.assertThrows(
         ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer2));
   }
