@@ -28,7 +28,6 @@ public abstract class ModuleDeclarer {
   protected ModuleDeclarer(@NotNull JavaPlugin javaPlugin, @NotNull String moduleName) {
     Objects.requireNonNull(javaPlugin);
     Objects.requireNonNull(moduleName);
-
     this.javaPlugin = javaPlugin;
     this.moduleName = moduleName;
   }

@@ -28,7 +28,6 @@ public class FallenVadersModule extends AbstractModule {
    */
   public FallenVadersModule(@NotNull JavaPlugin plugin) {
     Objects.requireNonNull(plugin);
-
     this.plugin = plugin;
   }
 

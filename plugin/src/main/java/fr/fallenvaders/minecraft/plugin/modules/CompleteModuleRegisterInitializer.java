@@ -32,7 +32,6 @@ public final class CompleteModuleRegisterInitializer implements ModuleRegisterIn
       @NotNull Logger logger, @NotNull ModuleRegisterService moduleRegisterService) {
     Objects.requireNonNull(logger);
     Objects.requireNonNull(moduleRegisterService);
-
     this.logger = logger;
     this.moduleRegisterService = moduleRegisterService;
   }

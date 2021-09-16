@@ -57,6 +57,7 @@ public class ModuleRegisterContainer {
    */
   @Nullable
   public ModuleDeclarer getModule(@NotNull String moduleName) {
+    Objects.requireNonNull(moduleName);
     return modules.stream()
         .filter(module -> module.getModuleName().equals(moduleName))
         .findFirst()

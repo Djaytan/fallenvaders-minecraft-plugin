@@ -27,7 +27,6 @@ public class ModuleDeclarerFactory {
   @Inject
   public ModuleDeclarerFactory(@NotNull JavaPlugin javaPlugin) {
     Objects.requireNonNull(javaPlugin);
-
     this.javaPlugin = javaPlugin;
   }
 

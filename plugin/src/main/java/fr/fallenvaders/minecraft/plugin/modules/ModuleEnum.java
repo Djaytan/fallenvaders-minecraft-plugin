@@ -21,7 +21,6 @@ public enum ModuleEnum {
 
   ModuleEnum(@NotNull String moduleName) {
     Objects.requireNonNull(moduleName);
-
     this.moduleName = moduleName;
   }
 

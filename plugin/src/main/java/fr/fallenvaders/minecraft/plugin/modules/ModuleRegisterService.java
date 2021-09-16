@@ -35,7 +35,6 @@ public class ModuleRegisterService {
     Objects.requireNonNull(logger);
     Objects.requireNonNull(moduleDeclarerFactory);
     Objects.requireNonNull(moduleRegisterContainer);
-
     this.logger = logger;
     this.moduleDeclarerFactory = moduleDeclarerFactory;
     this.moduleRegisterContainer = moduleRegisterContainer;
