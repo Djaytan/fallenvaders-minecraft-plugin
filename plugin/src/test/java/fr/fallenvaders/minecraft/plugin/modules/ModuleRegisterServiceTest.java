@@ -3,6 +3,7 @@ package fr.fallenvaders.minecraft.plugin.modules;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import fr.fallenvaders.minecraft.plugin.guice.TestInjector;
+import fr.fallenvaders.minecraft.plugin.modules.declarers.TestModuleDeclarer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -136,5 +137,15 @@ class ModuleRegisterServiceTest {
         moduleDeclarerUtils.createWithoutBehaviorModuleDeclarer("test-module-2");
     Assertions.assertThrows(
         ModuleRegisterException.class, () -> moduleRegisterService.registerModule(moduleDeclarer2));
+  }
+
+  @Test
+  @DisplayName("Register two identical modules")
+  void registerTwoIdenticalModules() {
+    Assertions.assertDoesNotThrow(
+        () -> moduleRegisterService.registerModule(TestModuleDeclarer.class));
+    Assertions.assertThrows(
+        ModuleRegisterException.class,
+        () -> moduleRegisterService.registerModule(TestModuleDeclarer.class));
   }
 }
