@@ -43,7 +43,7 @@ public class JavaCommandBuilder {
    * @return The built Java command.
    */
   @NotNull
-  public List<String> buildCommand(@NotNull JavaCommandProperties commandProperties) {
+  public List<String> build(@NotNull JavaCommandProperties commandProperties) {
     Objects.requireNonNull(commandProperties);
     List<String> commandArgs = Lists.newArrayList(JAVA_COMMAND);
     commandArgs.addAll(commandProperties.jvmArgs());
