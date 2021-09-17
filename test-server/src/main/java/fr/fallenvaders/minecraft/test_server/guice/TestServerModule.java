@@ -38,6 +38,11 @@ public final class TestServerModule extends AbstractModule {
 
   private final boolean debugMode;
 
+  /**
+   * Constructor.
+   *
+   * @param debugMode Tells if the program is in debug mode.
+   */
   public TestServerModule(boolean debugMode) {
     this.debugMode = debugMode;
   }
