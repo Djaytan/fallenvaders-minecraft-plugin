@@ -22,13 +22,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * A record of the program properties.
+ * A record of the Java command properties.
  *
  * @author Voltariuss
  * @since 0.2.0
  *
- * @param jarName The jar file name of the server.
- * @param jvmArgs The JVM args passed at server execution.
- * @param guiActive Tells if the GUI should be shown or not at server execution.
+ * @param jarName The jar file name to launch.
+ * @param jvmArgs The JVM arguments.
+ * @param programArgs The program arguments.
  */
-public record CommandProperties(@NotNull String jarName, @NotNull List<String> jvmArgs, @NotNull boolean guiActive) {}
+public record CommandProperties(@NotNull String jarName, @NotNull List<String> jvmArgs, @NotNull List<String> programArgs) {}
