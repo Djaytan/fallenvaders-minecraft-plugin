@@ -28,13 +28,13 @@ import java.util.Objects;
 import java.util.Properties;
 
 /**
- * Factory of {@link ProgramProperties}.
+ * Factory of {@link CommandProperties}.
  *
  * @author Voltariuss
  * @since 0.2.0
  */
 @Singleton
-public class ProgramPropertiesFactory {
+public class CommandPropertiesFactory {
 
   private final boolean debugMode;
   private final Properties config;
@@ -46,7 +46,7 @@ public class ProgramPropertiesFactory {
    * @param config The config properties of the test server.
    */
   @Inject
-  public ProgramPropertiesFactory(
+  public CommandPropertiesFactory(
       @DebugMode boolean debugMode, @NotNull @ConfigProperties Properties config) {
     Objects.requireNonNull(config);
     this.debugMode = debugMode;
@@ -54,17 +54,17 @@ public class ProgramPropertiesFactory {
   }
 
   /**
-   * Creates a {@link ProgramProperties} with the config properties.
+   * Creates a {@link CommandProperties} with the config properties.
    *
-   * @return The created {@link ProgramProperties} instance.
+   * @return The created {@link CommandProperties} instance.
    */
   @NotNull
-  public ProgramProperties createProgramProperties() {
+  public CommandProperties createProgramProperties() {
     String jarName = config.getProperty("fr.fallenvaders.server.jar.name");
     List<String> jvmArgs = List.of(getJvmArgs().split(" "));
     boolean guiActive =
         Boolean.parseBoolean(config.getProperty("fr.fallenvaders.server.gui.active"));
-    return new ProgramProperties(jarName, jvmArgs, guiActive);
+    return new CommandProperties(jarName, jvmArgs, guiActive);
   }
 
   @NotNull
