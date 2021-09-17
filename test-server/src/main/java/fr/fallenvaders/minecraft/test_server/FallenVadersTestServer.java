@@ -17,15 +17,17 @@
 
 package fr.fallenvaders.minecraft.test_server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public class FallenVadersTestServer {
 
-  public static final Logger LOGGER = Logger.getAnonymousLogger();
-
   public static final String SERVER_JAR_NAME = "papermc-server.jar";
+  
+  private static final Logger LOGGER = LoggerFactory.getLogger(FallenVadersTestServer.class);
 
   public static final String[] SERVER_LAUNCH_COMMAND =
       new String[] {"java", "-server", "-Xms512M", "-Xmx2G", "-jar", SERVER_JAR_NAME, "nogui"};
