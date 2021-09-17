@@ -31,4 +31,4 @@ import java.util.List;
  * @param jvmArgs The JVM arguments.
  * @param programArgs The program arguments.
  */
-public record CommandProperties(@NotNull String jarName, @NotNull List<String> jvmArgs, @NotNull List<String> programArgs) {}
+public record JavaCommandProperties(@NotNull String jarName, @NotNull List<String> jvmArgs, @NotNull List<String> programArgs) {}

@@ -28,13 +28,13 @@ import java.util.Objects;
 import java.util.Properties;
 
 /**
- * Factory of {@link CommandProperties}.
+ * Factory of {@link JavaCommandProperties}.
  *
  * @author Voltariuss
  * @since 0.2.0
  */
 @Singleton
-public class CommandPropertiesFactory {
+public class JavaCommandPropertiesFactory {
 
   /** This arg tells Bukkit to not show GUI on server execution. */
   private static final String BUKKIT_NO_GUI_ARG = "nogui";
@@ -49,7 +49,7 @@ public class CommandPropertiesFactory {
    * @param config The config properties of the test server.
    */
   @Inject
-  public CommandPropertiesFactory(
+  public JavaCommandPropertiesFactory(
       @DebugMode boolean debugMode, @NotNull @ConfigProperties Properties config) {
     Objects.requireNonNull(config);
     this.debugMode = debugMode;
@@ -57,16 +57,16 @@ public class CommandPropertiesFactory {
   }
 
   /**
-   * Creates a {@link CommandProperties} with the config properties.
+   * Creates a {@link JavaCommandProperties} with the config properties.
    *
-   * @return The created {@link CommandProperties} instance.
+   * @return The created {@link JavaCommandProperties} instance.
    */
   @NotNull
-  public CommandProperties createProgramProperties() {
+  public JavaCommandProperties createProgramProperties() {
     String jarName = config.getProperty("fr.fallenvaders.server.jar.name");
     List<String> jvmArgs = getJvmArgs();
     List<String> programArgs = getProgramArgs();
-    return new CommandProperties(jarName, jvmArgs, programArgs);
+    return new JavaCommandProperties(jarName, jvmArgs, programArgs);
   }
 
   @NotNull
