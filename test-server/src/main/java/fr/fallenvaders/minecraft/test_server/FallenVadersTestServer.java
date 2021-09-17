@@ -26,7 +26,7 @@ import java.io.IOException;
 public class FallenVadersTestServer {
 
   public static final String SERVER_JAR_NAME = "papermc-server.jar";
-  
+
   private static final Logger LOGGER = LoggerFactory.getLogger(FallenVadersTestServer.class);
 
   public static final String[] SERVER_LAUNCH_COMMAND =
@@ -50,7 +50,7 @@ public class FallenVadersTestServer {
       if ("debug".equalsIgnoreCase(args[0])) {
         serverLaunchCommand = DEBUG_SERVER_LAUNCH_COMMAND;
       } else {
-        LOGGER.severe("Wrong program arguments: only \"debug\" is allowed.");
+        LOGGER.error("Wrong program arguments: only \"debug\" is allowed.");
         System.exit(-1);
       }
     }
@@ -64,11 +64,11 @@ public class FallenVadersTestServer {
       try {
         p.waitFor();
       } catch (InterruptedException e) {
-        LOGGER.severe("Server interrupted!");
+        LOGGER.error("Server interrupted!");
         e.printStackTrace();
       }
     } catch (IOException e) {
-      LOGGER.severe("Failed to launch test server! Maybe wrong default working directory setup?");
+      LOGGER.error("Failed to launch test server! Maybe wrong default working directory setup?");
       e.printStackTrace();
     }
   }
