@@ -31,7 +31,7 @@ import java.util.Objects;
  * @since 0.2.0
  */
 @Singleton
-public class JavaCommandBuilder {
+public final class JavaCommandBuilder {
 
   private static final String JAVA_COMMAND = "java";
   private static final String JAR_SPECIFICATION_ARG = "-jar";

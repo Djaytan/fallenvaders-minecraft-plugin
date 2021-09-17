@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Voltariuss
  * @since 0.2.0
  */
-public class FallenVadersTestServer {
+public final class FallenVadersTestServer {
 
   /**
    * Main method.

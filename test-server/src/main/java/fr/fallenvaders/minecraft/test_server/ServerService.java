@@ -34,7 +34,7 @@ import java.util.Objects;
  * @since 0.2.0
  */
 @Singleton
-public class ServerService {
+public final class ServerService {
 
   private static final Logger logger = LoggerFactory.getLogger(ServerService.class);
 

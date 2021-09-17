@@ -32,7 +32,7 @@ import java.util.List;
  * @since 0.2.0
  */
 @Singleton
-public class CommandExecutor {
+public final class CommandExecutor {
 
   private static final Logger logger = LoggerFactory.getLogger(CommandExecutor.class);
 

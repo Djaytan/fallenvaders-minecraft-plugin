@@ -34,7 +34,7 @@ import java.util.Properties;
  * @since 0.2.0
  */
 @Singleton
-public class JavaCommandPropertiesFactory {
+public final class JavaCommandPropertiesFactory {
 
   /** This arg tells Bukkit to not show GUI on server execution. */
   private static final String BUKKIT_NO_GUI_ARG = "nogui";
