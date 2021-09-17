@@ -19,4 +19,16 @@ package fr.fallenvaders.minecraft.test_server;
 
 import org.jetbrains.annotations.NotNull;
 
-public record ProgramProperties (@NotNull String jarName, @NotNull String jvmArgs, @NotNull boolean guiActive) {}
+import java.util.List;
+
+/**
+ * A record of the program properties.
+ *
+ * @author Voltariuss
+ * @since 0.2.0
+ *
+ * @param jarName The jar file name of the server.
+ * @param jvmArgs The JVM args passed at server execution.
+ * @param guiActive Tells if the GUI should be shown or not at server execution.
+ */
+public record ProgramProperties (@NotNull String jarName, @NotNull List<String> jvmArgs, @NotNull boolean guiActive) {}
