@@ -36,6 +36,9 @@ import java.util.Properties;
 @Singleton
 public class CommandPropertiesFactory {
 
+  /** This arg tells Bukkit to not show GUI on server execution. */
+  private static final String BUKKIT_NO_GUI_ARG = "nogui";
+
   private final boolean debugMode;
   private final Properties config;
 
@@ -61,20 +64,32 @@ public class CommandPropertiesFactory {
   @NotNull
   public CommandProperties createProgramProperties() {
     String jarName = config.getProperty("fr.fallenvaders.server.jar.name");
-    List<String> jvmArgs = List.of(getJvmArgs().split(" "));
-    boolean guiActive =
-        Boolean.parseBoolean(config.getProperty("fr.fallenvaders.server.gui.active"));
-    return new CommandProperties(jarName, jvmArgs, guiActive);
+    List<String> jvmArgs = getJvmArgs();
+    List<String> programArgs = getProgramArgs();
+    return new CommandProperties(jarName, jvmArgs, programArgs);
   }
 
   @NotNull
-  private String getJvmArgs() {
+  private List<String> getJvmArgs() {
     String jvmArgs;
     if (!debugMode) {
       jvmArgs = config.getProperty("fr.fallenvaders.server.jvm.args");
     } else {
       jvmArgs = config.getProperty("fr.fallenvaders.server.jvm.args.debug");
     }
-    return jvmArgs;
+    return List.of(jvmArgs.split(" "));
+  }
+
+  @NotNull
+  private List<String> getProgramArgs() {
+    List<String> programArgs;
+    boolean guiActive =
+        Boolean.parseBoolean(config.getProperty("fr.fallenvaders.server.gui.active"));
+    if (!guiActive) {
+      programArgs = List.of(BUKKIT_NO_GUI_ARG);
+    } else {
+      programArgs = List.of();
+    }
+    return programArgs;
   }
 }
