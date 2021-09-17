@@ -71,11 +71,9 @@ public class JavaCommandPropertiesFactory {
 
   @NotNull
   private List<String> getJvmArgs() {
-    String jvmArgs;
-    if (!debugMode) {
-      jvmArgs = config.getProperty("fr.fallenvaders.server.jvm.args");
-    } else {
-      jvmArgs = config.getProperty("fr.fallenvaders.server.jvm.args.debug");
+    String jvmArgs = config.getProperty("fr.fallenvaders.server.jvm.args");
+    if (debugMode) {
+      jvmArgs += config.getProperty("fr.fallenvaders.server.jvm.args.debug");
     }
     return List.of(jvmArgs.split(" "));
   }
