@@ -33,6 +33,8 @@ import java.util.Properties;
  */
 public final class PropertiesUtils {
 
+  private PropertiesUtils() {}
+
   /**
    * Gets the well-formed {@link Properties} according to the specified property file.
    *
