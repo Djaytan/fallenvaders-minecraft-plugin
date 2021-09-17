@@ -42,8 +42,7 @@ public class ProgramPropertiesFactory {
   /**
    * Constructor.
    *
-   * @param debugMode {@link Boolean#TRUE} if the debug mode is enabled, {@link Boolean#FALSE}
-   *     otherwise.
+   * @param debugMode Tells if the program is in debug mode.
    * @param config The config properties of the test server.
    */
   @Inject
