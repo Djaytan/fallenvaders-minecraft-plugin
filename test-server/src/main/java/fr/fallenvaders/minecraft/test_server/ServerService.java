@@ -17,6 +17,10 @@
 
 package fr.fallenvaders.minecraft.test_server;
 
+import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
+import fr.fallenvaders.minecraft.test_server.command.JavaCommandBuilder;
+import fr.fallenvaders.minecraft.test_server.command.JavaCommandProperties;
+import fr.fallenvaders.minecraft.test_server.command.JavaCommandPropertiesFactory;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

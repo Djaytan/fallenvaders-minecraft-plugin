@@ -15,7 +15,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.test_server;
+package fr.fallenvaders.minecraft.test_server.command;
 
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
