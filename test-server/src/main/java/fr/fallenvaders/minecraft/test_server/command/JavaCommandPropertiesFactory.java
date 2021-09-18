@@ -80,14 +80,7 @@ public final class JavaCommandPropertiesFactory {
 
   @NotNull
   private List<String> getProgramArgs() {
-    List<String> programArgs;
-    boolean guiActive =
-        Boolean.parseBoolean(config.getProperty("fr.fallenvaders.server.gui.active"));
-    if (!guiActive) {
-      programArgs = List.of(BUKKIT_NO_GUI_ARG);
-    } else {
-      programArgs = List.of();
-    }
-    return programArgs;
+    String programArgs = config.getProperty("fr.fallenvaders.server.program.args");
+    return List.of(programArgs.split(" "));
   }
 }
