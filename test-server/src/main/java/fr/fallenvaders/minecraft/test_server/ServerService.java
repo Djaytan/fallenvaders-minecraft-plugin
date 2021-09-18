@@ -62,18 +62,11 @@ public final class ServerService {
    * Starts the server according to the config properties. If an exception is thrown during the
    * execution of the Java command, an error is logged and then the program exits with code error
    * -1.
-   *
-   * @param isDebugMode Tells if the program is in debug mode.
    */
-  public void startServer(boolean isDebugMode) {
-    try {
-      JavaCommandProperties javaCommandProperties =
-          javaCommandPropertiesFactory.createProgramProperties();
-      logger.info("Launching test server...");
-      commandExecutor.execute(javaCommandProperties);
-    } catch (Exception e) {
-      logger.error("An error prevent the server to start.", e);
-      System.exit(-1);
-    }
+  public void startServer() {
+    JavaCommandProperties javaCommandProperties =
+        javaCommandPropertiesFactory.createProgramProperties();
+    logger.info("Launching test server...");
+    commandExecutor.execute(javaCommandProperties);
   }
 }
