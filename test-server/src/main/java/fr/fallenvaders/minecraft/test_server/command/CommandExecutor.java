@@ -37,8 +37,6 @@ import java.util.Objects;
 @Singleton
 public final class CommandExecutor {
 
-  private static final Logger logger = LoggerFactory.getLogger(CommandExecutor.class);
-
   private final JavaCommandBuilder javaCommandBuilder;
 
   /**
