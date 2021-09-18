@@ -65,9 +65,6 @@ public final class CommandExecutor {
     ProcessBuilder pb = new ProcessBuilder(javaCommand);
     pb.directory(new File(javaCommandProperties.workingDirectory()));
     pb.inheritIO();
-    String strCommand = String.join(" ", pb.command());
-    logger.info("Executed command: {}", strCommand);
-    logger.info("Working directory: {}", javaCommandProperties.workingDirectory());
     try {
       Process p = pb.start();
       p.waitFor();
