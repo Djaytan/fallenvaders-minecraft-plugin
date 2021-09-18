@@ -64,9 +64,10 @@ public final class JavaCommandPropertiesFactory {
   @NotNull
   public JavaCommandProperties createProgramProperties() {
     String jarName = config.getProperty("fr.fallenvaders.server.jar.name");
+    String workingDirectory = config.getProperty("fv.fallenvaders.server.working_directory");
     List<String> jvmArgs = getJvmArgs();
     List<String> programArgs = getProgramArgs();
-    return new JavaCommandProperties(jarName, jvmArgs, programArgs);
+    return new JavaCommandProperties(jarName, jvmArgs, programArgs, workingDirectory);
   }
 
   @NotNull

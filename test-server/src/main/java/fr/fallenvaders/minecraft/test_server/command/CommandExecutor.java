@@ -17,13 +17,16 @@
 
 package fr.fallenvaders.minecraft.test_server.command;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Command executor class.
@@ -36,22 +39,35 @@ public final class CommandExecutor {
 
   private static final Logger logger = LoggerFactory.getLogger(CommandExecutor.class);
 
-  // TODO: make it configurable
-  private static final String SERVER_LOCATION = "server/";
+  private final JavaCommandBuilder javaCommandBuilder;
+
+  /**
+   * Constructor.
+   *
+   * @param javaCommandBuilder The Java command builder.
+   */
+  @Inject
+  public CommandExecutor(@NotNull JavaCommandBuilder javaCommandBuilder) {
+    Objects.requireNonNull(javaCommandBuilder);
+    this.javaCommandBuilder = javaCommandBuilder;
+  }
 
   // TODO: execute in another thread
   /**
    * Executes the specified Java command.
    *
-   * @param javaCommand The Java command to execute.
+   * @param javaCommandProperties The Java command properties of the command to execute.
    * @throws CommandExecutionException if something went wrong during the execution.
    */
-  public void execute(List<String> javaCommand) throws CommandExecutionException {
+  public void execute(@NotNull JavaCommandProperties javaCommandProperties) throws CommandExecutionException {
+    Objects.requireNonNull(javaCommandProperties);
+    List<String> javaCommand = javaCommandBuilder.build(javaCommandProperties);
     ProcessBuilder pb = new ProcessBuilder(javaCommand);
+    pb.directory(new File(javaCommandProperties.workingDirectory()));
+    pb.inheritIO();
     String strCommand = String.join(" ", pb.command());
     logger.info("Executed command: {}", strCommand);
-    pb.directory(new File(SERVER_LOCATION));
-    pb.inheritIO();
+    logger.info("Working directory: {}", javaCommandProperties.workingDirectory());
     try {
       Process p = pb.start();
       p.waitFor();

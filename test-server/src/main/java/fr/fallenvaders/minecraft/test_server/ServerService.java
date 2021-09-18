@@ -18,7 +18,6 @@
 package fr.fallenvaders.minecraft.test_server;
 
 import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
-import fr.fallenvaders.minecraft.test_server.command.JavaCommandBuilder;
 import fr.fallenvaders.minecraft.test_server.command.JavaCommandProperties;
 import fr.fallenvaders.minecraft.test_server.command.JavaCommandPropertiesFactory;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -42,26 +40,21 @@ public final class ServerService {
   private static final Logger logger = LoggerFactory.getLogger(ServerService.class);
 
   private final CommandExecutor commandExecutor;
-  private final JavaCommandBuilder javaCommandBuilder;
   private final JavaCommandPropertiesFactory javaCommandPropertiesFactory;
 
   /**
    * Constructor.
    *
    * @param commandExecutor The command executor.
-   * @param javaCommandBuilder The Java command builder.
    * @param javaCommandPropertiesFactory The {@link JavaCommandProperties}'s factory.
    */
   @Inject
   public ServerService(
       @NotNull CommandExecutor commandExecutor,
-      @NotNull JavaCommandBuilder javaCommandBuilder,
       @NotNull JavaCommandPropertiesFactory javaCommandPropertiesFactory) {
     Objects.requireNonNull(commandExecutor);
-    Objects.requireNonNull(javaCommandBuilder);
     Objects.requireNonNull(javaCommandPropertiesFactory);
     this.commandExecutor = commandExecutor;
-    this.javaCommandBuilder = javaCommandBuilder;
     this.javaCommandPropertiesFactory = javaCommandPropertiesFactory;
   }
 
@@ -76,9 +69,8 @@ public final class ServerService {
     try {
       JavaCommandProperties javaCommandProperties =
           javaCommandPropertiesFactory.createProgramProperties();
-      List<String> javaCommand = javaCommandBuilder.build(javaCommandProperties);
       logger.info("Launching test server...");
-      commandExecutor.execute(javaCommand);
+      commandExecutor.execute(javaCommandProperties);
     } catch (Exception e) {
       logger.error("An error prevent the server to start.", e);
       System.exit(-1);
