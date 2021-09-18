@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Thread class which run commands concurrently.
+ * Thread class which run commands concurrently by creating a {@link Process}.
  *
  * @author Voltariuss
  * @since 0.2.0

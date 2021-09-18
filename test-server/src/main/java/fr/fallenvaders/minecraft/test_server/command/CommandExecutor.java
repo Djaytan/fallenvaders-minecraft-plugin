@@ -52,15 +52,12 @@ public final class CommandExecutor {
     this.javaCommandBuilder = javaCommandBuilder;
   }
 
-  // TODO: execute in another thread
   /**
    * Executes the specified Java command.
    *
    * @param javaCommandProperties The Java command properties of the command to execute.
-   * @throws CommandExecutionException if something went wrong during the execution.
    */
-  public void execute(@NotNull JavaCommandProperties javaCommandProperties)
-      throws CommandExecutionException {
+  public void execute(@NotNull JavaCommandProperties javaCommandProperties) {
     Objects.requireNonNull(javaCommandProperties);
     List<String> javaCommand = javaCommandBuilder.build(javaCommandProperties);
     String strJavaCommand = String.join(" ", javaCommand);
