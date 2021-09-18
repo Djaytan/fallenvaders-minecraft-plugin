@@ -23,8 +23,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.io.File;
-import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,6 +36,8 @@ import java.util.Objects;
  */
 @Singleton
 public final class CommandExecutor {
+
+  private static final Logger logger = LoggerFactory.getLogger(CommandExecutor.class);
 
   private final JavaCommandBuilder javaCommandBuilder;
 
@@ -57,21 +59,16 @@ public final class CommandExecutor {
    * @param javaCommandProperties The Java command properties of the command to execute.
    * @throws CommandExecutionException if something went wrong during the execution.
    */
-  public void execute(@NotNull JavaCommandProperties javaCommandProperties) throws CommandExecutionException {
+  public void execute(@NotNull JavaCommandProperties javaCommandProperties)
+      throws CommandExecutionException {
     Objects.requireNonNull(javaCommandProperties);
     List<String> javaCommand = javaCommandBuilder.build(javaCommandProperties);
-    ProcessBuilder pb = new ProcessBuilder(javaCommand);
-    pb.directory(new File(javaCommandProperties.workingDirectory()));
-    pb.inheritIO();
-    try {
-      Process p = pb.start();
-      p.waitFor();
-    } catch (InterruptedException e) {
-      // TODO: fix SonarLint warning
-      throw new CommandExecutionException("Server interrupted!", e);
-    } catch (IOException e) {
-      throw new CommandExecutionException(
-          "Failed to launch test server! Maybe wrong default working directory setup?", e);
-    }
+    String strJavaCommand = String.join(" ", javaCommand);
+    Path path = Paths.get(javaCommandProperties.workingDirectory());
+    logger.info("Executed command: {}", strJavaCommand);
+    logger.info("Working directory: {}", path.toAbsolutePath());
+    CommandRunnerThread thread =
+        new CommandRunnerThread(javaCommand, javaCommandProperties.workingDirectory());
+    thread.start();
   }
 }
