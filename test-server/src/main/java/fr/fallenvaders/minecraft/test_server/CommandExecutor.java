@@ -59,7 +59,8 @@ public final class CommandExecutor {
       // TODO: fix SonarLint warning
       throw new CommandExecutionException("Server interrupted!", e);
     } catch (IOException e) {
-      throw new CommandExecutionException("Failed to launch test server! Maybe wrong default working directory setup?", e);
+      throw new CommandExecutionException(
+          "Failed to launch test server! Maybe wrong default working directory setup?", e);
     }
   }
 }

@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,7 +49,10 @@ public final class ServerService {
    * @param javaCommandPropertiesFactory The {@link JavaCommandProperties}'s factory.
    */
   @Inject
-  public ServerService(@NotNull CommandExecutor commandExecutor, @NotNull JavaCommandBuilder javaCommandBuilder, @NotNull JavaCommandPropertiesFactory javaCommandPropertiesFactory) {
+  public ServerService(
+      @NotNull CommandExecutor commandExecutor,
+      @NotNull JavaCommandBuilder javaCommandBuilder,
+      @NotNull JavaCommandPropertiesFactory javaCommandPropertiesFactory) {
     Objects.requireNonNull(commandExecutor);
     Objects.requireNonNull(javaCommandBuilder);
     Objects.requireNonNull(javaCommandPropertiesFactory);
@@ -60,15 +62,16 @@ public final class ServerService {
   }
 
   /**
-   * Starts the server according to the config properties.
-   * If an exception is thrown during the execution of the Java command,
-   * an error is logged and then the program exits with code error -1.
+   * Starts the server according to the config properties. If an exception is thrown during the
+   * execution of the Java command, an error is logged and then the program exits with code error
+   * -1.
    *
    * @param isDebugMode Tells if the program is in debug mode.
    */
   public void startServer(boolean isDebugMode) {
     try {
-      JavaCommandProperties javaCommandProperties = javaCommandPropertiesFactory.createProgramProperties();
+      JavaCommandProperties javaCommandProperties =
+          javaCommandPropertiesFactory.createProgramProperties();
       List<String> javaCommand = javaCommandBuilder.build(javaCommandProperties);
       logger.info("Launching test server...");
       commandExecutor.execute(javaCommand);

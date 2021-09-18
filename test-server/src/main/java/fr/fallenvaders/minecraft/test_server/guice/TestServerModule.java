@@ -18,7 +18,6 @@
 package fr.fallenvaders.minecraft.test_server.guice;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.BindingAnnotation;
 import com.google.inject.Provides;
 import fr.fallenvaders.minecraft.test_server.PropertiesUtils;
 import org.jetbrains.annotations.NotNull;
