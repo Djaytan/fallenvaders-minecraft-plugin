@@ -71,7 +71,7 @@ public final class ProgramPropertiesFactory {
   private List<String> getJvmArgs() {
     String jvmArgs = config.getProperty("fr.fallenvaders.server.jvm.args");
     if (debugMode) {
-      jvmArgs += config.getProperty("fr.fallenvaders.server.jvm.args.debug");
+      jvmArgs += " " + config.getProperty("fr.fallenvaders.server.jvm.args.debug");
     }
     return List.of(jvmArgs.split(" "));
   }
