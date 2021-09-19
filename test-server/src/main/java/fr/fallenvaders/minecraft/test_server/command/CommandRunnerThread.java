@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,26 +35,22 @@ public class CommandRunnerThread extends Thread {
 
   private static final Logger logger = LoggerFactory.getLogger(CommandRunnerThread.class);
 
-  private final List<String> javaCommand;
-  private final String workingDirectory;
+  private final TerminalCommand terminalCommand;
 
   /**
    * Constructor.
    *
-   * @param javaCommand The Java command to run.
-   * @param workingDirectory The working directory of the command to run.
+   * @param terminalCommand The terminal's command to run.
    */
-  public CommandRunnerThread(@NotNull List<String> javaCommand, @NotNull String workingDirectory) {
-    Objects.requireNonNull(javaCommand);
-    Objects.requireNonNull(workingDirectory);
-    this.javaCommand = javaCommand;
-    this.workingDirectory = workingDirectory;
+  public CommandRunnerThread(@NotNull TerminalCommand terminalCommand) {
+    Objects.requireNonNull(terminalCommand);
+    this.terminalCommand = terminalCommand;
   }
 
   @Override
   public void run() {
-    ProcessBuilder pb = new ProcessBuilder(javaCommand);
-    pb.directory(new File(workingDirectory));
+    ProcessBuilder pb = new ProcessBuilder(terminalCommand.args());
+    pb.directory(new File(terminalCommand.workingDirectory().toAbsolutePath().toString()));
     pb.inheritIO();
     try {
       Process p = pb.start();

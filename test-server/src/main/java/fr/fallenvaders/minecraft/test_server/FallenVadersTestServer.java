@@ -39,7 +39,7 @@ public final class FallenVadersTestServer {
     boolean debugMode = isDebugMode(args);
     Injector injector = Guice.createInjector(new TestServerModule(debugMode));
     ServerService serverService = injector.getInstance(ServerService.class);
-    serverService.startServer(debugMode);
+    serverService.startServer();
   }
 
   private static boolean isDebugMode(@NotNull String[] args) {

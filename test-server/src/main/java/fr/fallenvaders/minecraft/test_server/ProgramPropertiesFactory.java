@@ -15,7 +15,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.test_server.command;
+package fr.fallenvaders.minecraft.test_server;
 
 import fr.fallenvaders.minecraft.test_server.guice.ConfigProperties;
 import fr.fallenvaders.minecraft.test_server.guice.DebugMode;
@@ -28,16 +28,13 @@ import java.util.Objects;
 import java.util.Properties;
 
 /**
- * Factory of {@link JavaCommandProperties}.
+ * Factory of {@link ProgramProperties}.
  *
  * @author Voltariuss
  * @since 0.2.0
  */
 @Singleton
-public final class JavaCommandPropertiesFactory {
-
-  /** This arg tells Bukkit to not show GUI on server execution. */
-  private static final String BUKKIT_NO_GUI_ARG = "nogui";
+public final class ProgramPropertiesFactory {
 
   private final boolean debugMode;
   private final Properties config;
@@ -49,7 +46,7 @@ public final class JavaCommandPropertiesFactory {
    * @param config The config properties of the test server.
    */
   @Inject
-  public JavaCommandPropertiesFactory(
+  public ProgramPropertiesFactory(
       @DebugMode boolean debugMode, @NotNull @ConfigProperties Properties config) {
     Objects.requireNonNull(config);
     this.debugMode = debugMode;
@@ -57,17 +54,17 @@ public final class JavaCommandPropertiesFactory {
   }
 
   /**
-   * Creates a {@link JavaCommandProperties} with the config properties.
+   * Creates a {@link ProgramProperties} with the config properties.
    *
-   * @return The created {@link JavaCommandProperties} instance.
+   * @return The created {@link ProgramProperties} instance.
    */
   @NotNull
-  public JavaCommandProperties createProgramProperties() {
+  public ProgramProperties createProgramProperties() {
     String jarName = config.getProperty("fr.fallenvaders.server.jar.name");
     String workingDirectory = config.getProperty("fv.fallenvaders.server.working_directory");
     List<String> jvmArgs = getJvmArgs();
     List<String> programArgs = getProgramArgs();
-    return new JavaCommandProperties(jarName, jvmArgs, programArgs, workingDirectory);
+    return new ProgramProperties(programArgs, workingDirectory, jarName, jvmArgs);
   }
 
   @NotNull

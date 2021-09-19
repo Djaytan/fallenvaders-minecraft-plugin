@@ -19,21 +19,31 @@ package fr.fallenvaders.minecraft.test_server.command;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * A record of the Java command properties.
+ * Represents a terminal's command.
  *
  * @author Voltariuss
  * @since 0.2.0
  *
- * @param jarName The jar file name to launch.
- * @param jvmArgs The JVM arguments.
- * @param programArgs The program arguments.
- * @param workingDirectory The directory from where the command must be launched.
+ * @param args The command arguments.
+ * @param workingDirectory The directory where the command must be executed.
  */
-public record JavaCommandProperties(
-  @NotNull String jarName,
-  @NotNull List<String> jvmArgs,
-  @NotNull List<String> programArgs,
-  @NotNull String workingDirectory) {}
+public record TerminalCommand (@NotNull List<String> args, @NotNull Path workingDirectory) {
+
+  /**
+   * Constructor.
+   *
+   * @param args The command arguments.
+   * @param workingDirectory The directory where the command must be executed.
+   */
+  public TerminalCommand(@NotNull List<String> args, @NotNull Path workingDirectory) {
+    Objects.requireNonNull(args);
+    Objects.requireNonNull(workingDirectory);
+    this.args = args;
+    this.workingDirectory = workingDirectory;
+  }
+}

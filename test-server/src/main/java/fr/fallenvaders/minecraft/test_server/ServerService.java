@@ -18,8 +18,6 @@
 package fr.fallenvaders.minecraft.test_server;
 
 import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
-import fr.fallenvaders.minecraft.test_server.command.JavaCommandProperties;
-import fr.fallenvaders.minecraft.test_server.command.JavaCommandPropertiesFactory;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,22 +38,22 @@ public final class ServerService {
   private static final Logger logger = LoggerFactory.getLogger(ServerService.class);
 
   private final CommandExecutor commandExecutor;
-  private final JavaCommandPropertiesFactory javaCommandPropertiesFactory;
+  private final ProgramPropertiesFactory programPropertiesFactory;
 
   /**
    * Constructor.
    *
    * @param commandExecutor The command executor.
-   * @param javaCommandPropertiesFactory The {@link JavaCommandProperties}'s factory.
+   * @param programPropertiesFactory The {@link ProgramProperties}'s factory.
    */
   @Inject
   public ServerService(
       @NotNull CommandExecutor commandExecutor,
-      @NotNull JavaCommandPropertiesFactory javaCommandPropertiesFactory) {
+      @NotNull ProgramPropertiesFactory programPropertiesFactory) {
     Objects.requireNonNull(commandExecutor);
-    Objects.requireNonNull(javaCommandPropertiesFactory);
+    Objects.requireNonNull(programPropertiesFactory);
     this.commandExecutor = commandExecutor;
-    this.javaCommandPropertiesFactory = javaCommandPropertiesFactory;
+    this.programPropertiesFactory = programPropertiesFactory;
   }
 
   /**
@@ -64,9 +62,8 @@ public final class ServerService {
    * -1.
    */
   public void startServer() {
-    JavaCommandProperties javaCommandProperties =
-        javaCommandPropertiesFactory.createProgramProperties();
+    ProgramProperties programProperties = programPropertiesFactory.createProgramProperties();
     logger.info("Launching test server...");
-    commandExecutor.execute(javaCommandProperties);
+    commandExecutor.execute(programProperties);
   }
 }

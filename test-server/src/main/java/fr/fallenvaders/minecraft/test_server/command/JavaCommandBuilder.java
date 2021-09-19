@@ -17,10 +17,11 @@
 
 package fr.fallenvaders.minecraft.test_server.command;
 
-import com.google.common.collect.Lists;
+import fr.fallenvaders.minecraft.test_server.ProgramProperties;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Singleton;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,24 +32,23 @@ import java.util.Objects;
  * @since 0.2.0
  */
 @Singleton
-public final class JavaCommandBuilder {
+public final class JavaCommandBuilder extends TerminalCommandBuilder {
 
   private static final String JAVA_COMMAND = "java";
   private static final String JAR_SPECIFICATION_ARG = "-jar";
 
-  /**
-   * Builds the Java command according to the specified {@link JavaCommandProperties}.
-   *
-   * @param commandProperties The properties of the Java command to build.
-   * @return The built Java command.
-   */
-  @NotNull
-  public List<String> build(@NotNull JavaCommandProperties commandProperties) {
-    Objects.requireNonNull(commandProperties);
-    List<String> commandArgs = Lists.newArrayList(JAVA_COMMAND);
-    commandArgs.addAll(commandProperties.jvmArgs());
-    commandArgs.addAll(getJarSpecPart(commandProperties.jarName()));
-    commandArgs.addAll(commandProperties.programArgs());
+  /** Constructor. */
+  public JavaCommandBuilder() {
+    super(JAVA_COMMAND);
+  }
+
+  @Override
+  protected List<String> getCommandArgs(@NotNull ProgramProperties programProperties) {
+    Objects.requireNonNull(programProperties);
+    List<String> commandArgs = new ArrayList<>();
+    commandArgs.addAll(programProperties.jvmArgs());
+    commandArgs.addAll(getJarSpecPart(programProperties.jarName()));
+    commandArgs.addAll(programProperties.programArgs());
     return commandArgs;
   }
 

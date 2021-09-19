@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.test_server.command;
 
+import fr.fallenvaders.minecraft.test_server.ProgramProperties;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -55,17 +55,16 @@ public final class CommandExecutor {
   /**
    * Executes the specified Java command.
    *
-   * @param javaCommandProperties The Java command properties of the command to execute.
+   * @param programProperties The program's properties.
    */
-  public void execute(@NotNull JavaCommandProperties javaCommandProperties) {
-    Objects.requireNonNull(javaCommandProperties);
-    List<String> javaCommand = javaCommandBuilder.build(javaCommandProperties);
-    String strJavaCommand = String.join(" ", javaCommand);
-    Path path = Paths.get(javaCommandProperties.workingDirectory());
+  public void execute(@NotNull ProgramProperties programProperties) {
+    Objects.requireNonNull(programProperties);
+    TerminalCommand javaCommand = javaCommandBuilder.build(programProperties);
+    String strJavaCommand = String.join(" ", javaCommand.args());
+    Path path = Paths.get(programProperties.workingDirectory());
     logger.info("Executed command: {}", strJavaCommand);
     logger.info("Working directory: {}", path.toAbsolutePath());
-    CommandRunnerThread thread =
-        new CommandRunnerThread(javaCommand, javaCommandProperties.workingDirectory());
+    CommandRunnerThread thread = new CommandRunnerThread(javaCommand);
     thread.start();
   }
 }
