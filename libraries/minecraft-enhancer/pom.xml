@@ -21,11 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
     <parent>
         <artifactId>libraries</artifactId>
         <groupId>fr.fallenvaders.minecraft</groupId>
-        <version>0.2.0-SNAPSHOT</version>
+        <version>0.2.0</version>
     </parent>
 
     <artifactId>minecraft-enhancer</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
 
     <name>MinecraftEnhancer</name>
     <description>Overlay of some vanilla Minecraft functionalities</description>
