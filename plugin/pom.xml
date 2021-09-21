@@ -21,11 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
     <parent>
         <artifactId>mc-fallenvaders</artifactId>
         <groupId>fr.fallenvaders.minecraft</groupId>
-        <version>0.2.0-SNAPSHOT</version>
+        <version>0.3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>plugin</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>FallenVadersPlugin</name>
