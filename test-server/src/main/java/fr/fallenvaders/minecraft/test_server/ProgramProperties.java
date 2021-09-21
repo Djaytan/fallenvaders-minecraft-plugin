@@ -20,40 +20,30 @@ package fr.fallenvaders.minecraft.test_server;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A record of the program properties.
  *
  * @author Voltariuss
  * @since 0.3.0
+ *
+ * @param programArgs The program arguments.
+ * @param workingDirectory The directory from where the command must be launched.
+ * @param jarName The jar file name.
+ * @param jvmArgs The JVM arguments.
+ * @param pluginJarLocation The location of the FV's plugin jar file.
+ * @param pluginJarCoreName The core name of the FV's plugin jar file.
+ * @param pluginJarVersion The version of the FV's plugin jar file.
+ * @param pluginJarComplementName The complement name of the FV's plugin jar file.
+ * @param buildCommand The FV's plugin jar build command.
  */
 public record ProgramProperties(
   @NotNull List<String> programArgs,
   @NotNull String workingDirectory,
   @NotNull String jarName,
-  @NotNull List<String> jvmArgs) {
-
-  /**
-   * Constructor.
-   *
-   * @param programArgs The program arguments.
-   * @param workingDirectory The directory from where the command must be launched.
-   * @param jarName The jar file name.
-   * @param jvmArgs The JVM arguments.
-   */
-  public ProgramProperties(
-      @NotNull List<String> programArgs,
-      @NotNull String workingDirectory,
-      @NotNull String jarName,
-      @NotNull List<String> jvmArgs) {
-    Objects.requireNonNull(programArgs);
-    Objects.requireNonNull(workingDirectory);
-    Objects.requireNonNull(jarName);
-    Objects.requireNonNull(jvmArgs);
-    this.programArgs = programArgs;
-    this.workingDirectory = workingDirectory;
-    this.jarName = jarName;
-    this.jvmArgs = jvmArgs;
-  }
-}
+  @NotNull List<String> jvmArgs,
+  @NotNull String pluginJarLocation,
+  @NotNull String pluginJarCoreName,
+  @NotNull String pluginJarVersion,
+  @NotNull String pluginJarComplementName,
+  @NotNull String buildCommand) {}
