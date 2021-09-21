@@ -29,7 +29,7 @@ import java.util.Objects;
  * Thread class which run commands concurrently by creating a {@link Process}.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  */
 public class CommandRunnerThread extends Thread {
 

@@ -27,7 +27,7 @@ import java.util.Objects;
  * Represents a terminal's command.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  *
  * @param args The command arguments.
  * @param workingDirectory The directory where the command must be executed.

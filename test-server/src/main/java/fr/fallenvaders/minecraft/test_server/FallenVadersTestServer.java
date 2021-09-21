@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
  * Entry point of the test-server program.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  */
 public final class FallenVadersTestServer {
 

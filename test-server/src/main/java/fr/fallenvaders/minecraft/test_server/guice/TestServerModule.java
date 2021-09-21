@@ -29,7 +29,7 @@ import java.util.Properties;
  * Guice module for test server program.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  */
 public final class TestServerModule extends AbstractModule {
 

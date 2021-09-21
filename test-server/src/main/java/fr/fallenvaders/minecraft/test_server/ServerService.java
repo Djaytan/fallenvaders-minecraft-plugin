@@ -30,7 +30,7 @@ import java.util.Objects;
  * The service to manage the server.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  */
 @Singleton
 public final class ServerService {

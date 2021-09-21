@@ -25,7 +25,7 @@ import java.util.Objects;
  * Exception when an error occurs during command execution.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  */
 public class CommandExecutionException extends Exception {
 

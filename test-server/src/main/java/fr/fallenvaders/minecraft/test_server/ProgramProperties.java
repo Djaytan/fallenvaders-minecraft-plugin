@@ -26,7 +26,7 @@ import java.util.Objects;
  * A record of the program properties.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  */
 public record ProgramProperties(
   @NotNull List<String> programArgs,

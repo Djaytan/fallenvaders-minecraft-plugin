@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * Guice's annotation to inject {@link java.util.Properties} value for config properties.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  */
 @Qualifier
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})

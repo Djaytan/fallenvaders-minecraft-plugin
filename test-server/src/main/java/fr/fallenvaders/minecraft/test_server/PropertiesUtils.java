@@ -29,7 +29,7 @@ import java.util.Properties;
  * Utils class about properties manipulations.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  */
 public final class PropertiesUtils {
 

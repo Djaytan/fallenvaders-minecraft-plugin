@@ -32,7 +32,7 @@ import java.util.Objects;
  * Command executor class.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  */
 @Singleton
 public final class CommandExecutor {

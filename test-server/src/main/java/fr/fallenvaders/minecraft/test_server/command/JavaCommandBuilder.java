@@ -29,7 +29,7 @@ import java.util.Objects;
  * Java command builder class.
  *
  * @author Voltariuss
- * @since 0.2.0
+ * @since 0.3.0
  */
 @Singleton
 public final class JavaCommandBuilder extends TerminalCommandBuilder {
