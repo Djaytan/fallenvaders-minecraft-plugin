@@ -29,7 +29,7 @@ import java.util.StringJoiner;
  * @since 0.3.0
  */
 @Singleton
-public class MavenJarNameAssembler implements FVPluginJarNameAssembler {
+public class MavenPluginJarNameAssembler implements FVPluginJarNameAssembler {
 
   private static final String DELIMITER = "-";
   private static final String FILE_EXTENSION = ".jar";

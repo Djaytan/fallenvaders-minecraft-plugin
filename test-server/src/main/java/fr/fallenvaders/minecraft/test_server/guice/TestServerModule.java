@@ -21,7 +21,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import fr.fallenvaders.minecraft.test_server.PropertiesUtils;
 import fr.fallenvaders.minecraft.test_server.deploy.FVPluginJarNameAssembler;
-import fr.fallenvaders.minecraft.test_server.deploy.MavenJarNameAssembler;
+import fr.fallenvaders.minecraft.test_server.deploy.MavenPluginJarNameAssembler;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -50,7 +50,7 @@ public final class TestServerModule extends AbstractModule {
 
   @Override
   public void configure() {
-    bind(FVPluginJarNameAssembler.class).to(MavenJarNameAssembler.class);
+    bind(FVPluginJarNameAssembler.class).to(MavenPluginJarNameAssembler.class);
   }
 
   @Provides
