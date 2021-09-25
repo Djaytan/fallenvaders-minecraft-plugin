@@ -39,22 +39,31 @@ public final class ServerService {
   private static final Logger logger = LoggerFactory.getLogger(ServerService.class);
 
   private final CommandExecutor commandExecutor;
+  private final FVPluginJarNameAssembler fvPluginJarNameAssembler;
   private final ProgramPropertiesRegister programPropertiesRegister;
 
   /**
    * Constructor.
    *
    * @param commandExecutor The command executor.
+   * @param fvPluginJarNameAssembler The FV's plugin jar name assembler.
    * @param programPropertiesRegister The {@link ProgramProperties}'s register.
    */
   @Inject
   public ServerService(
       @NotNull CommandExecutor commandExecutor,
+      @NotNull FVPluginJarNameAssembler fvPluginJarNameAssembler,
       @NotNull ProgramPropertiesRegister programPropertiesRegister) {
     Objects.requireNonNull(commandExecutor);
+    Objects.requireNonNull(fvPluginJarNameAssembler);
     Objects.requireNonNull(programPropertiesRegister);
     this.commandExecutor = commandExecutor;
+    this.fvPluginJarNameAssembler = fvPluginJarNameAssembler;
     this.programPropertiesRegister = programPropertiesRegister;
+  }
+
+  public void prepareServer() {
+    String jarName = assemblerJarName();
   }
 
   /**
@@ -66,5 +75,14 @@ public final class ServerService {
     ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
     logger.info("Launching test server...");
     commandExecutor.execute(programProperties);
+  }
+
+  @NotNull
+  private String assemblerJarName() {
+    ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
+    String baseName = programProperties.pluginJarCoreName();
+    String version = programProperties.pluginJarVersion();
+    String complementName = programProperties.pluginJarComplementName();
+    return fvPluginJarNameAssembler.assemble(baseName, version, complementName);
   }
 }
