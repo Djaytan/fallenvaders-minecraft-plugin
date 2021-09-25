@@ -60,24 +60,24 @@ public final class ProgramPropertiesFactory {
    */
   @NotNull
   public ProgramProperties createProgramProperties() {
+    String projectVersion = config.getProperty("fr.fallenvaders.version");
     String jarName = config.getProperty("fr.fallenvaders.server.jar.name");
     String workingDirectory = config.getProperty("fv.fallenvaders.server.working_directory");
     List<String> jvmArgs = getJvmArgs();
     List<String> programArgs = getProgramArgs();
     String pluginJarLocation = config.getProperty("fr.fallenvaders.server.plugin.location");
     String pluginJarCoreName = config.getProperty("fr.fallenvaders.server.plugin.jar.name.core");
-    String pluginJarVersion = config.getProperty("fr.fallenvaders.server.plugin.jar.name.version");
     String pluginJarComplementName =
         config.getProperty("fr.fallenvaders.server.plugin.jar.name.complement");
     String buildCommand = config.getProperty("fr.fallenvaders.server.plugin.build.command");
     return new ProgramProperties(
+        projectVersion,
         programArgs,
         workingDirectory,
         jarName,
         jvmArgs,
         pluginJarLocation,
         pluginJarCoreName,
-        pluginJarVersion,
         pluginJarComplementName,
         buildCommand);
   }

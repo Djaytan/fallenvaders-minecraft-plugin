@@ -81,7 +81,7 @@ public final class ServerService {
   private String assemblerJarName() {
     ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
     String baseName = programProperties.pluginJarCoreName();
-    String version = programProperties.pluginJarVersion();
+    String version = programProperties.projectVersion();
     String complementName = programProperties.pluginJarComplementName();
     return fvPluginJarNameAssembler.assemble(baseName, version, complementName);
   }
