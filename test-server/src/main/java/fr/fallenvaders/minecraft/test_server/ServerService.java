@@ -18,6 +18,7 @@
 package fr.fallenvaders.minecraft.test_server;
 
 import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
+import fr.fallenvaders.minecraft.test_server.deploy.FVPluginDeployer;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,25 +39,28 @@ public final class ServerService {
   private static final Logger logger = LoggerFactory.getLogger(ServerService.class);
 
   private final CommandExecutor commandExecutor;
+  private final FVPluginDeployer fvPluginDeployer;
   private final ProgramPropertiesRegister programPropertiesRegister;
 
   /**
    * Constructor.
    *
    * @param commandExecutor The command executor.
+   * @param fvPluginDeployer The FV plugin deployer.
    * @param programPropertiesRegister The {@link ProgramProperties}'s register.
    */
   @Inject
   public ServerService(
       @NotNull CommandExecutor commandExecutor,
+      @NotNull FVPluginDeployer fvPluginDeployer,
       @NotNull ProgramPropertiesRegister programPropertiesRegister) {
     Objects.requireNonNull(commandExecutor);
+    Objects.requireNonNull(fvPluginDeployer);
     Objects.requireNonNull(programPropertiesRegister);
     this.commandExecutor = commandExecutor;
+    this.fvPluginDeployer = fvPluginDeployer;
     this.programPropertiesRegister = programPropertiesRegister;
   }
-
-  public void prepareServer() {}
 
   /**
    * Starts the server according to the config properties. If an exception is thrown during the
@@ -65,7 +69,16 @@ public final class ServerService {
    */
   public void startServer() {
     ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
+    logger.info("Preparing test server...");
+    prepareServer(programProperties);
+    logger.info("Preparing test server -> done.");
     logger.info("Launching test server...");
     commandExecutor.execute(programProperties);
+  }
+
+  private void prepareServer(@NotNull ProgramProperties programProperties) {
+    fvPluginDeployer.deleteOldPlugin();
+    fvPluginDeployer.createPlugin();
+    fvPluginDeployer.deployPlugin();
   }
 }

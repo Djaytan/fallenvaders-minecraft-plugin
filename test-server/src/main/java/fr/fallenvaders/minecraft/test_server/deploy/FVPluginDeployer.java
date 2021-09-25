@@ -29,7 +29,20 @@ import java.nio.file.Path;
 @Singleton
 public final class FVPluginDeployer {
 
-  /** Create the FallenVaders plugin in order to deploy it. */
+  /**
+   * Deletes the old plugin if it exists in order to deploy the new one. To remove the plugin, his
+   * core name is required to found it independently of his version.
+   *
+   * @param pluginsDirectory The server plugins directory.
+   * @param pluginCoreName The core name of the plugin to remove.
+   */
+  public void deleteOldPlugin(Path pluginsDirectory, String pluginCoreName) {}
+
+  /**
+   * Create the FallenVaders plugin in order to deploy it.
+   *
+   * @param pluginProjectLocation The project location of the plugin to create.
+   */
   public void createPlugin(Path pluginProjectLocation) {}
 
   /**
