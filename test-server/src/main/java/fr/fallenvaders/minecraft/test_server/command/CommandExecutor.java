@@ -61,7 +61,7 @@ public final class CommandExecutor {
     Objects.requireNonNull(programProperties);
     TerminalCommand javaCommand = javaCommandBuilder.build(programProperties);
     String strJavaCommand = String.join(" ", javaCommand.args());
-    Path path = Paths.get(programProperties.workingDirectory());
+    Path path = programProperties.workingDirectory();
     logger.info("Executed command: {}", strJavaCommand);
     logger.info("Working directory: {}", path.toAbsolutePath());
     CommandRunnerThread thread = new CommandRunnerThread(javaCommand);

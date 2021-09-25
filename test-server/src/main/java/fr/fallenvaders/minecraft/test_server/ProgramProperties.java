@@ -19,6 +19,7 @@ package fr.fallenvaders.minecraft.test_server;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -30,20 +31,22 @@ import java.util.List;
  * @param projectVersion The project's version.
  * @param programArgs The program arguments.
  * @param workingDirectory The directory from where the command must be launched.
+ * @param pluginsDirectory The location of the plugins of the server.
  * @param jarName The jar file name.
  * @param jvmArgs The JVM arguments.
- * @param pluginJarLocation The location of the FV's plugin jar file.
- * @param pluginJarCoreName The core name of the FV's plugin jar file.
- * @param pluginJarComplementName The complement name of the FV's plugin jar file.
- * @param buildCommand The FV's plugin jar build command.
+ * @param pluginProjectLocation The location of the FV plugin project.
+ * @param pluginJarName The jar file name of the FV plugin.
+ * @param mavenCommand The Maven command to execute in order to build the plugin.
+ * @param mavenArtifactLocation The location of the Maven's built artifact (=plugin).
  */
 public record ProgramProperties(
   @NotNull String projectVersion,
   @NotNull List<String> programArgs,
-  @NotNull String workingDirectory,
+  @NotNull Path workingDirectory,
+  @NotNull Path pluginsDirectory,
   @NotNull String jarName,
   @NotNull List<String> jvmArgs,
-  @NotNull String pluginJarLocation,
-  @NotNull String pluginJarCoreName,
-  @NotNull String pluginJarComplementName,
-  @NotNull String buildCommand) {}
+  @NotNull Path pluginProjectLocation,
+  @NotNull String pluginJarName,
+  @NotNull String mavenCommand,
+  @NotNull Path mavenArtifactLocation) {}

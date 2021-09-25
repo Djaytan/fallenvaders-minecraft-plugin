@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.nio.file.Path;
 import java.util.Objects;
 
 /**
@@ -63,7 +64,8 @@ public final class ServerService {
   }
 
   public void prepareServer() {
-    String jarName = assemblerJarName();
+    ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
+
   }
 
   /**
@@ -75,14 +77,5 @@ public final class ServerService {
     ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
     logger.info("Launching test server...");
     commandExecutor.execute(programProperties);
-  }
-
-  @NotNull
-  private String assemblerJarName() {
-    ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
-    String baseName = programProperties.pluginJarCoreName();
-    String version = programProperties.projectVersion();
-    String complementName = programProperties.pluginJarComplementName();
-    return fvPluginJarNameAssembler.assemble(baseName, version, complementName);
   }
 }
