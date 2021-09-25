@@ -18,6 +18,7 @@
 package fr.fallenvaders.minecraft.test_server;
 
 import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
+import fr.fallenvaders.minecraft.test_server.deploy.FVPluginJarNameAssembler;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,22 +39,22 @@ public final class ServerService {
   private static final Logger logger = LoggerFactory.getLogger(ServerService.class);
 
   private final CommandExecutor commandExecutor;
-  private final ProgramPropertiesFactory programPropertiesFactory;
+  private final ProgramPropertiesRegister programPropertiesRegister;
 
   /**
    * Constructor.
    *
    * @param commandExecutor The command executor.
-   * @param programPropertiesFactory The {@link ProgramProperties}'s factory.
+   * @param programPropertiesRegister The {@link ProgramProperties}'s register.
    */
   @Inject
   public ServerService(
       @NotNull CommandExecutor commandExecutor,
-      @NotNull ProgramPropertiesFactory programPropertiesFactory) {
+      @NotNull ProgramPropertiesRegister programPropertiesRegister) {
     Objects.requireNonNull(commandExecutor);
-    Objects.requireNonNull(programPropertiesFactory);
+    Objects.requireNonNull(programPropertiesRegister);
     this.commandExecutor = commandExecutor;
-    this.programPropertiesFactory = programPropertiesFactory;
+    this.programPropertiesRegister = programPropertiesRegister;
   }
 
   /**
@@ -62,7 +63,7 @@ public final class ServerService {
    * -1.
    */
   public void startServer() {
-    ProgramProperties programProperties = programPropertiesFactory.createProgramProperties();
+    ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
     logger.info("Launching test server...");
     commandExecutor.execute(programProperties);
   }
