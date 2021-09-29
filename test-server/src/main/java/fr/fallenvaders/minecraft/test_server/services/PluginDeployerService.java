@@ -96,6 +96,13 @@ public final class PluginDeployerService {
    *
    * @param pluginLocation The location of the plugin jar file.
    * @param deployLocation The location where to deploy the plugin.
+   * @throws DeploymentException If the deployment of the plugin has failed because of an I/O error.
    */
-  public void deployPlugin(Path pluginLocation, Path deployLocation) {}
+  public void deployPlugin(Path pluginLocation, Path deployLocation) throws DeploymentException {
+    try {
+      Files.copy(pluginLocation, deployLocation);
+    } catch (IOException e) {
+      throw new DeploymentException("The deployment of the plugin has failed.");
+    }
+  }
 }
