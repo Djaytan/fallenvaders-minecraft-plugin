@@ -29,24 +29,22 @@ import java.util.List;
  * @since 0.3.0
  *
  * @param projectVersion The project's version.
- * @param programArgs The program arguments.
- * @param workingDirectory The directory from where the command must be launched.
- * @param pluginsDirectory The location of the plugins of the server.
- * @param jarName The jar file name.
- * @param jvmArgs The JVM arguments.
- * @param pluginProjectLocation The location of the FV plugin project.
- * @param pluginJarName The jar file name of the FV plugin.
- * @param mavenCommand The Maven command to execute in order to build the plugin.
- * @param mavenArtifactLocation The location of the Maven's built artifact (=plugin).
+ * @param mcServerJvmArgs The JVM arguments of the test-server launch command.
+ * @param mcServerProgramArgs The program arguments of the test-server launch command.
+ * @param mcServerLocation The Minecraft test-server location.
+ * @param mcServerJarName The jar file name of the test-server's program to execute.
+ * @param fvPluginProjectLocation The location of the FV plugin project.
+ * @param fvPluginJarName The jar file name of the FV plugin.
+ * @param fvPluginBuildCommand The build command to execute in order to build the plugin.
+ * @param fcPluginArtifactLocation The location of the built plugin artifact.
  */
 public record ProgramProperties(
   @NotNull String projectVersion,
-  @NotNull List<String> programArgs,
-  @NotNull Path workingDirectory,
-  @NotNull Path pluginsDirectory,
-  @NotNull String jarName,
-  @NotNull List<String> jvmArgs,
-  @NotNull Path pluginProjectLocation,
-  @NotNull String pluginJarName,
-  @NotNull String mavenCommand,
-  @NotNull Path mavenArtifactLocation) {}
+  @NotNull List<String> mcServerJvmArgs,
+  @NotNull List<String> mcServerProgramArgs,
+  @NotNull Path mcServerLocation,
+  @NotNull String mcServerJarName,
+  @NotNull Path fvPluginProjectLocation,
+  @NotNull String fvPluginJarName,
+  @NotNull String fvPluginBuildCommand,
+  @NotNull Path fcPluginArtifactLocation) {}
