@@ -30,11 +30,14 @@ public interface FVPluginJarNameAssembler {
   /**
    * Assembles the FallenVaders's plugin jar file name according to the specified values.
    *
-   * @param baseName The base name of the jar file (=plugin's name).
-   * @param version The version of the plugin.
-   * @param complement The complement name of the jar file.
+   * @param fvPluginJarCoreName The core name of the jar file (=plugin's name).
+   * @param projectVersion The version of the project (and by extend the version of the plugin).
+   * @param fvPluginJarComplementName The complement name of the jar file.
    * @return The assembled FallenVaders's plugin jar file name.
    */
   @NotNull
-  String assemble(@NotNull String baseName, @NotNull String version, @NotNull String complement);
+  String assemble(
+      @NotNull String fvPluginJarCoreName,
+      @NotNull String projectVersion,
+      @NotNull String fvPluginJarComplementName);
 }

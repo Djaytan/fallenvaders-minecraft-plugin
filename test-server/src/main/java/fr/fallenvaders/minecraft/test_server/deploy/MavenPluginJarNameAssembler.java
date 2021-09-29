@@ -34,13 +34,16 @@ public class MavenPluginJarNameAssembler implements FVPluginJarNameAssembler {
   private static final String DELIMITER = "-";
   private static final String FILE_EXTENSION = ".jar";
 
+  @Override
   @NotNull
   public String assemble(
-      @NotNull String baseName, @NotNull String version, @NotNull String complement) {
+      @NotNull String fvPluginJarCoreName,
+      @NotNull String projectVersion,
+      @NotNull String fvPluginJarComplementName) {
     StringJoiner sb = new StringJoiner(DELIMITER);
-    sb.add(baseName);
-    sb.add(version);
-    sb.add(complement);
+    sb.add(fvPluginJarCoreName);
+    sb.add(projectVersion);
+    sb.add(fvPluginJarComplementName);
     sb.add(FILE_EXTENSION);
     return sb.toString();
   }
