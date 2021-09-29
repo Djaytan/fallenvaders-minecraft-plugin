@@ -20,6 +20,7 @@ package fr.fallenvaders.minecraft.test_server;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import fr.fallenvaders.minecraft.test_server.guice.TestServerModule;
+import fr.fallenvaders.minecraft.test_server.services.MinecraftServerService;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -38,8 +39,8 @@ public final class FallenVadersTestServer {
   public static void main(@NotNull String[] args) {
     boolean debugMode = isDebugMode(args);
     Injector injector = Guice.createInjector(new TestServerModule(debugMode));
-    ServerService serverService = injector.getInstance(ServerService.class);
-    serverService.startServer();
+    MinecraftServerService minecraftServerService = injector.getInstance(MinecraftServerService.class);
+    minecraftServerService.startServer();
   }
 
   private static boolean isDebugMode(@NotNull String[] args) {

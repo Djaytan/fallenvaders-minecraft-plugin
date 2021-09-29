@@ -15,16 +15,18 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.test_server.deploy;
+package fr.fallenvaders.minecraft.test_server.services;
 
+import fr.fallenvaders.minecraft.test_server.command.TerminalCommand;
+import fr.fallenvaders.minecraft.test_server.deploy.DeploymentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -34,9 +36,9 @@ import java.util.stream.Stream;
  * @since 0.3.0
  */
 @Singleton
-public final class FVPluginDeployer {
+public final class PluginDeployerService {
 
-  private static final Logger logger = LoggerFactory.getLogger(FVPluginDeployer.class);
+  private static final Logger logger = LoggerFactory.getLogger(PluginDeployerService.class);
 
   /**
    * Deletes the old plugin if it exists in order to deploy the new one. To remove the plugin, his
@@ -70,7 +72,11 @@ public final class FVPluginDeployer {
    *
    * @param pluginProjectLocation The project location of the plugin to create.
    */
-  public void createPlugin(Path pluginProjectLocation) {}
+  public void createPlugin(Path pluginProjectLocation, String strMavenCommand) {
+    List<String> mavenCommand = List.of(strMavenCommand.split(" "));
+    TerminalCommand terminalCommand = new TerminalCommand(mavenCommand, pluginProjectLocation);
+
+  }
 
   /**
    * Deploys the plugin into the test-server by moving a copy of the jar file.

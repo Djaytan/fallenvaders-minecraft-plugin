@@ -15,11 +15,11 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.test_server;
+package fr.fallenvaders.minecraft.test_server.services;
 
+import fr.fallenvaders.minecraft.test_server.JavaCommandBuilder;
 import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
 import fr.fallenvaders.minecraft.test_server.command.TerminalCommand;
-import fr.fallenvaders.minecraft.test_server.deploy.FVPluginDeployer;
 import fr.fallenvaders.minecraft.test_server.properties.ProgramProperties;
 import fr.fallenvaders.minecraft.test_server.properties.ProgramPropertiesRegister;
 import org.jetbrains.annotations.NotNull;
@@ -38,12 +38,12 @@ import java.util.List;
  * @since 0.3.0
  */
 @Singleton
-public final class ServerService {
+public final class MinecraftServerService {
 
-  private static final Logger logger = LoggerFactory.getLogger(ServerService.class);
+  private static final Logger logger = LoggerFactory.getLogger(MinecraftServerService.class);
 
   private final CommandExecutor commandExecutor;
-  private final FVPluginDeployer fvPluginDeployer;
+  private final PluginDeployerService fvPluginDeployer;
   private final JavaCommandBuilder javaCommandBuilder;
   private final ProgramPropertiesRegister programPropertiesRegister;
 
@@ -56,9 +56,9 @@ public final class ServerService {
    * @param programPropertiesRegister The {@link ProgramProperties}'s register.
    */
   @Inject
-  public ServerService(
+  public MinecraftServerService(
       @NotNull CommandExecutor commandExecutor,
-      @NotNull FVPluginDeployer fvPluginDeployer,
+      @NotNull PluginDeployerService fvPluginDeployer,
       @NotNull JavaCommandBuilder javaCommandBuilder,
       @NotNull ProgramPropertiesRegister programPropertiesRegister) {
     this.commandExecutor = commandExecutor;
