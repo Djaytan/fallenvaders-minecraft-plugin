@@ -69,16 +69,16 @@ public final class ProgramPropertiesFactory {
    */
   @NotNull
   public ProgramProperties createProgramProperties() {
-    String projectVersion = config.getProperty("fr.fallenvaders.project.version");
-    String jarName = config.getProperty("fr.fallenvaders.mc-server.jar.name");
-    Path workingDirectory = Path.of(config.getProperty("fv.fallenvaders.mc-server.working_directory"));
+    String projectVersion = config.getProperty("fr.fallenvaders.test-server.version");
+    String jarName = config.getProperty("fr.fallenvaders.minecraft.test-server.server.jar_name");
+    Path workingDirectory = Path.of(config.getProperty("fr.fallenvaders.minecraft.test-server.server.location"));
     Path pluginsDirectory = getPluginsDirectory(workingDirectory);
     List<String> jvmArgs = getJvmArgs();
     List<String> programArgs = getProgramArgs();
     Path pluginProjectLocation =
-        Path.of(config.getProperty("fr.fallenvaders.mc-server.plugin.project.location"));
+        Path.of(config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.project.location"));
     String pluginJarName = assembleJarName(projectVersion);
-    String mavenCommand = config.getProperty("fr.fallenvaders.mc-server.plugin.maven.command");
+    String mavenCommand = config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.project.build.command");
     Path mavenArtifactLocation = getMavenArtifactLocation(pluginProjectLocation);
     return new ProgramProperties(
         projectVersion,
@@ -95,36 +95,37 @@ public final class ProgramPropertiesFactory {
 
   @NotNull
   private List<String> getJvmArgs() {
-    String jvmArgs = config.getProperty("fr.fallenvaders.mc-server.jvm.args");
+    String jvmArgs = config.getProperty("fr.fallenvaders.minecraft.test-server.server.command.args.jvm");
     if (debugMode) {
-      jvmArgs += " " + config.getProperty("fr.fallenvaders.mc-server.jvm.args.debug");
+      jvmArgs += " " + config.getProperty("fr.fallenvaders.minecraft.test-server.server.command.args.jvm.debug");
     }
     return List.of(jvmArgs.split(" "));
   }
 
+  // TODO: rename methods
   @NotNull
   private List<String> getProgramArgs() {
-    String programArgs = config.getProperty("fr.fallenvaders.mc-server.program.args");
+    String programArgs = config.getProperty("fr.fallenvaders.minecraft.test-server.server.command.args.program");
     return List.of(programArgs.split(" "));
   }
 
   @NotNull
   private Path getPluginsDirectory(@NotNull Path workingDirectory) {
-    String pluginsDirectory = config.getProperty("fr.fallenvaders.mc-server.plugins_directory");
+    String pluginsDirectory = config.getProperty("fr.fallenvaders.minecraft.test-server.server.plugins_directory.location");
     return workingDirectory.resolve(pluginsDirectory);
   }
 
   @NotNull
   private String assembleJarName(@NotNull String projectVersion) {
-    String baseName = config.getProperty("fr.fallenvaders.mc-server.plugin.jar.name.core");
-    String complementName = config.getProperty("fr.fallenvaders.mc-server.plugin.jar.name.complement");
+    String baseName = config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.jar_name.core_name");
+    String complementName = config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.jar_name.complement_name");
     return fvPluginJarNameAssembler.assemble(baseName, projectVersion, complementName);
   }
 
   @NotNull
   private Path getMavenArtifactLocation(@NotNull Path pluginProjectLocation) {
     String mavenArtifactLocation =
-        config.getProperty("fr.fallenvaders.mc-server.plugin.maven.artifact.location");
+        config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.project.build.artifact.location");
     return pluginProjectLocation.resolve(mavenArtifactLocation);
   }
 }
