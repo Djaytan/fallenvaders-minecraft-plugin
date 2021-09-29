@@ -20,6 +20,8 @@ package fr.fallenvaders.minecraft.test_server;
 import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
 import fr.fallenvaders.minecraft.test_server.command.TerminalCommand;
 import fr.fallenvaders.minecraft.test_server.deploy.FVPluginDeployer;
+import fr.fallenvaders.minecraft.test_server.properties.ProgramProperties;
+import fr.fallenvaders.minecraft.test_server.properties.ProgramPropertiesRegister;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

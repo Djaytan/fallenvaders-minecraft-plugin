@@ -15,7 +15,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.test_server;
+package fr.fallenvaders.minecraft.test_server.properties;
 
 import fr.fallenvaders.minecraft.test_server.deploy.FVPluginJarNameAssembler;
 import fr.fallenvaders.minecraft.test_server.guice.ConfigProperties;
