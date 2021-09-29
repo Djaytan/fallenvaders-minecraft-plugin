@@ -44,29 +44,29 @@ public final class MinecraftServerService {
   private static final Logger logger = LoggerFactory.getLogger(MinecraftServerService.class);
 
   private final CommandExecutor commandExecutor;
-  // TODO: rename it
-  private final PluginDeployerService fvPluginDeployer;
   private final FVPluginJarNameAssembler fvPluginJarNameAssembler;
   private final JavaCommandBuilder javaCommandBuilder;
+  private final PluginDeployerService pluginDeployerService;
   private final ProgramPropertiesRegister programPropertiesRegister;
 
   /**
    * Constructor.
    *
    * @param commandExecutor The command executor.
-   * @param fvPluginDeployer The FV plugin deployer.
+   * @param fvPluginJarNameAssembler The assembler of the jar name of FV plugin.
    * @param javaCommandBuilder The Java command builder.
+   * @param pluginDeployerService The FV plugin deployer.
    * @param programPropertiesRegister The {@link ProgramProperties}'s register.
    */
   @Inject
   public MinecraftServerService(
       @NotNull CommandExecutor commandExecutor,
-      @NotNull PluginDeployerService fvPluginDeployer,
       @NotNull FVPluginJarNameAssembler fvPluginJarNameAssembler,
       @NotNull JavaCommandBuilder javaCommandBuilder,
+      @NotNull PluginDeployerService pluginDeployerService,
       @NotNull ProgramPropertiesRegister programPropertiesRegister) {
     this.commandExecutor = commandExecutor;
-    this.fvPluginDeployer = fvPluginDeployer;
+    this.pluginDeployerService = pluginDeployerService;
     this.fvPluginJarNameAssembler = fvPluginJarNameAssembler;
     this.javaCommandBuilder = javaCommandBuilder;
     this.programPropertiesRegister = programPropertiesRegister;
@@ -96,11 +96,11 @@ public final class MinecraftServerService {
 
   private void prepareServer(@NotNull ProgramProperties programProperties)
       throws DeploymentException {
-    fvPluginDeployer.deleteOldPlugin(
+    pluginDeployerService.deleteOldPlugin(
         programProperties.mcServerLocation(), programProperties.fvPluginJarCoreName());
-    fvPluginDeployer.createPlugin(
+    pluginDeployerService.createPlugin(
         programProperties.fvPluginProjectLocation(), programProperties.fvPluginBuildCommand());
-    fvPluginDeployer.deployPlugin(
+    pluginDeployerService.deployPlugin(
         getFvPluginLocation(programProperties), programProperties.mcServerLocation());
   }
 
