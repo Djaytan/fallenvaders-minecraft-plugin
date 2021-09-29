@@ -28,6 +28,7 @@ import javax.inject.Singleton;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -39,6 +40,8 @@ import java.util.stream.Stream;
  */
 @Singleton
 public final class PluginDeployerService {
+
+  private static final String SERVER_PLUGINS_LOCATION = "plugins/";
 
   private static final Logger logger = LoggerFactory.getLogger(PluginDeployerService.class);
 
@@ -57,20 +60,20 @@ public final class PluginDeployerService {
    * Deletes the old plugin if it exists in order to deploy the new one. To remove the plugin, his
    * core name is required to found it independently of his version.
    *
-   * @param pluginsDirectory The server plugins directory.
    * @param pluginCoreName The core name of the plugin to remove.
    * @throws DeploymentException if an I/O error occurs during the delete file process.
    */
-  public void deleteOldPlugin(Path pluginsDirectory, String pluginCoreName)
+  public void deleteOldPlugin(@NotNull String pluginCoreName)
       throws DeploymentException {
     try (Stream<Path> pluginStreamPath =
         Files.find(
-            pluginsDirectory,
+            Paths.get(SERVER_PLUGINS_LOCATION),
             1,
             (path, basicFileAttributes) -> path.getFileName().startsWith(pluginCoreName))) {
       Path pluginPath = pluginStreamPath.findFirst().orElse(null);
       if (pluginPath != null) {
         Files.delete(pluginPath);
+        // TODO: precise where the remove happen
         logger.info("Old plugin file successfully deleted.");
       } else {
         logger.info("No old plugin file to delete.");

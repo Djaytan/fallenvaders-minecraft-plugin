@@ -72,7 +72,6 @@ public final class ProgramPropertiesFactory {
     String projectVersion = config.getProperty("fr.fallenvaders.test-server.version");
     String jarName = config.getProperty("fr.fallenvaders.minecraft.test-server.server.jar_name");
     Path workingDirectory = Path.of(config.getProperty("fr.fallenvaders.minecraft.test-server.server.location"));
-    Path pluginsDirectory = getPluginsDirectory(workingDirectory);
     List<String> jvmArgs = getJvmArgs();
     List<String> programArgs = getProgramArgs();
     Path pluginProjectLocation =
@@ -84,7 +83,6 @@ public final class ProgramPropertiesFactory {
         projectVersion,
         programArgs,
         workingDirectory,
-        pluginsDirectory,
         jarName,
         jvmArgs,
         pluginProjectLocation,
@@ -107,12 +105,6 @@ public final class ProgramPropertiesFactory {
   private List<String> getProgramArgs() {
     String programArgs = config.getProperty("fr.fallenvaders.minecraft.test-server.server.command.args.program");
     return List.of(programArgs.split(" "));
-  }
-
-  @NotNull
-  private Path getPluginsDirectory(@NotNull Path workingDirectory) {
-    String pluginsDirectory = config.getProperty("fr.fallenvaders.minecraft.test-server.server.plugins_directory.location");
-    return workingDirectory.resolve(pluginsDirectory);
   }
 
   @NotNull
