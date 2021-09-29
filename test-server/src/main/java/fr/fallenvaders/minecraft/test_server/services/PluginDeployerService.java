@@ -60,14 +60,15 @@ public final class PluginDeployerService {
    * Deletes the old plugin if it exists in order to deploy the new one. To remove the plugin, his
    * core name is required to found it independently of his version.
    *
+   * @param mcServerLocation The location of the Minecraft test-server.
    * @param pluginCoreName The core name of the plugin to remove.
    * @throws DeploymentException if an I/O error occurs during the delete file process.
    */
-  public void deleteOldPlugin(@NotNull String pluginCoreName)
+  public void deleteOldPlugin(@NotNull Path mcServerLocation, @NotNull String pluginCoreName)
       throws DeploymentException {
     try (Stream<Path> pluginStreamPath =
         Files.find(
-            Paths.get(SERVER_PLUGINS_LOCATION),
+            mcServerLocation.resolve(SERVER_PLUGINS_LOCATION),
             1,
             (path, basicFileAttributes) -> path.getFileName().startsWith(pluginCoreName))) {
       Path pluginPath = pluginStreamPath.findFirst().orElse(null);
