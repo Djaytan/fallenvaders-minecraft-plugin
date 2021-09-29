@@ -34,7 +34,8 @@ import java.util.List;
  * @param mcServerLocation The Minecraft test-server location.
  * @param mcServerJarName The jar file name of the test-server's program to execute.
  * @param fvPluginProjectLocation The location of the FV plugin project.
- * @param fvPluginJarName The jar file name of the FV plugin.
+ * @param fvPluginJarCoreName The jar file core name of the FV plugin.
+ * @param fvPluginJarComplementName The jar file complement name of the FV plugin.
  * @param fvPluginBuildCommand The build command to execute in order to build the plugin.
  * @param fcPluginArtifactLocation The location of the built plugin artifact.
  */
@@ -45,6 +46,7 @@ public record ProgramProperties(
   @NotNull Path mcServerLocation,
   @NotNull String mcServerJarName,
   @NotNull Path fvPluginProjectLocation,
-  @NotNull String fvPluginJarName,
+  @NotNull String fvPluginJarCoreName,
+  @NotNull String fvPluginJarComplementName,
   @NotNull String fvPluginBuildCommand,
   @NotNull Path fcPluginArtifactLocation) {}

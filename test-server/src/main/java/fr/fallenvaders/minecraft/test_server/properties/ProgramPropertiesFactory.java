@@ -41,25 +41,18 @@ public final class ProgramPropertiesFactory {
   private final boolean debugMode;
   private final Properties config;
 
-  private final FVPluginJarNameAssembler fvPluginJarNameAssembler;
-
   /**
    * Constructor.
    *
    * @param debugMode Tells if the program is in debug mode.
    * @param config The config properties of the test server.
-   * @param fvPluginJarNameAssembler The FV's plugin jar name assembler.
    */
   @Inject
   public ProgramPropertiesFactory(
       @DebugMode boolean debugMode,
-      @NotNull @ConfigProperties Properties config,
-      @NotNull FVPluginJarNameAssembler fvPluginJarNameAssembler) {
-    Objects.requireNonNull(config);
-    Objects.requireNonNull(fvPluginJarNameAssembler);
+      @NotNull @ConfigProperties Properties config) {
     this.debugMode = debugMode;
     this.config = config;
-    this.fvPluginJarNameAssembler = fvPluginJarNameAssembler;
   }
 
   /**
@@ -69,16 +62,16 @@ public final class ProgramPropertiesFactory {
    */
   @NotNull
   public ProgramProperties createProgramProperties() {
-    String projectVersion = getProjectVersion();
     Path fvPluginProjectLocation = getFvPluginProjectLocation();
     return new ProgramProperties(
-        projectVersion,
+        getProjectVersion(),
         getMcServerJvmArgs(),
         getMcServerProgramArgs(),
         getMcServerLocation(),
         getMcServerJarName(),
         fvPluginProjectLocation,
-        assembleFvPluginJarName(projectVersion),
+        getFvPluginJarCoreName(),
+        getFvPluginJarComplementName(),
         getFvPluginBuildCommand(),
         getPluginArtifactLocation(fvPluginProjectLocation));
   }
@@ -125,12 +118,14 @@ public final class ProgramPropertiesFactory {
   }
 
   @NotNull
-  private String assembleFvPluginJarName(@NotNull String projectVersion) {
-    String baseName =
-        config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.jar_name.core_name");
-    String complementName =
-        config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.jar_name.complement_name");
-    return fvPluginJarNameAssembler.assemble(baseName, projectVersion, complementName);
+  private String getFvPluginJarCoreName() {
+    return config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.jar_name.core_name");
+  }
+
+  @NotNull
+  private String getFvPluginJarComplementName() {
+    return config.getProperty(
+        "fr.fallenvaders.minecraft.test-server.plugin.jar_name.complement_name");
   }
 
   @NotNull
