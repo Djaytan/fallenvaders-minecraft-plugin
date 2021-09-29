@@ -73,7 +73,7 @@ public final class PluginDeployerService {
         Files.delete(pluginPath);
         logger.info("Old plugin file successfully deleted.");
       } else {
-        logger.info("No old plugin file found.");
+        logger.info("No old plugin file to delete.");
       }
     } catch (IOException e) {
       throw new DeploymentException("Failed to delete the old plugin file.", e);
