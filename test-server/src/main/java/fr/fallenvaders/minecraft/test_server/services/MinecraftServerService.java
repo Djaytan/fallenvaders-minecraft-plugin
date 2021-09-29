@@ -73,17 +73,29 @@ public final class MinecraftServerService {
   }
 
   /**
-   * Starts the server according to the config properties. If an exception is thrown during the
-   * execution of the Java command, an error is logged and then the program exits with code error
-   * -1.
+   * Initializes the server by deploying the last current last version of the FallenVaders plugin.
    *
    * @throws DeploymentException If the deployment of the FallenVaders plugin has failed.
    */
-  public void launchServer() throws DeploymentException {
+  public void initServer() throws DeploymentException {
     ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
     logger.info("Preparing test server...");
-    prepareServer(programProperties);
+    pluginDeployerService.deleteOldPlugin(
+        programProperties.mcServerLocation(), programProperties.fvPluginJarCoreName());
+    pluginDeployerService.createPlugin(
+        programProperties.fvPluginProjectLocation(), programProperties.fvPluginBuildCommand());
+    pluginDeployerService.deployPlugin(
+        getFvPluginLocation(programProperties), programProperties.mcServerLocation());
     logger.info("Preparing test server -> done.");
+  }
+
+  /**
+   * Starts the server according to the config properties. If an exception is thrown during the
+   * execution of the Java command, an error is logged and then the program exits with code error
+   * -1.
+   */
+  public void launchServer() {
+    ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
     logger.info("Launching test server...");
     TerminalCommand terminalCommand =
         javaCommandBuilder.build(
@@ -92,16 +104,6 @@ public final class MinecraftServerService {
             programProperties.mcServerProgramArgs(),
             programProperties.mcServerLocation());
     commandExecutor.execute(terminalCommand);
-  }
-
-  private void prepareServer(@NotNull ProgramProperties programProperties)
-      throws DeploymentException {
-    pluginDeployerService.deleteOldPlugin(
-        programProperties.mcServerLocation(), programProperties.fvPluginJarCoreName());
-    pluginDeployerService.createPlugin(
-        programProperties.fvPluginProjectLocation(), programProperties.fvPluginBuildCommand());
-    pluginDeployerService.deployPlugin(
-        getFvPluginLocation(programProperties), programProperties.mcServerLocation());
   }
 
   private Path getFvPluginLocation(@NotNull ProgramProperties programProperties) {

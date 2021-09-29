@@ -47,6 +47,7 @@ public final class FallenVadersTestServer {
     MinecraftServerService minecraftServerService =
         injector.getInstance(MinecraftServerService.class);
     try {
+      minecraftServerService.initServer();
       minecraftServerService.launchServer();
     } catch (DeploymentException e) {
       logger.error("An error occurs during the launch of the Minecraft test-server.", e);
