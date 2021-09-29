@@ -69,30 +69,23 @@ public final class ProgramPropertiesFactory {
    */
   @NotNull
   public ProgramProperties createProgramProperties() {
-    String projectVersion = config.getProperty("fr.fallenvaders.test-server.version");
-    List<String> mcServerJvmArgs = getMcServerJvmArgs();
-    List<String> mcServerProgramArgs = getMcServerProgramArgs();
-    Path mcServerLocation =
-        Path.of(config.getProperty("fr.fallenvaders.minecraft.test-server.server.location"));
-    String mcServerJarName =
-        config.getProperty("fr.fallenvaders.minecraft.test-server.server.jar_name");
-    Path fvPluginProjectLocation =
-        Path.of(
-            config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.project.location"));
-    String fvPluginJarName = assembleFvPluginJarName(projectVersion);
-    String fvPluginBuildCommand =
-        config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.project.build.command");
-    Path fcPluginArtifactLocation = getPluginArtifactLocation(fvPluginProjectLocation);
+    String projectVersion = getProjectVersion();
+    Path fvPluginProjectLocation = getFvPluginProjectLocation();
     return new ProgramProperties(
         projectVersion,
-        mcServerJvmArgs,
-        mcServerProgramArgs,
-        mcServerLocation,
-        mcServerJarName,
+        getMcServerJvmArgs(),
+        getMcServerProgramArgs(),
+        getMcServerLocation(),
+        getMcServerJarName(),
         fvPluginProjectLocation,
-        fvPluginJarName,
-        fvPluginBuildCommand,
-        fcPluginArtifactLocation);
+        assembleFvPluginJarName(projectVersion),
+        getFvPluginBuildCommand(),
+        getPluginArtifactLocation(fvPluginProjectLocation));
+  }
+
+  @NotNull
+  private String getProjectVersion() {
+    return config.getProperty("fr.fallenvaders.test-server.version");
   }
 
   @NotNull
@@ -116,12 +109,33 @@ public final class ProgramPropertiesFactory {
   }
 
   @NotNull
+  private Path getMcServerLocation() {
+    return Path.of(config.getProperty("fr.fallenvaders.minecraft.test-server.server.location"));
+  }
+
+  @NotNull
+  private String getMcServerJarName() {
+    return config.getProperty("fr.fallenvaders.minecraft.test-server.server.jar_name");
+  }
+
+  @NotNull
+  private Path getFvPluginProjectLocation() {
+    return Path.of(
+        config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.project.location"));
+  }
+
+  @NotNull
   private String assembleFvPluginJarName(@NotNull String projectVersion) {
     String baseName =
         config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.jar_name.core_name");
     String complementName =
         config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.jar_name.complement_name");
     return fvPluginJarNameAssembler.assemble(baseName, projectVersion, complementName);
+  }
+
+  @NotNull
+  private String getFvPluginBuildCommand() {
+    return config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.project.build.command");
   }
 
   @NotNull
