@@ -94,7 +94,9 @@ public final class PluginDeployerService {
       @NotNull Path fvPluginProjectLocation, @NotNull String fvPluginBuildCommand) {
     List<String> buildCommand = List.of(fvPluginBuildCommand.split(" "));
     TerminalCommand terminalCommand = new TerminalCommand(buildCommand, fvPluginProjectLocation);
+    logger.info("Launching build of the FallenVaders plugin...");
     commandExecutor.execute(terminalCommand);
+    logger.info("Launching build of the FallenVaders plugin -> done.");
   }
 
   /**
@@ -107,7 +109,9 @@ public final class PluginDeployerService {
   public void deployPlugin(@NotNull Path fvPluginLocation, @NotNull Path mcServerLocation)
       throws DeploymentException {
     try {
+      logger.info("Deployment of the FallenVaders plugin in the Minecraft test-server...");
       Files.copy(fvPluginLocation, mcServerLocation.resolve(SERVER_PLUGINS_LOCATION));
+      logger.info("Deployment of the FallenVaders plugin in the Minecraft test-server -> done.");
     } catch (IOException e) {
       throw new DeploymentException("The deployment of the plugin has failed.");
     }
