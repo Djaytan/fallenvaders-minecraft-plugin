@@ -79,7 +79,7 @@ public final class MinecraftServerService {
    *
    * @throws DeploymentException If the deployment of the FallenVaders plugin has failed.
    */
-  public void startServer() throws DeploymentException {
+  public void launchServer() throws DeploymentException {
     ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
     logger.info("Preparing test server...");
     prepareServer(programProperties);
