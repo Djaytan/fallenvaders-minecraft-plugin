@@ -40,8 +40,9 @@ public final class CommandExecutor {
    * Executes the specified terminal command.
    *
    * @param terminalCommand The terminal command to execute.
+   * @return The thread in charge of executing the {@link TerminalCommand}.
    */
-  public void execute(@NotNull TerminalCommand terminalCommand) {
+  public Thread execute(@NotNull TerminalCommand terminalCommand) {
     Objects.requireNonNull(terminalCommand);
     String strJavaCommand = String.join(" ", terminalCommand.args());
     Path path = terminalCommand.workingDirectory();
@@ -49,5 +50,6 @@ public final class CommandExecutor {
     logger.info("Working directory: {}", path.toAbsolutePath());
     CommandRunnerThread thread = new CommandRunnerThread(terminalCommand);
     thread.start();
+    return thread;
   }
 }
