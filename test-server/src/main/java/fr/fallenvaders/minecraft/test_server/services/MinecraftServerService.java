@@ -20,6 +20,8 @@ package fr.fallenvaders.minecraft.test_server.services;
 import fr.fallenvaders.minecraft.test_server.JavaCommandBuilder;
 import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
 import fr.fallenvaders.minecraft.test_server.command.TerminalCommand;
+import fr.fallenvaders.minecraft.test_server.deploy.DeploymentException;
+import fr.fallenvaders.minecraft.test_server.deploy.FVPluginJarNameAssembler;
 import fr.fallenvaders.minecraft.test_server.properties.ProgramProperties;
 import fr.fallenvaders.minecraft.test_server.properties.ProgramPropertiesRegister;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.nio.file.Path;
 
 /**
  * The service to manage the server.
@@ -43,6 +46,7 @@ public final class MinecraftServerService {
   private final CommandExecutor commandExecutor;
   // TODO: rename it
   private final PluginDeployerService fvPluginDeployer;
+  private final FVPluginJarNameAssembler fvPluginJarNameAssembler;
   private final JavaCommandBuilder javaCommandBuilder;
   private final ProgramPropertiesRegister programPropertiesRegister;
 
@@ -58,10 +62,12 @@ public final class MinecraftServerService {
   public MinecraftServerService(
       @NotNull CommandExecutor commandExecutor,
       @NotNull PluginDeployerService fvPluginDeployer,
+      @NotNull FVPluginJarNameAssembler fvPluginJarNameAssembler,
       @NotNull JavaCommandBuilder javaCommandBuilder,
       @NotNull ProgramPropertiesRegister programPropertiesRegister) {
     this.commandExecutor = commandExecutor;
     this.fvPluginDeployer = fvPluginDeployer;
+    this.fvPluginJarNameAssembler = fvPluginJarNameAssembler;
     this.javaCommandBuilder = javaCommandBuilder;
     this.programPropertiesRegister = programPropertiesRegister;
   }
@@ -70,8 +76,10 @@ public final class MinecraftServerService {
    * Starts the server according to the config properties. If an exception is thrown during the
    * execution of the Java command, an error is logged and then the program exits with code error
    * -1.
+   *
+   * @throws DeploymentException If the deployment of the FallenVaders plugin has failed.
    */
-  public void startServer() {
+  public void startServer() throws DeploymentException {
     ProgramProperties programProperties = programPropertiesRegister.getProgramProperties();
     logger.info("Preparing test server...");
     prepareServer(programProperties);
@@ -86,9 +94,22 @@ public final class MinecraftServerService {
     commandExecutor.execute(terminalCommand);
   }
 
-  private void prepareServer(@NotNull ProgramProperties programProperties) {
-    fvPluginDeployer.deleteOldPlugin();
-    fvPluginDeployer.createPlugin();
-    fvPluginDeployer.deployPlugin();
+  private void prepareServer(@NotNull ProgramProperties programProperties)
+      throws DeploymentException {
+    fvPluginDeployer.deleteOldPlugin(
+        programProperties.mcServerLocation(), programProperties.fvPluginJarCoreName());
+    fvPluginDeployer.createPlugin(
+        programProperties.fvPluginProjectLocation(), programProperties.fvPluginBuildCommand());
+    fvPluginDeployer.deployPlugin(
+        getFvPluginLocation(programProperties), programProperties.mcServerLocation());
+  }
+
+  private Path getFvPluginLocation(@NotNull ProgramProperties programProperties) {
+    String fvPluginJarName =
+        fvPluginJarNameAssembler.assemble(
+            programProperties.fvPluginJarCoreName(),
+            programProperties.projectVersion(),
+            programProperties.fvPluginJarComplementName());
+    return programProperties.fvPluginArtifactLocation().resolve(fvPluginJarName);
   }
 }
