@@ -119,13 +119,13 @@ public final class ProgramPropertiesFactory {
 
   @NotNull
   private String getFvPluginJarCoreName() {
-    return config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.jar_name.core_name");
+    return config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.jar.core_name");
   }
 
   @NotNull
   private String getFvPluginJarComplementName() {
     return config.getProperty(
-        "fr.fallenvaders.minecraft.test-server.plugin.jar_name.complement_name");
+        "fr.fallenvaders.minecraft.test-server.plugin.jar.complement_name");
   }
 
   @NotNull
