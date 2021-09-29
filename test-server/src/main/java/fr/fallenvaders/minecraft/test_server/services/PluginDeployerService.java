@@ -86,11 +86,12 @@ public final class PluginDeployerService {
   /**
    * Create the FallenVaders plugin in order to deploy it.
    *
-   * @param pluginProjectLocation The project location of the plugin to create.
+   * @param fvPluginProjectLocation The project location of the plugin to create.
+   * @param fvPluginBuildCommand The build command to create the plugin.
    */
-  public void createPlugin(Path pluginProjectLocation, String strMavenCommand) {
-    List<String> mavenCommand = List.of(strMavenCommand.split(" "));
-    TerminalCommand terminalCommand = new TerminalCommand(mavenCommand, pluginProjectLocation);
+  public void createPlugin(@NotNull Path fvPluginProjectLocation, @NotNull String fvPluginBuildCommand) {
+    List<String> buildCommand = List.of(fvPluginBuildCommand.split(" "));
+    TerminalCommand terminalCommand = new TerminalCommand(buildCommand, fvPluginProjectLocation);
     commandExecutor.execute(terminalCommand);
   }
 
