@@ -19,9 +19,12 @@ package fr.fallenvaders.minecraft.test_server;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import fr.fallenvaders.minecraft.test_server.deploy.DeploymentException;
 import fr.fallenvaders.minecraft.test_server.guice.TestServerModule;
 import fr.fallenvaders.minecraft.test_server.services.MinecraftServerService;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Entry point of the test-server program.
@@ -31,6 +34,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class FallenVadersTestServer {
 
+  private static final Logger logger = LoggerFactory.getLogger(FallenVadersTestServer.class);
+
   /**
    * Main method.
    *
@@ -39,8 +44,13 @@ public final class FallenVadersTestServer {
   public static void main(@NotNull String[] args) {
     boolean debugMode = isDebugMode(args);
     Injector injector = Guice.createInjector(new TestServerModule(debugMode));
-    MinecraftServerService minecraftServerService = injector.getInstance(MinecraftServerService.class);
-    minecraftServerService.startServer();
+    MinecraftServerService minecraftServerService =
+        injector.getInstance(MinecraftServerService.class);
+    try {
+      minecraftServerService.startServer();
+    } catch (DeploymentException e) {
+      logger.error("An error occurs during the launch of the Minecraft test-server.", e);
+    }
   }
 
   private static boolean isDebugMode(@NotNull String[] args) {
