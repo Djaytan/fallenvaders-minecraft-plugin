@@ -50,7 +50,9 @@ public final class FallenVadersTestServer {
       minecraftServerService.initServer();
       minecraftServerService.launchServer();
     } catch (DeploymentException e) {
-      logger.error("An error occurs during the launch of the Minecraft test-server.", e);
+      logger.error(
+          "An error occurs during the deployment of the FallenVaders plugin in the Minecraft test-server.",
+          e);
     }
   }
 
