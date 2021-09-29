@@ -100,12 +100,12 @@ public final class PluginDeployerService {
    * Deploys the plugin into the test-server by moving a copy of the jar file.
    *
    * @param fvPluginLocation The location of the plugin jar file.
-   * @param fvPluginDeployLocation The location where to deploy the plugin.
+   * @param mcServerLocation The location of the Minecraft test-server.
    * @throws DeploymentException If the deployment of the plugin has failed because of an I/O error.
    */
-  public void deployPlugin(@NotNull Path fvPluginLocation, @NotNull Path fvPluginDeployLocation) throws DeploymentException {
+  public void deployPlugin(@NotNull Path fvPluginLocation, @NotNull Path mcServerLocation) throws DeploymentException {
     try {
-      Files.copy(fvPluginLocation, fvPluginDeployLocation);
+      Files.copy(fvPluginLocation, mcServerLocation.resolve(SERVER_PLUGINS_LOCATION));
     } catch (IOException e) {
       throw new DeploymentException("The deployment of the plugin has failed.");
     }
