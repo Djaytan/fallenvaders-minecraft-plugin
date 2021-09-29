@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -51,6 +52,7 @@ public final class PluginDeployerService {
    *
    * @param commandExecutor The command executor.
    */
+  @Inject
   public PluginDeployerService(@NotNull CommandExecutor commandExecutor) {
     this.commandExecutor = commandExecutor;
   }
