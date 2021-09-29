@@ -73,7 +73,7 @@ public final class ProgramPropertiesFactory {
         getFvPluginJarCoreName(),
         getFvPluginJarComplementName(),
         getFvPluginBuildCommand(),
-        getPluginArtifactLocation(fvPluginProjectLocation));
+        getFvPluginArtifactLocation(fvPluginProjectLocation));
   }
 
   @NotNull
@@ -134,7 +134,7 @@ public final class ProgramPropertiesFactory {
   }
 
   @NotNull
-  private Path getPluginArtifactLocation(@NotNull Path pluginProjectLocation) {
+  private Path getFvPluginArtifactLocation(@NotNull Path pluginProjectLocation) {
     String mavenArtifactLocation =
         config.getProperty(
             "fr.fallenvaders.minecraft.test-server.plugin.project.build.artifact.location");
