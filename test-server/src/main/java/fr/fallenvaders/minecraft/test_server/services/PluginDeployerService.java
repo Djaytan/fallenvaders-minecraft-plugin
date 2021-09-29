@@ -17,8 +17,10 @@
 
 package fr.fallenvaders.minecraft.test_server.services;
 
+import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
 import fr.fallenvaders.minecraft.test_server.command.TerminalCommand;
 import fr.fallenvaders.minecraft.test_server.deploy.DeploymentException;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,17 @@ import java.util.stream.Stream;
 public final class PluginDeployerService {
 
   private static final Logger logger = LoggerFactory.getLogger(PluginDeployerService.class);
+
+  private final CommandExecutor commandExecutor;
+
+  /**
+   * Constructor.
+   *
+   * @param commandExecutor The command executor.
+   */
+  public PluginDeployerService(@NotNull CommandExecutor commandExecutor) {
+    this.commandExecutor = commandExecutor;
+  }
 
   /**
    * Deletes the old plugin if it exists in order to deploy the new one. To remove the plugin, his
@@ -75,7 +88,7 @@ public final class PluginDeployerService {
   public void createPlugin(Path pluginProjectLocation, String strMavenCommand) {
     List<String> mavenCommand = List.of(strMavenCommand.split(" "));
     TerminalCommand terminalCommand = new TerminalCommand(mavenCommand, pluginProjectLocation);
-
+    commandExecutor.execute(terminalCommand);
   }
 
   /**
