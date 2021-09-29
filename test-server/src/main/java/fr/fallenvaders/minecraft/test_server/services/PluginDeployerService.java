@@ -74,13 +74,12 @@ public final class PluginDeployerService {
       Path pluginPath = pluginStreamPath.findFirst().orElse(null);
       if (pluginPath != null) {
         Files.delete(pluginPath);
-        // TODO: precise where the remove happen
-        logger.info("Old plugin file successfully deleted.");
+        logger.info("Old plugin file successfully deleted from the Minecraft test-server.");
       } else {
-        logger.info("No old plugin file to delete.");
+        logger.info("No old plugin file to delete in the Minecraft test-server.");
       }
     } catch (IOException e) {
-      throw new DeploymentException("Failed to delete the old plugin file.", e);
+      throw new DeploymentException("Failed to delete the old plugin file from the Minecraft test-server.", e);
     }
   }
 
