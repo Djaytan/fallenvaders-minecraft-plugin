@@ -18,6 +18,7 @@
 package fr.fallenvaders.minecraft.test_server;
 
 import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
+import fr.fallenvaders.minecraft.test_server.command.TerminalCommand;
 import fr.fallenvaders.minecraft.test_server.deploy.FVPluginDeployer;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -25,7 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.Objects;
+import java.nio.file.Path;
+import java.util.List;
 
 /**
  * The service to manage the server.
@@ -40,6 +42,7 @@ public final class ServerService {
 
   private final CommandExecutor commandExecutor;
   private final FVPluginDeployer fvPluginDeployer;
+  private final JavaCommandBuilder javaCommandBuilder;
   private final ProgramPropertiesRegister programPropertiesRegister;
 
   /**
@@ -47,18 +50,18 @@ public final class ServerService {
    *
    * @param commandExecutor The command executor.
    * @param fvPluginDeployer The FV plugin deployer.
+   * @param javaCommandBuilder The Java command builder.
    * @param programPropertiesRegister The {@link ProgramProperties}'s register.
    */
   @Inject
   public ServerService(
       @NotNull CommandExecutor commandExecutor,
       @NotNull FVPluginDeployer fvPluginDeployer,
+      @NotNull JavaCommandBuilder javaCommandBuilder,
       @NotNull ProgramPropertiesRegister programPropertiesRegister) {
-    Objects.requireNonNull(commandExecutor);
-    Objects.requireNonNull(fvPluginDeployer);
-    Objects.requireNonNull(programPropertiesRegister);
     this.commandExecutor = commandExecutor;
     this.fvPluginDeployer = fvPluginDeployer;
+    this.javaCommandBuilder = javaCommandBuilder;
     this.programPropertiesRegister = programPropertiesRegister;
   }
 
@@ -73,7 +76,13 @@ public final class ServerService {
     prepareServer(programProperties);
     logger.info("Preparing test server -> done.");
     logger.info("Launching test server...");
-    commandExecutor.execute(programProperties);
+    List<String> jvmArgs = programProperties.jvmArgs();
+    String jarName = programProperties.jarName();
+    List<String> programArgs = programProperties.programArgs();
+    Path workingDirectory = programProperties.workingDirectory();
+    TerminalCommand terminalCommand =
+        javaCommandBuilder.build(jvmArgs, jarName, programArgs, workingDirectory);
+    commandExecutor.execute(terminalCommand);
   }
 
   private void prepareServer(@NotNull ProgramProperties programProperties) {

@@ -15,12 +15,13 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.test_server.command;
+package fr.fallenvaders.minecraft.test_server;
 
-import fr.fallenvaders.minecraft.test_server.ProgramProperties;
+import fr.fallenvaders.minecraft.test_server.command.TerminalCommand;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Singleton;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,28 +33,36 @@ import java.util.Objects;
  * @since 0.3.0
  */
 @Singleton
-public final class JavaCommandBuilder extends TerminalCommandBuilder {
+public final class JavaCommandBuilder {
 
   private static final String JAVA_COMMAND = "java";
   private static final String JAR_SPECIFICATION_ARG = "-jar";
 
-  /** Constructor. */
-  public JavaCommandBuilder() {
-    super(JAVA_COMMAND);
-  }
-
-  @Override
-  protected List<String> getCommandArgs(@NotNull ProgramProperties programProperties) {
-    Objects.requireNonNull(programProperties);
+  /**
+   * Builds the terminal command.
+   *
+   * @param jvmArgs The JVM arguments of the Java command to execute.
+   * @param jarName The jar file name to execute.
+   * @param programArgs The arguments of the Java program to execute.
+   * @param workingDirectory The working directory of the program to execute.
+   * @return The built terminal command.
+   */
+  @NotNull
+  public TerminalCommand build(
+      @NotNull List<String> jvmArgs,
+      @NotNull String jarName,
+      @NotNull List<String> programArgs,
+      @NotNull Path workingDirectory) {
     List<String> commandArgs = new ArrayList<>();
-    commandArgs.addAll(programProperties.jvmArgs());
-    commandArgs.addAll(getJarSpecPart(programProperties.jarName()));
-    commandArgs.addAll(programProperties.programArgs());
-    return commandArgs;
+    commandArgs.add(JAVA_COMMAND);
+    commandArgs.addAll(jvmArgs);
+    commandArgs.addAll(getJarSpecPart(jarName));
+    commandArgs.addAll(programArgs);
+    return new TerminalCommand(commandArgs, workingDirectory);
   }
 
   @NotNull
-  private List<String> getJarSpecPart(String jarFile) {
+  private List<String> getJarSpecPart(@NotNull String jarFile) {
     return List.of(JAR_SPECIFICATION_ARG, jarFile);
   }
 }
