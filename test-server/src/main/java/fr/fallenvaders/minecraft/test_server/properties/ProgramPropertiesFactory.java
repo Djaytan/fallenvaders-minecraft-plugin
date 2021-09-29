@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.test_server.properties;
 
-import fr.fallenvaders.minecraft.test_server.deploy.FVPluginJarNameAssembler;
 import fr.fallenvaders.minecraft.test_server.guice.ConfigProperties;
 import fr.fallenvaders.minecraft.test_server.guice.DebugMode;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +25,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -49,8 +47,7 @@ public final class ProgramPropertiesFactory {
    */
   @Inject
   public ProgramPropertiesFactory(
-      @DebugMode boolean debugMode,
-      @NotNull @ConfigProperties Properties config) {
+      @DebugMode boolean debugMode, @NotNull @ConfigProperties Properties config) {
     this.debugMode = debugMode;
     this.config = config;
   }
@@ -124,8 +121,7 @@ public final class ProgramPropertiesFactory {
 
   @NotNull
   private String getFvPluginJarComplementName() {
-    return config.getProperty(
-        "fr.fallenvaders.minecraft.test-server.plugin.jar.complement_name");
+    return config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.jar.complement_name");
   }
 
   @NotNull

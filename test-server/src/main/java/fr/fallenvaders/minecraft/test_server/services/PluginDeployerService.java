@@ -28,7 +28,6 @@ import javax.inject.Singleton;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -80,7 +79,8 @@ public final class PluginDeployerService {
         logger.info("No old plugin file to delete in the Minecraft test-server.");
       }
     } catch (IOException e) {
-      throw new DeploymentException("Failed to delete the old plugin file from the Minecraft test-server.", e);
+      throw new DeploymentException(
+          "Failed to delete the old plugin file from the Minecraft test-server.", e);
     }
   }
 
@@ -90,7 +90,8 @@ public final class PluginDeployerService {
    * @param fvPluginProjectLocation The project location of the plugin to create.
    * @param fvPluginBuildCommand The build command to create the plugin.
    */
-  public void createPlugin(@NotNull Path fvPluginProjectLocation, @NotNull String fvPluginBuildCommand) {
+  public void createPlugin(
+      @NotNull Path fvPluginProjectLocation, @NotNull String fvPluginBuildCommand) {
     List<String> buildCommand = List.of(fvPluginBuildCommand.split(" "));
     TerminalCommand terminalCommand = new TerminalCommand(buildCommand, fvPluginProjectLocation);
     commandExecutor.execute(terminalCommand);
@@ -103,7 +104,8 @@ public final class PluginDeployerService {
    * @param mcServerLocation The location of the Minecraft test-server.
    * @throws DeploymentException If the deployment of the plugin has failed because of an I/O error.
    */
-  public void deployPlugin(@NotNull Path fvPluginLocation, @NotNull Path mcServerLocation) throws DeploymentException {
+  public void deployPlugin(@NotNull Path fvPluginLocation, @NotNull Path mcServerLocation)
+      throws DeploymentException {
     try {
       Files.copy(fvPluginLocation, mcServerLocation.resolve(SERVER_PLUGINS_LOCATION));
     } catch (IOException e) {

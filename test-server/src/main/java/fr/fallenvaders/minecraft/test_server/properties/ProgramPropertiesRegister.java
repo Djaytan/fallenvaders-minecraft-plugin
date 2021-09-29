@@ -48,8 +48,8 @@ public class ProgramPropertiesRegister {
   }
 
   /**
-   * Returns the stored {@link ProgramProperties} if exits, otherwise create
-   * it before store him is this singleton instance.
+   * Returns the stored {@link ProgramProperties} if exits, otherwise create it before store him is
+   * this singleton instance.
    *
    * @return The {@link ProgramProperties} of the application.
    */
