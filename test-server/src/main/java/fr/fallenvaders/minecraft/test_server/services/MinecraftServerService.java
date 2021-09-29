@@ -28,8 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.nio.file.Path;
-import java.util.List;
 
 /**
  * The service to manage the server.
@@ -43,6 +41,7 @@ public final class MinecraftServerService {
   private static final Logger logger = LoggerFactory.getLogger(MinecraftServerService.class);
 
   private final CommandExecutor commandExecutor;
+  // TODO: rename it
   private final PluginDeployerService fvPluginDeployer;
   private final JavaCommandBuilder javaCommandBuilder;
   private final ProgramPropertiesRegister programPropertiesRegister;
@@ -78,12 +77,12 @@ public final class MinecraftServerService {
     prepareServer(programProperties);
     logger.info("Preparing test server -> done.");
     logger.info("Launching test server...");
-    List<String> jvmArgs = programProperties.jvmArgs();
-    String jarName = programProperties.jarName();
-    List<String> programArgs = programProperties.programArgs();
-    Path workingDirectory = programProperties.workingDirectory();
     TerminalCommand terminalCommand =
-        javaCommandBuilder.build(jvmArgs, jarName, programArgs, workingDirectory);
+        javaCommandBuilder.build(
+            programProperties.mcServerJvmArgs(),
+            programProperties.mcServerJarName(),
+            programProperties.mcServerProgramArgs(),
+            programProperties.mcServerLocation());
     commandExecutor.execute(terminalCommand);
   }
 
