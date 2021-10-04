@@ -91,13 +91,20 @@ public final class PluginDeployerService {
    *
    * @param fvPluginProjectLocation The project location of the plugin to create.
    * @param fvPluginBuildCommand The build command to create the plugin.
+   * @throws DeploymentException If the build command execution is interrupted.
    */
   public void createPlugin(
-      @NotNull Path fvPluginProjectLocation, @NotNull String fvPluginBuildCommand) {
+      @NotNull Path fvPluginProjectLocation, @NotNull String fvPluginBuildCommand) throws DeploymentException {
     List<String> buildCommand = List.of(fvPluginBuildCommand.split(" "));
     TerminalCommand terminalCommand = new TerminalCommand(buildCommand, fvPluginProjectLocation);
     logger.info("Launching build of the FallenVaders plugin...");
-    commandExecutor.execute(terminalCommand);
+    Thread thread = commandExecutor.execute(terminalCommand);
+    try {
+      // TODO: apply SonarLint returns
+      thread.wait();
+    } catch (InterruptedException e) {
+      throw new DeploymentException("The build command execution was interrupted.", e);
+    }
     logger.info("Launching build of the FallenVaders plugin -> done.");
   }
 
