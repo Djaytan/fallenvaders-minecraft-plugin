@@ -44,7 +44,6 @@ public class MavenPluginJarNameAssembler implements FVPluginJarNameAssembler {
     sb.add(fvPluginJarCoreName);
     sb.add(projectVersion);
     sb.add(fvPluginJarComplementName);
-    sb.add(FILE_EXTENSION);
-    return sb.toString();
+    return sb + FILE_EXTENSION;
   }
 }
