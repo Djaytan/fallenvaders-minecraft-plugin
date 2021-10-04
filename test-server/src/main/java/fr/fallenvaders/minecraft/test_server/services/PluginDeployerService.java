@@ -122,7 +122,7 @@ public final class PluginDeployerService {
       Files.copy(fvPluginLocation, mcServerLocation.resolve(SERVER_PLUGINS_LOCATION));
       logger.info("Deployment of the FallenVaders plugin in the Minecraft test-server -> done.");
     } catch (IOException e) {
-      throw new DeploymentException("The deployment of the plugin has failed.");
+      throw new DeploymentException("The deployment of the plugin has failed.", e);
     }
   }
 }
