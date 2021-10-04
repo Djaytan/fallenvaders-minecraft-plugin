@@ -67,22 +67,25 @@ public final class PluginDeployerService {
    */
   public void deleteOldPlugin(@NotNull Path mcServerLocation, @NotNull String fvPluginJarCoreName)
       throws DeploymentException {
-    // TODO: remove all the FV plugin files instead of only one if they are several ones
+    Path mcServerPluginsLocation = mcServerLocation.resolve(SERVER_PLUGINS_LOCATION);
     try (Stream<Path> pluginStreamPath =
         Files.find(
-            mcServerLocation.resolve(SERVER_PLUGINS_LOCATION),
+            mcServerPluginsLocation,
             1,
             (path, basicFileAttributes) -> path.getFileName().startsWith(fvPluginJarCoreName))) {
-      Path pluginPath = pluginStreamPath.findFirst().orElse(null);
-      if (pluginPath != null) {
-        Files.delete(pluginPath);
-        logger.info("Old plugin file successfully deleted from the Minecraft test-server.");
-      } else {
+      List<Path> result = pluginStreamPath.toList();
+      if (result.isEmpty()) {
         logger.info("No old plugin file to delete in the Minecraft test-server.");
+      } else {
+        logger.info("Old plugin file(s) detected in the Minecraft test-server.");
+        for (Path pluginPath : result) {
+          Files.delete(pluginPath);
+          logger.info("Plugin '{}' deleted.", pluginPath);
+        }
       }
     } catch (IOException e) {
       throw new DeploymentException(
-          "Failed to delete the old plugin file from the Minecraft test-server.", e);
+          "Failed to delete old plugin file(s) from the Minecraft test-server.", e);
     }
   }
 
