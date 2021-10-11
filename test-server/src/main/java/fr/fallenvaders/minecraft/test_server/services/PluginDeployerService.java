@@ -73,7 +73,7 @@ public final class PluginDeployerService {
         Files.find(
             mcServerPluginsLocation,
             1,
-            (path, basicFileAttributes) -> path.getFileName().startsWith(fvPluginJarCoreName))) {
+            (path, basicFileAttributes) -> path.toFile().getName().startsWith(fvPluginJarCoreName))) {
       List<Path> result = pluginStreamPath.toList();
       if (result.isEmpty()) {
         logger.info("No old plugin file to delete in the Minecraft test-server.");
