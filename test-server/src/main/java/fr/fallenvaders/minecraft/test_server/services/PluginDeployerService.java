@@ -18,14 +18,15 @@
 package fr.fallenvaders.minecraft.test_server.services;
 
 import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
-import fr.fallenvaders.minecraft.test_server.command.TerminalCommand;
 import fr.fallenvaders.minecraft.test_server.deploy.DeploymentException;
+import org.apache.maven.shared.invoker.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -93,22 +94,26 @@ public final class PluginDeployerService {
    * Create the FallenVaders plugin in order to deploy it.
    *
    * @param fvPluginProjectLocation The project location of the plugin to create.
-   * @param fvPluginBuildCommand The build command to create the plugin.
+   * @param fvPluginMavenBuildGoals The Maven goals to create the plugin.
    * @throws DeploymentException If the build command execution is interrupted.
    */
   public void createPlugin(
-      @NotNull Path fvPluginProjectLocation, @NotNull String fvPluginBuildCommand) throws DeploymentException {
-    List<String> buildCommand = List.of(fvPluginBuildCommand.split(" "));
-    TerminalCommand terminalCommand = new TerminalCommand(buildCommand, fvPluginProjectLocation);
-    logger.info("Launching build of the FallenVaders plugin...");
-    Thread thread = commandExecutor.execute(terminalCommand);
+      @NotNull Path fvPluginProjectLocation, @NotNull String fvPluginMavenBuildGoals)
+      throws DeploymentException {
+    List<String> buildGoals = List.of(fvPluginMavenBuildGoals.split(" "));
+    File pomFile = fvPluginProjectLocation.resolve("../pom.xml").toFile();
+
+    Invoker invoker = new DefaultInvoker();
+    InvocationRequest request = new DefaultInvocationRequest();
+    request.setPomFile(pomFile);
+    request.setGoals(buildGoals);
     try {
-      // TODO: apply SonarLint returns
-      thread.wait();
-    } catch (InterruptedException e) {
-      throw new DeploymentException("The build command execution was interrupted.", e);
+      logger.info("Launching build of the FallenVaders plugin...");
+      invoker.execute(request);
+      logger.info("Launching build of the FallenVaders plugin -> done.");
+    } catch (MavenInvocationException e) {
+      throw new DeploymentException("The plugin build failed.", e);
     }
-    logger.info("Launching build of the FallenVaders plugin -> done.");
   }
 
   /**
