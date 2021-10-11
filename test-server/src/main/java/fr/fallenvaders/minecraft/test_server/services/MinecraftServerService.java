@@ -83,9 +83,11 @@ public final class MinecraftServerService {
     pluginDeployerService.deleteOldPlugin(
         programProperties.mcServerLocation(), programProperties.fvPluginJarCoreName());
     pluginDeployerService.createPlugin(
-        programProperties.fvPluginProjectLocation(), programProperties.fvPluginBuildCommand());
+        programProperties.fvPluginProjectLocation(), programProperties.fvPluginBuildGoals());
     pluginDeployerService.deployPlugin(
-        getFvPluginLocation(programProperties), programProperties.mcServerLocation());
+        getFvPluginName(programProperties),
+        getFvPluginLocation(programProperties),
+        programProperties.mcServerLocation());
     logger.info("Preparing test server -> done.");
   }
 
@@ -106,12 +108,15 @@ public final class MinecraftServerService {
     commandExecutor.execute(terminalCommand);
   }
 
+  private String getFvPluginName(@NotNull ProgramProperties programProperties) {
+    return fvPluginJarNameAssembler.assemble(
+        programProperties.fvPluginJarCoreName(),
+        programProperties.projectVersion(),
+        programProperties.fvPluginJarComplementName());
+  }
+
   private Path getFvPluginLocation(@NotNull ProgramProperties programProperties) {
-    String fvPluginJarName =
-        fvPluginJarNameAssembler.assemble(
-            programProperties.fvPluginJarCoreName(),
-            programProperties.projectVersion(),
-            programProperties.fvPluginJarComplementName());
+    String fvPluginJarName = getFvPluginName(programProperties);
     return programProperties.fvPluginArtifactLocation().resolve(fvPluginJarName);
   }
 }
