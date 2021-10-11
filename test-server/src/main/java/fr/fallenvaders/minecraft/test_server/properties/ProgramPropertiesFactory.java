@@ -69,7 +69,7 @@ public final class ProgramPropertiesFactory {
         fvPluginProjectLocation,
         getFvPluginJarCoreName(),
         getFvPluginJarComplementName(),
-        getFvPluginBuildCommand(),
+        getFvPluginBuildGoals(),
         getFvPluginArtifactLocation(fvPluginProjectLocation));
   }
 
@@ -125,8 +125,8 @@ public final class ProgramPropertiesFactory {
   }
 
   @NotNull
-  private String getFvPluginBuildCommand() {
-    return config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.project.build.command");
+  private String getFvPluginBuildGoals() {
+    return config.getProperty("fr.fallenvaders.minecraft.test-server.plugin.project.build.goals");
   }
 
   @NotNull

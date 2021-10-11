@@ -36,7 +36,7 @@ import java.util.List;
  * @param fvPluginProjectLocation The location of the FV plugin project.
  * @param fvPluginJarCoreName The jar file core name of the FV plugin.
  * @param fvPluginJarComplementName The jar file complement name of the FV plugin.
- * @param fvPluginBuildCommand The build command to execute in order to build the plugin.
+ * @param fvPluginBuildGoals The Maven goals to build the plugin.
  * @param fvPluginArtifactLocation The location of the built plugin artifact.
  */
 public record ProgramProperties(
@@ -48,5 +48,5 @@ public record ProgramProperties(
   @NotNull Path fvPluginProjectLocation,
   @NotNull String fvPluginJarCoreName,
   @NotNull String fvPluginJarComplementName,
-  @NotNull String fvPluginBuildCommand,
+  @NotNull String fvPluginBuildGoals,
   @NotNull Path fvPluginArtifactLocation) {}
