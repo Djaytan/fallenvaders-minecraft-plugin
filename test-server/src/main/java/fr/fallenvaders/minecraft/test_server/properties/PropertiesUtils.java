@@ -44,8 +44,6 @@ public final class PropertiesUtils {
    */
   @NotNull
   public static Properties getProperties(@NotNull String propertyFile) throws IOException {
-    Objects.requireNonNull(propertyFile);
-
     Properties properties = new Properties();
     try (InputStream inputStream =
         PropertiesUtils.class.getClassLoader().getResourceAsStream(propertyFile)) {

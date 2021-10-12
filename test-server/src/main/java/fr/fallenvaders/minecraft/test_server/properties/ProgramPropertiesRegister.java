@@ -43,7 +43,6 @@ public class ProgramPropertiesRegister {
    */
   @Inject
   public ProgramPropertiesRegister(@NotNull ProgramPropertiesFactory programPropertiesFactory) {
-    Objects.requireNonNull(programPropertiesFactory);
     this.programPropertiesFactory = programPropertiesFactory;
   }
 

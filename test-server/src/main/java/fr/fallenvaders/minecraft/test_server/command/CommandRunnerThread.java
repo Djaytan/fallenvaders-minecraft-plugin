@@ -43,7 +43,6 @@ public class CommandRunnerThread extends Thread {
    * @param terminalCommand The terminal's command to run.
    */
   public CommandRunnerThread(@NotNull TerminalCommand terminalCommand) {
-    Objects.requireNonNull(terminalCommand);
     this.terminalCommand = terminalCommand;
   }
 

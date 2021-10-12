@@ -41,8 +41,6 @@ public record TerminalCommand (@NotNull List<String> args, @NotNull Path working
    * @param workingDirectory The directory where the command must be executed.
    */
   public TerminalCommand(@NotNull List<String> args, @NotNull Path workingDirectory) {
-    Objects.requireNonNull(args);
-    Objects.requireNonNull(workingDirectory);
     this.args = args;
     this.workingDirectory = workingDirectory;
   }
