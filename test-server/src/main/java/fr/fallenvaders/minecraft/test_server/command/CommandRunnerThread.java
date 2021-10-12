@@ -54,8 +54,8 @@ public class CommandRunnerThread extends Thread {
       Process p = pb.start();
       p.waitFor();
     } catch (InterruptedException e) {
-      // TODO: fix SonarLint warning
       logger.error("Server interrupted!", e);
+      interrupt();
     } catch (IOException e) {
       logger.error("Failed to launch test server! Maybe wrong default working directory setup?", e);
     }
