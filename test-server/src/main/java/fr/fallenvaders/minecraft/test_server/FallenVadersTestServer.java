@@ -47,7 +47,9 @@ public final class FallenVadersTestServer {
     MinecraftServerService minecraftServerService =
         injector.getInstance(MinecraftServerService.class);
     try {
-      minecraftServerService.initServer();
+      if (!debugMode) {
+        minecraftServerService.initServer();
+      }
       minecraftServerService.launchServer();
     } catch (DeploymentException e) {
       logger.error(
