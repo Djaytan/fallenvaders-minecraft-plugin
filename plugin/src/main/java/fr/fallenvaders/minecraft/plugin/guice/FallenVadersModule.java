@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.plugin.guice;
 
+import co.aikar.commands.PaperCommandManager;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -63,5 +64,11 @@ public final class FallenVadersModule extends AbstractModule {
   @Singleton
   public @NotNull Logger getSLF4JLogger() {
     return plugin.getSLF4JLogger();
+  }
+
+  @Provides
+  @Singleton
+  public @NotNull PaperCommandManager getPaperCommandManager() {
+    return new PaperCommandManager(plugin);
   }
 }
