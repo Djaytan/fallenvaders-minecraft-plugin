@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
 import java.nio.file.Path;
-import java.util.Objects;
 
 /**
  * Command executor class.

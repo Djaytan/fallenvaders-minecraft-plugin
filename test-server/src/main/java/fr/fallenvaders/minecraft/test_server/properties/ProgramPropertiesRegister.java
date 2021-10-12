@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.Objects;
 
 /**
  * Register class of {@link ProgramProperties}.

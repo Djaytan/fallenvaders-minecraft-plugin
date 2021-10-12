@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents a terminal's command.
