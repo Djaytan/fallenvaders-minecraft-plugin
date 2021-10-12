@@ -31,4 +31,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
     <name>Test server</name>
     <description>Minecraft test server</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>maven-invoker</artifactId>
+            <version>3.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>

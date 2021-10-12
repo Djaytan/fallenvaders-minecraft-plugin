@@ -2,6 +2,10 @@
 # JusticeHands module config
 justicehands:
   sanctionmanager:
+    points-system:
+      mute-min-points: 1
+      ban-day-points: 10
+      risingban-points: 100
     MainMenu:
       lines: 3
       playerhead-line: 0

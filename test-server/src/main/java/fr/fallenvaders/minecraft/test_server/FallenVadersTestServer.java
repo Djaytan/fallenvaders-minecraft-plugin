@@ -17,57 +17,56 @@
 
 package fr.fallenvaders.minecraft.test_server;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Logger;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import fr.fallenvaders.minecraft.test_server.deploy.DeploymentException;
+import fr.fallenvaders.minecraft.test_server.guice.TestServerModule;
+import fr.fallenvaders.minecraft.test_server.services.MinecraftServerService;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class FallenVadersTestServer {
+/**
+ * Entry point of the test-server program.
+ *
+ * @author Voltariuss
+ * @since 0.3.0
+ */
+public final class FallenVadersTestServer {
 
-  public static final Logger LOGGER = Logger.getAnonymousLogger();
+  private static final Logger logger = LoggerFactory.getLogger(FallenVadersTestServer.class);
 
-  public static final String SERVER_JAR_NAME = "papermc-server.jar";
+  /**
+   * Main method.
+   *
+   * @param args The program arguments.
+   */
+  public static void main(@NotNull String[] args) {
+    boolean debugMode = isDebugMode(args);
+    Injector injector = Guice.createInjector(new TestServerModule(debugMode));
+    MinecraftServerService minecraftServerService =
+        injector.getInstance(MinecraftServerService.class);
+    try {
+      if (!debugMode) {
+        minecraftServerService.initServer();
+      }
+      minecraftServerService.launchServer();
+    } catch (DeploymentException e) {
+      logger.error(
+          "An error occurs during the deployment of the FallenVaders plugin in the Minecraft test-server.",
+          e);
+    }
+  }
 
-  public static final String[] SERVER_LAUNCH_COMMAND =
-      new String[] {"java", "-server", "-Xms512M", "-Xmx2G", "-jar", SERVER_JAR_NAME, "nogui"};
-
-  public static final String[] DEBUG_SERVER_LAUNCH_COMMAND =
-      new String[] {
-        "java",
-        "-server",
-        "-Xms512M",
-        "-Xmx2G",
-        "-agentlib:jdwp=transport=dt_socket,server=n,suspend=n,address=5005",
-        "-jar",
-        SERVER_JAR_NAME,
-        "nogui"
-      };
-
-  public static void main(String[] args) {
-    String[] serverLaunchCommand = SERVER_LAUNCH_COMMAND;
+  private static boolean isDebugMode(@NotNull String[] args) {
+    boolean debugMode = false;
     if (args.length > 0) {
       if ("debug".equalsIgnoreCase(args[0])) {
-        serverLaunchCommand = DEBUG_SERVER_LAUNCH_COMMAND;
+        debugMode = true;
       } else {
-        LOGGER.severe("Wrong program arguments: only \"debug\" is allowed.");
-        System.exit(-1);
+        throw new IllegalArgumentException("Wrong program arguments: only 'debug' is allowed.");
       }
     }
-    ProcessBuilder pb = new ProcessBuilder(serverLaunchCommand);
-    pb.directory(new File("server/"));
-    pb.inheritIO();
-    try {
-      LOGGER.info("Launching test server...");
-      LOGGER.info(String.join(" ", pb.command()));
-      Process p = pb.start();
-      try {
-        p.waitFor();
-      } catch (InterruptedException e) {
-        LOGGER.severe("Server interrupted!");
-        e.printStackTrace();
-      }
-    } catch (IOException e) {
-      LOGGER.severe("Failed to launch test server! Maybe wrong default working directory setup?");
-      e.printStackTrace();
-    }
+    return debugMode;
   }
 }
