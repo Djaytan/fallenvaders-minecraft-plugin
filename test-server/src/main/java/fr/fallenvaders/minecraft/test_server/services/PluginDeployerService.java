@@ -17,14 +17,12 @@
 
 package fr.fallenvaders.minecraft.test_server.services;
 
-import fr.fallenvaders.minecraft.test_server.command.CommandExecutor;
 import fr.fallenvaders.minecraft.test_server.deploy.DeploymentException;
 import org.apache.maven.shared.invoker.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.File;
 import java.io.IOException;
@@ -46,18 +44,6 @@ public final class PluginDeployerService {
 
   private static final Logger logger = LoggerFactory.getLogger(PluginDeployerService.class);
 
-  private final CommandExecutor commandExecutor;
-
-  /**
-   * Constructor.
-   *
-   * @param commandExecutor The command executor.
-   */
-  @Inject
-  public PluginDeployerService(@NotNull CommandExecutor commandExecutor) {
-    this.commandExecutor = commandExecutor;
-  }
-
   /**
    * Deletes the old plugin if it exists in order to deploy the new one. To remove the plugin, his
    * core name is required to found it independently of his version.
@@ -73,7 +59,8 @@ public final class PluginDeployerService {
         Files.find(
             mcServerPluginsLocation,
             1,
-            (path, basicFileAttributes) -> path.toFile().getName().startsWith(fvPluginJarCoreName))) {
+            (path, basicFileAttributes) ->
+                path.toFile().getName().startsWith(fvPluginJarCoreName))) {
       List<Path> result = pluginStreamPath.toList();
       if (result.isEmpty()) {
         logger.info("No old plugin file to delete in the Minecraft test-server.");
@@ -124,7 +111,10 @@ public final class PluginDeployerService {
    * @param mcServerLocation The location of the Minecraft test-server.
    * @throws DeploymentException If the deployment of the plugin has failed because of an I/O error.
    */
-  public void deployPlugin(@NotNull String fvPluginFileName, @NotNull Path fvPluginLocation, @NotNull Path mcServerLocation)
+  public void deployPlugin(
+      @NotNull String fvPluginFileName,
+      @NotNull Path fvPluginLocation,
+      @NotNull Path mcServerLocation)
       throws DeploymentException {
     try {
       logger.info("Deployment of the FallenVaders plugin in the Minecraft test-server...");
