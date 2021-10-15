@@ -178,6 +178,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
                 <scope>runtime</scope>
             </dependency>
             <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>5.0.0</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>30.1.1-jre</version>
