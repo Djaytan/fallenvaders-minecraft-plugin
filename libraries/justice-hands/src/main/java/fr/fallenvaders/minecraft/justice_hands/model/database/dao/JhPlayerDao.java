@@ -60,9 +60,16 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
     this.fvDataSource = fvDataSource;
   }
 
+  /**
+   * Gets and returns the JusticeHands' player from the model which match with the specified UUID.
+   *
+   * @param strUuid The UUID of the sought JusticeHands' player.
+   * @return The found JusticeHands' player if it exists.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   */
   @Override
-  public Optional<JhPlayer> get(String id) throws SQLException {
-    UUID uuid = UUID.fromString(id);
+  public Optional<JhPlayer> get(String strUuid) throws SQLException {
+    UUID uuid = UUID.fromString(strUuid);
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement("SELECT points FROM players_points WHERE uuid = ?")) {
@@ -76,6 +83,12 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
     }
   }
 
+  /**
+   * Gets and returns all the JusticeHands' players from the model.
+   *
+   * @return All the JusticeHands' players from the model.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   */
   @Override
   public List<JhPlayer> getAll() throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
