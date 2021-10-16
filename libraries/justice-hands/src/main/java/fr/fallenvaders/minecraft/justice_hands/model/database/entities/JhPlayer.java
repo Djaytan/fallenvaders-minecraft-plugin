@@ -89,4 +89,9 @@ public class JhPlayer {
   public void setPoints(int points) {
     this.points = points;
   }
+
+  @Override
+  public String toString() {
+    return String.format("%s{%s=%s, %s=%s}", getClass().getName(), "uuid", uuid, "points", points);
+  }
 }
