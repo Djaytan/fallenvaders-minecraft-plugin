@@ -116,11 +116,15 @@ public class JhPlayerService {
    * Updates the specified {@link JhPlayer}.
    *
    * @param jhPlayer The FallenVaders' player to update in the model.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
-   * @throws JhSqlException if the player isn't registered in the model.
    */
-  public void updateJhPlayer(@NotNull JhPlayer jhPlayer) throws SQLException {
-    jhPlayerDao.update(jhPlayer);
+  public void updateJhPlayer(@NotNull JhPlayer jhPlayer) {
+    logger.info("Try to update the JusticeHands' player with UUID '{}' with this following new value: {}", jhPlayer.getUuid(), jhPlayer)
+    try {
+      jhPlayerDao.update(jhPlayer);
+      logger.info("The JusticeHands' player updated successfully.");
+    } catch (SQLException e) {
+      logger.error("An SQL error occurs when trying to update a JusticeHands' player.", e);
+    }
   }
 
   /**
