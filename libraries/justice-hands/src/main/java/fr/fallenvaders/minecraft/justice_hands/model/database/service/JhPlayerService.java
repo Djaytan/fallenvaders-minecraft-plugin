@@ -101,11 +101,15 @@ public class JhPlayerService {
    * Saves the specified {@link JhPlayer}.
    *
    * @param jhPlayer The FallenVaders' player to save into the model.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
-   * @throws JhSqlException if the player is already registered in the model.
    */
-  public void saveJhPlayer(@NotNull JhPlayer jhPlayer) throws SQLException {
-    jhPlayerDao.save(jhPlayer);
+  public void saveJhPlayer(@NotNull JhPlayer jhPlayer) {
+    logger.info("Try to save the following new JusticeHands' player: {}", jhPlayer);
+    try {
+      jhPlayerDao.save(jhPlayer);
+      logger.info("The JusticeHands' player registered successfully.");
+    } catch (SQLException e) {
+      logger.error("An SQL error occurs when trying to save a JusticeHands' player.", e);
+    }
   }
 
   /**
