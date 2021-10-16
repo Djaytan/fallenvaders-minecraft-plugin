@@ -71,7 +71,7 @@ public class JhPlayerService {
         logger.warn("No JusticeHands' player found for UUID '{}'", uuid);
       }
     } catch (SQLException e) {
-      logger.error("An SQL error occurs during JusticeHands' player seek.", e);
+      logger.error("An SQL error occurs during the seek of a JusticeHands' player.", e);
     }
     return Optional.ofNullable(jhPlayer);
   }
@@ -80,10 +80,21 @@ public class JhPlayerService {
    * Gets and returns all existing {@link JhPlayer}s of the model.
    *
    * @return All the existing {@link JhPlayer}s of the model.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  public List<JhPlayer> getJhPlayers() throws SQLException {
-    return jhPlayerDao.getAll();
+  public List<JhPlayer> getJhPlayers() {
+    logger.info("Seek of all JusticeHands' players.");
+    List<JhPlayer> jhPlayers = List.of();
+    try {
+      jhPlayers = jhPlayerDao.getAll();
+      if (!jhPlayers.isEmpty()) {
+        logger.info("JusticeHands' players found: {}", jhPlayers);
+      } else {
+        logger.warn("No JusticeHands' player found.");
+      }
+    } catch (SQLException e) {
+      logger.error("An SQL error occurs during the seek of all JusticeHands' players.", e);
+    }
+    return jhPlayers;
   }
 
   /**
