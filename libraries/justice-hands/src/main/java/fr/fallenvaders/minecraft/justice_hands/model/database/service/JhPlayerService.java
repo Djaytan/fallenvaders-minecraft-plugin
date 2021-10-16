@@ -21,6 +21,7 @@ import fr.fallenvaders.minecraft.justice_hands.model.database.JhSqlException;
 import fr.fallenvaders.minecraft.justice_hands.model.database.dao.JhPlayerDao;
 import fr.fallenvaders.minecraft.justice_hands.model.database.entities.JhPlayer;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -38,6 +39,7 @@ import java.util.UUID;
 @Singleton
 public class JhPlayerService {
 
+  private final Logger logger;
   private final JhPlayerDao jhPlayerDao;
 
   /**
@@ -46,8 +48,9 @@ public class JhPlayerService {
    * @param jhPlayerDao The DAO for the JusticeHands' player entity class.
    */
   @Inject
-  public JhPlayerService(@NotNull JhPlayerDao jhPlayerDao) {
+  public JhPlayerService(@NotNull JhPlayerDao jhPlayerDao, @NotNull Logger logger) {
     this.jhPlayerDao = jhPlayerDao;
+    this.logger = logger;
   }
 
   /**
@@ -55,11 +58,22 @@ public class JhPlayerService {
    *
    * @param uuid The UUID of the {@link JhPlayer} to seek.
    * @return The {@link JhPlayer} associated with the specified {@link UUID}.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @NotNull
-  public Optional<JhPlayer> getJhPlayer(@NotNull UUID uuid) throws SQLException {
-    return jhPlayerDao.get(uuid.toString());
+  public Optional<JhPlayer> getJhPlayer(@NotNull UUID uuid) {
+    logger.info("Seek of the JusticeHands' player associated with UUID '{}'.", uuid);
+    JhPlayer jhPlayer = null;
+    try {
+      jhPlayer = jhPlayerDao.get(uuid.toString()).orElse(null);
+      if (jhPlayer != null) {
+        logger.info("JusticeHands' player found for the UUID '{}': {}", uuid, jhPlayer);
+      } else {
+        logger.info("No JusticeHands' player found for UUID '{}'", uuid);
+      }
+    } catch (SQLException e) {
+      logger.error("An SQL error occurs during JusticeHands' player seek.", e);
+    }
+    return Optional.ofNullable(jhPlayer);
   }
 
   /**
