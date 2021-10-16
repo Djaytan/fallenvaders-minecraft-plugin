@@ -19,6 +19,7 @@ package fr.fallenvaders.minecraft.justice_hands.model.database.dao;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
 import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
+import fr.fallenvaders.minecraft.justice_hands.model.database.JhSqlException;
 import fr.fallenvaders.minecraft.justice_hands.model.database.entities.JhPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -91,9 +92,26 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
     }
   }
 
+  /**
+   * Saves the JusticeHands' player into the model.
+   *
+   * @param jhPlayer The JusticeHands' player to save.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws JhSqlException if the player is already registered in the model.
+   */
   @Override
   public void save(JhPlayer jhPlayer) throws SQLException {
-    throw new RuntimeException("Not implemented yet.");
+    if (!isAlreadyRegistered(jhPlayer.getUuid())) {
+      try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement q =
+             connection.prepareStatement("INSERT INTO players_points (uuid, points) VALUES (?, ?)")) {
+        q.setString(1, jhPlayer.getUuid().toString());
+        q.setInt(2, jhPlayer.getPoints());
+        q.executeUpdate();
+      }
+    } else {
+      throw new JhSqlException(String.format("The JusticeHands' player with UUID '%s' is already registered.", jhPlayer.getUuid().toString()))
+    }
   }
 
   @Override
@@ -104,5 +122,9 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   @Override
   public void delete(JhPlayer jhPlayer) throws SQLException {
     throw new RuntimeException("Not implemented yet.");
+  }
+
+  private boolean isAlreadyRegistered(@NotNull UUID uuid) throws SQLException {
+    return get(uuid.toString()).orElse(null) != null;
   }
 }
