@@ -23,8 +23,8 @@ import java.sql.SQLException;
 
 /**
  * The JusticeHands {@link SQLException} class. It corresponds to a special case of Dao operations
- * typically when the {@link FvDao#save(Object)} method is called whereas the specified object is
- * already registered.
+ * typically when the {@link FvDao#delete(Object)} method is called whereas the specified object
+ * isn't registered.
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
