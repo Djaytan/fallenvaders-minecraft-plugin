@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.commons.sql;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,34 +42,39 @@ public interface FvDao<T> {
    *
    * @param id The ID of the entity instance in the model.
    * @return The entity instance corresponding to the specified ID if it exists.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  Optional<T> get(long id);
+  Optional<T> get(String id) throws SQLException;
 
   /**
    * Reads all the existing entity instances {@link T} in the model.
    *
    * @return The list of existing entity instances in the model.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  List<T> getAll();
+  List<T> getAll() throws SQLException;
 
   /**
    * Saves a new entity instance {@link T} in the model.
    *
    * @param t The entity instance to save in the model.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void save(T t);
+  void save(T t) throws SQLException;
 
   /**
    * Updates the entity instance {@link T} in the model.
    *
    * @param t The entity instance to update in the model.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void update(T t);
+  void update(T t) throws SQLException;
 
   /**
    * Deletes the entity instance {@link T} from the model.
    *
    * @param t The entity instance to delete from the model.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void delete(T t);
+  void delete(T t) throws SQLException;
 }
