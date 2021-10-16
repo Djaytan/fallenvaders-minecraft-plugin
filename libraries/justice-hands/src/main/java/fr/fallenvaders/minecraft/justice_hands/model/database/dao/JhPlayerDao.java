@@ -155,9 +155,27 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
     }
   }
 
+  /**
+   * Deletes the specified {@link JhPlayer}.
+   *
+   * @param jhPlayer The FallenVaders' player to delete.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws JhSqlException if the {@link JhPlayer} is not registered in the model.
+   */
   @Override
-  public void delete(JhPlayer jhPlayer) throws SQLException {
-    throw new RuntimeException("Not implemented yet.");
+  public void delete(JhPlayer jhPlayer) throws SQLException, JhSqlException {
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt =
+            connection.prepareStatement("DELETE FROM players_points WHERE uuid = ?")) {
+      stmt.setString(1, jhPlayer.getUuid().toString());
+      int rowCount = stmt.executeUpdate();
+      if (rowCount == 0) {
+        throw new JhSqlException(
+            String.format(
+                "The FallenVaders' player with UUID '%s' is not registered in the model and then can't be deleted.",
+                jhPlayer.getUuid().toString()));
+      }
+    }
   }
 
   private boolean isAlreadyRegistered(@NotNull UUID uuid) throws SQLException {
