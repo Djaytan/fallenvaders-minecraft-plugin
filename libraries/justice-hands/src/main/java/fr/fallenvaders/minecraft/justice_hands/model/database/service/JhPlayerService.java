@@ -68,7 +68,7 @@ public class JhPlayerService {
       if (jhPlayer != null) {
         logger.info("JusticeHands' player found for the UUID '{}': {}", uuid, jhPlayer);
       } else {
-        logger.info("No JusticeHands' player found for UUID '{}'", uuid);
+        logger.warn("No JusticeHands' player found for UUID '{}'", uuid);
       }
     } catch (SQLException e) {
       logger.error("An SQL error occurs during JusticeHands' player seek.", e);
