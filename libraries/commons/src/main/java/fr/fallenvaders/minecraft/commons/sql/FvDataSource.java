@@ -42,6 +42,9 @@ import java.sql.SQLException;
  * time the client of the pool (here is us) must stop to wait a connection by receiving and
  * exception.
  *
+ * <p>In the context of the project, it's necessary to set the autoCommit option to "false" for 1)
+ * performances and 2) transactions reliability purposes.
+ *
  * <p>When you want to release the connection, simply close her directly through the method {@link
  * Connection#close()}. The library is in charge of detecting closed connections in order to reopen
  * new ones.
