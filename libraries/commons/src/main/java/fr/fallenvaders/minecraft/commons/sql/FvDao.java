@@ -17,6 +17,8 @@
 
 package fr.fallenvaders.minecraft.commons.sql;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +46,8 @@ public interface FvDao<T> {
    * @return The entity instance corresponding to the specified ID if it exists.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  Optional<T> get(String id) throws SQLException;
+  @NotNull
+  Optional<T> get(@NotNull String id) throws SQLException;
 
   /**
    * Reads all the existing entity instances {@link T} in the model.
@@ -52,6 +55,7 @@ public interface FvDao<T> {
    * @return The list of existing entity instances in the model.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
+  @NotNull
   List<T> getAll() throws SQLException;
 
   /**
@@ -60,7 +64,7 @@ public interface FvDao<T> {
    * @param t The entity instance to save in the model.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void save(T t) throws SQLException;
+  void save(@NotNull T t) throws SQLException;
 
   /**
    * Updates the entity instance {@link T} in the model.
@@ -68,7 +72,7 @@ public interface FvDao<T> {
    * @param t The entity instance to update in the model.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void update(T t) throws SQLException;
+  void update(@NotNull T t) throws SQLException;
 
   /**
    * Deletes the entity instance {@link T} from the model.
@@ -76,5 +80,5 @@ public interface FvDao<T> {
    * @param t The entity instance to delete from the model.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void delete(T t) throws SQLException;
+  void delete(@NotNull T t) throws SQLException;
 }
