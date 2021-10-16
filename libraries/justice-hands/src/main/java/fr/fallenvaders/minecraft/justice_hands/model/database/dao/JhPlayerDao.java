@@ -90,6 +90,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
+  @NotNull
   public List<JhPlayer> getAll() throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
@@ -113,7 +114,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
    * @throws JhSqlException if the player is already registered in the model.
    */
   @Override
-  public void save(JhPlayer jhPlayer) throws SQLException {
+  public void save(JhPlayer jhPlayer) throws SQLException, JhSqlException {
     if (!isAlreadyRegistered(jhPlayer.getUuid())) {
       try (Connection connection = fvDataSource.getConnection();
           PreparedStatement q =
@@ -136,10 +137,10 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
    *
    * @param jhPlayer The FallenVaders' player to update.
    * @throws SQLException if something went wrong during database access or stuffs like this.
-   * @throws JhSqlException if the {@link JhPlayer} is not registered yet.
+   * @throws JhSqlException if the {@link JhPlayer} is not registered in the model.
    */
   @Override
-  public void update(JhPlayer jhPlayer) throws SQLException {
+  public void update(JhPlayer jhPlayer) throws SQLException, JhSqlException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement("UPDATE players_points SET points = ? WHERE uuid = ?")) {
