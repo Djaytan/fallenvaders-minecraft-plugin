@@ -112,24 +112,16 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
    *
    * @param jhPlayer The JusticeHands' player to save.
    * @throws SQLException if something went wrong during database access or stuffs like this.
-   * @throws JhSqlException if the {@link JhPlayer} is already registered in the model.
    */
   @Override
-  public void save(@NotNull JhPlayer jhPlayer) throws SQLException, JhSqlException {
-    if (!isAlreadyRegistered(jhPlayer.getUuid())) {
-      try (Connection connection = fvDataSource.getConnection();
-          PreparedStatement stmt =
-              connection.prepareStatement(
-                  "INSERT INTO players_points (uuid, points) VALUES (?, ?)")) {
-        stmt.setString(1, jhPlayer.getUuid().toString());
-        stmt.setInt(2, jhPlayer.getPoints());
-        stmt.executeUpdate();
-      }
-    } else {
-      throw new JhSqlException(
-          String.format(
-              "The JusticeHands' player with UUID '%s' is already registered.",
-              jhPlayer.getUuid().toString()));
+  public void save(@NotNull JhPlayer jhPlayer) throws SQLException {
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt =
+            connection.prepareStatement(
+                "INSERT INTO players_points (uuid, points) VALUES (?, ?)")) {
+      stmt.setString(1, jhPlayer.getUuid().toString());
+      stmt.setInt(2, jhPlayer.getPoints());
+      stmt.executeUpdate();
     }
   }
 
