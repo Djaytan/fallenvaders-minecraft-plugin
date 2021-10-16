@@ -116,20 +116,43 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   public void save(JhPlayer jhPlayer) throws SQLException {
     if (!isAlreadyRegistered(jhPlayer.getUuid())) {
       try (Connection connection = fvDataSource.getConnection();
-        PreparedStatement q =
-             connection.prepareStatement("INSERT INTO players_points (uuid, points) VALUES (?, ?)")) {
+          PreparedStatement q =
+              connection.prepareStatement(
+                  "INSERT INTO players_points (uuid, points) VALUES (?, ?)")) {
         q.setString(1, jhPlayer.getUuid().toString());
         q.setInt(2, jhPlayer.getPoints());
         q.executeUpdate();
       }
     } else {
-      throw new JhSqlException(String.format("The JusticeHands' player with UUID '%s' is already registered.", jhPlayer.getUuid().toString()))
+      throw new JhSqlException(
+          String.format(
+              "The JusticeHands' player with UUID '%s' is already registered.",
+              jhPlayer.getUuid().toString()));
     }
   }
 
+  /**
+   * Updates the specified {@link JhPlayer}.
+   *
+   * @param jhPlayer The FallenVaders' player to update.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws JhSqlException if the {@link JhPlayer} is not registered yet.
+   */
   @Override
   public void update(JhPlayer jhPlayer) throws SQLException {
-    throw new RuntimeException("Not implemented yet.");
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt =
+            connection.prepareStatement("UPDATE players_points SET points = ? WHERE uuid = ?")) {
+      stmt.setInt(1, jhPlayer.getPoints());
+      stmt.setString(2, jhPlayer.getUuid().toString());
+      int rowCount = stmt.executeUpdate();
+      if (rowCount == 0) {
+        throw new JhSqlException(
+            String.format(
+                "The FallenVaders' player with UUID '%s' is not registered and then can't be updated.",
+                jhPlayer.getUuid().toString()));
+      }
+    }
   }
 
   @Override
