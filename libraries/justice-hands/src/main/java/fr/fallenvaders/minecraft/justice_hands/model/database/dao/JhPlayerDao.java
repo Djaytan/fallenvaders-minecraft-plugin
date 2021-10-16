@@ -61,7 +61,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   }
 
   /**
-   * Gets and returns the JusticeHands' player from the model which match with the specified UUID.
+   * Gets and returns the {@link JhPlayer} from the model which match with the specified UUID.
    *
    * @param strUuid The UUID of the sought JusticeHands' player.
    * @return The found JusticeHands' player if it exists.
@@ -84,7 +84,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   }
 
   /**
-   * Gets and returns all the JusticeHands' players from the model.
+   * Gets and returns all the {@link JhPlayer}s from the model.
    *
    * @return All the JusticeHands' players from the model.
    * @throws SQLException if something went wrong during database access or stuffs like this.
@@ -106,7 +106,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   }
 
   /**
-   * Saves the JusticeHands' player into the model.
+   * Saves the {@link JhPlayer} into the model.
    *
    * @param jhPlayer The JusticeHands' player to save.
    * @throws SQLException if something went wrong during database access or stuffs like this.
