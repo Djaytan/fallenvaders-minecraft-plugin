@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.justice_hands.model.database.service;
 
-import fr.fallenvaders.minecraft.justice_hands.model.database.JhSqlException;
 import fr.fallenvaders.minecraft.justice_hands.model.database.dao.JhPlayerDao;
 import fr.fallenvaders.minecraft.justice_hands.model.database.entities.JhPlayer;
 import org.jetbrains.annotations.NotNull;
@@ -118,7 +117,10 @@ public class JhPlayerService {
    * @param jhPlayer The FallenVaders' player to update in the model.
    */
   public void updateJhPlayer(@NotNull JhPlayer jhPlayer) {
-    logger.info("Try to update the JusticeHands' player with UUID '{}' with this following new value: {}", jhPlayer.getUuid(), jhPlayer)
+    logger.info(
+        "Try to update the JusticeHands' player with UUID '{}' with this following new value: {}",
+        jhPlayer.getUuid(),
+        jhPlayer);
     try {
       jhPlayerDao.update(jhPlayer);
       logger.info("The JusticeHands' player updated successfully.");
@@ -131,10 +133,14 @@ public class JhPlayerService {
    * Deletes the specified {@link JhPlayer}.
    *
    * @param jhPlayer The FallenVaders' player to delete from the model.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
-   * @throws JhSqlException if the player isn't already registered in the model.
    */
-  public void deleteJhPlayer(@NotNull JhPlayer jhPlayer) throws SQLException {
-    jhPlayerDao.delete(jhPlayer);
+  public void deleteJhPlayer(@NotNull JhPlayer jhPlayer) {
+    logger.info("Try to delete the following JusticeHands' player: {}", jhPlayer);
+    try {
+      jhPlayerDao.delete(jhPlayer);
+      logger.info("The JusticeHands' player deleted successfully.");
+    } catch (SQLException e) {
+      logger.error("An SQL error occurs when trying to delete a JusticeHands' player.", e);
+    }
   }
 }
