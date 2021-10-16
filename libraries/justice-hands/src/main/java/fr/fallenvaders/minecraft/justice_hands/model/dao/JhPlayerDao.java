@@ -15,11 +15,11 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.justice_hands.model.database.dao;
+package fr.fallenvaders.minecraft.justice_hands.model.dao;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
 import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
-import fr.fallenvaders.minecraft.justice_hands.model.database.entities.JhPlayer;
+import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;

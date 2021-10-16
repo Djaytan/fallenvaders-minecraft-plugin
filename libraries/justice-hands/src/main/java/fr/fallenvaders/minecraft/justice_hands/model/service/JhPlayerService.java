@@ -15,10 +15,10 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.justice_hands.model.database.service;
+package fr.fallenvaders.minecraft.justice_hands.model.service;
 
-import fr.fallenvaders.minecraft.justice_hands.model.database.dao.JhPlayerDao;
-import fr.fallenvaders.minecraft.justice_hands.model.database.entities.JhPlayer;
+import fr.fallenvaders.minecraft.justice_hands.model.dao.JhPlayerDao;
+import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 

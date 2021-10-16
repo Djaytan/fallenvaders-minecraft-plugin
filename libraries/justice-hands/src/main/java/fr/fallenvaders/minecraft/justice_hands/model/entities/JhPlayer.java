@@ -15,7 +15,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.justice_hands.model.database.entities;
+package fr.fallenvaders.minecraft.justice_hands.model.entities;
 
 import org.jetbrains.annotations.NotNull;
 
