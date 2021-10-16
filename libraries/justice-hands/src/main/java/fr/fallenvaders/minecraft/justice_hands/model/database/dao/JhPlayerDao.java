@@ -19,7 +19,6 @@ package fr.fallenvaders.minecraft.justice_hands.model.database.dao;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
 import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
-import fr.fallenvaders.minecraft.justice_hands.model.database.JhSqlException;
 import fr.fallenvaders.minecraft.justice_hands.model.database.entities.JhPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -130,10 +129,9 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
    *
    * @param jhPlayer The FallenVaders' player to update.
    * @throws SQLException if something went wrong during database access or stuffs like this.
-   * @throws JhSqlException if the {@link JhPlayer} isn't registered in the model.
    */
   @Override
-  public void update(@NotNull JhPlayer jhPlayer) throws SQLException, JhSqlException {
+  public void update(@NotNull JhPlayer jhPlayer) throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement("UPDATE players_points SET points = ? WHERE uuid = ?")) {
@@ -141,7 +139,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
       stmt.setString(2, jhPlayer.getUuid().toString());
       int rowCount = stmt.executeUpdate();
       if (rowCount == 0) {
-        throw new JhSqlException(
+        throw new SQLException(
             String.format(
                 "The FallenVaders' player with UUID '%s' is not registered and then can't be updated.",
                 jhPlayer.getUuid().toString()));
@@ -154,17 +152,16 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
    *
    * @param jhPlayer The FallenVaders' player to delete.
    * @throws SQLException if something went wrong during database access or stuffs like this.
-   * @throws JhSqlException if the {@link JhPlayer} isn't registered in the model.
    */
   @Override
-  public void delete(@NotNull JhPlayer jhPlayer) throws SQLException, JhSqlException {
+  public void delete(@NotNull JhPlayer jhPlayer) throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement("DELETE FROM players_points WHERE uuid = ?")) {
       stmt.setString(1, jhPlayer.getUuid().toString());
       int rowCount = stmt.executeUpdate();
       if (rowCount == 0) {
-        throw new JhSqlException(
+        throw new SQLException(
             String.format(
                 "The FallenVaders' player with UUID '%s' is not registered in the model and then can't be deleted.",
                 jhPlayer.getUuid().toString()));
