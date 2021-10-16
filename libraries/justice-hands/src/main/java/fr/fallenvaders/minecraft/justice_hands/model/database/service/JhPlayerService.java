@@ -53,13 +53,24 @@ public class JhPlayerService {
   /**
    * Gets and returns the {@link JhPlayer} associated with the specified {@link UUID}.
    *
-   * @param uuid The UUID of the {@link JhPlayer} to sought.
+   * @param uuid The UUID of the {@link JhPlayer} to seek.
    * @return The {@link JhPlayer} associated with the specified {@link UUID}.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @NotNull
   public Optional<JhPlayer> getJhPlayer(@NotNull UUID uuid) throws SQLException {
     return jhPlayerDao.get(uuid.toString());
+  }
+
+  /**
+   * Checks if a {@link JhPlayer} associated with the specified UUID exists.
+   *
+   * @param uuid The UUID of the {@link JhPlayer} to seek.
+   * @return "True" if the specified {@link JhPlayer} exists.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   */
+  public boolean isJhPlayerExists(@NotNull UUID uuid) throws SQLException {
+    return getJhPlayer(uuid).orElse(null) != null;
   }
 
   /**
