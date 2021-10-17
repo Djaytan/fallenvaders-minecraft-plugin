@@ -27,9 +27,16 @@ package fr.fallenvaders.minecraft.commons;
  */
 public interface FvModule {
 
-  /** Defines the logic needed to initialize and make operational the FallenVaders' module. */
-  void enable();
+  /**
+   * Defines the behavior involved when the FallenVaders' module is loaded.
+   *
+   * <p>Note: this method is called before {@link FvModule#onEnable()}.
+   */
+  void onLoad();
 
-  /** Defines the logic need to properly disable the FallenVaders' module. */
-  void disable();
+  /** Defines the logic needed to initialize and make operational the FallenVaders' module. */
+  void onEnable();
+
+  /** Defines the logic needed to properly disable the FallenVaders' module. */
+  void onDisable();
 }
