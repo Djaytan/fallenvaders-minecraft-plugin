@@ -1,84 +1,83 @@
 package fr.fallenvaders.minecraft.justice_hands;
 
+import co.aikar.commands.PaperCommandManager;
+import fr.fallenvaders.minecraft.commons.FvModule;
 import fr.fallenvaders.minecraft.justice_hands.criminalrecords.CommandCR;
 import fr.fallenvaders.minecraft.justice_hands.criminalrecords.listeners.PlayerJoinListener;
 import fr.fallenvaders.minecraft.justice_hands.keyskeeper.listeners.AsyncChatListener;
 import fr.fallenvaders.minecraft.justice_hands.keyskeeper.listeners.PlayerLoginListener;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CategoriesList;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CommandSM;
-import fr.fallenvaders.minecraft.justice_hands.sql.SqlConnection;
-import fr.fallenvaders.minecraft.justice_hands.sql.SqlKeysKeeper;
-import fr.fallenvaders.minecraft.justice_hands.sql.SqlPlayerAccount;
-import fr.fallenvaders.minecraft.justice_hands.sql.SqlSanctionManager;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
-public class JusticeHands extends JavaPlugin {
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-  public static JavaPlugin PLUGIN;
+/**
+ * Entry point class for JusticeHands module.
+ *
+ * @author FallenVaders' dev team
+ * @version 0.3.0
+ */
+@Singleton
+public class JusticeHands implements FvModule {
 
-  private static SqlConnection sql = null;
-  private static SqlPlayerAccount sqlPA = null;
-  private static SqlSanctionManager sqlSM = null;
-  private static SqlKeysKeeper sqlKK = null;
+  private final JavaPlugin plugin;
+  private final PluginManager pluginManager;
+  private final PaperCommandManager paperCommandManager;
 
-  public static void enableModule(JavaPlugin plugin) {
-    PLUGIN = plugin;
-    plugin.getConfig().options().copyDefaults(true);
-    plugin.saveConfig();
+  private final CommandSM commandSM;
+  private final CommandCR commandCR;
 
-    // Connexion à la base de données
-    String database = PLUGIN.getConfig().getString("database.database");
-    String host = PLUGIN.getConfig().getString("database.host");
-    String user = PLUGIN.getConfig().getString("database.user");
-    String password = PLUGIN.getConfig().getString("database.password");
-    sql = new SqlConnection("jdbc:mariadb://" + host + ":3306/" + database, user, password);
-    sql.connection();
+  /**
+   * Constructor.
+   *
+   * @param plugin The Bukkit plugin.
+   * @param pluginManager The Bukkit plugin manager.
+   * @param paperCommandManager The Paper command manager of aïkar lib.
+   * @param commandCR The criminal record Bukkit command.
+   * @param commandSM The sanction manager Bukkit command.
+   */
+  @Inject
+  public JusticeHands(@NotNull JavaPlugin plugin,
+    @NotNull PluginManager pluginManager, @NotNull PaperCommandManager paperCommandManager, @NotNull CommandCR commandCR, @NotNull CommandSM commandSM) {
+    this.plugin = plugin;
+    this.pluginManager = pluginManager;
+    this.paperCommandManager = paperCommandManager;
+    this.commandCR = commandCR;
+    this.commandSM = commandSM;
+  }
 
-    // On donne la connection
-    sqlPA = new SqlPlayerAccount(sql.getConnection());
-    sqlSM = new SqlSanctionManager(sql.getConnection());
-    sqlKK = new SqlKeysKeeper(sql.getConnection());
+  @Override
+  public void onLoad() {
+    /* Nothing to do */
+  }
 
-    // On active commandes et listeners
+  @Override
+  public void onEnable() {
     activeCommands();
     activeListeners();
 
-    // On charge les sanctions du dossier de configuration
+    // Load sanctions from config folder
     CategoriesList.getSanctionsConfig(plugin.getConfig());
   }
 
-  public static void disableModule(JavaPlugin plugin) {
-    // Déconnection de la base de données
-    sql.disconnect();
+  @Override
+  public void onDisable() {
+    /* Nothing to do */
   }
 
-  private static void activeListeners() {
-    PLUGIN.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), PLUGIN);
-    PLUGIN.getServer().getPluginManager().registerEvents(new AsyncChatListener(), PLUGIN);
-    PLUGIN.getServer().getPluginManager().registerEvents(new PlayerLoginListener(), PLUGIN);
+  private void activeListeners() {
+    pluginManager.registerEvents(new PlayerJoinListener(), plugin);
+    pluginManager.registerEvents(new AsyncChatListener(), plugin);
+    pluginManager.registerEvents(new PlayerLoginListener(), plugin);
   }
 
-  private static void activeCommands() {
-    PLUGIN.getCommand("cr").setExecutor(new CommandCR());
+  private void activeCommands() {
+    plugin.getCommand("cr").setExecutor(commandCR);
     // getCommand("mt").setExecutor(new CommandMT(this));
-    PLUGIN.getCommand("sm").setExecutor(new CommandSM(PLUGIN.getConfig()));
+    plugin.getCommand("sm").setExecutor(commandSM);
   }
-
-  //// **** ACCESSEURS & MUTATEURS ****////
-  public static SqlConnection getSql() {
-    return sql;
-  }
-
-  public static SqlPlayerAccount getSqlPA() {
-    return sqlPA;
-  }
-
-  public static SqlSanctionManager getSqlSM() {
-    return sqlSM;
-  }
-
-  public static SqlKeysKeeper getSqlKK() {
-    return sqlKK;
-  }
-  //////////////////////////////////////////
 }
