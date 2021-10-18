@@ -72,7 +72,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
     UUID uuid = UUID.fromString(strUuid);
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
-            connection.prepareStatement("SELECT points FROM players_points WHERE uuid = ?")) {
+            connection.prepareStatement("SELECT points FROM jh_player WHERE uuid = ?")) {
       stmt.setString(1, uuid.toString());
       ResultSet rs = stmt.executeQuery();
       JhPlayer jhPlayer = null;
@@ -94,7 +94,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   public List<JhPlayer> getAll() throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
-            connection.prepareStatement("SELECT uuid, points FROM players_points")) {
+            connection.prepareStatement("SELECT uuid, points FROM jh_player")) {
       ResultSet rs = stmt.executeQuery();
       List<JhPlayer> jhPlayers = new ArrayList<>(rs.getFetchSize());
       while (rs.next()) {
@@ -117,7 +117,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement(
-                "INSERT INTO players_points (uuid, points) VALUES (?, ?)")) {
+                "INSERT INTO jh_player (uuid, points) VALUES (?, ?)")) {
       stmt.setString(1, jhPlayer.getUuid().toString());
       stmt.setInt(2, jhPlayer.getPoints());
       stmt.executeUpdate();
@@ -134,7 +134,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   public void update(@NotNull JhPlayer jhPlayer) throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
-            connection.prepareStatement("UPDATE players_points SET points = ? WHERE uuid = ?")) {
+            connection.prepareStatement("UPDATE jh_player SET points = ? WHERE uuid = ?")) {
       stmt.setInt(1, jhPlayer.getPoints());
       stmt.setString(2, jhPlayer.getUuid().toString());
       int rowCount = stmt.executeUpdate();
@@ -157,7 +157,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   public void delete(@NotNull JhPlayer jhPlayer) throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
-            connection.prepareStatement("DELETE FROM players_points WHERE uuid = ?")) {
+            connection.prepareStatement("DELETE FROM jh_player WHERE uuid = ?")) {
       stmt.setString(1, jhPlayer.getUuid().toString());
       int rowCount = stmt.executeUpdate();
       if (rowCount == 0) {
