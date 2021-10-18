@@ -10,15 +10,21 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.UUID;
 
+@Singleton
 public class CommandSM implements CommandExecutor {
 
-  /*
-   * TODO, a remplacer en utilisant le plugin permettant de mieux optimiser les commandes
-   */
   private FileConfiguration config;
 
+  /**
+   * Constructor.
+   *
+   * @param config The plugin config.
+   */
+  @Inject
   public CommandSM(FileConfiguration config) {
     this.config = config;
   }

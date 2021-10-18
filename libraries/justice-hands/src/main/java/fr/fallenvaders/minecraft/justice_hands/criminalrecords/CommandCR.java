@@ -9,8 +9,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import javax.inject.Singleton;
 import java.util.UUID;
 
+@Singleton
 public class CommandCR implements CommandExecutor {
 
   @Override
