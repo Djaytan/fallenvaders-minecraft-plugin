@@ -57,6 +57,13 @@ class ModuleContainerTest {
   }
 
   @Test
+  @DisplayName("Add a module")
+  void addNullModule() {
+    FvModule module = moduleUtils.createWithoutBehaviorModule("test-module");
+    Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(module));
+  }
+
+  @Test
   @DisplayName("Add two identical modules")
   void addTwoIdenticalModules() {
     String moduleName = "test-module";
