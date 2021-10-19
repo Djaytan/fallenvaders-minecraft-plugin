@@ -46,6 +46,7 @@ class ModuleServiceTest {
   @Inject private ModuleUtils moduleUtils;
   private ModuleContainer moduleContainer;
   private ModuleService moduleService;
+  private int loadStack;
   private int enableStack;
   private int disableStack;
 
@@ -55,6 +56,7 @@ class ModuleServiceTest {
     logger.setLevel(Level.WARN);
     moduleContainer = new ModuleContainer();
     moduleService = new ModuleService(logger, moduleContainer);
+    loadStack = 0;
     enableStack = 0;
     disableStack = 0;
   }
@@ -98,24 +100,22 @@ class ModuleServiceTest {
 
     @Test
     void load_modules_before_loading_shall_work() {
-      Assertions.assertEquals(0, enableStack);
-      Runnable onLoad = () -> enableStack++;
+      Runnable onLoad = () -> loadStack++;
       FvModule fvModule = moduleUtils.createModule("test-module", onLoad, null, null);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
       moduleService.loadModules();
-      Assertions.assertEquals(1, enableStack);
+      Assertions.assertEquals(1, loadStack);
       Assertions.assertSame(PluginModulesState.LOADED, moduleContainer.getState());
     }
 
     @Test
     void load_modules_after_loading_shall_not_work() {
-      Assertions.assertEquals(0, enableStack);
-      Runnable onLoad = () -> enableStack++;
+      Runnable onLoad = () -> loadStack++;
       FvModule fvModule = moduleUtils.createModule("test-module", onLoad, null, null);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
       moduleService.loadModules();
       moduleService.loadModules();
-      Assertions.assertEquals(1, enableStack);
+      Assertions.assertEquals(1, loadStack);
       Assertions.assertSame(PluginModulesState.LOADED, moduleContainer.getState());
     }
   }
@@ -126,7 +126,6 @@ class ModuleServiceTest {
 
     @Test
     void enable_modules_after_loading_shall_work() {
-      Assertions.assertEquals(0, enableStack);
       Runnable onEnable = () -> enableStack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, onEnable, null);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
@@ -138,7 +137,6 @@ class ModuleServiceTest {
 
     @Test
     void enable_modules_before_loading_shall_not_work() {
-      Assertions.assertEquals(0, enableStack);
       Runnable onEnable = () -> enableStack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, onEnable, null);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
@@ -149,7 +147,6 @@ class ModuleServiceTest {
 
     @Test
     void enable_modules_after_enabling_shall_not_work() {
-      Assertions.assertEquals(0, enableStack);
       Runnable onEnable = () -> enableStack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, onEnable, null);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
@@ -166,89 +163,73 @@ class ModuleServiceTest {
 
     @Test
     void disable_modules_after_enabling_shall_work() {
-      Assertions.assertEquals(0, enableStack);
-      Runnable onDisable = () -> enableStack++;
+      Runnable onDisable = () -> disableStack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, null, onDisable);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
       moduleService.loadModules();
       moduleService.enableModules();
       moduleService.disableModules();
-      Assertions.assertEquals(1, enableStack);
+      Assertions.assertEquals(1, disableStack);
       Assertions.assertSame(PluginModulesState.DISABLED, moduleContainer.getState());
     }
 
     @Test
     void disable_modules_before_enabling_shall_not_work() {
-      Assertions.assertEquals(0, enableStack);
-      Runnable onDisable = () -> enableStack++;
+      Runnable onDisable = () -> disableStack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, null, onDisable);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
       moduleService.loadModules();
       moduleService.disableModules();
-      Assertions.assertEquals(0, enableStack);
+      Assertions.assertEquals(0, disableStack);
       Assertions.assertSame(PluginModulesState.LOADED, moduleContainer.getState());
     }
 
     @Test
     void disable_modules_after_disabling_shall_not_work() {
-      Assertions.assertEquals(0, enableStack);
-      Runnable onDisable = () -> enableStack++;
+      Runnable onDisable = () -> disableStack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, null, onDisable);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
       moduleService.loadModules();
       moduleService.enableModules();
       moduleService.disableModules();
       moduleService.disableModules();
-      Assertions.assertEquals(1, enableStack);
+      Assertions.assertEquals(1, disableStack);
       Assertions.assertSame(PluginModulesState.DISABLED, moduleContainer.getState());
     }
   }
 
   /** Integration test cases */
-  @Test
-  void load_a_module_before_any_manipulation_shall_work() {
-    Assertions.assertEquals(0, enableStack);
-    Runnable onLoad = () -> enableStack++;
-    FvModule fvModule = moduleUtils.createModule("test-module", onLoad, null, null);
-    Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
-    moduleService.loadModules();
-    Assertions.assertEquals(1, enableStack);
-    Assertions.assertSame(PluginModulesState.LOADED, moduleContainer.getState());
-  }
+  @Nested
+  class integration_test_cases {
 
-  @Test
-  @DisplayName("Enable then disable one module")
-  void enableThenDisableOneModule() {
-    Assertions.assertEquals(0, enableStack);
-    Assertions.assertEquals(0, disableStack);
-    Runnable onEnable = () -> enableStack++;
-    Runnable onDisable = () -> disableStack++;
-    FvModule fvModule = moduleUtils.createModuleDeclarer("test-module", onEnable, onDisable);
-    Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
-    moduleService.enableModules();
-    moduleService.disableModules();
-    Assertions.assertEquals(1, enableStack);
-    Assertions.assertEquals(1, disableStack);
-    Assertions.assertTrue(moduleContainer.isHasLaunched());
-  }
+    @Test
+    void load_enable_and_disable_one_module() {
+      Runnable onEnable = () -> enableStack++;
+      Runnable onDisable = () -> disableStack++;
+      FvModule fvModule = moduleUtils.createModuleDeclarer("test-module", onEnable, onDisable);
+      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.enableModules();
+      moduleService.disableModules();
+      Assertions.assertEquals(1, enableStack);
+      Assertions.assertEquals(1, disableStack);
+      Assertions.assertTrue(moduleContainer.isHasLaunched());
+    }
 
-  @Test
-  @DisplayName("Enable then disable several modules")
-  void enableThenDisableSeveralModules() {
-    Assertions.assertEquals(0, enableStack);
-    Assertions.assertEquals(0, disableStack);
-    Runnable onEnable = () -> enableStack++;
-    Runnable onDisable = () -> disableStack++;
-    FvModule fvModule1 = moduleUtils.createModuleDeclarer("test-module-1", onEnable, onDisable);
-    FvModule fvModule2 = moduleUtils.createModuleDeclarer("test-module-2", onEnable, onDisable);
-    FvModule fvModule3 = moduleUtils.createModuleDeclarer("test-module-3", onEnable, onDisable);
-    Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule1));
-    Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule2));
-    Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule3));
-    moduleService.enableModules();
-    moduleService.disableModules();
-    Assertions.assertEquals(3, enableStack);
-    Assertions.assertEquals(3, disableStack);
-    Assertions.assertTrue(moduleContainer.isHasLaunched());
+    @Test
+    void load_enable_and_disable_several_module() {
+      Runnable onEnable = () -> enableStack++;
+      Runnable onDisable = () -> disableStack++;
+      FvModule fvModule1 = moduleUtils.createModuleDeclarer("test-module-1", onEnable, onDisable);
+      FvModule fvModule2 = moduleUtils.createModuleDeclarer("test-module-2", onEnable, onDisable);
+      FvModule fvModule3 = moduleUtils.createModuleDeclarer("test-module-3", onEnable, onDisable);
+      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule1));
+      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule2));
+      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule3));
+      moduleService.enableModules();
+      moduleService.disableModules();
+      Assertions.assertEquals(3, enableStack);
+      Assertions.assertEquals(3, disableStack);
+      Assertions.assertTrue(moduleContainer.isHasLaunched());
+    }
   }
 }
