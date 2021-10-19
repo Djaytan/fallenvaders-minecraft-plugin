@@ -38,31 +38,28 @@ public final class FallenVadersPlugin extends JavaPlugin {
 
   @Inject private PluginInitializer moduleRegInit;
   @Inject private ModuleService moduleService;
-  @Inject private Logger slf4jLogger;
 
   @Override
-  public void onEnable() {
+  public void onLoad() {
     // Guice setup
     FallenVadersInjector.inject(this);
 
+    // Modules initialization
+    moduleRegInit.initialize();
+    moduleService.loadModules();
+  }
+
+  @Override
+  public void onEnable() {
     // Config preparation
     this.saveDefaultConfig();
 
-    // Modules initialization
-    try {
-      moduleRegInit.initialize();
-      moduleService.enableModules();
-      slf4jLogger.info("FallenVaders plugin successfully enabled.");
-    } catch (ModuleException e) {
-      slf4jLogger.error("An error has occurred during modules registration.", e);
-    }
-    // TODO: FV-94 - better error management (catch all exceptions and allow the launch of some
-    // modules even if some other ones fail)
+    // Enable modules
+    moduleService.enableModules();
   }
 
   @Override
   public void onDisable() {
     moduleService.disableModules();
-    slf4jLogger.info("FallenVaders plugin disabled.");
   }
 }
