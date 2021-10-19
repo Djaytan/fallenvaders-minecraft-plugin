@@ -30,6 +30,9 @@ import javax.inject.Inject;
 /**
  * Test class of {@link ModuleContainer}.
  *
+ * <p>The following trivial methods are no tested: {@link ModuleContainer#getModules()} (a pure
+ * getter), {@link ModuleContainer#getState()} (a pure getter)
+ *
  * @author Voltariuss
  * @since 0.2.0
  */
