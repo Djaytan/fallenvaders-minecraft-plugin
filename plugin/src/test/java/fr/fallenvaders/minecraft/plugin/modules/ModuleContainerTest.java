@@ -52,7 +52,7 @@ class ModuleContainerTest {
   @Test
   @DisplayName("Init the module register")
   void isModuleRegisterWellInit() {
-    Assertions.assertFalse(moduleContainer.isHasLaunched());
+    Assertions.assertNull(moduleContainer.getState());
     Assertions.assertTrue(moduleContainer.getModules().isEmpty());
   }
 
