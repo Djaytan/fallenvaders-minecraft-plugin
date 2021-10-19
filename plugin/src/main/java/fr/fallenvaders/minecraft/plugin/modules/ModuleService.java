@@ -58,6 +58,7 @@ public final class ModuleService {
     try {
       if (moduleContainer.getState() == null) {
         moduleContainer.addModule(fvModule);
+        logger.info("Module '{}' registered.", fvModule.getModuleName());
       } else {
         throw new ModuleException("The modules manipulation process has already been launched.");
       }
@@ -103,10 +104,11 @@ public final class ModuleService {
               case ENABLED -> module.onEnable();
               case DISABLED -> module.onDisable();
             }
-            logger.info("Module {} {}.", module.getModuleName(), state.name().toLowerCase());
+            logger.info("Module '{}' {}.", module.getModuleName(), state.name().toLowerCase());
           });
+      logger.info("FallenVaders modules successfully {}.", state.name().toLowerCase());
     } catch (ModuleException e) {
-      logger.error(String.format("Fail during modules manipulation (%s phase).", state.name()), e);
+      logger.error("Fail during modules manipulation ({} phase).", state.name(), e);
     }
   }
 }

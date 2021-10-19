@@ -62,10 +62,7 @@ public final class FullPluginInitializer implements PluginInitializer {
   }
 
   @Override
-  public void initialize() throws ModuleException {
-    // TODO: FV-94 - treat exception before rethrow again (rethrow only if needed...)
-    logger.info("Start modules registration.");
+  public void initialize() {
     moduleService.registerModule(justiceHandsModule);
-    logger.info("Modules registration done.");
   }
 }

@@ -31,10 +31,6 @@ import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
  */
 public interface PluginInitializer {
 
-  /**
-   * Initializes {@link ModuleService} singleton instance with {@link FvModule} instances.
-   *
-   * @throws ModuleException if the initialization into the {@link ModuleService} fail.
-   */
-  void initialize() throws ModuleException;
+  /** Initializes {@link ModuleService} singleton instance with {@link FvModule} instances. */
+  void initialize();
 }
