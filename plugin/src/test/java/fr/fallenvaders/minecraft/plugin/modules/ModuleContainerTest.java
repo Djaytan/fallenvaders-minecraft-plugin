@@ -59,7 +59,7 @@ class ModuleContainerTest {
   class add_module {
 
     @Test
-    void add_a_module_shall_work() {
+    void add_a_module_in_empty_container_shall_work() {
       FvModule module = moduleUtils.createWithoutBehaviorModule("test-module");
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module));
     }
