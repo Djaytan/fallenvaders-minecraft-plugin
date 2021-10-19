@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.List;
 
 /**
  * This is an implementation class of {@link PluginInitializer} interface.
@@ -40,8 +41,7 @@ public final class FullPluginInitializer implements PluginInitializer {
   private final Logger logger;
   private final ModuleService moduleService;
 
-  /* FallenVaders' modules declaration */
-  private final JusticeHandsModule justiceHandsModule;
+  private final List<FvModule> modules;
 
   /**
    * Constructor.
@@ -58,11 +58,14 @@ public final class FullPluginInitializer implements PluginInitializer {
     this.moduleService = moduleService;
 
     /* FallenVaders' modules declaration */
-    this.justiceHandsModule = justiceHandsModule;
+    this.modules = List.of(justiceHandsModule);
   }
 
   @Override
   public void initialize() {
-    moduleService.registerModule(justiceHandsModule);
+    for (FvModule module : modules) {
+      moduleService.registerModule(module);
+    }
+    logger.info("All FallenVaders' modules registered.");
   }
 }
