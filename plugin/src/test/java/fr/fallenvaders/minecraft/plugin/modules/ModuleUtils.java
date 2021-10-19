@@ -52,7 +52,10 @@ public class ModuleUtils {
    * @return a {@link FvModule} test-implementation.
    */
   public @NotNull FvModule createModule(
-      @NotNull String moduleName, @Nullable Runnable onLoad, @Nullable Runnable onEnable, @Nullable Runnable onDisable) {
+      @NotNull String moduleName,
+      @Nullable Runnable onLoad,
+      @Nullable Runnable onEnable,
+      @Nullable Runnable onDisable) {
     return new FvModule(moduleName) {
       @Override
       public void onLoad() {

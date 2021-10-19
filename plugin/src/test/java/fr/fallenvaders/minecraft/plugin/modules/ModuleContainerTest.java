@@ -161,10 +161,13 @@ class ModuleContainerTest {
     @Test
     void set_loaded_state_after_higher_state_shall_not_work() {
       Assertions.assertDoesNotThrow(() -> moduleContainer.setState(PluginModulesState.ENABLED));
-      Assertions.assertThrows(ModuleException.class, () -> moduleContainer.setState(PluginModulesState.LOADED));
+      Assertions.assertThrows(
+          ModuleException.class, () -> moduleContainer.setState(PluginModulesState.LOADED));
       Assertions.assertDoesNotThrow(() -> moduleContainer.setState(PluginModulesState.DISABLED));
-      Assertions.assertThrows(ModuleException.class, () -> moduleContainer.setState(PluginModulesState.LOADED));
-      Assertions.assertThrows(ModuleException.class, () -> moduleContainer.setState(PluginModulesState.ENABLED));
+      Assertions.assertThrows(
+          ModuleException.class, () -> moduleContainer.setState(PluginModulesState.LOADED));
+      Assertions.assertThrows(
+          ModuleException.class, () -> moduleContainer.setState(PluginModulesState.ENABLED));
     }
   }
 }
