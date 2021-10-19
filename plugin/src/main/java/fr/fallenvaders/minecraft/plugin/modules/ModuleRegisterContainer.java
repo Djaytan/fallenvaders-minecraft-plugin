@@ -17,9 +17,11 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import fr.fallenvaders.minecraft.commons.FvModule;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +36,11 @@ import java.util.Objects;
 @Singleton
 public final class ModuleRegisterContainer {
 
-  private final List<ModuleDeclarer> modules;
+  private final List<FvModule> modules;
   private boolean hasLaunched;
 
   /** Constructor. */
+  @Inject
   public ModuleRegisterContainer() {
     modules = new ArrayList<>();
     hasLaunched = false;
@@ -50,10 +53,10 @@ public final class ModuleRegisterContainer {
    * @param module The module to add into the register.
    * @throws ModuleRegisterException if a module with the same name of the new on already exists.
    */
-  public void addModule(@NotNull ModuleDeclarer module) throws ModuleRegisterException {
+  public void addModule(@NotNull FvModule module) throws ModuleRegisterException {
     Objects.requireNonNull(module);
 
-    ModuleDeclarer existingModule = getModule(module.getModuleName());
+    FvModule existingModule = getModule(module.getModuleName());
 
     if (existingModule == null) {
       modules.add(module);
@@ -66,14 +69,13 @@ public final class ModuleRegisterContainer {
   }
 
   /**
-   * Tries to find the registered {@link ModuleDeclarer} which match with the given module's name.
+   * Tries to find the registered {@link FvModule} which match with the given module's name.
    *
    * @param moduleName The name of the sought module.
-   * @return The registered {@link ModuleDeclarer} which match with the given module's name if it
-   *     exists.
+   * @return The registered module which match with the given module's name if it exists.
    */
   @Nullable
-  public ModuleDeclarer getModule(@NotNull String moduleName) {
+  public FvModule getModule(@NotNull String moduleName) {
     Objects.requireNonNull(moduleName);
     return modules.stream()
         .filter(module -> module.getModuleName().equals(moduleName))
@@ -82,12 +84,12 @@ public final class ModuleRegisterContainer {
   }
 
   /**
-   * Returns the list of {@link ModuleDeclarer} registered.
+   * Returns the list of {@link FvModule} registered.
    *
-   * @return The list of {@link ModuleDeclarer} registered.
+   * @return The list of {@link FvModule} registered.
    */
   @NotNull
-  public List<ModuleDeclarer> getModules() {
+  public List<FvModule> getModules() {
     return modules;
   }
 

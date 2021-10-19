@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import fr.fallenvaders.minecraft.commons.FvModule;
 import fr.fallenvaders.minecraft.plugin.guice.TestInjector;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.Assertions;
@@ -59,14 +60,12 @@ class ModuleRegisterContainerTest {
   @DisplayName("Add two identical modules")
   void addTwoIdenticalModules() {
     String moduleName = "test-module";
-    ModuleDeclarer moduleDeclarer1 =
-        moduleDeclarerUtils.createWithoutBehaviorModuleDeclarer(moduleName);
-    ModuleDeclarer moduleDeclarer2 =
-        moduleDeclarerUtils.createWithoutBehaviorModuleDeclarer(moduleName);
-    Assertions.assertDoesNotThrow(() -> moduleRegisterContainer.addModule(moduleDeclarer1));
+    FvModule fvModule1 = moduleDeclarerUtils.createWithoutBehaviorModule(moduleName);
+    FvModule fvModule2 = moduleDeclarerUtils.createWithoutBehaviorModule(moduleName);
+    Assertions.assertDoesNotThrow(() -> moduleRegisterContainer.addModule(fvModule1));
     Assertions.assertThrows(
-        ModuleRegisterException.class, () -> moduleRegisterContainer.addModule(moduleDeclarer1));
+        ModuleRegisterException.class, () -> moduleRegisterContainer.addModule(fvModule1));
     Assertions.assertThrows(
-        ModuleRegisterException.class, () -> moduleRegisterContainer.addModule(moduleDeclarer2));
+        ModuleRegisterException.class, () -> moduleRegisterContainer.addModule(fvModule2));
   }
 }

@@ -17,20 +17,19 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
-import fr.fallenvaders.minecraft.plugin.modules.declarers.*;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.Objects;
 
 /**
  * This is an implementation class of {@link ModuleRegisterInitializer} interface. The purpose of
  * this initializer is to assemble a full version of the plugin by injecting all the existing {@link
- * ModuleDeclarer}s.
+ * fr.fallenvaders.minecraft.commons.FvModule}s.
  *
- * @author Voltariuss
+ * @author FallenVaders' dev team
  * @since 0.1.0
  */
 @Singleton
@@ -38,6 +37,9 @@ public final class CompleteModuleRegisterInitializer implements ModuleRegisterIn
 
   private final Logger logger;
   private final ModuleRegisterService moduleRegisterService;
+
+  /* FallenVaders' modules declaration */
+  private final JusticeHands justiceHands;
 
   /**
    * Constructor.
@@ -47,21 +49,21 @@ public final class CompleteModuleRegisterInitializer implements ModuleRegisterIn
    */
   @Inject
   public CompleteModuleRegisterInitializer(
-      @NotNull Logger logger, @NotNull ModuleRegisterService moduleRegisterService) {
-    Objects.requireNonNull(logger);
-    Objects.requireNonNull(moduleRegisterService);
+      @NotNull Logger logger,
+      @NotNull ModuleRegisterService moduleRegisterService,
+      @NotNull JusticeHands justiceHands) {
     this.logger = logger;
     this.moduleRegisterService = moduleRegisterService;
+
+    /* FallenVaders' modules declaration */
+    this.justiceHands = justiceHands;
   }
 
   @Override
   public void initialize() throws ModuleRegisterException {
+    // TODO: FV-94 - treat exception before rethrow again (rethrow only if needed...)
     logger.info("Start modules registration.");
-    moduleRegisterService.registerModule(FallenVadersCoreModuleDeclarer.class);
-    moduleRegisterService.registerModule(JusticeHandsModuleDeclarer.class);
-    moduleRegisterService.registerModule(MailBoxModuleDeclarer.class);
-    moduleRegisterService.registerModule(MinecraftEnhancerModuleDeclarer.class);
-    moduleRegisterService.registerModule(MiniEventsModuleDeclarer.class);
+    moduleRegisterService.registerModule(justiceHands);
     logger.info("Modules registration done.");
   }
 }

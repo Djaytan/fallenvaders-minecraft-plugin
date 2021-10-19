@@ -17,6 +17,8 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import fr.fallenvaders.minecraft.commons.FvModule;
+
 /**
  * This class is in charge to initialize the {@link ModuleRegisterService} singleton instance.
  *
@@ -26,8 +28,7 @@ package fr.fallenvaders.minecraft.plugin.modules;
 public interface ModuleRegisterInitializer {
 
   /**
-   * Initializes {@link ModuleRegisterService} singleton instance with {@link ModuleDeclarer}
-   * instances.
+   * Initializes {@link ModuleRegisterService} singleton instance with {@link FvModule} instances.
    *
    * @throws ModuleRegisterException if the initialization into the {@link ModuleRegisterService}
    *     fail.

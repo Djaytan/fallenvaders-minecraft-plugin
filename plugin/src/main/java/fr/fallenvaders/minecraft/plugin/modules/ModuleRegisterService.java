@@ -17,85 +17,62 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import fr.fallenvaders.minecraft.commons.FvModule;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.Objects;
 
 /**
- * This is a singleton class which manage registration of {@link ModuleDeclarer}.
+ * This is a singleton class which manage registration of {@link FvModule}.
  *
- * @author Voltariuss
+ * @author FallenVaders' dev team.
  * @since 0.2.0
  */
 @Singleton
 public final class ModuleRegisterService {
 
   private final Logger logger;
-  private final ModuleDeclarerFactory moduleDeclarerFactory;
   private final ModuleRegisterContainer moduleRegisterContainer;
 
   /**
    * Constructor.
    *
    * @param logger The SLF4J project's logger instance.
-   * @param moduleDeclarerFactory The {@link ModuleDeclarer} factory.
    * @param moduleRegisterContainer The container associated to this service.
    */
   @Inject
   public ModuleRegisterService(
-      @NotNull Logger logger,
-      @NotNull ModuleDeclarerFactory moduleDeclarerFactory,
-      @NotNull ModuleRegisterContainer moduleRegisterContainer) {
-    Objects.requireNonNull(logger);
-    Objects.requireNonNull(moduleDeclarerFactory);
-    Objects.requireNonNull(moduleRegisterContainer);
+      @NotNull Logger logger, @NotNull ModuleRegisterContainer moduleRegisterContainer) {
     this.logger = logger;
-    this.moduleDeclarerFactory = moduleDeclarerFactory;
     this.moduleRegisterContainer = moduleRegisterContainer;
   }
 
   /**
-   * Registers a {@link ModuleDeclarer}. If modules registration has already been launched, then an
+   * Registers a {@link FvModule}. If modules registration has already been launched, then an
    * exception is thrown.
    *
-   * @param moduleDeclarer The module to register.
+   * @param fvModule The FallenVaders' module to register.
    * @throws ModuleRegisterException if modules registration has already been launched or the {@link
-   *     ModuleDeclarer} is already registered.
+   *     FvModule} is already registered.
    */
-  public void registerModule(@NotNull ModuleDeclarer moduleDeclarer)
-      throws ModuleRegisterException {
-    Objects.requireNonNull(moduleDeclarer);
-
+  public void registerModule(@NotNull FvModule fvModule) throws ModuleRegisterException {
     if (moduleRegisterContainer.isHasLaunched()) {
       throw new ModuleRegisterException(
-          "Module registration rejected: the module registration process has already been launched.");
+          String.format(
+              "Module registration of '%s' rejected: the module registration process has already been launched.",
+              fvModule.getModuleName()));
     }
-    moduleRegisterContainer.addModule(moduleDeclarer);
+    moduleRegisterContainer.addModule(fvModule);
   }
 
-  /**
-   * Registers a {@link ModuleDeclarer}. If modules registration has already been launched, then an
-   * exception is thrown.
-   *
-   * @param moduleClass The class of the module to register.
-   * @throws ModuleRegisterException if modules has already been launched or the {@link
-   *     ModuleDeclarer} is already registered or the something wrong during the module declarer
-   *     creation.
-   */
-  public void registerModule(@NotNull Class<? extends ModuleDeclarer> moduleClass)
-      throws ModuleRegisterException {
-    Objects.requireNonNull(moduleClass);
-    ModuleDeclarer moduleDeclarer = moduleDeclarerFactory.createModule(moduleClass);
-    registerModule(moduleDeclarer);
-  }
+  // TODO: FV-123 - add loadModules method and replace "hasLaunched" by "loaded"
 
   /**
-   * Enables all registered {@link ModuleDeclarer} by calling the {@link ModuleDeclarer#onEnable()}
-   * method for each of them. After that, modules registration is considered has "launched" and none
-   * new registrations are allowed anymore.
+   * Enables all registered {@link FvModule} by calling the {@link FvModule#onEnable()} method for
+   * each of them. After that, modules registration is considered has "launched" and none new
+   * registrations are allowed anymore.
    */
   public void enableModules() {
     moduleRegisterContainer
@@ -109,8 +86,8 @@ public final class ModuleRegisterService {
   }
 
   /**
-   * Disables all registered {@link ModuleDeclarer} by calling the {@link
-   * ModuleDeclarer#onDisable()} method for each of them.
+   * Disables all registered {@link FvModule} by calling the {@link FvModule#onDisable()} method for
+   * each of them.
    */
   public void disableModules() {
     moduleRegisterContainer

@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import fr.fallenvaders.minecraft.commons.FvModule;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +27,7 @@ import javax.inject.Singleton;
 import java.util.Objects;
 
 /**
- * Utils about creation of {@link ModuleDeclarer} for testing purposes.
+ * Utils about creation of {@link FvModule} for testing purposes.
  *
  * @author Voltariuss
  * @since 0.2.0
@@ -34,58 +35,40 @@ import java.util.Objects;
 @Singleton
 public class ModuleDeclarerUtils {
 
-  private final JavaPlugin javaPlugin;
-
   /**
-   * Constructor.
-   *
-   * @param javaPlugin The mocked Bukkit plugin.
-   */
-  @Inject
-  public ModuleDeclarerUtils(@NotNull JavaPlugin javaPlugin) {
-    Objects.requireNonNull(javaPlugin);
-    this.javaPlugin = javaPlugin;
-  }
-
-  /**
-   * Creates a {@link ModuleDeclarer} implementation without any behavior.
+   * Creates a {@link FvModule} implementation without any behavior.
    *
    * @param moduleName The module name.
-   * @return a {@link ModuleDeclarer} implementation without any behavior.
+   * @return a {@link FvModule} implementation without any behavior.
    */
-  public ModuleDeclarer createWithoutBehaviorModuleDeclarer(@NotNull String moduleName) {
+  public @NotNull FvModule createWithoutBehaviorModule(@NotNull String moduleName) {
     return createModuleDeclarer(moduleName, null, null);
   }
 
   /**
-   * Creates a {@link ModuleDeclarer} implementation.
+   * Creates a {@link FvModule} implementation.
    *
    * @param moduleName The module name.
    * @param onEnable This one is executed when the module is enabled.
    * @param onDisable This one is executed when the module is disabled.
-   * @return a {@link ModuleDeclarer} implementation.
+   * @return a {@link FvModule} implementation.
    */
-  public ModuleDeclarer createModuleDeclarer(
+  public @NotNull FvModule createModuleDeclarer(
       @NotNull String moduleName, @Nullable Runnable onEnable, @Nullable Runnable onDisable) {
-    Objects.requireNonNull(moduleName);
+    return new FvModule(moduleName) {
+      @Override
+      public void onEnable() {
+        if (onEnable != null) {
+          onEnable.run();
+        }
+      }
 
-    ModuleDeclarer moduleDeclarer;
-    moduleDeclarer =
-        new ModuleDeclarer(javaPlugin, moduleName) {
-          @Override
-          public void onEnable() {
-            if (onEnable != null) {
-              onEnable.run();
-            }
-          }
-
-          @Override
-          public void onDisable() {
-            if (onDisable != null) {
-              onDisable.run();
-            }
-          }
-        };
-    return moduleDeclarer;
+      @Override
+      public void onDisable() {
+        if (onDisable != null) {
+          onDisable.run();
+        }
+      }
+    };
   }
 }
