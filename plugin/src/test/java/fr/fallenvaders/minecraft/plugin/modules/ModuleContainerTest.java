@@ -85,4 +85,12 @@ class ModuleContainerTest {
     Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule1));
     Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule2));
   }
+
+  /** Test cases: {@link ModuleContainer#getModule(String)} **/
+
+  @Test
+  @DisplayName("Search module when no ones are registered")
+  void getModule_when_no_ones_are_registered() {
+    Assertions.assertNull(moduleContainer.getModule("test-module"));
+  }
 }
