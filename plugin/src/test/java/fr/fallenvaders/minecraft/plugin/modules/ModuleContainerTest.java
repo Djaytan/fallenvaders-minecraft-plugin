@@ -148,4 +148,23 @@ class ModuleContainerTest {
       Assertions.assertSame(targetedModule, moduleContainer.getModule(targetedModuleName));
     }
   }
+
+  /** Test cases: {@link ModuleContainer#setState(PluginModulesState)} */
+  @Nested
+  class set_state {
+
+    @Test
+    void set_loaded_state_when_no_state_shall_work() {
+      Assertions.assertDoesNotThrow(() -> moduleContainer.setState(PluginModulesState.LOADED));
+    }
+
+    @Test
+    void set_loaded_state_after_higher_state_shall_not_work() {
+      Assertions.assertDoesNotThrow(() -> moduleContainer.setState(PluginModulesState.ENABLED));
+      Assertions.assertThrows(ModuleException.class, () -> moduleContainer.setState(PluginModulesState.LOADED));
+      Assertions.assertDoesNotThrow(() -> moduleContainer.setState(PluginModulesState.DISABLED));
+      Assertions.assertThrows(ModuleException.class, () -> moduleContainer.setState(PluginModulesState.LOADED));
+      Assertions.assertThrows(ModuleException.class, () -> moduleContainer.setState(PluginModulesState.ENABLED));
+    }
+  }
 }
