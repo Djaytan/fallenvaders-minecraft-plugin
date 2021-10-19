@@ -17,26 +17,58 @@
 
 package fr.fallenvaders.minecraft.commons;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
- * This is the interface for a FallenVaders' module declaration. It is mandatory to implement this
- * interface in each module of the project in order to make possible the registration of the module
- * in the plugin properly.
+ * This is the abstraction of a FallenVaders' module. It is mandatory to implement it in
+ * each module of the project in order to make possible the registration of the module in the plugin
+ * properly.
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
-public interface FvModule {
+public abstract class FvModule {
+
+  private String moduleName;
+
+  /**
+   * Constructor.
+   *
+   * @param moduleName The module's name.
+   */
+  protected FvModule(@NotNull String moduleName) {
+    this.moduleName = moduleName;
+  }
 
   /**
    * Defines the behavior involved when the FallenVaders' module is loaded.
    *
    * <p>Note: this method is called before {@link FvModule#onEnable()}.
+   *
+   * <p>The implementation of this method is optional.
    */
-  void onLoad();
+  public void onLoad() {}
 
-  /** Defines the logic needed to initialize and make operational the FallenVaders' module. */
-  void onEnable();
+  /**
+   * Defines the logic needed to initialize and make operational the FallenVaders' module.
+   *
+   * <p>It is mandatory to implement this method.
+   */
+  public abstract void onEnable();
 
-  /** Defines the logic needed to properly disable the FallenVaders' module. */
-  void onDisable();
+  /**
+   * Defines the logic needed to properly disable the FallenVaders' module.
+   *
+   * <p>The implementation of this method is optional.
+   */
+  public void onDisable() {}
+
+  /**
+   * Getter.
+   *
+   * @return The module's name.
+   */
+  public final @NotNull String getModuleName() {
+    return moduleName;
+  }
 }
