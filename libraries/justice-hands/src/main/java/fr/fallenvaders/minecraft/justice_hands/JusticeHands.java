@@ -8,6 +8,7 @@ import fr.fallenvaders.minecraft.justice_hands.keyskeeper.listeners.AsyncChatLis
 import fr.fallenvaders.minecraft.justice_hands.keyskeeper.listeners.PlayerLoginListener;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CategoriesList;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CommandSM;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -22,10 +23,15 @@ import javax.inject.Singleton;
  * @version 0.3.0
  */
 @Singleton
-public class JusticeHands implements FvModule {
+public final class JusticeHands extends FvModule {
+
+  /** This is the module's name. */
+  public static final String MODULE_NAME = "justice-hands";
 
   private final JavaPlugin plugin;
   private final PluginManager pluginManager;
+  private final FileConfiguration config;
+
   private final PaperCommandManager paperCommandManager;
 
   private final CommandSM commandSM;
@@ -39,20 +45,23 @@ public class JusticeHands implements FvModule {
    * @param paperCommandManager The Paper command manager of aïkar lib.
    * @param commandCR The criminal record Bukkit command.
    * @param commandSM The sanction manager Bukkit command.
+   * @param config The Bukkit plugin config file instance.
    */
   @Inject
-  public JusticeHands(@NotNull JavaPlugin plugin,
-    @NotNull PluginManager pluginManager, @NotNull PaperCommandManager paperCommandManager, @NotNull CommandCR commandCR, @NotNull CommandSM commandSM) {
+  public JusticeHands(
+      @NotNull JavaPlugin plugin,
+      @NotNull PluginManager pluginManager,
+      @NotNull PaperCommandManager paperCommandManager,
+      @NotNull CommandCR commandCR,
+      @NotNull CommandSM commandSM,
+      @NotNull FileConfiguration config) {
+    super(MODULE_NAME);
     this.plugin = plugin;
     this.pluginManager = pluginManager;
     this.paperCommandManager = paperCommandManager;
     this.commandCR = commandCR;
     this.commandSM = commandSM;
-  }
-
-  @Override
-  public void onLoad() {
-    /* Nothing to do */
+    this.config = config;
   }
 
   @Override
@@ -61,12 +70,7 @@ public class JusticeHands implements FvModule {
     activeListeners();
 
     // Load sanctions from config folder
-    CategoriesList.getSanctionsConfig(plugin.getConfig());
-  }
-
-  @Override
-  public void onDisable() {
-    /* Nothing to do */
+    CategoriesList.getSanctionsConfig(config);
   }
 
   private void activeListeners() {
