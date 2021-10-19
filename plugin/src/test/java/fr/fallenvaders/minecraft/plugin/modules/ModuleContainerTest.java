@@ -90,5 +90,13 @@ class ModuleContainerTest {
     void get_a_module_when_no_ones_are_registered_shall_be_null() {
       Assertions.assertNull(moduleContainer.getModule("test-module"));
     }
+
+    @Test
+    void get_a_module_when_only_one_is_registered_shall_work() {
+      String moduleName = "test-module";
+      FvModule module = moduleUtils.createWithoutBehaviorModule(moduleName);
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module));
+      Assertions.assertSame(moduleContainer.getModule(moduleName), module);
+    }
   }
 }
