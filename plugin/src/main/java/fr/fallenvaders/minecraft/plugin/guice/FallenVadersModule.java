@@ -23,7 +23,10 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import fr.fallenvaders.minecraft.plugin.modules.FullPluginInitializer;
 import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
+import org.bukkit.Server;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -57,6 +60,24 @@ public final class FallenVadersModule extends AbstractModule {
   @Singleton
   public @NotNull JavaPlugin providesPlugin() {
     return plugin;
+  }
+
+  @Provides
+  @Singleton
+  public @NotNull Server providesServer() {
+    return plugin.getServer();
+  }
+
+  @Provides
+  @Singleton
+  public @NotNull PluginLoader providesPluginLoader() {
+    return plugin.getPluginLoader();
+  }
+
+  @Provides
+  @Singleton
+  public @NotNull ConsoleCommandSender providesConsoleSender() {
+    return plugin.getServer().getConsoleSender();
   }
 
   @Provides
