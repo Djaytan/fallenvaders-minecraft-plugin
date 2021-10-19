@@ -39,7 +39,7 @@ public class ModuleUtils {
    * @return a {@link FvModule} implementation without any behavior.
    */
   public @NotNull FvModule createWithoutBehaviorModule(@NotNull String moduleName) {
-    return createModuleDeclarer(moduleName, null, null, null);
+    return createModule(moduleName, null, null, null);
   }
 
   /**
@@ -51,7 +51,7 @@ public class ModuleUtils {
    * @param onDisable This one is executed when the module is disabled.
    * @return a {@link FvModule} test-implementation.
    */
-  public @NotNull FvModule createModuleDeclarer(
+  public @NotNull FvModule createModule(
       @NotNull String moduleName, @Nullable Runnable onLoad, @Nullable Runnable onEnable, @Nullable Runnable onDisable) {
     return new FvModule(moduleName) {
       @Override
