@@ -1,6 +1,6 @@
 package fr.fallenvaders.minecraft.justice_hands.keyskeeper;
 
-import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanction;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ public class KeysKeeperBot {
 
   @NotNull
   public static Long getPlayerMuteDate(Player player) {
-    List<Long> muteDateTSList = JusticeHands.getSqlKK().getPlayerMutesEDLong(player);
+    List<Long> muteDateTSList = JusticeHandsModule.getSqlKK().getPlayerMutesEDLong(player);
     try {
       return muteDateTSList.stream().max(Long::compare).get();
     } catch (NoSuchElementException e) {
@@ -31,7 +31,7 @@ public class KeysKeeperBot {
   @Nullable
   public static CJSanction getPlayerActiveBan(Player player) {
     List<CJSanction> playerBansList =
-        JusticeHands.getSqlKK().getPlayerBans(player); // Récupération de tous les bans du joueurs
+        JusticeHandsModule.getSqlKK().getPlayerBans(player); // Récupération de tous les bans du joueurs
     System.out.println("Nombre de bans : " + playerBansList.size());
 
     List<Long> unbanDateTSList =

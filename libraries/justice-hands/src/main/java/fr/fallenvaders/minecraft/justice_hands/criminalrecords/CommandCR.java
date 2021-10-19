@@ -1,7 +1,7 @@
 package fr.fallenvaders.minecraft.justice_hands.criminalrecords;
 
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
-import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justice_hands.criminalrecords.invmanager.InventoryBuilderCR;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -28,9 +28,9 @@ public class CommandCR implements CommandExecutor {
         } else if (args.length == 1 && args[0] != null) {
           try {
             UUID playerUUID = Bukkit.getPlayer(args[0]).getUniqueId();
-            if (JusticeHands.getSqlPA().hasAccount(playerUUID)) {
+            if (JusticeHandsModule.getSqlPA().hasAccount(playerUUID)) {
               UUID targetUUID =
-                  JusticeHands.getSqlPA().getAccount(Bukkit.getPlayer(args[0]).getUniqueId());
+                  JusticeHandsModule.getSqlPA().getAccount(Bukkit.getPlayer(args[0]).getUniqueId());
 
               InventoryBuilderCR.openMainMenu(
                   moderator, targetUUID); // Ouverture de l'inventaire SM du joueur target.

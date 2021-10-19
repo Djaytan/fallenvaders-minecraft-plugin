@@ -1,6 +1,6 @@
 package fr.fallenvaders.minecraft.justice_hands.criminalrecords.invmanager;
 
-import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
 import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanction;
 import org.bukkit.Material;
@@ -111,7 +111,7 @@ public class SanctionStatistics {
     }
 
     // Récupération des points actuel du joueur
-    int playerActualPoints = JusticeHands.getSqlPA().getPoints(target.getUniqueId());
+    int playerActualPoints = JusticeHandsModule.getSqlPA().getPoints(target.getUniqueId());
 
     // Total des points obtenus depuis sa première connexion sur le serveur
     int playerAllPoints = 0;

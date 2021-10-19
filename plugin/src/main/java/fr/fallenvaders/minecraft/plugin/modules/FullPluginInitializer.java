@@ -18,7 +18,7 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
 import fr.fallenvaders.minecraft.commons.FvModule;
-import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -41,7 +41,7 @@ public final class FullPluginInitializer implements PluginInitializer {
   private final ModuleService moduleService;
 
   /* FallenVaders' modules declaration */
-  private final JusticeHands justiceHands;
+  private final JusticeHandsModule justiceHandsModule;
 
   /**
    * Constructor.
@@ -53,19 +53,19 @@ public final class FullPluginInitializer implements PluginInitializer {
   public FullPluginInitializer(
       @NotNull Logger logger,
       @NotNull ModuleService moduleService,
-      @NotNull JusticeHands justiceHands) {
+      @NotNull JusticeHandsModule justiceHandsModule) {
     this.logger = logger;
     this.moduleService = moduleService;
 
     /* FallenVaders' modules declaration */
-    this.justiceHands = justiceHands;
+    this.justiceHandsModule = justiceHandsModule;
   }
 
   @Override
   public void initialize() throws ModuleException {
     // TODO: FV-94 - treat exception before rethrow again (rethrow only if needed...)
     logger.info("Start modules registration.");
-    moduleService.registerModule(justiceHands);
+    moduleService.registerModule(justiceHandsModule);
     logger.info("Modules registration done.");
   }
 }

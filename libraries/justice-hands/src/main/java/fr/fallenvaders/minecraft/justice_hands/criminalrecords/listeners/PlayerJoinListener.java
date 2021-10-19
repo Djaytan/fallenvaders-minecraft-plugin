@@ -1,6 +1,6 @@
 package fr.fallenvaders.minecraft.justice_hands.criminalrecords.listeners;
 
-import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,6 +15,6 @@ public class PlayerJoinListener implements Listener {
   @EventHandler
   public void onJoin(PlayerJoinEvent event) {
     Player player = event.getPlayer();
-    JusticeHands.getSqlPA().createAccount(player.getUniqueId());
+    JusticeHandsModule.getSqlPA().createAccount(player.getUniqueId());
   }
 }

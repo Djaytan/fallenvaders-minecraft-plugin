@@ -1,7 +1,7 @@
 package fr.fallenvaders.minecraft.justice_hands.sanctionmanager;
 
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
-import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.objects.Sanction;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -34,7 +34,7 @@ public class SanctionsAlgo {
    */
 
   public static void generateSanction(Sanction sanction, Player moderator, Player target) {
-    final FileConfiguration CONFIG = JusticeHands.PLUGIN.getConfig();
+    final FileConfiguration CONFIG = JusticeHandsModule.PLUGIN.getConfig();
     final int CFG_MUTE_MIN_POINT = CONFIG.getInt(CFG_PATH_MUTE_MIN_POINT);
     final int CFG_BAN_DAY_POINT = CONFIG.getInt(CFG_PATH_BAN_DAY_POINT);
     final int CFG_RISINGBAN_LIMIT = CONFIG.getInt(CFG_PATH_RISINGBAN_LIMIT);
@@ -42,7 +42,7 @@ public class SanctionsAlgo {
     // Lors de l'algorithme, les points et le types de sanction peuvent être modifiés.
     // On va donc créer une nouvelle sanction identique à celle en paramètre.
     Sanction tempSanction = (Sanction) sanction.clone();
-    final int targetPoints = JusticeHands.getSqlPA().getPoints(target.getUniqueId());
+    final int targetPoints = JusticeHandsModule.getSqlPA().getPoints(target.getUniqueId());
 
     // Permet de dire si un joueur mérite un ban au lieu d'un mute ou d'un kick
     if (targetPoints >= CFG_RISINGBAN_LIMIT
@@ -54,7 +54,7 @@ public class SanctionsAlgo {
       // Le type de sanction est un type sans date d'expiration
     } else if (tempSanction.getInitialType().equals("kick")
         || tempSanction.getInitialType().equals("bandef")) {
-      JusticeHands.getSqlSM().addSanction(target, moderator, tempSanction, null);
+      JusticeHandsModule.getSqlSM().addSanction(target, moderator, tempSanction, null);
       sendAlertMsg(
           target, tempSanction, GeneralUtils.getPrefix("SM"), System.currentTimeMillis(), 0);
     } else if (tempSanction.getInitialType().equals("mute")
@@ -72,7 +72,7 @@ public class SanctionsAlgo {
   // Algorithme permettant la génération du temps d'expiration adéquat selon le joueur
   private static void generateBanMute(
       Sanction tempSanction, Player moderator, Player target, int muteMinPerPts, int banDayPerPts) {
-    final int targetPoints = JusticeHands.getSqlPA().getPoints(target.getUniqueId());
+    final int targetPoints = JusticeHandsModule.getSqlPA().getPoints(target.getUniqueId());
     final long currentTime = System.currentTimeMillis();
     final double extraTime;
 
@@ -90,7 +90,7 @@ public class SanctionsAlgo {
     long expireTime = (long) (currentTime + extraTime);
     Timestamp expireDate = new Timestamp(expireTime);
 
-    JusticeHands.getSqlSM().addSanction(target, moderator, tempSanction, expireDate);
+    JusticeHandsModule.getSqlSM().addSanction(target, moderator, tempSanction, expireDate);
     sendAlertMsg(target, tempSanction, GeneralUtils.getPrefix("SM"), currentTime, expireTime);
   }
 

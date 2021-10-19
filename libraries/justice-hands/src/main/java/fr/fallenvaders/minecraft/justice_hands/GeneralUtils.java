@@ -35,7 +35,7 @@ public class GeneralUtils {
     lores.add("§7Pseudo: §f" + target.getName());
     lores.add("§7Grade: §fà remplir");
     lores.add(
-        "§7Points de sanctions: §6" + JusticeHands.getSqlPA().getPoints(target.getUniqueId()));
+        "§7Points de sanctions: §6" + JusticeHandsModule.getSqlPA().getPoints(target.getUniqueId()));
     lores.add("§7AchievementPoints: §fà remplir");
     lores.add("§7Connecté: " + getState(target.isOnline()));
     Date firstPlayed = new Date(target.getFirstPlayed());

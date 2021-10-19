@@ -1,7 +1,7 @@
 package fr.fallenvaders.minecraft.justice_hands.criminalrecords.invmanager;
 
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
-import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanction;
 import fr.minuskube.inv.InventoryManager;
 import fr.minuskube.inv.SmartInventory;
@@ -20,10 +20,10 @@ public class InventoryBuilderCR {
     Player target = Bukkit.getPlayer(targetUUID);
 
     // Récupération de la liste des sanctions du joueur
-    List<CJSanction> playerAllSanctionList = JusticeHands.getSqlSM().getPlayerSanctions(player);
+    List<CJSanction> playerAllSanctionList = JusticeHandsModule.getSqlSM().getPlayerSanctions(player);
 
     // Création de l'inventaire
-    InventoryManager inventoryManager = new InventoryManager(JusticeHands.PLUGIN);
+    InventoryManager inventoryManager = new InventoryManager(JusticeHandsModule.PLUGIN);
     inventoryManager.init();
 
     SmartInventory.Builder builder = SmartInventory.builder();

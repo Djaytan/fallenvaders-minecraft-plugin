@@ -1,7 +1,7 @@
 package fr.fallenvaders.minecraft.justice_hands.sanctionmanager;
 
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
-import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.invmanager.InventoryBuilderSM;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -40,9 +40,9 @@ public class CommandSM implements CommandExecutor {
           moderator.sendMessage(
               "     §7/" + cmd.getName().toString().toLowerCase() + " §7<joueur>");
         } else if (args.length == 1 && args[0] != null) {
-          if (JusticeHands.getSqlPA().hasAccount(Bukkit.getPlayer(args[0]).getUniqueId())) {
+          if (JusticeHandsModule.getSqlPA().hasAccount(Bukkit.getPlayer(args[0]).getUniqueId())) {
             UUID targetUUID =
-                JusticeHands.getSqlPA().getAccount(Bukkit.getPlayer(args[0]).getUniqueId());
+                JusticeHandsModule.getSqlPA().getAccount(Bukkit.getPlayer(args[0]).getUniqueId());
 
             InventoryBuilderSM.openMainMenu(
                 moderator, targetUUID, config); // Ouverture de l'inventaire SM du joueur target.

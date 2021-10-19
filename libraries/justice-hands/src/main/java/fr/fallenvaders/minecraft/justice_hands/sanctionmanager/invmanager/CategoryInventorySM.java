@@ -1,7 +1,7 @@
 package fr.fallenvaders.minecraft.justice_hands.sanctionmanager.invmanager;
 
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
-import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
 import fr.fallenvaders.minecraft.justice_hands.keyskeeper.KeysKeeperBot;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CategoriesList;
@@ -80,7 +80,7 @@ public class CategoryInventorySM implements InventoryProvider {
                         "justicehands.sm." + sanction.getInitialType().toLowerCase())) {
                       SanctionsAlgo.generateSanction(sanction, moderator, player);
                       KeysKeeperBot.kickPlayer(
-                          player, JusticeHands.getSqlSM().getLastSanction(player));
+                          player, JusticeHandsModule.getSqlSM().getLastSanction(player));
                     } else {
                       SanctionType type = SanctionType.getType(sanction.getInitialType());
                       moderator.sendMessage(

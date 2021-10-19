@@ -23,7 +23,7 @@ import javax.inject.Singleton;
  * @version 0.3.0
  */
 @Singleton
-public final class JusticeHands extends FvModule {
+public final class JusticeHandsModule extends FvModule {
 
   /** This is the module's name. */
   public static final String MODULE_NAME = "justice-hands";
@@ -48,7 +48,7 @@ public final class JusticeHands extends FvModule {
    * @param config The Bukkit plugin config file instance.
    */
   @Inject
-  public JusticeHands(
+  public JusticeHandsModule(
       @NotNull JavaPlugin plugin,
       @NotNull PluginManager pluginManager,
       @NotNull PaperCommandManager paperCommandManager,

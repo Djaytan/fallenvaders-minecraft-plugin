@@ -1,7 +1,7 @@
 package fr.fallenvaders.minecraft.justice_hands.sanctionmanager.invmanager;
 
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
-import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.objects.Categorie;
 import fr.minuskube.inv.InventoryManager;
 import fr.minuskube.inv.SmartInventory;
@@ -24,7 +24,7 @@ public class InventoryBuilderSM {
     int targetHeadColum = config.getInt(mainMenuPath + ".playerhead-colum");
 
     // Création de l'inventaire
-    InventoryManager inventoryManager = new InventoryManager(JusticeHands.PLUGIN);
+    InventoryManager inventoryManager = new InventoryManager(JusticeHandsModule.PLUGIN);
     inventoryManager.init();
 
     SmartInventory.Builder builder = SmartInventory.builder();
@@ -43,7 +43,7 @@ public class InventoryBuilderSM {
   public static void openCategoryMenu(Categorie categorie, Player moderator, Player target) {
 
     // Création de l'inventaire
-    InventoryManager inventoryManager = new InventoryManager(JusticeHands.PLUGIN);
+    InventoryManager inventoryManager = new InventoryManager(JusticeHandsModule.PLUGIN);
     inventoryManager.init();
 
     SmartInventory.Builder builder = SmartInventory.builder();
