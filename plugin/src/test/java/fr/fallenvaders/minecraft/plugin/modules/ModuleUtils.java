@@ -39,20 +39,28 @@ public class ModuleUtils {
    * @return a {@link FvModule} implementation without any behavior.
    */
   public @NotNull FvModule createWithoutBehaviorModule(@NotNull String moduleName) {
-    return createModuleDeclarer(moduleName, null, null);
+    return createModuleDeclarer(moduleName, null, null, null);
   }
 
   /**
    * Creates a {@link FvModule} implementation.
    *
    * @param moduleName The module name.
+   * @param onLoad This one is executed when the module is loaded.
    * @param onEnable This one is executed when the module is enabled.
    * @param onDisable This one is executed when the module is disabled.
-   * @return a {@link FvModule} implementation.
+   * @return a {@link FvModule} test-implementation.
    */
   public @NotNull FvModule createModuleDeclarer(
-      @NotNull String moduleName, @Nullable Runnable onEnable, @Nullable Runnable onDisable) {
+      @NotNull String moduleName, @Nullable Runnable onLoad, @Nullable Runnable onEnable, @Nullable Runnable onDisable) {
     return new FvModule(moduleName) {
+      @Override
+      public void onLoad() {
+        if (onLoad != null) {
+          onLoad.run();
+        }
+      }
+
       @Override
       public void onEnable() {
         if (onEnable != null) {
