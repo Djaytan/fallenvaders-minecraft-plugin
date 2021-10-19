@@ -112,5 +112,29 @@ class ModuleContainerTest {
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule2));
       Assertions.assertSame(targetedModule, moduleContainer.getModule(targetedModuleName));
     }
+
+    @Test
+    void get_first_module_when_several_ones_are_registered_shall_found_the_correct_one() {
+      String targetedModuleName = "targeted-test-module";
+      FvModule targetedModule = moduleUtils.createWithoutBehaviorModule(targetedModuleName);
+      FvModule otherModule1 = moduleUtils.createWithoutBehaviorModule("other-test-module-1");
+      FvModule otherModule2 = moduleUtils.createWithoutBehaviorModule("other-test-module-2");
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(targetedModule));
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule1));
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule2));
+      Assertions.assertSame(targetedModule, moduleContainer.getModule(targetedModuleName));
+    }
+
+    @Test
+    void get_last_module_when_several_ones_are_registered_shall_found_the_correct_one() {
+      String targetedModuleName = "targeted-test-module";
+      FvModule targetedModule = moduleUtils.createWithoutBehaviorModule(targetedModuleName);
+      FvModule otherModule1 = moduleUtils.createWithoutBehaviorModule("other-test-module-1");
+      FvModule otherModule2 = moduleUtils.createWithoutBehaviorModule("other-test-module-2");
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule1));
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule2));
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(targetedModule));
+      Assertions.assertSame(targetedModule, moduleContainer.getModule(targetedModuleName));
+    }
   }
 }
