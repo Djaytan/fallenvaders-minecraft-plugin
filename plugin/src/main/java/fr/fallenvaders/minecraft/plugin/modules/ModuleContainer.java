@@ -47,9 +47,7 @@ public final class ModuleContainer {
    */
   public void addModule(@NotNull FvModule module) throws ModuleException {
     if (state == null) {
-      FvModule existingModule = getModule(module.getModuleName());
-
-      if (existingModule == null) {
+      if (!isExist(module.getModuleName())) {
         modules.add(module);
       } else {
         throw new ModuleException(
@@ -113,5 +111,9 @@ public final class ModuleContainer {
               "Wrong new plugin's modules state: '%s' state can't follow the '%s' one.",
               state.name(), this.state.name()));
     }
+  }
+
+  private boolean isExist(@NotNull String moduleName) {
+    return getModule(moduleName) != null;
   }
 }
