@@ -18,11 +18,9 @@
 package fr.fallenvaders.minecraft.plugin;
 
 import fr.fallenvaders.minecraft.plugin.guice.FallenVadersInjector;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleException;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleService;
 import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
