@@ -80,6 +80,8 @@ class ModuleContainerTest {
       Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule1));
       Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule2));
     }
+
+    // TODO: add several modules test case
   }
 
   /** Test cases: {@link ModuleContainer#getModule(String)} * */
@@ -97,6 +99,18 @@ class ModuleContainerTest {
       FvModule module = moduleUtils.createWithoutBehaviorModule(moduleName);
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module));
       Assertions.assertSame(moduleContainer.getModule(moduleName), module);
+    }
+
+    @Test
+    void get_middle_module_when_several_ones_are_registered_shall_found_the_correct_one() {
+      String targetedModuleName = "targeted-test-module";
+      FvModule targetedModule = moduleUtils.createWithoutBehaviorModule(targetedModuleName);
+      FvModule otherModule1 = moduleUtils.createWithoutBehaviorModule("other-test-module-1");
+      FvModule otherModule2 = moduleUtils.createWithoutBehaviorModule("other-test-module-2");
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule1));
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(targetedModule));
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule2));
+      Assertions.assertSame(targetedModule, moduleContainer.getModule(targetedModuleName));
     }
   }
 }
