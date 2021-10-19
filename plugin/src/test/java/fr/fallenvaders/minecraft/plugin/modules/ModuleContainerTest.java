@@ -81,7 +81,15 @@ class ModuleContainerTest {
       Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule2));
     }
 
-    // TODO: add several modules test case
+    @Test
+    void add_several_modules_shall_work() {
+      FvModule module1 = moduleUtils.createWithoutBehaviorModule("test-module-1");
+      FvModule module2 = moduleUtils.createWithoutBehaviorModule("test-module-2");
+      FvModule module3 = moduleUtils.createWithoutBehaviorModule("test-module-3");
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module1));
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module2));
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module3));
+    }
   }
 
   /** Test cases: {@link ModuleContainer#getModule(String)} * */
