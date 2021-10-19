@@ -59,14 +59,37 @@ class ModuleServiceTest {
     disableStack = 0;
   }
 
-  @Test
-  @DisplayName("Register a module")
-  void registerModule() {
-    FvModule fvModule = moduleUtils.createWithoutBehaviorModule("test-module");
-    Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
-    FvModule actualFvModule = moduleContainer.getModule("test-module");
-    Assertions.assertEquals(1, moduleContainer.getModules().size());
-    Assertions.assertEquals(fvModule, actualFvModule);
+  /** Test cases: {@link ModuleService#registerModule(FvModule)} */
+  @Nested
+  class register_module {
+
+    @Test
+    void register_one_module_when_no_other_one_is_registered_shall_work() {
+      FvModule fvModule = moduleUtils.createWithoutBehaviorModule("test-module");
+      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      FvModule actualFvModule = moduleContainer.getModule("test-module");
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
+      Assertions.assertSame(fvModule, actualFvModule);
+    }
+
+    @Test
+    void register_module_after_loading_shall_not_work() {
+      FvModule fvModule1 = moduleUtils.createWithoutBehaviorModule("test-module-1");
+      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule1));
+      moduleService.loadModules();
+      Assertions.assertSame(PluginModulesState.LOADED, moduleContainer.getState());
+      FvModule fvModule2 = moduleUtils.createWithoutBehaviorModule("test-module-2");
+      Assertions.assertThrows(ModuleException.class, () -> moduleService.registerModule(fvModule2));
+    }
+
+    @Test
+    void register_two_identical_modules_shall_not_work() {
+      FvModule fvModule1 = moduleUtils.createWithoutBehaviorModule("test-module");
+      FvModule fvModule2 = moduleUtils.createWithoutBehaviorModule("test-module");
+      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule1));
+      Assertions.assertThrows(ModuleException.class, () -> moduleService.registerModule(fvModule1));
+      Assertions.assertThrows(ModuleException.class, () -> moduleService.registerModule(fvModule2));
+    }
   }
 
   @Test
@@ -128,25 +151,5 @@ class ModuleServiceTest {
     Assertions.assertEquals(3, enableStack);
     Assertions.assertEquals(3, disableStack);
     Assertions.assertTrue(moduleContainer.isHasLaunched());
-  }
-
-  @Test
-  @DisplayName("Register module after launch throw exception")
-  void registerModuleAfterLaunchThrowException() {
-    FvModule fvModule1 = moduleUtils.createWithoutBehaviorModule("test-module-1");
-    Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule1));
-    moduleService.enableModules();
-    Assertions.assertTrue(moduleContainer.isHasLaunched());
-    FvModule fvModule2 = moduleUtils.createWithoutBehaviorModule("test-module-2");
-    Assertions.assertThrows(ModuleException.class, () -> moduleService.registerModule(fvModule2));
-  }
-
-  @Test
-  @DisplayName("Register two identical modules")
-  void registerTwoIdenticalModules() {
-    FvModule fvModule1 = moduleUtils.createWithoutBehaviorModule("test-module");
-    FvModule fvModule2 = moduleUtils.createWithoutBehaviorModule("test-module");
-    Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule1));
-    Assertions.assertThrows(ModuleException.class, () -> moduleService.registerModule(fvModule2));
   }
 }
