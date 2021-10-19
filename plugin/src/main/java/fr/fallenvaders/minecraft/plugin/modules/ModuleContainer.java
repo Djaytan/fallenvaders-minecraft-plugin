@@ -28,40 +28,38 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This singleton class represents the container for the {@link ModuleRegisterService}.
+ * This singleton class represents the container for the {@link ModuleService}.
  *
  * @author Voltariuss
  * @since 0.2.0
  */
 @Singleton
-public final class ModuleRegisterContainer {
+public final class ModuleContainer {
 
   private final List<FvModule> modules;
   private boolean hasLaunched;
 
   /** Constructor. */
   @Inject
-  public ModuleRegisterContainer() {
+  public ModuleContainer() {
     modules = new ArrayList<>();
     hasLaunched = false;
   }
 
   /**
-   * Adds a module in the module register. If a module with the same name of the new one exists,
+   * Adds a module in the module container. If a module with the same name of the new one exists,
    * then the operation is cancelled and an exception is thrown.
    *
-   * @param module The module to add into the register.
-   * @throws ModuleRegisterException if a module with the same name of the new on already exists.
+   * @param module The module to add into the container.
+   * @throws ModuleException if a module with the same name of the new on already exists.
    */
-  public void addModule(@NotNull FvModule module) throws ModuleRegisterException {
-    Objects.requireNonNull(module);
-
+  public void addModule(@NotNull FvModule module) throws ModuleException {
     FvModule existingModule = getModule(module.getModuleName());
 
     if (existingModule == null) {
       modules.add(module);
     } else {
-      throw new ModuleRegisterException(
+      throw new ModuleException(
           String.format(
               "The module with the name %s already exists in the register.",
               module.getModuleName()));
@@ -76,7 +74,6 @@ public final class ModuleRegisterContainer {
    */
   @Nullable
   public FvModule getModule(@NotNull String moduleName) {
-    Objects.requireNonNull(moduleName);
     return modules.stream()
         .filter(module -> module.getModuleName().equals(moduleName))
         .findFirst()

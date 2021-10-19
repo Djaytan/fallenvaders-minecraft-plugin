@@ -31,41 +31,39 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import javax.inject.Inject;
 
 /**
- * Test class of {@link ModuleRegisterContainer}.
+ * Test class of {@link ModuleContainer}.
  *
  * @author Voltariuss
  * @since 0.2.0
  */
 @ExtendWith(MockitoExtension.class)
-class ModuleRegisterContainerTest {
+class ModuleContainerTest {
 
   @Mock private JavaPlugin javaPlugin;
-  @Inject private ModuleDeclarerUtils moduleDeclarerUtils;
-  private ModuleRegisterContainer moduleRegisterContainer;
+  @Inject private ModuleUtils moduleUtils;
+  private ModuleContainer moduleContainer;
 
   @BeforeEach
   void setUp() {
     TestInjector.inject(javaPlugin, this);
-    moduleRegisterContainer = new ModuleRegisterContainer();
+    moduleContainer = new ModuleContainer();
   }
 
   @Test
   @DisplayName("Init the module register")
   void isModuleRegisterWellInit() {
-    Assertions.assertFalse(moduleRegisterContainer.isHasLaunched());
-    Assertions.assertTrue(moduleRegisterContainer.getModules().isEmpty());
+    Assertions.assertFalse(moduleContainer.isHasLaunched());
+    Assertions.assertTrue(moduleContainer.getModules().isEmpty());
   }
 
   @Test
   @DisplayName("Add two identical modules")
   void addTwoIdenticalModules() {
     String moduleName = "test-module";
-    FvModule fvModule1 = moduleDeclarerUtils.createWithoutBehaviorModule(moduleName);
-    FvModule fvModule2 = moduleDeclarerUtils.createWithoutBehaviorModule(moduleName);
-    Assertions.assertDoesNotThrow(() -> moduleRegisterContainer.addModule(fvModule1));
-    Assertions.assertThrows(
-        ModuleRegisterException.class, () -> moduleRegisterContainer.addModule(fvModule1));
-    Assertions.assertThrows(
-        ModuleRegisterException.class, () -> moduleRegisterContainer.addModule(fvModule2));
+    FvModule fvModule1 = moduleUtils.createWithoutBehaviorModule(moduleName);
+    FvModule fvModule2 = moduleUtils.createWithoutBehaviorModule(moduleName);
+    Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(fvModule1));
+    Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule1));
+    Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule2));
   }
 }

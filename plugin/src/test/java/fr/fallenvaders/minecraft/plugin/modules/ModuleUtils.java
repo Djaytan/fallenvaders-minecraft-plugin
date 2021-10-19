@@ -18,13 +18,10 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
 import fr.fallenvaders.minecraft.commons.FvModule;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.Objects;
 
 /**
  * Utils about creation of {@link FvModule} for testing purposes.
@@ -33,7 +30,7 @@ import java.util.Objects;
  * @since 0.2.0
  */
 @Singleton
-public class ModuleDeclarerUtils {
+public class ModuleUtils {
 
   /**
    * Creates a {@link FvModule} implementation without any behavior.

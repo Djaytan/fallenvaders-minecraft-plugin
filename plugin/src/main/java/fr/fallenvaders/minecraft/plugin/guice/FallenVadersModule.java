@@ -21,15 +21,13 @@ import co.aikar.commands.PaperCommandManager;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import fr.fallenvaders.minecraft.plugin.modules.CompleteModuleRegisterInitializer;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
+import fr.fallenvaders.minecraft.plugin.modules.FullPluginInitializer;
+import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
-
-import java.util.Objects;
 
 /**
  * Guice module of the project.
@@ -47,13 +45,12 @@ public final class FallenVadersModule extends AbstractModule {
    * @param plugin The Bukkit plugin.
    */
   public FallenVadersModule(@NotNull JavaPlugin plugin) {
-    Objects.requireNonNull(plugin);
     this.plugin = plugin;
   }
 
   @Override
   public void configure() {
-    bind(ModuleRegisterInitializer.class).to(CompleteModuleRegisterInitializer.class);
+    bind(PluginInitializer.class).to(FullPluginInitializer.class);
   }
 
   @Provides

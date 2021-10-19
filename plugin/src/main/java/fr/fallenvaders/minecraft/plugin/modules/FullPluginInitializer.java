@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import fr.fallenvaders.minecraft.commons.FvModule;
 import fr.fallenvaders.minecraft.justice_hands.JusticeHands;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -25,18 +26,19 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * This is an implementation class of {@link ModuleRegisterInitializer} interface. The purpose of
- * this initializer is to assemble a full version of the plugin by injecting all the existing {@link
- * fr.fallenvaders.minecraft.commons.FvModule}s.
+ * This is an implementation class of {@link PluginInitializer} interface.
+ *
+ * <p>The purpose of this initializer is to assemble a full version of the plugin by injecting all
+ * the existing {@link FvModule}s.
  *
  * @author FallenVaders' dev team
  * @since 0.1.0
  */
 @Singleton
-public final class CompleteModuleRegisterInitializer implements ModuleRegisterInitializer {
+public final class FullPluginInitializer implements PluginInitializer {
 
   private final Logger logger;
-  private final ModuleRegisterService moduleRegisterService;
+  private final ModuleService moduleService;
 
   /* FallenVaders' modules declaration */
   private final JusticeHands justiceHands;
@@ -45,25 +47,25 @@ public final class CompleteModuleRegisterInitializer implements ModuleRegisterIn
    * Constructor.
    *
    * @param logger The SLF4J project's logger.
-   * @param moduleRegisterService The module register service.
+   * @param moduleService The module register service.
    */
   @Inject
-  public CompleteModuleRegisterInitializer(
+  public FullPluginInitializer(
       @NotNull Logger logger,
-      @NotNull ModuleRegisterService moduleRegisterService,
+      @NotNull ModuleService moduleService,
       @NotNull JusticeHands justiceHands) {
     this.logger = logger;
-    this.moduleRegisterService = moduleRegisterService;
+    this.moduleService = moduleService;
 
     /* FallenVaders' modules declaration */
     this.justiceHands = justiceHands;
   }
 
   @Override
-  public void initialize() throws ModuleRegisterException {
+  public void initialize() throws ModuleException {
     // TODO: FV-94 - treat exception before rethrow again (rethrow only if needed...)
     logger.info("Start modules registration.");
-    moduleRegisterService.registerModule(justiceHands);
+    moduleService.registerModule(justiceHands);
     logger.info("Modules registration done.");
   }
 }

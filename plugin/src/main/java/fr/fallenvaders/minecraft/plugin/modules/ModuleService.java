@@ -25,28 +25,27 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * This is a singleton class which manage registration of {@link FvModule}.
+ * This is a singleton class which manage FallenVaders' modules.
  *
- * @author FallenVaders' dev team.
+ * @author FallenVaders' dev team
  * @since 0.2.0
  */
 @Singleton
-public final class ModuleRegisterService {
+public final class ModuleService {
 
   private final Logger logger;
-  private final ModuleRegisterContainer moduleRegisterContainer;
+  private final ModuleContainer moduleContainer;
 
   /**
    * Constructor.
    *
-   * @param logger The SLF4J project's logger instance.
-   * @param moduleRegisterContainer The container associated to this service.
+   * @param logger The SLF4J logger instance.
+   * @param moduleContainer The container associated to this service.
    */
   @Inject
-  public ModuleRegisterService(
-      @NotNull Logger logger, @NotNull ModuleRegisterContainer moduleRegisterContainer) {
+  public ModuleService(@NotNull Logger logger, @NotNull ModuleContainer moduleContainer) {
     this.logger = logger;
-    this.moduleRegisterContainer = moduleRegisterContainer;
+    this.moduleContainer = moduleContainer;
   }
 
   /**
@@ -54,17 +53,17 @@ public final class ModuleRegisterService {
    * exception is thrown.
    *
    * @param fvModule The FallenVaders' module to register.
-   * @throws ModuleRegisterException if modules registration has already been launched or the {@link
+   * @throws ModuleException if modules registration has already been launched or the {@link
    *     FvModule} is already registered.
    */
-  public void registerModule(@NotNull FvModule fvModule) throws ModuleRegisterException {
-    if (moduleRegisterContainer.isHasLaunched()) {
-      throw new ModuleRegisterException(
+  public void registerModule(@NotNull FvModule fvModule) throws ModuleException {
+    if (moduleContainer.isHasLaunched()) {
+      throw new ModuleException(
           String.format(
               "Module registration of '%s' rejected: the module registration process has already been launched.",
               fvModule.getModuleName()));
     }
-    moduleRegisterContainer.addModule(fvModule);
+    moduleContainer.addModule(fvModule);
   }
 
   // TODO: FV-123 - add loadModules method and replace "hasLaunched" by "loaded"
@@ -75,14 +74,14 @@ public final class ModuleRegisterService {
    * registrations are allowed anymore.
    */
   public void enableModules() {
-    moduleRegisterContainer
+    moduleContainer
         .getModules()
         .forEach(
             module -> {
               module.onEnable();
               logger.info("Module {} enabled.", module.getModuleName());
             });
-    moduleRegisterContainer.setHasLaunched(true);
+    moduleContainer.setHasLaunched(true);
   }
 
   /**
@@ -90,7 +89,7 @@ public final class ModuleRegisterService {
    * each of them.
    */
   public void disableModules() {
-    moduleRegisterContainer
+    moduleContainer
         .getModules()
         .forEach(
             module -> {

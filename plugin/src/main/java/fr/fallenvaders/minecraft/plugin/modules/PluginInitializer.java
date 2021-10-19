@@ -18,20 +18,23 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
 import fr.fallenvaders.minecraft.commons.FvModule;
+import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
 
 /**
- * This class is in charge to initialize the {@link ModuleRegisterService} singleton instance.
+ * This class is in charge to initialize the {@link FallenVadersPlugin} by creating the {@link
+ * ModuleService} singleton instance.
  *
- * @author Voltariuss
+ * <p>This interface allows to initialize a full version of the plugin or alternative ones.
+ *
+ * @author FallenVaders' dev team
  * @since 0.1.0
  */
-public interface ModuleRegisterInitializer {
+public interface PluginInitializer {
 
   /**
-   * Initializes {@link ModuleRegisterService} singleton instance with {@link FvModule} instances.
+   * Initializes {@link ModuleService} singleton instance with {@link FvModule} instances.
    *
-   * @throws ModuleRegisterException if the initialization into the {@link ModuleRegisterService}
-   *     fail.
+   * @throws ModuleException if the initialization into the {@link ModuleService} fail.
    */
-  void initialize() throws ModuleRegisterException;
+  void initialize() throws ModuleException;
 }

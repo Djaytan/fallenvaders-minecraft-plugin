@@ -18,9 +18,9 @@
 package fr.fallenvaders.minecraft.plugin;
 
 import fr.fallenvaders.minecraft.plugin.guice.FallenVadersInjector;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterException;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterService;
+import fr.fallenvaders.minecraft.plugin.modules.ModuleException;
+import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
+import fr.fallenvaders.minecraft.plugin.modules.ModuleService;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 
@@ -36,8 +36,8 @@ import javax.inject.Singleton;
 @Singleton
 public final class FallenVadersPlugin extends JavaPlugin {
 
-  @Inject private ModuleRegisterInitializer moduleRegInit;
-  @Inject private ModuleRegisterService moduleRegisterService;
+  @Inject private PluginInitializer moduleRegInit;
+  @Inject private ModuleService moduleService;
   @Inject private Logger slf4jLogger;
 
   @Override
@@ -51,9 +51,9 @@ public final class FallenVadersPlugin extends JavaPlugin {
     // Modules initialization
     try {
       moduleRegInit.initialize();
-      moduleRegisterService.enableModules();
+      moduleService.enableModules();
       slf4jLogger.info("FallenVaders plugin successfully enabled.");
-    } catch (ModuleRegisterException e) {
+    } catch (ModuleException e) {
       slf4jLogger.error("An error has occurred during modules registration.", e);
     }
     // TODO: FV-94 - better error management (catch all exceptions and allow the launch of some
@@ -62,7 +62,7 @@ public final class FallenVadersPlugin extends JavaPlugin {
 
   @Override
   public void onDisable() {
-    moduleRegisterService.disableModules();
+    moduleService.disableModules();
     slf4jLogger.info("FallenVaders plugin disabled.");
   }
 }
