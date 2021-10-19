@@ -201,7 +201,8 @@ class ModuleServiceTest {
     @Test
     void load_enable_and_disable_one_module() {
       Runnable stackIncrement = () -> stack++;
-      FvModule fvModule = moduleUtils.createModule("test-module", stackIncrement, stackIncrement, stackIncrement);
+      FvModule fvModule =
+          moduleUtils.createModule("test-module", stackIncrement, stackIncrement, stackIncrement);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
       moduleService.loadModules();
       moduleService.enableModules();
@@ -213,9 +214,12 @@ class ModuleServiceTest {
     @Test
     void load_enable_and_disable_several_module() {
       Runnable stackIncrement = () -> stack++;
-      FvModule fvModule1 = moduleUtils.createModule("test-module-1", stackIncrement, stackIncrement, stackIncrement);
-      FvModule fvModule2 = moduleUtils.createModule("test-module-2", stackIncrement, stackIncrement, stackIncrement);
-      FvModule fvModule3 = moduleUtils.createModule("test-module-3", stackIncrement, stackIncrement, stackIncrement);
+      FvModule fvModule1 =
+          moduleUtils.createModule("test-module-1", stackIncrement, stackIncrement, stackIncrement);
+      FvModule fvModule2 =
+          moduleUtils.createModule("test-module-2", stackIncrement, stackIncrement, stackIncrement);
+      FvModule fvModule3 =
+          moduleUtils.createModule("test-module-3", stackIncrement, stackIncrement, stackIncrement);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule1));
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule2));
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule3));
