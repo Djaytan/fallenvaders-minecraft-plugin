@@ -103,7 +103,7 @@ public final class ModuleContainer {
    * @throws ModuleException if the new state can't follow the previous one.
    */
   public void setState(@NotNull PluginModulesState state) throws ModuleException {
-    if (this.state == null || this.state.getStateOrder() < state.getStateOrder()) {
+    if (isExpectedNextStep(state)) {
       this.state = state;
     } else {
       throw new ModuleException(
@@ -115,5 +115,10 @@ public final class ModuleContainer {
 
   private boolean isExist(@NotNull String moduleName) {
     return getModule(moduleName) != null;
+  }
+
+  private boolean isExpectedNextStep(@NotNull PluginModulesState state) {
+    int expectedNewStateOrder = (this.state == null) ? 1 : this.state.getStateOrder() + 1;
+    return expectedNewStateOrder == state.getStateOrder();
   }
 }
