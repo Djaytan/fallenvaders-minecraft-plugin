@@ -20,10 +20,7 @@ package fr.fallenvaders.minecraft.plugin.modules;
 import fr.fallenvaders.minecraft.commons.FvModule;
 import fr.fallenvaders.minecraft.plugin.guice.TestInjector;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -37,6 +34,7 @@ import javax.inject.Inject;
  * @since 0.2.0
  */
 @ExtendWith(MockitoExtension.class)
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ModuleContainerTest {
 
   @Mock private JavaPlugin javaPlugin;
@@ -49,48 +47,48 @@ class ModuleContainerTest {
     moduleContainer = new ModuleContainer();
   }
 
-  /** Global test cases **/
-
+  /** Global test cases * */
   @Test
-  @DisplayName("Initialize the container")
-  void module_container_initialization() {
+  void initialization() {
     Assertions.assertNull(moduleContainer.getState());
     Assertions.assertTrue(moduleContainer.getModules().isEmpty());
   }
-  
-  /** Test cases: {@link ModuleContainer#addModule(FvModule)} **/
 
-  @Test
-  @DisplayName("Add a module")
-  void addModule_add_a_module() {
-    FvModule module = moduleUtils.createWithoutBehaviorModule("test-module");
-    Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module));
+  /** Test cases: {@link ModuleContainer#addModule(FvModule)} */
+  @Nested
+  class add_module {
+
+    @Test
+    void add_a_module_shall_work() {
+      FvModule module = moduleUtils.createWithoutBehaviorModule("test-module");
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module));
+    }
+
+    @Test
+    void add_a_module_when_there_is_a_state_shall_not_work() {
+      FvModule module = moduleUtils.createWithoutBehaviorModule("test-module");
+      Assertions.assertDoesNotThrow(() -> moduleContainer.setState(PluginModulesState.LOADED));
+      Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(module));
+    }
+
+    @Test
+    void add_two_identical_modules_shall_not_work() {
+      String moduleName = "test-module";
+      FvModule fvModule1 = moduleUtils.createWithoutBehaviorModule(moduleName);
+      FvModule fvModule2 = moduleUtils.createWithoutBehaviorModule(moduleName);
+      Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(fvModule1));
+      Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule1));
+      Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule2));
+    }
   }
 
-  @Test
-  @DisplayName("Add a module when the state is defined.")
-  void addModule_add_a_module_with_state() {
-    FvModule module = moduleUtils.createWithoutBehaviorModule("test-module");
-    Assertions.assertDoesNotThrow(() -> moduleContainer.setState(PluginModulesState.LOADED));
-    Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(module));
-  }
+  /** Test cases: {@link ModuleContainer#getModule(String)} * */
+  @Nested
+  class get_module {
 
-  @Test
-  @DisplayName("Add two identical modules")
-  void addModule_add_two_identical_modules() {
-    String moduleName = "test-module";
-    FvModule fvModule1 = moduleUtils.createWithoutBehaviorModule(moduleName);
-    FvModule fvModule2 = moduleUtils.createWithoutBehaviorModule(moduleName);
-    Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(fvModule1));
-    Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule1));
-    Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(fvModule2));
-  }
-
-  /** Test cases: {@link ModuleContainer#getModule(String)} **/
-
-  @Test
-  @DisplayName("Search module when no ones are registered")
-  void getModule_when_no_ones_are_registered() {
-    Assertions.assertNull(moduleContainer.getModule("test-module"));
+    @Test
+    void get_a_module_when_no_ones_are_registered_shall_be_null() {
+      Assertions.assertNull(moduleContainer.getModule("test-module"));
+    }
   }
 }
