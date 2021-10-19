@@ -49,24 +49,35 @@ class ModuleContainerTest {
     moduleContainer = new ModuleContainer();
   }
 
+  /** Global test cases **/
+
   @Test
-  @DisplayName("Init the module register")
-  void isModuleRegisterWellInit() {
+  @DisplayName("Initialize the container")
+  void module_container_initialization() {
     Assertions.assertNull(moduleContainer.getState());
     Assertions.assertTrue(moduleContainer.getModules().isEmpty());
   }
+  
+  /** Test cases: {@link ModuleContainer#addModule(FvModule)} **/
 
   @Test
   @DisplayName("Add a module")
-  void addModule() {
+  void addModule_add_a_module() {
     FvModule module = moduleUtils.createWithoutBehaviorModule("test-module");
     Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module));
+  }
+
+  @Test
+  @DisplayName("Add a module when the state is defined.")
+  void addModule_add_a_module_with_state() {
+    FvModule module = moduleUtils.createWithoutBehaviorModule("test-module");
+    Assertions.assertDoesNotThrow(() -> moduleContainer.setState(PluginModulesState.LOADED));
     Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(module));
   }
 
   @Test
   @DisplayName("Add two identical modules")
-  void addTwoIdenticalModules() {
+  void addModule_add_two_identical_modules() {
     String moduleName = "test-module";
     FvModule fvModule1 = moduleUtils.createWithoutBehaviorModule(moduleName);
     FvModule fvModule2 = moduleUtils.createWithoutBehaviorModule(moduleName);
