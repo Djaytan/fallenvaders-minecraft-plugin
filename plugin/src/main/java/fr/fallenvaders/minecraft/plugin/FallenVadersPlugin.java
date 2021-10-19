@@ -19,8 +19,8 @@ package fr.fallenvaders.minecraft.plugin;
 
 import fr.fallenvaders.minecraft.plugin.guice.FallenVadersInjector;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleException;
-import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleService;
+import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 
@@ -50,6 +50,7 @@ public final class FallenVadersPlugin extends JavaPlugin {
 
     // Modules initialization
     try {
+      // TODO: FV-123 - only moduleService as entry point
       moduleRegInit.initialize();
       moduleService.enableModules();
       slf4jLogger.info("FallenVaders plugin successfully enabled.");

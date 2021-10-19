@@ -25,7 +25,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This singleton class represents the container for the {@link ModuleService}.
