@@ -204,15 +204,18 @@ class ModuleServiceTest {
 
     @Test
     void load_enable_and_disable_one_module() {
+      Runnable onLoad = () -> loadStack++;
       Runnable onEnable = () -> enableStack++;
       Runnable onDisable = () -> disableStack++;
-      FvModule fvModule = moduleUtils.createModuleDeclarer("test-module", onEnable, onDisable);
+      FvModule fvModule = moduleUtils.createModule("test-module", onLoad, onEnable, onDisable);
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.loadModules();
       moduleService.enableModules();
       moduleService.disableModules();
+      Assertions.assertEquals(1, loadStack);
       Assertions.assertEquals(1, enableStack);
       Assertions.assertEquals(1, disableStack);
-      Assertions.assertTrue(moduleContainer.isHasLaunched());
+      Assertions.assertSame(PluginModulesState.DISABLED, moduleContainer.getState());
     }
 
     @Test
