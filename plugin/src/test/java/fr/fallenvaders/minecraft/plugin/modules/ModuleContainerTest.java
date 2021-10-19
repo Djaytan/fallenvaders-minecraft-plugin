@@ -58,7 +58,7 @@ class ModuleContainerTest {
 
   @Test
   @DisplayName("Add a module")
-  void addNullModule() {
+  void addModule() {
     FvModule module = moduleUtils.createWithoutBehaviorModule("test-module");
     Assertions.assertThrows(ModuleException.class, () -> moduleContainer.addModule(module));
   }
