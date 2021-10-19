@@ -95,17 +95,14 @@ public final class ModuleService {
   private void manipulateModules(@NotNull PluginModulesState state) {
     try {
       moduleContainer.setState(state);
-      moduleContainer
-        .getModules()
-        .forEach(
-          module -> {
-            switch (state) {
-              case LOADED -> module.onLoad();
-              case ENABLED -> module.onEnable();
-              case DISABLED -> module.onDisable();
-            }
-            logger.info("Module '{}' {}.", module.getModuleName(), state.name().toLowerCase());
-          });
+      for (FvModule module : moduleContainer.getModules()) {
+        switch (state) {
+          case LOADED -> module.onLoad();
+          case ENABLED -> module.onEnable();
+          case DISABLED -> module.onDisable();
+        }
+        logger.info("Module '{}' {}.", module.getModuleName(), state.name().toLowerCase());
+      }
       logger.info("FallenVaders modules successfully {}.", state.name().toLowerCase());
     } catch (ModuleException e) {
       logger.error("Fail during modules manipulation ({} phase).", state.name(), e);
