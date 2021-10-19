@@ -98,7 +98,7 @@ class ModuleContainerTest {
       String moduleName = "test-module";
       FvModule module = moduleUtils.createWithoutBehaviorModule(moduleName);
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module));
-      Assertions.assertSame(moduleContainer.getModule(moduleName), module);
+      Assertions.assertSame(module, moduleContainer.getModule(moduleName));
     }
 
     @Test
