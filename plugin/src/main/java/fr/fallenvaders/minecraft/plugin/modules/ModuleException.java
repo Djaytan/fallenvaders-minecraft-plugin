@@ -19,8 +19,6 @@ package fr.fallenvaders.minecraft.plugin.modules;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 /**
  * This exception is thrown when a problem occurs during the registration process of a module (e.g.
  * register a module with the {@link ModuleService} was launched).
@@ -37,17 +35,5 @@ public class ModuleException extends Exception {
    */
   public ModuleException(@NotNull String message) {
     super(message);
-  }
-
-  /**
-   * Constructor.
-   *
-   * @param message The mandatory exception message.
-   * @param cause The cause exception.
-   */
-  public ModuleException(@NotNull String message, @NotNull Throwable cause) {
-    super(message, cause);
-    Objects.requireNonNull(message);
-    Objects.requireNonNull(cause);
   }
 }
