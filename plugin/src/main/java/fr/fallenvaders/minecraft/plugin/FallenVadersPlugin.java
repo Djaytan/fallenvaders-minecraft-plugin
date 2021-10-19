@@ -50,7 +50,6 @@ public final class FallenVadersPlugin extends JavaPlugin {
 
     // Modules initialization
     try {
-      // TODO: FV-123 - only moduleService as entry point
       moduleRegInit.initialize();
       moduleService.enableModules();
       slf4jLogger.info("FallenVaders plugin successfully enabled.");
