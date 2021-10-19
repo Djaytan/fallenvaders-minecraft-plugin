@@ -17,37 +17,37 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
+import fr.fallenvaders.minecraft.commons.FvModule;
+import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
 
 /**
- * This exception is thrown when a problem occurs during the registration process of a module (e.g.
- * register a module with the {@link ModuleService} was launched).
+ * This enum represents the state of {@link FvModule} of the {@link FallenVadersPlugin}.
  *
- * @author Voltariuss
- * @since 0.1.0
+ * @author FallenVaders' dev team
+ * @since 0.3.0
  */
-public class ModuleException extends Exception {
+public enum PluginModulesState {
+  LOADED(1),
+  ENABLED(2),
+  DISABLED(3);
+
+  private final int stateOrder;
 
   /**
    * Constructor.
    *
-   * @param message The mandatory exception message.
+   * @param stateOrder The state order number.
    */
-  public ModuleException(@NotNull String message) {
-    super(message);
+  PluginModulesState(int stateOrder) {
+    this.stateOrder = stateOrder;
   }
 
   /**
-   * Constructor.
+   * Getter.
    *
-   * @param message The mandatory exception message.
-   * @param cause The cause exception.
+   * @return The state order number.
    */
-  public ModuleException(@NotNull String message, @NotNull Throwable cause) {
-    super(message, cause);
-    Objects.requireNonNull(message);
-    Objects.requireNonNull(cause);
+  public int getStateOrder() {
+    return stateOrder;
   }
 }

@@ -57,44 +57,63 @@ public final class ModuleService {
    *     FvModule} is already registered.
    */
   public void registerModule(@NotNull FvModule fvModule) throws ModuleException {
-    if (moduleContainer.isHasLaunched()) {
+    if (moduleContainer.getState() == null) {
+      moduleContainer.addModule(fvModule);
+    } else {
       throw new ModuleException(
           String.format(
-              "Module registration of '%s' rejected: the module registration process has already been launched.",
+              "Module registration of '%s' rejected: the modules manipulation process has already been launched.",
               fvModule.getModuleName()));
     }
-    moduleContainer.addModule(fvModule);
   }
 
-  // TODO: FV-123 - add loadModules method and replace "hasLaunched" by "loaded"
+  /**
+   * Loads all registered {@link FvModule} by calling the {@link FvModule#onLoad()} ()} method for
+   * each of them. After that, modules registration is considered has "loaded" and none new
+   * registrations are allowed anymore.
+   *
+   * @throws ModuleException if something went wrong during modules manipulation (e.g. modules have already been loaded).
+   */
+  public void loadModules() throws ModuleException {
+    manipulateModules(PluginModulesState.LOADED);
+  }
 
   /**
    * Enables all registered {@link FvModule} by calling the {@link FvModule#onEnable()} method for
-   * each of them. After that, modules registration is considered has "launched" and none new
-   * registrations are allowed anymore.
+   * each of them.
+   *
+   * @throws ModuleException if something went wrong during modules manipulation (e.g. modules have already been enabled).
    */
-  public void enableModules() {
-    moduleContainer
-        .getModules()
-        .forEach(
-            module -> {
-              module.onEnable();
-              logger.info("Module {} enabled.", module.getModuleName());
-            });
-    moduleContainer.setHasLaunched(true);
+  public void enableModules() throws ModuleException {
+    manipulateModules(PluginModulesState.ENABLED);
   }
 
   /**
    * Disables all registered {@link FvModule} by calling the {@link FvModule#onDisable()} method for
    * each of them.
+   *
+   * @throws ModuleException if something went wrong during modules manipulation (e.g. modules have already been disabled).
    */
-  public void disableModules() {
-    moduleContainer
+  public void disableModules() throws ModuleException {
+    manipulateModules(PluginModulesState.DISABLED);
+  }
+
+  private void manipulateModules(@NotNull PluginModulesState state) throws ModuleException {
+    try {
+      moduleContainer.setState(state);
+      moduleContainer
         .getModules()
         .forEach(
-            module -> {
-              module.onDisable();
-              logger.info("Module {} disabled.", module.getModuleName());
-            });
+          module -> {
+            switch (state) {
+              case LOADED -> module.onLoad();
+              case ENABLED -> module.onEnable();
+              case DISABLED -> module.onDisable();
+            }
+            logger.info("Module {} {}.", module.getModuleName(), state.name().toLowerCase());
+          });
+    } catch (ModuleException e) {
+      throw new ModuleException(String.format("Fail during modules manipulation (%s phase).", state.name()), e);
+    }
   }
 }

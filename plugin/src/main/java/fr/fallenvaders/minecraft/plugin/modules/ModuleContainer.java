@@ -21,7 +21,6 @@ import fr.fallenvaders.minecraft.commons.FvModule;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,32 +34,33 @@ import java.util.List;
 @Singleton
 public final class ModuleContainer {
 
-  private final List<FvModule> modules;
-  private boolean hasLaunched;
-
-  /** Constructor. */
-  @Inject
-  public ModuleContainer() {
-    modules = new ArrayList<>();
-    hasLaunched = false;
-  }
+  private final List<FvModule> modules = new ArrayList<>();
+  private PluginModulesState state = null;
 
   /**
    * Adds a module in the module container. If a module with the same name of the new one exists,
    * then the operation is cancelled and an exception is thrown.
    *
    * @param module The module to add into the container.
-   * @throws ModuleException if a module with the same name of the new on already exists.
+   * @throws ModuleException if a module with the same name of the new on already exists or the
+   *     loading process as already been launched.
    */
   public void addModule(@NotNull FvModule module) throws ModuleException {
-    FvModule existingModule = getModule(module.getModuleName());
+    if (state == null) {
+      FvModule existingModule = getModule(module.getModuleName());
 
-    if (existingModule == null) {
-      modules.add(module);
+      if (existingModule == null) {
+        modules.add(module);
+      } else {
+        throw new ModuleException(
+            String.format(
+                "The module with the name %s already exists in the register.",
+                module.getModuleName()));
+      }
     } else {
       throw new ModuleException(
           String.format(
-              "The module with the name %s already exists in the register.",
+              "Impossible to load the module '%s': the loading as already been launched.",
               module.getModuleName()));
     }
   }
@@ -90,21 +90,28 @@ public final class ModuleContainer {
   }
 
   /**
-   * Returns {@link Boolean#TRUE} if the registration has been launched.
+   * Getter.
    *
-   * @return {@link Boolean#TRUE} if the registration has been launched.
+   * @return The plugin's modules state.
    */
-  public boolean isHasLaunched() {
-    return hasLaunched;
+  public @Nullable PluginModulesState getState() {
+    return state;
   }
 
   /**
-   * Defines if the registration has been launched or no.
+   * Setter.
    *
-   * @param hasLaunched {@link Boolean#TRUE} if the registration has been launched, {@link
-   *     Boolean#FALSE} otherwise.
+   * @param state The new plugin's modules state.
+   * @throws ModuleException if the new state can't follow the previous one.
    */
-  public void setHasLaunched(boolean hasLaunched) {
-    this.hasLaunched = hasLaunched;
+  public void setState(@NotNull PluginModulesState state) throws ModuleException {
+    if (this.state == null || this.state.getStateOrder() < state.getStateOrder()) {
+      this.state = state;
+    } else {
+      throw new ModuleException(
+          String.format(
+              "Wrong new plugin's modules state: '%s' state can't follow the '%s' one.",
+              state.name(), this.state.name()));
+    }
   }
 }
