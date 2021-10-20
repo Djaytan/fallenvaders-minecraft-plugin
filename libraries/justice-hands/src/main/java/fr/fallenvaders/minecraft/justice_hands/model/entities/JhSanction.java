@@ -19,6 +19,7 @@ package fr.fallenvaders.minecraft.justice_hands.model.entities;
 
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -35,8 +36,8 @@ public class JhSanction {
   private String sanctionName;
   private String sanctionReason;
   private int sanctionPoints;
-  private Date sanctionBeginningDate;
-  private Date sanctionEndingDate;
+  private Timestamp sanctionBeginningDate;
+  private Timestamp sanctionEndingDate;
   private UUID sanctionAuthorUuid;
   private SanctionType sanctionType;
   private String sanctionState;
@@ -137,7 +138,7 @@ public class JhSanction {
    *
    * @return The beginning date of the sanction.
    */
-  public Date getSanctionBeginningDate() {
+  public Timestamp getSanctionBeginningDate() {
     return sanctionBeginningDate;
   }
 
@@ -146,7 +147,7 @@ public class JhSanction {
    *
    * @param sanctionBeginningDate The beginning date of the sanction.
    */
-  public void setSanctionBeginningDate(Date sanctionBeginningDate) {
+  public void setSanctionBeginningDate(Timestamp sanctionBeginningDate) {
     this.sanctionBeginningDate = sanctionBeginningDate;
   }
 
@@ -155,7 +156,7 @@ public class JhSanction {
    *
    * @return The ending date of the sanction.
    */
-  public Date getSanctionEndingDate() {
+  public Timestamp getSanctionEndingDate() {
     return sanctionEndingDate;
   }
 
@@ -164,7 +165,7 @@ public class JhSanction {
    *
    * @param sanctionEndingDate The ending date of the sanction.
    */
-  public void setSanctionEndingDate(Date sanctionEndingDate) {
+  public void setSanctionEndingDate(Timestamp sanctionEndingDate) {
     this.sanctionEndingDate = sanctionEndingDate;
   }
 
