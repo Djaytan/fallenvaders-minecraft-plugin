@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class FvModule {
 
-  private String moduleName;
+  private final String moduleName;
 
   /**
    * Constructor.
