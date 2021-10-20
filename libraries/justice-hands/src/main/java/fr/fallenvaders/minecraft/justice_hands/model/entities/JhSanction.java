@@ -41,8 +41,14 @@ public class JhSanction {
   private SanctionType sanctionType;
   private String sanctionState;
 
-  /** Constructor. */
-  public JhSanction() {}
+  /**
+   * Constructor.
+   *
+   * @param id The ID of the sanction.
+   */
+  public JhSanction(int id) {
+    this.id = id;
+  }
 
   /**
    * Getter.
@@ -51,17 +57,6 @@ public class JhSanction {
    */
   public int getId() {
     return id;
-  }
-
-  /**
-   * Setter.
-   *
-   * <p>This setter shall be used only at creation of the sanction, not to update it.
-   *
-   * @param id The ID of the sanction.
-   */
-  public void setId(int id) {
-    this.id = id;
   }
 
   /**
