@@ -98,13 +98,30 @@ public class JhSanctionDao implements FvDao<JhSanction> {
                     + "sctn_reason, sctn_points, sctn_beginning_date, sctn_ending_date, "
                     + "sctn_author_player_uuid, sctn_type, sctn_state)"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-      setSanction(jhSanction, stmt);
+      setSanction(jhSanction, stmt, false);
       stmt.executeUpdate();
     }
   }
 
   @Override
-  public void update(@NotNull JhSanction o) throws SQLException {}
+  public void update(@NotNull JhSanction jhSanction) throws SQLException {
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt =
+            connection.prepareStatement(
+                "UPDATE fv_jh_sanction SET sctn_inculpated_player_uuid = ?, sctn_name = ?, "
+                    + "sctn_reason = ?, sctn_points = ?, sctn_beginning_date = ?, "
+                    + "sctn_ending_date = ?, sctn_author_player_uuid = ?, sctn_type = ?, "
+                    + "sctn_state = ? WHERE sctn_id = ?")) {
+      setSanction(jhSanction, stmt, true);
+      int rowCount = stmt.executeUpdate();
+      if (rowCount == 0) {
+        throw new SQLException(
+            String.format(
+                "The JusticeHands' sanction with ID '%d' doesn't exists and then can't be updated.",
+                jhSanction.getSctnId()));
+      }
+    }
+  }
 
   @Override
   public void delete(@NotNull JhSanction o) throws SQLException {}
@@ -125,17 +142,25 @@ public class JhSanctionDao implements FvDao<JhSanction> {
     return jhSanction;
   }
 
-  private void setSanction(@NotNull JhSanction jhSanction, @NotNull PreparedStatement stmt)
+  private void setSanction(
+      @NotNull JhSanction jhSanction, @NotNull PreparedStatement stmt, boolean idIsLast)
       throws SQLException {
-    stmt.setInt(1, jhSanction.getSctnId());
-    stmt.setString(2, jhSanction.getSctnInculpatedPlayer().getUniqueId().toString());
-    stmt.setString(3, jhSanction.getSctnName());
-    stmt.setString(4, jhSanction.getSctnReason());
-    stmt.setInt(5, jhSanction.getSctnPoints());
-    stmt.setTimestamp(6, jhSanction.getSctnBeginningDate());
-    stmt.setTimestamp(7, jhSanction.getSctnEndingDate());
-    stmt.setString(8, jhSanction.getSctnAuthorPlayer().getUniqueId().toString());
-    stmt.setString(9, jhSanction.getSctnType().name());
-    stmt.setString(10, jhSanction.getSctnState());
+    int index = 1;
+    boolean idIsFirst = !idIsLast;
+    if (idIsFirst) {
+      stmt.setInt(index++, jhSanction.getSctnId());
+    }
+    stmt.setString(index++, jhSanction.getSctnInculpatedPlayer().getUniqueId().toString());
+    stmt.setString(index++, jhSanction.getSctnName());
+    stmt.setString(index++, jhSanction.getSctnReason());
+    stmt.setInt(index++, jhSanction.getSctnPoints());
+    stmt.setTimestamp(index++, jhSanction.getSctnBeginningDate());
+    stmt.setTimestamp(index++, jhSanction.getSctnEndingDate());
+    stmt.setString(index++, jhSanction.getSctnAuthorPlayer().getUniqueId().toString());
+    stmt.setString(index++, jhSanction.getSctnType().name());
+    stmt.setString(index++, jhSanction.getSctnState());
+    if (idIsLast) {
+      stmt.setInt(index, jhSanction.getSctnId());
+    }
   }
 }
