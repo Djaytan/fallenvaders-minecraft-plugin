@@ -20,7 +20,6 @@ package fr.fallenvaders.minecraft.justice_hands.model.dao;
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
 import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
-import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
@@ -79,8 +78,7 @@ public class JhSanctionDao implements FvDao<JhSanction> {
   @Override
   public @NotNull List<JhSanction> getAll() throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
-         PreparedStatement stmt =
-           connection.prepareStatement("SELECT * FROM fv_jh_sanction")) {
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM fv_jh_sanction")) {
       ResultSet rs = stmt.executeQuery();
       List<JhSanction> jhSanctions = new ArrayList<>(rs.getFetchSize());
       while (rs.next()) {
@@ -92,7 +90,18 @@ public class JhSanctionDao implements FvDao<JhSanction> {
   }
 
   @Override
-  public void save(@NotNull JhSanction o) throws SQLException {}
+  public void save(@NotNull JhSanction jhSanction) throws SQLException {
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt =
+            connection.prepareStatement(
+                "INSERT INTO fv_jh_sanction (sctn_inculpated_player_uuid, sctn_name, "
+                    + "sctn_reason, sctn_points, sctn_beginning_date, sctn_ending_date, "
+                    + "sctn_author_player_uuid, sctn_type, sctn_state)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+      setSanction(jhSanction, stmt);
+      stmt.executeUpdate();
+    }
+  }
 
   @Override
   public void update(@NotNull JhSanction o) throws SQLException {}
@@ -102,15 +111,31 @@ public class JhSanctionDao implements FvDao<JhSanction> {
 
   private @NotNull JhSanction getSanction(@NotNull ResultSet rs) throws SQLException {
     JhSanction jhSanction = new JhSanction(rs.getInt("sctn_id"));
-    jhSanction.setSctnInculpatedPlayer(server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_inculpated_player_uuid"))));
+    jhSanction.setSctnInculpatedPlayer(
+        server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_inculpated_player_uuid"))));
     jhSanction.setSctnName(rs.getString("sctn_name"));
     jhSanction.setSctnReason(rs.getString("sctn_reason"));
     jhSanction.setSctnPoints(rs.getInt("sctn_points"));
     jhSanction.setSctnBeginningDate(rs.getTimestamp("sctn_beginning_date"));
     jhSanction.setSctnEndingDate(rs.getTimestamp("sctn_ending_date"));
-    jhSanction.setSctnAuthorPlayer(server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_author_player_uuid"))));
+    jhSanction.setSctnAuthorPlayer(
+        server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_author_player_uuid"))));
     jhSanction.setSctnType(SanctionType.valueOf(rs.getString("sctn_type")));
     jhSanction.setSctnState(rs.getString("sctn_state"));
     return jhSanction;
+  }
+
+  private void setSanction(@NotNull JhSanction jhSanction, @NotNull PreparedStatement stmt)
+      throws SQLException {
+    stmt.setInt(1, jhSanction.getSctnId());
+    stmt.setString(2, jhSanction.getSctnInculpatedPlayer().getUniqueId().toString());
+    stmt.setString(3, jhSanction.getSctnName());
+    stmt.setString(4, jhSanction.getSctnReason());
+    stmt.setInt(5, jhSanction.getSctnPoints());
+    stmt.setTimestamp(6, jhSanction.getSctnBeginningDate());
+    stmt.setTimestamp(7, jhSanction.getSctnEndingDate());
+    stmt.setString(8, jhSanction.getSctnAuthorPlayer().getUniqueId().toString());
+    stmt.setString(9, jhSanction.getSctnType().name());
+    stmt.setString(10, jhSanction.getSctnState());
   }
 }
