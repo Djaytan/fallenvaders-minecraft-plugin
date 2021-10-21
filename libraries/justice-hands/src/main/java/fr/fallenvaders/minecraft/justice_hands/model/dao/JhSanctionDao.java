@@ -20,6 +20,7 @@ package fr.fallenvaders.minecraft.justice_hands.model.dao;
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
 import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
+import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +31,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -68,16 +70,7 @@ public class JhSanctionDao implements FvDao<JhSanction> {
       ResultSet rs = stmt.executeQuery();
       JhSanction jhSanction = null;
       if (rs.first()) {
-        jhSanction = new JhSanction(id);
-        jhSanction.setSctnInculpatedPlayer(server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_inculpated_player_uuid"))));
-        jhSanction.setSctnName(rs.getString("sctn_name"));
-        jhSanction.setSctnReason(rs.getString("sctn_reason"));
-        jhSanction.setSctnPoints(rs.getInt("sctn_points"));
-        jhSanction.setSctnBeginningDate(rs.getTimestamp("sctn_beginning_date"));
-        jhSanction.setSctnEndingDate(rs.getTimestamp("sctn_ending_date"));
-        jhSanction.setSctnAuthorPlayer(server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_author_player_uuid"))));
-        jhSanction.setSctnType(SanctionType.valueOf(rs.getString("sctn_type")));
-        jhSanction.setSctnState(rs.getString("sctn_state"));
+        jhSanction = getSanction(rs);
       }
       return Optional.ofNullable(jhSanction);
     }
@@ -85,7 +78,17 @@ public class JhSanctionDao implements FvDao<JhSanction> {
 
   @Override
   public @NotNull List<JhSanction> getAll() throws SQLException {
-    return null;
+    try (Connection connection = fvDataSource.getConnection();
+         PreparedStatement stmt =
+           connection.prepareStatement("SELECT * FROM fv_jh_sanction")) {
+      ResultSet rs = stmt.executeQuery();
+      List<JhSanction> jhSanctions = new ArrayList<>(rs.getFetchSize());
+      while (rs.next()) {
+        JhSanction jhSanction = getSanction(rs);
+        jhSanctions.add(jhSanction);
+      }
+      return jhSanctions;
+    }
   }
 
   @Override
@@ -96,4 +99,18 @@ public class JhSanctionDao implements FvDao<JhSanction> {
 
   @Override
   public void delete(@NotNull JhSanction o) throws SQLException {}
+
+  private @NotNull JhSanction getSanction(@NotNull ResultSet rs) throws SQLException {
+    JhSanction jhSanction = new JhSanction(rs.getInt("sctn_id"));
+    jhSanction.setSctnInculpatedPlayer(server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_inculpated_player_uuid"))));
+    jhSanction.setSctnName(rs.getString("sctn_name"));
+    jhSanction.setSctnReason(rs.getString("sctn_reason"));
+    jhSanction.setSctnPoints(rs.getInt("sctn_points"));
+    jhSanction.setSctnBeginningDate(rs.getTimestamp("sctn_beginning_date"));
+    jhSanction.setSctnEndingDate(rs.getTimestamp("sctn_ending_date"));
+    jhSanction.setSctnAuthorPlayer(server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_author_player_uuid"))));
+    jhSanction.setSctnType(SanctionType.valueOf(rs.getString("sctn_type")));
+    jhSanction.setSctnState(rs.getString("sctn_state"));
+    return jhSanction;
+  }
 }
