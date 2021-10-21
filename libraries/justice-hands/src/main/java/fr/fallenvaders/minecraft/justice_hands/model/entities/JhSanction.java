@@ -18,37 +18,38 @@
 package fr.fallenvaders.minecraft.justice_hands.model.entities;
 
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
+import org.bukkit.OfflinePlayer;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * This entity represents a JusticeHands' sanction.
+ *
+ * <p>Note: "sctn" means "sanction".
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
 public class JhSanction {
 
-  private int id;
-  private UUID playerUuid;
-  private String sanctionName;
-  private String sanctionReason;
-  private int sanctionPoints;
-  private Timestamp sanctionBeginningDate;
-  private Timestamp sanctionEndingDate;
-  private UUID sanctionAuthorUuid;
-  private SanctionType sanctionType;
-  private String sanctionState;
+  private final int sctnId;
+  private OfflinePlayer sctnInculpatedPlayer;
+  private String sctnName;
+  private String sctnReason;
+  private int sctnPoints;
+  private Timestamp sctnBeginningDate;
+  private Timestamp sctnEndingDate;
+  private OfflinePlayer sctnAuthorPlayer;
+  private SanctionType sctnType;
+  private String sctnState;
 
   /**
    * Constructor.
    *
-   * @param id The ID of the sanction.
+   * @param sctnId The ID of the sanction.
    */
-  public JhSanction(int id) {
-    this.id = id;
+  public JhSanction(int sctnId) {
+    this.sctnId = sctnId;
   }
 
   /**
@@ -56,26 +57,26 @@ public class JhSanction {
    *
    * @return The ID of the sanction.
    */
-  public int getId() {
-    return id;
+  public int getSctnId() {
+    return sctnId;
   }
 
   /**
    * Getter.
    *
-   * @return The player's UUID targeted by the sanction.
+   * @return The inculpated player targeted by the sanction.
    */
-  public UUID getPlayerUuid() {
-    return playerUuid;
+  public OfflinePlayer getSctnInculpatedPlayer() {
+    return sctnInculpatedPlayer;
   }
 
   /**
    * Setter.
    *
-   * @param playerUuid The player's UUID targeted by the sanction.
+   * @param sctnInculpatedPlayer The inculpated player targeted by the sanction.
    */
-  public void setPlayerUuid(UUID playerUuid) {
-    this.playerUuid = playerUuid;
+  public void setSctnInculpatedPlayer(OfflinePlayer sctnInculpatedPlayer) {
+    this.sctnInculpatedPlayer = sctnInculpatedPlayer;
   }
 
   /**
@@ -84,17 +85,17 @@ public class JhSanction {
    * @return The name of the sanction.
    */
   // TODO: replace this one by a reference to an existing sanction_type.
-  public String getSanctionName() {
-    return sanctionName;
+  public String getSctnName() {
+    return sctnName;
   }
 
   /**
    * Setter.
    *
-   * @param sanctionName The name of the sanction.
+   * @param sctnName The name of the sanction.
    */
-  public void setSanctionName(String sanctionName) {
-    this.sanctionName = sanctionName;
+  public void setSctnName(String sctnName) {
+    this.sctnName = sctnName;
   }
 
   /**
@@ -102,17 +103,17 @@ public class JhSanction {
    *
    * @return The reason of the sanction.
    */
-  public String getSanctionReason() {
-    return sanctionReason;
+  public String getSctnReason() {
+    return sctnReason;
   }
 
   /**
    * Setter.
    *
-   * @param sanctionReason The reason of the sanction.
+   * @param sctnReason The reason of the sanction.
    */
-  public void setSanctionReason(String sanctionReason) {
-    this.sanctionReason = sanctionReason;
+  public void setSctnReason(String sctnReason) {
+    this.sctnReason = sctnReason;
   }
 
   /**
@@ -120,17 +121,17 @@ public class JhSanction {
    *
    * @return The points of the sanction.
    */
-  public int getSanctionPoints() {
-    return sanctionPoints;
+  public int getSctnPoints() {
+    return sctnPoints;
   }
 
   /**
    * Setter.
    *
-   * @param sanctionPoints The points of the sanction.
+   * @param sctnPoints The points of the sanction.
    */
-  public void setSanctionPoints(int sanctionPoints) {
-    this.sanctionPoints = sanctionPoints;
+  public void setSctnPoints(int sctnPoints) {
+    this.sctnPoints = sctnPoints;
   }
 
   /**
@@ -138,17 +139,17 @@ public class JhSanction {
    *
    * @return The beginning date of the sanction.
    */
-  public Timestamp getSanctionBeginningDate() {
-    return sanctionBeginningDate;
+  public Timestamp getSctnBeginningDate() {
+    return sctnBeginningDate;
   }
 
   /**
    * Setter.
    *
-   * @param sanctionBeginningDate The beginning date of the sanction.
+   * @param sctnBeginningDate The beginning date of the sanction.
    */
-  public void setSanctionBeginningDate(Timestamp sanctionBeginningDate) {
-    this.sanctionBeginningDate = sanctionBeginningDate;
+  public void setSctnBeginningDate(Timestamp sctnBeginningDate) {
+    this.sctnBeginningDate = sctnBeginningDate;
   }
 
   /**
@@ -156,17 +157,17 @@ public class JhSanction {
    *
    * @return The ending date of the sanction.
    */
-  public Timestamp getSanctionEndingDate() {
-    return sanctionEndingDate;
+  public Timestamp getSctnEndingDate() {
+    return sctnEndingDate;
   }
 
   /**
    * Setter.
    *
-   * @param sanctionEndingDate The ending date of the sanction.
+   * @param sctnEndingDate The ending date of the sanction.
    */
-  public void setSanctionEndingDate(Timestamp sanctionEndingDate) {
-    this.sanctionEndingDate = sanctionEndingDate;
+  public void setSctnEndingDate(Timestamp sctnEndingDate) {
+    this.sctnEndingDate = sctnEndingDate;
   }
 
   /**
@@ -174,17 +175,17 @@ public class JhSanction {
    *
    * @return The author's UUID of the sanction.
    */
-  public UUID getSanctionAuthorUuid() {
-    return sanctionAuthorUuid;
+  public OfflinePlayer getSctnAuthorPlayer() {
+    return sctnAuthorPlayer;
   }
 
   /**
    * Setter.
    *
-   * @param sanctionAuthorUuid The author's UUID of the sanction.
+   * @param sctnAuthorPlayer The author's UUID of the sanction.
    */
-  public void setSanctionAuthorUuid(UUID sanctionAuthorUuid) {
-    this.sanctionAuthorUuid = sanctionAuthorUuid;
+  public void setSctnAuthorPlayer(OfflinePlayer sctnAuthorPlayer) {
+    this.sctnAuthorPlayer = sctnAuthorPlayer;
   }
 
   /**
@@ -192,17 +193,17 @@ public class JhSanction {
    *
    * @return The type of the sanction (mute, ban, ...).
    */
-  public SanctionType getSanctionType() {
-    return sanctionType;
+  public SanctionType getSctnType() {
+    return sctnType;
   }
 
   /**
    * Setter.
    *
-   * @param sanctionType The type of the sanction (mute, ban, ...).
+   * @param sctnType The type of the sanction (mute, ban, ...).
    */
-  public void setSanctionType(SanctionType sanctionType) {
-    this.sanctionType = sanctionType;
+  public void setSctnType(SanctionType sctnType) {
+    this.sctnType = sctnType;
   }
 
   /**
@@ -211,16 +212,16 @@ public class JhSanction {
    * @return The state of the sanction.
    */
   // TODO: remove it
-  public String getSanctionState() {
-    return sanctionState;
+  public String getSctnState() {
+    return sctnState;
   }
 
   /**
    * Setter.
    *
-   * @param sanctionState The state of the sanction.
+   * @param sctnState The state of the sanction.
    */
-  public void setSanctionState(String sanctionState) {
-    this.sanctionState = sanctionState;
+  public void setSctnState(String sctnState) {
+    this.sctnState = sctnState;
   }
 }
