@@ -117,7 +117,7 @@ public class JhSanctionService {
    *
    * @param jhSanction The JusticeHands' sanction to update in the model.
    */
-  public void updateJhPlayer(@NotNull JhSanction jhSanction) {
+  public void updateJhSanction(@NotNull JhSanction jhSanction) {
     logger.info(
         "Try to update the JusticeHands' sanction with ID '{}' with this following new value: {}",
         jhSanction.getSctnId(),
