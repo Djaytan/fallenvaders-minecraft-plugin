@@ -101,7 +101,7 @@ public class JhPlayerService {
   /**
    * Saves the specified {@link JhPlayer}.
    *
-   * @param jhPlayer The FallenVaders' player to save into the model.
+   * @param jhPlayer The JusticeHands' player to save into the model.
    */
   public void saveJhPlayer(@NotNull JhPlayer jhPlayer) {
     logger.info("Try to save the following new JusticeHands' player: {}", jhPlayer);
@@ -116,7 +116,7 @@ public class JhPlayerService {
   /**
    * Updates the specified {@link JhPlayer}.
    *
-   * @param jhPlayer The FallenVaders' player to update in the model.
+   * @param jhPlayer The JusticeHands' player to update in the model.
    */
   public void updateJhPlayer(@NotNull JhPlayer jhPlayer) {
     logger.info(
@@ -134,7 +134,7 @@ public class JhPlayerService {
   /**
    * Deletes the specified {@link JhPlayer}.
    *
-   * @param jhPlayer The FallenVaders' player to delete from the model.
+   * @param jhPlayer The JusticeHands' player to delete from the model.
    */
   public void deleteJhPlayer(@NotNull JhPlayer jhPlayer) {
     logger.info("Try to delete the following JusticeHands' player: {}", jhPlayer);
