@@ -38,11 +38,16 @@ import java.util.UUID;
 /**
  * JusticeHands' DAO class about manipulation of sanctions in the model.
  *
+ * <p>For more information about DAO pattern, see {@link FvDao} interface Javadoc.
+ *
  * @author FallenVaders' dev team
  * @since 0.3.0
+ * @see FvDao
  */
 @Singleton
 public class JhSanctionDao implements FvDao<JhSanction> {
+
+  // TODO: FV-116, FV-117 - optimisation with cache
 
   private final Server server;
   private final FvDataSource fvDataSource;
