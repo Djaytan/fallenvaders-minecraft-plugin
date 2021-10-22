@@ -25,6 +25,8 @@ import org.slf4j.Logger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -72,5 +74,26 @@ public class JhSanctionService {
       logger.error("An SQL error occurs during the seek of a JusticeHands' sanction.", e);
     }
     return Optional.ofNullable(jhSanction);
+  }
+
+  /**
+   * Gets and returns all existing {@link JhSanction}s of the model.
+   *
+   * @return All the existing {@link JhSanction}s of the model.
+   */
+  public List<JhSanction> getJhSanctions() {
+    logger.info("Seek of all JusticeHands' sanctions.");
+    List<JhSanction> jhSanctions = Collections.emptyList();
+    try {
+      jhSanctions = jhSanctionDao.getAll();
+      if (!jhSanctions.isEmpty()) {
+        logger.info("JusticeHands' sanctions found: {}", jhSanctions);
+      } else {
+        logger.warn("No JusticeHands' sanction found.");
+      }
+    } catch (SQLException e) {
+      logger.error("An SQL error occurs during the seek of all JusticeHands' sanctions.", e);
+    }
+    return jhSanctions;
   }
 }
