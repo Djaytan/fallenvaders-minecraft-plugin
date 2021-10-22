@@ -125,7 +125,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   }
 
   /**
-   * Updates the specified {@link JhPlayer}.
+   * Updates the specified {@link JhPlayer} in the model.
    *
    * @param jhPlayer The updated instance of the JusticeHands' player to update.
    * @throws SQLException if something went wrong during database access or stuffs like this.
@@ -148,7 +148,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   }
 
   /**
-   * Deletes the specified {@link JhPlayer}.
+   * Deletes the specified {@link JhPlayer} from the model.
    *
    * @param jhPlayer The JusticeHands' player to delete.
    * @throws SQLException if something went wrong during database access or stuffs like this.
