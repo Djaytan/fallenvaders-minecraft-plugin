@@ -132,7 +132,7 @@ public class JhPlayerService {
   }
 
   /**
-   * Deletes the specified {@link JhPlayer}.
+   * Deletes the specified {@link JhPlayer} from the model.
    *
    * @param jhPlayer The JusticeHands' player to delete from the model.
    */

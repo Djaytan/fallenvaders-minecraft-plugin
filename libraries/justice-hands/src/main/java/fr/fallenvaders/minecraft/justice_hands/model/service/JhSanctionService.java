@@ -129,4 +129,19 @@ public class JhSanctionService {
       logger.error("An SQL error occurs when trying to update a JusticeHands' sanction.", e);
     }
   }
+
+  /**
+   * Deletes the specified {@link JhSanction} from the model.
+   *
+   * @param jhSanction The JusticeHands' sanction to delete from the model.
+   */
+  public void deleteJhSanction(@NotNull JhSanction jhSanction) {
+    logger.info("Try to delete the following JusticeHands' sanction: {}", jhSanction);
+    try {
+      jhSanctionDao.delete(jhSanction);
+      logger.info("The JusticeHands' sanction deleted successfully.");
+    } catch (SQLException e) {
+      logger.error("An SQL error occurs when trying to delete a JusticeHands' sanction.", e);
+    }
+  }
 }
