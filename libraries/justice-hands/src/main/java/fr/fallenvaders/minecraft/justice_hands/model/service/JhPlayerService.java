@@ -99,7 +99,7 @@ public class JhPlayerService {
   }
 
   /**
-   * Saves the specified {@link JhPlayer}.
+   * Saves the specified {@link JhPlayer} into the model.
    *
    * @param jhPlayer The JusticeHands' player to save into the model.
    */

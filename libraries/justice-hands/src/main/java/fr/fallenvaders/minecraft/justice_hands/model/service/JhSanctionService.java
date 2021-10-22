@@ -18,6 +18,7 @@
 package fr.fallenvaders.minecraft.justice_hands.model.service;
 
 import fr.fallenvaders.minecraft.justice_hands.model.dao.JhSanctionDao;
+import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -95,5 +96,20 @@ public class JhSanctionService {
       logger.error("An SQL error occurs during the seek of all JusticeHands' sanctions.", e);
     }
     return jhSanctions;
+  }
+
+  /**
+   * Saves the specified {@link JhSanction} into the model.
+   *
+   * @param jhSanction The JusticeHands' sanction to save into the model.
+   */
+  public void saveJhSanction(@NotNull JhSanction jhSanction) {
+    logger.info("Try to save the following new JusticeHands' sanction: {}", jhSanction);
+    try {
+      jhSanctionDao.save(jhSanction);
+      logger.info("The JusticeHands' sanction registered successfully.");
+    } catch (SQLException e) {
+      logger.error("An SQL error occurs when trying to save a JusticeHands' sanction.", e);
+    }
   }
 }
