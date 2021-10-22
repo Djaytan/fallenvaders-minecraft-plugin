@@ -127,7 +127,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   /**
    * Updates the specified {@link JhPlayer}.
    *
-   * @param jhPlayer The FallenVaders' player to update.
+   * @param jhPlayer The updated instance of the JusticeHands' player to update.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
@@ -141,7 +141,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
       if (rowCount == 0) {
         throw new SQLException(
             String.format(
-                "The FallenVaders' player with UUID '%s' is not registered and then can't be updated.",
+                "The JusticeHands' player with UUID '%s' is not registered and then can't be updated.",
                 jhPlayer.getUuid().toString()));
       }
     }
@@ -150,7 +150,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   /**
    * Deletes the specified {@link JhPlayer}.
    *
-   * @param jhPlayer The FallenVaders' player to delete.
+   * @param jhPlayer The JusticeHands' player to delete.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
@@ -163,7 +163,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
       if (rowCount == 0) {
         throw new SQLException(
             String.format(
-                "The FallenVaders' player with UUID '%s' is not registered in the model and then can't be deleted.",
+                "The JusticeHands' player with UUID '%s' is not registered in the model and then can't be deleted.",
                 jhPlayer.getUuid().toString()));
       }
     }
