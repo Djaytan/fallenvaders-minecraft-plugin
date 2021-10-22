@@ -18,13 +18,14 @@
 package fr.fallenvaders.minecraft.justice_hands.model.service;
 
 import fr.fallenvaders.minecraft.justice_hands.model.dao.JhSanctionDao;
-import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.sql.SQLException;
+import java.util.Optional;
 
 /**
  * Class which offers services about the manipulation of {@link JhSanction}s in the model.
@@ -48,5 +49,28 @@ public class JhSanctionService {
   public JhSanctionService(@NotNull Logger logger, @NotNull JhSanctionDao jhSanctionDao) {
     this.logger = logger;
     this.jhSanctionDao = jhSanctionDao;
+  }
+
+  /**
+   * Gets and returns the {@link JhSanction} associated with the specified ID.
+   *
+   * @param id The ID of the {@link JhSanction} to seek.
+   * @return The {@link JhSanction} associated with the specified ID.
+   */
+  @NotNull
+  public Optional<JhSanction> getJhSanction(int id) {
+    logger.info("Seek of the JusticeHands' sanction associated with ID '{}'.", id);
+    JhSanction jhSanction = null;
+    try {
+      jhSanction = jhSanctionDao.get(Integer.toString(id)).orElse(null);
+      if (jhSanction != null) {
+        logger.info("JusticeHands' sanction found for the ID '{}': {}", id, jhSanction);
+      } else {
+        logger.warn("No JusticeHands' sanction found for ID '{}'", id);
+      }
+    } catch (SQLException e) {
+      logger.error("An SQL error occurs during the seek of a JusticeHands' sanction.", e);
+    }
+    return Optional.ofNullable(jhSanction);
   }
 }
