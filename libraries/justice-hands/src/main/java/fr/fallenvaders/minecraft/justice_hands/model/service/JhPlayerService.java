@@ -114,7 +114,7 @@ public class JhPlayerService {
   }
 
   /**
-   * Updates the specified {@link JhPlayer}.
+   * Updates the specified {@link JhPlayer} in the model.
    *
    * @param jhPlayer The JusticeHands' player to update in the model.
    */
