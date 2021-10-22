@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -83,7 +84,7 @@ public class JhPlayerService {
    */
   public List<JhPlayer> getJhPlayers() {
     logger.info("Seek of all JusticeHands' players.");
-    List<JhPlayer> jhPlayers = List.of();
+    List<JhPlayer> jhPlayers = Collections.emptyList();
     try {
       jhPlayers = jhPlayerDao.getAll();
       if (!jhPlayers.isEmpty()) {
