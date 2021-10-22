@@ -162,15 +162,15 @@ public class JhSanctionDao implements FvDao<JhSanction> {
   @Override
   public void delete(@NotNull JhSanction jhSanction) throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
-         PreparedStatement stmt =
-           connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
+        PreparedStatement stmt =
+            connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
       stmt.setInt(1, jhSanction.getSctnId());
       int rowCount = stmt.executeUpdate();
       if (rowCount == 0) {
         throw new SQLException(
-          String.format(
-            "The JusticeHands' sanction with ID '%d' doesn't exists and then can't be deleted.",
-            jhSanction.getSctnId()));
+            String.format(
+                "The JusticeHands' sanction with ID '%d' doesn't exists and then can't be deleted.",
+                jhSanction.getSctnId()));
       }
     }
   }

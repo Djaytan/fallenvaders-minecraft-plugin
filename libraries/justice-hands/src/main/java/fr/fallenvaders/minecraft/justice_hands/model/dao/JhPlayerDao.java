@@ -116,8 +116,7 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   public void save(@NotNull JhPlayer jhPlayer) throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
-            connection.prepareStatement(
-                "INSERT INTO fv_jh_player (uuid, points) VALUES (?, ?)")) {
+            connection.prepareStatement("INSERT INTO fv_jh_player (uuid, points) VALUES (?, ?)")) {
       stmt.setString(1, jhPlayer.getUuid().toString());
       stmt.setInt(2, jhPlayer.getPoints());
       stmt.executeUpdate();
