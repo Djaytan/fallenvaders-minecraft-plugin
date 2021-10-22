@@ -44,13 +44,13 @@ public class JhPlayerService {
   /**
    * Constructor.
    *
-   * @param jhPlayerDao The DAO for the JusticeHands' player entity class.
    * @param logger The logger of the FallenVaders' plugin.
+   * @param jhPlayerDao The {@link JhPlayer} DAO.
    */
   @Inject
-  public JhPlayerService(@NotNull JhPlayerDao jhPlayerDao, @NotNull Logger logger) {
-    this.jhPlayerDao = jhPlayerDao;
+  public JhPlayerService(@NotNull Logger logger, @NotNull JhPlayerDao jhPlayerDao) {
     this.logger = logger;
+    this.jhPlayerDao = jhPlayerDao;
   }
 
   /**
