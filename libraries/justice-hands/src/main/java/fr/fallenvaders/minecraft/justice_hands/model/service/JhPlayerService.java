@@ -45,6 +45,7 @@ public class JhPlayerService {
    * Constructor.
    *
    * @param jhPlayerDao The DAO for the JusticeHands' player entity class.
+   * @param logger The logger of the FallenVaders' plugin.
    */
   @Inject
   public JhPlayerService(@NotNull JhPlayerDao jhPlayerDao, @NotNull Logger logger) {
