@@ -59,6 +59,13 @@ public class JhSanctionDao implements FvDao<JhSanction> {
     this.fvDataSource = fvDataSource;
   }
 
+  /**
+   * Gets and returns the {@link JhSanction} which correspond to the specified ID from the model.
+   *
+   * @param strId The ID of the sought sanction.
+   * @return The JusticeHands' sanction associated to the specified ID if it exists.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   */
   @Override
   public @NotNull Optional<JhSanction> get(@NotNull String strId) throws SQLException {
     int id = Integer.parseInt(strId);
@@ -75,6 +82,12 @@ public class JhSanctionDao implements FvDao<JhSanction> {
     }
   }
 
+  /**
+   * Gets and returns all existing {@link JhSanction}s from the model.
+   *
+   * @return The list of all existing JusticeHands' sanctions.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   */
   @Override
   public @NotNull List<JhSanction> getAll() throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
@@ -89,6 +102,12 @@ public class JhSanctionDao implements FvDao<JhSanction> {
     }
   }
 
+  /**
+   * Saves a new {@link JhSanction} into the model.
+   *
+   * @param jhSanction The JusticeHands' sanction to save.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   */
   @Override
   public void save(@NotNull JhSanction jhSanction) throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
@@ -103,6 +122,12 @@ public class JhSanctionDao implements FvDao<JhSanction> {
     }
   }
 
+  /**
+   * Updates the specified {@link JhSanction} in the model.
+   *
+   * @param jhSanction The updates instance of the JusticeHands' sanction to update.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   */
   @Override
   public void update(@NotNull JhSanction jhSanction) throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
@@ -123,6 +148,12 @@ public class JhSanctionDao implements FvDao<JhSanction> {
     }
   }
 
+  /**
+   * Deletes the specified {@link JhSanction} from the model.
+   *
+   * @param jhSanction The JusticeHands' sanction to delete from the model.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   */
   @Override
   public void delete(@NotNull JhSanction jhSanction) throws SQLException {
     try (Connection connection = fvDataSource.getConnection();
