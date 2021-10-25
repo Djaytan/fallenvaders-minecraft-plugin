@@ -187,7 +187,6 @@ public class JhSanctionDao implements FvDao<JhSanction> {
     jhSanction.setSctnAuthorPlayer(
         server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_author_player_uuid"))));
     jhSanction.setSctnType(SanctionType.valueOf(rs.getString("sctn_type")));
-    jhSanction.setSctnState(rs.getString("sctn_state"));
     return jhSanction;
   }
 
@@ -207,7 +206,6 @@ public class JhSanctionDao implements FvDao<JhSanction> {
     stmt.setTimestamp(index++, jhSanction.getSctnEndingDate());
     stmt.setString(index++, jhSanction.getSctnAuthorPlayer().getUniqueId().toString());
     stmt.setString(index++, jhSanction.getSctnType().name());
-    stmt.setString(index++, jhSanction.getSctnState());
     if (idIsLast) {
       stmt.setInt(index, jhSanction.getSctnId());
     }

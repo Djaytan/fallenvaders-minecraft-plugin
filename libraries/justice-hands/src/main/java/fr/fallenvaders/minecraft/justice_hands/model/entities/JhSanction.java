@@ -41,7 +41,6 @@ public class JhSanction {
   private Timestamp sctnEndingDate;
   private OfflinePlayer sctnAuthorPlayer;
   private SanctionType sctnType;
-  private String sctnState;
 
   /**
    * Constructor.
@@ -204,24 +203,5 @@ public class JhSanction {
    */
   public void setSctnType(SanctionType sctnType) {
     this.sctnType = sctnType;
-  }
-
-  /**
-   * Getter.
-   *
-   * @return The state of the sanction.
-   */
-  // TODO: remove it
-  public String getSctnState() {
-    return sctnState;
-  }
-
-  /**
-   * Setter.
-   *
-   * @param sctnState The state of the sanction.
-   */
-  public void setSctnState(String sctnState) {
-    this.sctnState = sctnState;
   }
 }
