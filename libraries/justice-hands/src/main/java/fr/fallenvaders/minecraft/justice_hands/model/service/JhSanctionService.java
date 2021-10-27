@@ -101,7 +101,7 @@ public class JhSanctionService {
    * @return All the existing {@link JhSanction}s of the model.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public Set<JhSanction> getJhSanctions() throws JusticeHandsException {
+  public @NotNull Set<JhSanction> getJhSanctions() throws JusticeHandsException {
     logger.info("Seek of all existing JusticeHands' sanctions.");
     try (Connection connection = fvDataSource.getConnection()) {
       try {
