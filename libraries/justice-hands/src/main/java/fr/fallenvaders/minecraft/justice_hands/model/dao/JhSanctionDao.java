@@ -20,6 +20,7 @@ package fr.fallenvaders.minecraft.justice_hands.model.dao;
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +30,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * JusticeHands' DAO class about manipulation of sanctions in the model.
@@ -68,21 +72,18 @@ public class JhSanctionDao implements FvDao<JhSanction> {
   @Override
   public @NotNull Optional<JhSanction> get(@NotNull Connection connection, @NotNull String strId)
       throws SQLException {
-    int id = Integer.parseInt(strId);
     try (PreparedStatement stmt =
         connection.prepareStatement("SELECT * FROM fv_jh_sanction WHERE sctn_id = ?")) {
-      stmt.setInt(1, id);
-      ResultSet rs = stmt.executeQuery();
-      JhSanction jhSanction = null;
-      if (rs.first()) {
-        jhSanction = getSanction(rs);
-      }
-      return Optional.ofNullable(jhSanction);
+      stmt.setInt(1, Integer.parseInt(strId));
+      return getSanctions(stmt).stream().findFirst();
     }
   }
 
   /**
    * Gets and returns all existing {@link JhSanction}s from the model.
+   *
+   * <p>The set is ordered from the older sanction in first position to the youngest in the last
+   * position.
    *
    * @param connection The connection to the DBMS.
    * @return The list of all existing JusticeHands' sanctions.
@@ -91,13 +92,30 @@ public class JhSanctionDao implements FvDao<JhSanction> {
   @Override
   public @NotNull Set<JhSanction> getAll(@NotNull Connection connection) throws SQLException {
     try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM fv_jh_sanction")) {
-      ResultSet rs = stmt.executeQuery();
-      Set<JhSanction> jhSanctions = new LinkedHashSet<>(rs.getFetchSize());
-      while (rs.next()) {
-        JhSanction jhSanction = getSanction(rs);
-        jhSanctions.add(jhSanction);
-      }
-      return jhSanctions;
+      return getSanctions(stmt);
+    }
+  }
+
+  /**
+   * Gets and returns all existing {@link JhSanction}s where the specified {@link OfflinePlayer} is
+   * associated with them as an inculpated player.
+   *
+   * <p>The set is ordered from the older sanction in first position to the youngest in the last *
+   * position.
+   *
+   * @param connection The connection to the DBMS.
+   * @param player The Bukkit offline player.
+   * @return The list of all existing JusticeHands' sanctions for the specified {@link
+   *     OfflinePlayer}.
+   * @throws SQLException if something went wrong during database access or stuffs like this.
+   */
+  public @NotNull Set<JhSanction> getFromPlayer(
+      @NotNull Connection connection, @NotNull OfflinePlayer player) throws SQLException {
+    try (PreparedStatement stmt =
+        connection.prepareStatement(
+            "SELECT * FROM fv_jh_sanction WHERE sctn_inculpated_player_uuid = ?")) {
+      stmt.setString(1, player.getUniqueId().toString());
+      return getSanctions(stmt);
     }
   }
 
@@ -176,6 +194,17 @@ public class JhSanctionDao implements FvDao<JhSanction> {
         server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_author_player_uuid"))));
     jhSanction.setSctnType(SanctionType.valueOf(rs.getString("sctn_type")));
     return jhSanction;
+  }
+
+  private @NotNull Set<JhSanction> getSanctions(@NotNull PreparedStatement stmt)
+      throws SQLException {
+    ResultSet rs = stmt.executeQuery();
+    Set<JhSanction> jhSanctions = new LinkedHashSet<>(rs.getFetchSize());
+    while (rs.next()) {
+      JhSanction jhSanction = getSanction(rs);
+      jhSanctions.add(jhSanction);
+    }
+    return jhSanctions;
   }
 
   private void setSanction(
