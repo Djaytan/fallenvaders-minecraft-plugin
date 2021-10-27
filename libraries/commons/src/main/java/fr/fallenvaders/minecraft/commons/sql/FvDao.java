@@ -66,25 +66,28 @@ public interface FvDao<T> {
    *
    * @param connection The connection to the DBMS.
    * @param t The entity instance to save in the model.
+   * @return The number of affected rows.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void save(@NotNull Connection connection, @NotNull T t) throws SQLException;
+  int save(@NotNull Connection connection, @NotNull T t) throws SQLException;
 
   /**
    * Updates the entity instance {@link T} in the model.
    *
    * @param connection The connection to the DBMS.
    * @param t The entity instance to update in the model.
+   * @return The number of affected rows.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void update(@NotNull Connection connection, @NotNull T t) throws SQLException;
+  int update(@NotNull Connection connection, @NotNull T t) throws SQLException;
 
   /**
    * Deletes the entity instance {@link T} from the model.
    *
    * @param connection The connection to the DBMS.
    * @param t The entity instance to delete from the model.
+   * @return The number of affected rows.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void delete(@NotNull Connection connection, @NotNull T t) throws SQLException;
+  int delete(@NotNull Connection connection, @NotNull T t) throws SQLException;
 }
