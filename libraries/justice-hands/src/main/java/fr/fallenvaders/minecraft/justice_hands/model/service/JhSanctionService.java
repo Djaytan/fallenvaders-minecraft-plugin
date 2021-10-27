@@ -29,7 +29,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
@@ -132,7 +131,30 @@ public class JhSanctionService {
    *
    * @return All the {@link JhSanction} of the specified {@link OfflinePlayer}.
    */
-  public Set<JhSanction> getPlayerJhSanctions() {}
+  public @NotNull Set<JhSanction> getPlayerJhSanctions(@NotNull OfflinePlayer offlinePlayer) {
+    logger.info(
+        "Seek all JusticeHands' sanctions of the inculpated player '{}' with UUID '{}'",
+        offlinePlayer.getName(),
+        offlinePlayer.getUniqueId());
+    Set<JhSanction> jhSanctions = Collections.emptySet();
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhSanctions = jhSanctionDao.getFromPlayer(connection, offlinePlayer);
+        connection.commit();
+        if (!jhSanctions.isEmpty()) {
+          logger.info("JusticeHands' sanctions found: {}", jhSanctions);
+        } else {
+          logger.warn("No JusticeHands' sanction found.");
+        }
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
+      }
+    } catch (SQLException e) {
+      logger.error("An SQL error occurs during the seek of all JusticeHands' sanctions.", e);
+    }
+    return jhSanctions;
+  }
 
   /**
    * Saves the specified {@link JhSanction} into the model.
