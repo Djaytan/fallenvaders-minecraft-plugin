@@ -54,6 +54,7 @@ public class JhPlayerService {
    * @param logger The logger of the FallenVaders' plugin.
    * @param jhPlayerDao The {@link JhPlayer} DAO.
    * @param jhSanctionDao The {@link JhSanction} DAO.
+   * @param fvDataSource The FallenVaders' data source for DBMS.
    */
   @Inject
   public JhPlayerService(
