@@ -18,9 +18,7 @@
 package fr.fallenvaders.minecraft.justice_hands.model.dao;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
-import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
-import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
@@ -71,10 +69,11 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public @NotNull Optional<JhSanction> get(@NotNull Connection connection, @NotNull String strId) throws SQLException {
+  public @NotNull Optional<JhSanction> get(@NotNull Connection connection, @NotNull String strId)
+      throws SQLException {
     int id = Integer.parseInt(strId);
     try (PreparedStatement stmt =
-            connection.prepareStatement("SELECT * FROM fv_jh_sanction WHERE sctn_id = ?")) {
+        connection.prepareStatement("SELECT * FROM fv_jh_sanction WHERE sctn_id = ?")) {
       stmt.setInt(1, id);
       ResultSet rs = stmt.executeQuery();
       JhSanction jhSanction = null;
@@ -113,13 +112,14 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public void save(@NotNull Connection connection, @NotNull JhSanction jhSanction) throws SQLException {
+  public void save(@NotNull Connection connection, @NotNull JhSanction jhSanction)
+      throws SQLException {
     try (PreparedStatement stmt =
-            connection.prepareStatement(
-                "INSERT INTO fv_jh_sanction (sctn_inculpated_player_uuid, sctn_name, "
-                    + "sctn_reason, sctn_points, sctn_beginning_date, sctn_ending_date, "
-                    + "sctn_author_player_uuid, sctn_type, sctn_state)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+        connection.prepareStatement(
+            "INSERT INTO fv_jh_sanction (sctn_inculpated_player_uuid, sctn_name, "
+                + "sctn_reason, sctn_points, sctn_beginning_date, sctn_ending_date, "
+                + "sctn_author_player_uuid, sctn_type, sctn_state)"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
       setSanction(jhSanction, stmt, false);
       stmt.executeUpdate();
     }
@@ -133,13 +133,14 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public void update(@NotNull Connection connection, @NotNull JhSanction jhSanction) throws SQLException {
+  public void update(@NotNull Connection connection, @NotNull JhSanction jhSanction)
+      throws SQLException {
     try (PreparedStatement stmt =
-            connection.prepareStatement(
-                "UPDATE fv_jh_sanction SET sctn_inculpated_player_uuid = ?, sctn_name = ?, "
-                    + "sctn_reason = ?, sctn_points = ?, sctn_beginning_date = ?, "
-                    + "sctn_ending_date = ?, sctn_author_player_uuid = ?, sctn_type = ?, "
-                    + "sctn_state = ? WHERE sctn_id = ?")) {
+        connection.prepareStatement(
+            "UPDATE fv_jh_sanction SET sctn_inculpated_player_uuid = ?, sctn_name = ?, "
+                + "sctn_reason = ?, sctn_points = ?, sctn_beginning_date = ?, "
+                + "sctn_ending_date = ?, sctn_author_player_uuid = ?, sctn_type = ?, "
+                + "sctn_state = ? WHERE sctn_id = ?")) {
       setSanction(jhSanction, stmt, true);
       int rowCount = stmt.executeUpdate();
       if (rowCount == 0) {
@@ -159,9 +160,10 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public void delete(@NotNull Connection connection, @NotNull JhSanction jhSanction) throws SQLException {
+  public void delete(@NotNull Connection connection, @NotNull JhSanction jhSanction)
+      throws SQLException {
     try (PreparedStatement stmt =
-            connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
+        connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
       stmt.setInt(1, jhSanction.getSctnId());
       int rowCount = stmt.executeUpdate();
       if (rowCount == 0) {
