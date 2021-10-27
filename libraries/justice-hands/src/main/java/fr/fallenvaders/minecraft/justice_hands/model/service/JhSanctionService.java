@@ -21,6 +21,7 @@ import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justice_hands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justice_hands.model.dao.JhSanctionDao;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
+import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -95,6 +96,9 @@ public class JhSanctionService {
   /**
    * Gets and returns all existing {@link JhSanction}s of the model.
    *
+   * <p>The set is ordered from the older sanction in first position to the youngest in the last *
+   * position.
+   *
    * @return All the existing {@link JhSanction}s of the model.
    */
   public Set<JhSanction> getJhSanctions() {
@@ -119,7 +123,16 @@ public class JhSanctionService {
     return jhSanctions;
   }
 
-  public Collection<JhSanction> getPlayerJhSanctions() {}
+  /**
+   * Gets and returns all existing {@link JhSanction} of the specified {@link OfflinePlayer} where
+   * he is designed as an inculpated one.
+   *
+   * <p>The set is ordered from the older sanction in first position to the youngest in the last
+   * position.
+   *
+   * @return All the {@link JhSanction} of the specified {@link OfflinePlayer}.
+   */
+  public Set<JhSanction> getPlayerJhSanctions() {}
 
   /**
    * Saves the specified {@link JhSanction} into the model.
