@@ -17,7 +17,9 @@
 
 package fr.fallenvaders.minecraft.justice_hands.model.service;
 
+import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justice_hands.model.dao.JhSanctionDao;
+import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -40,17 +42,23 @@ public class JhSanctionService {
 
   private final Logger logger;
   private final JhSanctionDao jhSanctionDao;
+  private final FvDataSource fvDataSource;
 
   /**
    * Constructor.
    *
    * @param logger The logger of FallenVaders' plugin.
    * @param jhSanctionDao The {@link JhSanction} DAO.
+   * @param fvDataSource The FallenVaders' data source for DBMS.
    */
   @Inject
-  public JhSanctionService(@NotNull Logger logger, @NotNull JhSanctionDao jhSanctionDao) {
+  public JhSanctionService(
+      @NotNull Logger logger,
+      @NotNull JhSanctionDao jhSanctionDao,
+      @NotNull FvDataSource fvDataSource) {
     this.logger = logger;
     this.jhSanctionDao = jhSanctionDao;
+    this.fvDataSource = fvDataSource;
   }
 
   /**
