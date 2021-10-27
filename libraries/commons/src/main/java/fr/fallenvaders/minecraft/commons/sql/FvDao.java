@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * This is a DAO interface which ask setting up at least CRUD operations for a given entity type in
@@ -60,7 +61,7 @@ public interface FvDao<T> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @NotNull
-  Collection<T> getAll(@NotNull Connection connection) throws SQLException;
+  Set<T> getAll(@NotNull Connection connection) throws SQLException;
 
   /**
    * Saves a new entity instance {@link T} in the model.
