@@ -19,13 +19,13 @@ package fr.fallenvaders.minecraft.justice_hands.model.service;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justice_hands.model.dao.JhSanctionDao;
-import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -71,12 +71,18 @@ public class JhSanctionService {
   public Optional<JhSanction> getJhSanction(int id) {
     logger.info("Seek of the JusticeHands' sanction associated with ID '{}'.", id);
     JhSanction jhSanction = null;
-    try {
-      jhSanction = jhSanctionDao.get(Integer.toString(id)).orElse(null);
-      if (jhSanction != null) {
-        logger.info("JusticeHands' sanction found for the ID '{}': {}", id, jhSanction);
-      } else {
-        logger.warn("No JusticeHands' sanction found for ID '{}'", id);
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhSanction = jhSanctionDao.get(connection, Integer.toString(id)).orElse(null);
+        connection.commit();
+        if (jhSanction != null) {
+          logger.info("JusticeHands' sanction found for the ID '{}': {}", id, jhSanction);
+        } else {
+          logger.warn("No JusticeHands' sanction found for ID '{}'", id);
+        }
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
       }
     } catch (SQLException e) {
       logger.error("An SQL error occurs during the seek of a JusticeHands' sanction.", e);
