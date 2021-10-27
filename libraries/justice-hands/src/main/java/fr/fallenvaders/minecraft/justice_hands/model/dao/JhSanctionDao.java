@@ -109,10 +109,11 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    *
    * @param connection The connection to the DBMS.
    * @param jhSanction The JusticeHands' sanction to save.
+   * @return The number of affected rows.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public void save(@NotNull Connection connection, @NotNull JhSanction jhSanction)
+  public int save(@NotNull Connection connection, @NotNull JhSanction jhSanction)
       throws SQLException {
     try (PreparedStatement stmt =
         connection.prepareStatement(
@@ -121,7 +122,7 @@ public class JhSanctionDao implements FvDao<JhSanction> {
                 + "sctn_author_player_uuid, sctn_type, sctn_state)"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
       setSanction(jhSanction, stmt, false);
-      stmt.executeUpdate();
+      return stmt.executeUpdate();
     }
   }
 
@@ -130,10 +131,11 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    *
    * @param connection The connection to the DBMS.
    * @param jhSanction The updates instance of the JusticeHands' sanction to update.
+   * @return The number of affected rows.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public void update(@NotNull Connection connection, @NotNull JhSanction jhSanction)
+  public int update(@NotNull Connection connection, @NotNull JhSanction jhSanction)
       throws SQLException {
     try (PreparedStatement stmt =
         connection.prepareStatement(
@@ -142,13 +144,7 @@ public class JhSanctionDao implements FvDao<JhSanction> {
                 + "sctn_ending_date = ?, sctn_author_player_uuid = ?, sctn_type = ?, "
                 + "sctn_state = ? WHERE sctn_id = ?")) {
       setSanction(jhSanction, stmt, true);
-      int rowCount = stmt.executeUpdate();
-      if (rowCount == 0) {
-        throw new SQLException(
-            String.format(
-                "The JusticeHands' sanction with ID '%d' doesn't exists and then can't be updated.",
-                jhSanction.getSctnId()));
-      }
+      return stmt.executeUpdate();
     }
   }
 
@@ -157,21 +153,16 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    *
    * @param connection The connection to the DBMS.
    * @param jhSanction The JusticeHands' sanction to delete from the model.
+   * @return The number of affected rows.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public void delete(@NotNull Connection connection, @NotNull JhSanction jhSanction)
+  public int delete(@NotNull Connection connection, @NotNull JhSanction jhSanction)
       throws SQLException {
     try (PreparedStatement stmt =
         connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
       stmt.setInt(1, jhSanction.getSctnId());
-      int rowCount = stmt.executeUpdate();
-      if (rowCount == 0) {
-        throw new SQLException(
-            String.format(
-                "The JusticeHands' sanction with ID '%d' doesn't exists and then can't be deleted.",
-                jhSanction.getSctnId()));
-      }
+      return stmt.executeUpdate();
     }
   }
 
