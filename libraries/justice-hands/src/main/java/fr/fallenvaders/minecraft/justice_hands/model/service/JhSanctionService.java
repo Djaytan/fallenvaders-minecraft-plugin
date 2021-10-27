@@ -123,19 +123,28 @@ public class JhSanctionService {
    *
    * @param jhSanction The JusticeHands' sanction to save into the model.
    */
-  public void saveJhSanction(@NotNull JhSanction jhSanction) {
+  public void saveJhSanction(@NotNull JhSanction jhSanction) throws JusticeHandsException {
     logger.info("Try to save the following new JusticeHands' sanction: {}", jhSanction);
     try (Connection connection = fvDataSource.getConnection()) {
       try {
-        jhSanctionDao.save(connection, jhSanction);
+        int rowCount = jhSanctionDao.save(connection, jhSanction);
         connection.commit();
-        logger.info("The JusticeHands' sanction registered successfully.");
+        if (rowCount > 0) {
+          logger.info("The JusticeHands' sanction have been registered successfully.");
+          if (rowCount > 1) {
+            logger.warn("More than one sanction have been registered...");
+          }
+        } else {
+          throw new JusticeHandsException("Failed to register the new sanction into the model.");
+        }
       } catch (SQLException e) {
         connection.rollback();
         throw e;
       }
-    } catch (SQLException e) {
-      logger.error("An SQL error occurs when trying to save a JusticeHands' sanction.", e);
+    } catch (Exception e) {
+      logger.error("An error occurs when trying to save a JusticeHands' sanction.", e);
+      throw new JusticeHandsException(
+          String.format("Failed to register the new following sanction: %s", jhSanction));
     }
   }
 
@@ -155,7 +164,7 @@ public class JhSanctionService {
         int rowCount = jhSanctionDao.update(connection, jhSanction);
         connection.commit();
         if (rowCount > 0) {
-          logger.info("The JusticeHands' sanction updated successfully.");
+          logger.info("The JusticeHands' sanction have been updated successfully.");
           if (rowCount > 1) {
             logger.warn("More than one sanction have been updated...");
           }
@@ -180,20 +189,33 @@ public class JhSanctionService {
    * Deletes the specified {@link JhSanction} from the model.
    *
    * @param jhSanction The JusticeHands' sanction to delete from the model.
+   * @throws JusticeHandsException if the specified sanction can't be updated in the model.
    */
-  public void deleteJhSanction(@NotNull JhSanction jhSanction) {
+  public void deleteJhSanction(@NotNull JhSanction jhSanction) throws JusticeHandsException {
     logger.info("Try to delete the following JusticeHands' sanction: {}", jhSanction);
     try (Connection connection = fvDataSource.getConnection()) {
       try {
-        jhSanctionDao.delete(connection, jhSanction);
+        int rowCount = jhSanctionDao.delete(connection, jhSanction);
         connection.commit();
-        logger.info("The JusticeHands' sanction deleted successfully.");
+        if (rowCount > 0) {
+          logger.info("The JusticeHands' sanction have been deleted successfully.");
+          if (rowCount > 1) {
+            logger.warn("More than one sanction have been deleted...");
+          }
+        } else {
+          throw new JusticeHandsException(
+              String.format(
+                  "The JusticeHands' sanction with ID '%d' doesn't exist and then can't be deleted.",
+                  jhSanction.getSctnId()));
+        }
       } catch (SQLException e) {
         connection.rollback();
         throw e;
       }
-    } catch (SQLException e) {
-      logger.error("An SQL error occurs when trying to delete a JusticeHands' sanction.", e);
+    } catch (Exception e) {
+      logger.error("An error occurs when trying to delete a JusticeHands' sanction.", e);
+      throw new JusticeHandsException(
+          String.format("Failed to delete the sanction with ID '%s'.", jhSanction.getSctnId()));
     }
   }
 }
