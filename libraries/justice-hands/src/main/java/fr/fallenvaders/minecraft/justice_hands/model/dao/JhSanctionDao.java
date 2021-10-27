@@ -20,7 +20,6 @@ package fr.fallenvaders.minecraft.justice_hands.model.dao;
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
 
@@ -90,10 +89,10 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public @NotNull Collection<JhSanction> getAll(@NotNull Connection connection) throws SQLException {
+  public @NotNull Set<JhSanction> getAll(@NotNull Connection connection) throws SQLException {
     try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM fv_jh_sanction")) {
       ResultSet rs = stmt.executeQuery();
-      List<JhSanction> jhSanctions = new ArrayList<>(rs.getFetchSize());
+      Set<JhSanction> jhSanctions = new LinkedHashSet<>(rs.getFetchSize());
       while (rs.next()) {
         JhSanction jhSanction = getSanction(rs);
         jhSanctions.add(jhSanction);

@@ -30,8 +30,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Class which offers services about the manipulation of {@link JhSanction}s in the model.
@@ -97,9 +97,9 @@ public class JhSanctionService {
    *
    * @return All the existing {@link JhSanction}s of the model.
    */
-  public Collection<JhSanction> getJhSanctions() {
+  public Set<JhSanction> getJhSanctions() {
     logger.info("Seek of all JusticeHands' sanctions.");
-    Collection<JhSanction> jhSanctions = Collections.emptyList();
+    Set<JhSanction> jhSanctions = Collections.emptySet();
     try (Connection connection = fvDataSource.getConnection()) {
       try {
         jhSanctions = jhSanctionDao.getAll(connection);
@@ -118,6 +118,8 @@ public class JhSanctionService {
     }
     return jhSanctions;
   }
+
+  public Collection<JhSanction> getPlayerJhSanctions() {}
 
   /**
    * Saves the specified {@link JhSanction} into the model.
