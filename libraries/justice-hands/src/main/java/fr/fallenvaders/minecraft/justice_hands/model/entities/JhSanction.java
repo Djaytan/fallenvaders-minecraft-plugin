@@ -18,6 +18,7 @@
 package fr.fallenvaders.minecraft.justice_hands.model.entities;
 
 import fr.fallenvaders.minecraft.justice_hands.SanctionType;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.bukkit.OfflinePlayer;
 
 import java.sql.Timestamp;
@@ -203,5 +204,10 @@ public class JhSanction {
    */
   public void setSctnType(SanctionType sctnType) {
     this.sctnType = sctnType;
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
   }
 }
