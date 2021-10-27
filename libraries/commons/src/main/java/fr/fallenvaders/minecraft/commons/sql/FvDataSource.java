@@ -89,7 +89,7 @@ public class FvDataSource {
     config.setJdbcUrl(jdbcUrl.toString());
     config.setUsername(dbmsAccessInfo.username());
     config.setPassword(dbmsAccessInfo.password());
-    config.addDataSourceProperty("autoCommit", "false");
+    config.addDataSourceProperty("autoCommit", "true");
     config.addDataSourceProperty("cachePrepStmts", "true");
     config.addDataSourceProperty("cacheResultSetMetadata", "true");
     config.addDataSourceProperty("cacheServerConfiguration", "true");
