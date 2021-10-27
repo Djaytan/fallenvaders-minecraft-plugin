@@ -18,11 +18,9 @@
 package fr.fallenvaders.minecraft.justice_hands.model.dao;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
-import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
 import org.jetbrains.annotations.NotNull;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,32 +45,21 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
 
   // TODO: FV-116, FV-117 - optimisation with cache
 
-  private final FvDataSource fvDataSource;
-
-  /**
-   * Constructor.
-   *
-   * @param fvDataSource The FallenVaders' data source.
-   */
-  @Inject
-  public JhPlayerDao(@NotNull FvDataSource fvDataSource) {
-    this.fvDataSource = fvDataSource;
-  }
-
   /**
    * Gets and returns the {@link JhPlayer} from the model which match with the specified UUID.
    *
+   * @param connection The connection to the DBMS.
    * @param strUuid The UUID of the sought JusticeHands' player.
    * @return The found JusticeHands' player if it exists.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
   @NotNull
-  public Optional<JhPlayer> get(@NotNull String strUuid) throws SQLException {
+  public Optional<JhPlayer> get(@NotNull Connection connection, @NotNull String strUuid)
+      throws SQLException {
     UUID uuid = UUID.fromString(strUuid);
-    try (Connection connection = fvDataSource.getConnection();
-        PreparedStatement stmt =
-            connection.prepareStatement("SELECT points FROM fv_jh_player WHERE uuid = ?")) {
+    try (PreparedStatement stmt =
+        connection.prepareStatement("SELECT points FROM fv_jh_player WHERE uuid = ?")) {
       stmt.setString(1, uuid.toString());
       ResultSet rs = stmt.executeQuery();
       JhPlayer jhPlayer = null;
@@ -86,15 +73,15 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   /**
    * Gets and returns all the {@link JhPlayer}s from the model.
    *
+   * @param connection The connection to the DBMS.
    * @return All the JusticeHands' players from the model.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
   @NotNull
-  public List<JhPlayer> getAll() throws SQLException {
-    try (Connection connection = fvDataSource.getConnection();
-        PreparedStatement stmt =
-            connection.prepareStatement("SELECT uuid, points FROM fv_jh_player")) {
+  public List<JhPlayer> getAll(@NotNull Connection connection) throws SQLException {
+    try (PreparedStatement stmt =
+        connection.prepareStatement("SELECT uuid, points FROM fv_jh_player")) {
       ResultSet rs = stmt.executeQuery();
       List<JhPlayer> jhPlayers = new ArrayList<>(rs.getFetchSize());
       while (rs.next()) {
@@ -109,14 +96,14 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   /**
    * Saves the {@link JhPlayer} into the model.
    *
+   * @param connection The connection to the DBMS.
    * @param jhPlayer The JusticeHands' player to save.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public void save(@NotNull JhPlayer jhPlayer) throws SQLException {
-    try (Connection connection = fvDataSource.getConnection();
-        PreparedStatement stmt =
-            connection.prepareStatement("INSERT INTO fv_jh_player (uuid, points) VALUES (?, ?)")) {
+  public void save(@NotNull Connection connection, @NotNull JhPlayer jhPlayer) throws SQLException {
+    try (PreparedStatement stmt =
+        connection.prepareStatement("INSERT INTO fv_jh_player (uuid, points) VALUES (?, ?)")) {
       stmt.setString(1, jhPlayer.getUuid().toString());
       stmt.setInt(2, jhPlayer.getPoints());
       stmt.executeUpdate();
@@ -126,14 +113,15 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   /**
    * Updates the specified {@link JhPlayer} in the model.
    *
+   * @param connection The connection to the DBMS.
    * @param jhPlayer The updated instance of the JusticeHands' player to update.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public void update(@NotNull JhPlayer jhPlayer) throws SQLException {
-    try (Connection connection = fvDataSource.getConnection();
-        PreparedStatement stmt =
-            connection.prepareStatement("UPDATE fv_jh_player SET points = ? WHERE uuid = ?")) {
+  public void update(@NotNull Connection connection, @NotNull JhPlayer jhPlayer)
+      throws SQLException {
+    try (PreparedStatement stmt =
+        connection.prepareStatement("UPDATE fv_jh_player SET points = ? WHERE uuid = ?")) {
       stmt.setInt(1, jhPlayer.getPoints());
       stmt.setString(2, jhPlayer.getUuid().toString());
       int rowCount = stmt.executeUpdate();
@@ -149,14 +137,15 @@ public class JhPlayerDao implements FvDao<JhPlayer> {
   /**
    * Deletes the specified {@link JhPlayer} from the model.
    *
+   * @param connection The connection to the DBMS.
    * @param jhPlayer The JusticeHands' player to delete.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public void delete(@NotNull JhPlayer jhPlayer) throws SQLException {
-    try (Connection connection = fvDataSource.getConnection();
-        PreparedStatement stmt =
-            connection.prepareStatement("DELETE FROM fv_jh_player WHERE uuid = ?")) {
+  public void delete(@NotNull Connection connection, @NotNull JhPlayer jhPlayer)
+      throws SQLException {
+    try (PreparedStatement stmt =
+        connection.prepareStatement("DELETE FROM fv_jh_player WHERE uuid = ?")) {
       stmt.setString(1, jhPlayer.getUuid().toString());
       int rowCount = stmt.executeUpdate();
       if (rowCount == 0) {

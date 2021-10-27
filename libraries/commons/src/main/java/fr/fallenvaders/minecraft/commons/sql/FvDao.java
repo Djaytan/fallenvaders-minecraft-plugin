@@ -19,6 +19,7 @@ package fr.fallenvaders.minecraft.commons.sql;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -42,43 +43,48 @@ public interface FvDao<T> {
   /**
    * Reads a specific entity instance {@link T} in the model according to the specified ID argument.
    *
+   * @param connection The connection to the DBMS.
    * @param id The ID of the entity instance in the model.
    * @return The entity instance corresponding to the specified ID if it exists.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @NotNull
-  Optional<T> get(@NotNull String id) throws SQLException;
+  Optional<T> get(@NotNull Connection connection, @NotNull String id) throws SQLException;
 
   /**
    * Reads all the existing entity instances {@link T} in the model.
    *
+   * @param connection The connection to the DBMS.
    * @return The list of existing entity instances in the model.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @NotNull
-  List<T> getAll() throws SQLException;
+  List<T> getAll(@NotNull Connection connection) throws SQLException;
 
   /**
    * Saves a new entity instance {@link T} in the model.
    *
+   * @param connection The connection to the DBMS.
    * @param t The entity instance to save in the model.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void save(@NotNull T t) throws SQLException;
+  void save(@NotNull Connection connection, @NotNull T t) throws SQLException;
 
   /**
    * Updates the entity instance {@link T} in the model.
    *
+   * @param connection The connection to the DBMS.
    * @param t The entity instance to update in the model.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void update(@NotNull T t) throws SQLException;
+  void update(@NotNull Connection connection, @NotNull T t) throws SQLException;
 
   /**
    * Deletes the entity instance {@link T} from the model.
    *
+   * @param connection The connection to the DBMS.
    * @param t The entity instance to delete from the model.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  void delete(@NotNull T t) throws SQLException;
+  void delete(@NotNull Connection connection, @NotNull T t) throws SQLException;
 }
