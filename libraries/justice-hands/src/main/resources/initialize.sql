@@ -1,9 +1,3 @@
-CREATE TABLE IF NOT EXISTS `fv_jh_player`
-(
-  `uuid`   CHAR(36) NOT NULL PRIMARY KEY,
-  `points` INT      NOT NULL DEFAULT 0
-);
-
 CREATE TABLE IF NOT EXISTS `fv_jh_sanction`
 (
   `sctn_id`                              INT(255) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
