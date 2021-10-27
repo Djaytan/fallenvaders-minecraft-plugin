@@ -119,8 +119,8 @@ public class JhSanctionDao implements FvDao<JhSanction> {
         connection.prepareStatement(
             "INSERT INTO fv_jh_sanction (sctn_inculpated_player_uuid, sctn_name, "
                 + "sctn_reason, sctn_points, sctn_beginning_date, sctn_ending_date, "
-                + "sctn_author_player_uuid, sctn_type, sctn_state)"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                + "sctn_author_player_uuid, sctn_type)"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
       setSanction(jhSanction, stmt, false);
       return stmt.executeUpdate();
     }
@@ -141,8 +141,8 @@ public class JhSanctionDao implements FvDao<JhSanction> {
         connection.prepareStatement(
             "UPDATE fv_jh_sanction SET sctn_inculpated_player_uuid = ?, sctn_name = ?, "
                 + "sctn_reason = ?, sctn_points = ?, sctn_beginning_date = ?, "
-                + "sctn_ending_date = ?, sctn_author_player_uuid = ?, sctn_type = ?, "
-                + "sctn_state = ? WHERE sctn_id = ?")) {
+                + "sctn_ending_date = ?, sctn_author_player_uuid = ?, sctn_type = ? "
+                + "WHERE sctn_id = ?")) {
       setSanction(jhSanction, stmt, true);
       return stmt.executeUpdate();
     }
