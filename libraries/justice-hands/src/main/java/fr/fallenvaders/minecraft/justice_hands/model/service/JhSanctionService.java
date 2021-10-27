@@ -18,6 +18,7 @@
 package fr.fallenvaders.minecraft.justice_hands.model.service;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
+import fr.fallenvaders.minecraft.justice_hands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justice_hands.model.dao.JhSanctionDao;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
 import org.jetbrains.annotations.NotNull;
@@ -142,23 +143,36 @@ public class JhSanctionService {
    * Updates the specified {@link JhSanction} in the model.
    *
    * @param jhSanction The JusticeHands' sanction to update in the model.
+   * @throws JusticeHandsException if the specified sanction can't be updated in the model.
    */
-  public void updateJhSanction(@NotNull JhSanction jhSanction) {
+  public void updateJhSanction(@NotNull JhSanction jhSanction) throws JusticeHandsException {
     logger.info(
         "Try to update the JusticeHands' sanction with ID '{}' with this following new value: {}",
         jhSanction.getSctnId(),
         jhSanction);
     try (Connection connection = fvDataSource.getConnection()) {
       try {
-        jhSanctionDao.update(connection, jhSanction);
+        int rowCount = jhSanctionDao.update(connection, jhSanction);
         connection.commit();
-        logger.info("The JusticeHands' sanction updated successfully.");
+        if (rowCount > 0) {
+          logger.info("The JusticeHands' sanction updated successfully.");
+          if (rowCount > 1) {
+            logger.warn("More than one sanction have been updated...");
+          }
+        } else {
+          throw new JusticeHandsException(
+              String.format(
+                  "The JusticeHands' sanction with ID '%d' doesn't exist and then can't be updated.",
+                  jhSanction.getSctnId()));
+        }
       } catch (SQLException e) {
         connection.rollback();
         throw e;
       }
-    } catch (SQLException e) {
-      logger.error("An SQL error occurs when trying to update a JusticeHands' sanction.", e);
+    } catch (Exception e) {
+      logger.error("An error occurs when trying to update a JusticeHands' sanction.", e);
+      throw new JusticeHandsException(
+          String.format("Failed to update the sanction with ID '%s'.", jhSanction.getSctnId()));
     }
   }
 
