@@ -98,12 +98,18 @@ public class JhSanctionService {
   public List<JhSanction> getJhSanctions() {
     logger.info("Seek of all JusticeHands' sanctions.");
     List<JhSanction> jhSanctions = Collections.emptyList();
-    try {
-      jhSanctions = jhSanctionDao.getAll();
-      if (!jhSanctions.isEmpty()) {
-        logger.info("JusticeHands' sanctions found: {}", jhSanctions);
-      } else {
-        logger.warn("No JusticeHands' sanction found.");
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhSanctions = jhSanctionDao.getAll(connection);
+        connection.commit();
+        if (!jhSanctions.isEmpty()) {
+          logger.info("JusticeHands' sanctions found: {}", jhSanctions);
+        } else {
+          logger.warn("No JusticeHands' sanction found.");
+        }
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
       }
     } catch (SQLException e) {
       logger.error("An SQL error occurs during the seek of all JusticeHands' sanctions.", e);
@@ -118,9 +124,15 @@ public class JhSanctionService {
    */
   public void saveJhSanction(@NotNull JhSanction jhSanction) {
     logger.info("Try to save the following new JusticeHands' sanction: {}", jhSanction);
-    try {
-      jhSanctionDao.save(jhSanction);
-      logger.info("The JusticeHands' sanction registered successfully.");
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhSanctionDao.save(connection, jhSanction);
+        connection.commit();
+        logger.info("The JusticeHands' sanction registered successfully.");
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
+      }
     } catch (SQLException e) {
       logger.error("An SQL error occurs when trying to save a JusticeHands' sanction.", e);
     }
@@ -136,9 +148,15 @@ public class JhSanctionService {
         "Try to update the JusticeHands' sanction with ID '{}' with this following new value: {}",
         jhSanction.getSctnId(),
         jhSanction);
-    try {
-      jhSanctionDao.update(jhSanction);
-      logger.info("The JusticeHands' sanction updated successfully.");
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhSanctionDao.update(connection, jhSanction);
+        connection.commit();
+        logger.info("The JusticeHands' sanction updated successfully.");
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
+      }
     } catch (SQLException e) {
       logger.error("An SQL error occurs when trying to update a JusticeHands' sanction.", e);
     }
@@ -151,9 +169,15 @@ public class JhSanctionService {
    */
   public void deleteJhSanction(@NotNull JhSanction jhSanction) {
     logger.info("Try to delete the following JusticeHands' sanction: {}", jhSanction);
-    try {
-      jhSanctionDao.delete(jhSanction);
-      logger.info("The JusticeHands' sanction deleted successfully.");
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhSanctionDao.delete(connection, jhSanction);
+        connection.commit();
+        logger.info("The JusticeHands' sanction deleted successfully.");
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
+      }
     } catch (SQLException e) {
       logger.error("An SQL error occurs when trying to delete a JusticeHands' sanction.", e);
     }
