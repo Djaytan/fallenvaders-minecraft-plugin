@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -96,9 +97,9 @@ public class JhSanctionService {
    *
    * @return All the existing {@link JhSanction}s of the model.
    */
-  public List<JhSanction> getJhSanctions() {
+  public Collection<JhSanction> getJhSanctions() {
     logger.info("Seek of all JusticeHands' sanctions.");
-    List<JhSanction> jhSanctions = Collections.emptyList();
+    Collection<JhSanction> jhSanctions = Collections.emptyList();
     try (Connection connection = fvDataSource.getConnection()) {
       try {
         jhSanctions = jhSanctionDao.getAll(connection);

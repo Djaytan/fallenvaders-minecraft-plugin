@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +60,7 @@ public interface FvDao<T> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @NotNull
-  List<T> getAll(@NotNull Connection connection) throws SQLException;
+  Collection<T> getAll(@NotNull Connection connection) throws SQLException;
 
   /**
    * Saves a new entity instance {@link T} in the model.
