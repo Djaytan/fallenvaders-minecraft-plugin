@@ -17,13 +17,17 @@
 
 package fr.fallenvaders.minecraft.justice_hands.model.service;
 
+import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justice_hands.model.dao.JhPlayerDao;
+import fr.fallenvaders.minecraft.justice_hands.model.dao.JhSanctionDao;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhPlayer;
+import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -41,17 +45,26 @@ public class JhPlayerService {
 
   private final Logger logger;
   private final JhPlayerDao jhPlayerDao;
+  private final JhSanctionDao jhSanctionDao;
+  private final FvDataSource fvDataSource;
 
   /**
    * Constructor.
    *
    * @param logger The logger of the FallenVaders' plugin.
    * @param jhPlayerDao The {@link JhPlayer} DAO.
+   * @param jhSanctionDao The {@link JhSanction} DAO.
    */
   @Inject
-  public JhPlayerService(@NotNull Logger logger, @NotNull JhPlayerDao jhPlayerDao) {
+  public JhPlayerService(
+      @NotNull Logger logger,
+      @NotNull JhPlayerDao jhPlayerDao,
+      @NotNull JhSanctionDao jhSanctionDao,
+      @NotNull FvDataSource fvDataSource) {
     this.logger = logger;
     this.jhPlayerDao = jhPlayerDao;
+    this.jhSanctionDao = jhSanctionDao;
+    this.fvDataSource = fvDataSource;
   }
 
   /**
@@ -64,12 +77,18 @@ public class JhPlayerService {
   public Optional<JhPlayer> getJhPlayer(@NotNull UUID uuid) {
     logger.info("Seek of the JusticeHands' player associated with UUID '{}'.", uuid);
     JhPlayer jhPlayer = null;
-    try {
-      jhPlayer = jhPlayerDao.get(uuid.toString()).orElse(null);
-      if (jhPlayer != null) {
-        logger.info("JusticeHands' player found for the UUID '{}': {}", uuid, jhPlayer);
-      } else {
-        logger.warn("No JusticeHands' player found for UUID '{}'", uuid);
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhPlayer = jhPlayerDao.get(connection, uuid.toString()).orElse(null);
+        connection.commit();
+        if (jhPlayer != null) {
+          logger.info("JusticeHands' player found for the UUID '{}': {}", uuid, jhPlayer);
+        } else {
+          logger.warn("No JusticeHands' player found for UUID '{}'", uuid);
+        }
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
       }
     } catch (SQLException e) {
       logger.error("An SQL error occurs during the seek of a JusticeHands' player.", e);
@@ -85,12 +104,18 @@ public class JhPlayerService {
   public List<JhPlayer> getJhPlayers() {
     logger.info("Seek of all JusticeHands' players.");
     List<JhPlayer> jhPlayers = Collections.emptyList();
-    try {
-      jhPlayers = jhPlayerDao.getAll();
-      if (!jhPlayers.isEmpty()) {
-        logger.info("JusticeHands' players found: {}", jhPlayers);
-      } else {
-        logger.warn("No JusticeHands' player found.");
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhPlayers = jhPlayerDao.getAll(connection);
+        connection.commit();
+        if (!jhPlayers.isEmpty()) {
+          logger.info("JusticeHands' players found: {}", jhPlayers);
+        } else {
+          logger.warn("No JusticeHands' player found.");
+        }
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
       }
     } catch (SQLException e) {
       logger.error("An SQL error occurs during the seek of all JusticeHands' players.", e);
@@ -105,9 +130,15 @@ public class JhPlayerService {
    */
   public void saveJhPlayer(@NotNull JhPlayer jhPlayer) {
     logger.info("Try to save the following new JusticeHands' player: {}", jhPlayer);
-    try {
-      jhPlayerDao.save(jhPlayer);
-      logger.info("The JusticeHands' player registered successfully.");
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhPlayerDao.save(connection, jhPlayer);
+        connection.commit();
+        logger.info("The JusticeHands' player registered successfully.");
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
+      }
     } catch (SQLException e) {
       logger.error("An SQL error occurs when trying to save a JusticeHands' player.", e);
     }
@@ -123,9 +154,15 @@ public class JhPlayerService {
         "Try to update the JusticeHands' player with UUID '{}' with this following new value: {}",
         jhPlayer.getUuid(),
         jhPlayer);
-    try {
-      jhPlayerDao.update(jhPlayer);
-      logger.info("The JusticeHands' player updated successfully.");
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhPlayerDao.update(connection, jhPlayer);
+        connection.commit();
+        logger.info("The JusticeHands' player updated successfully.");
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
+      }
     } catch (SQLException e) {
       logger.error("An SQL error occurs when trying to update a JusticeHands' player.", e);
     }
@@ -134,13 +171,23 @@ public class JhPlayerService {
   /**
    * Deletes the specified {@link JhPlayer} from the model.
    *
+   * <p>By deleting a {@link JhPlayer}, all the associated {@link JhSanction} are deleted too.
+   *
+   * <p>IMPORTANT: should be used only under exceptional circumstances.
+   *
    * @param jhPlayer The JusticeHands' player to delete from the model.
    */
   public void deleteJhPlayer(@NotNull JhPlayer jhPlayer) {
     logger.info("Try to delete the following JusticeHands' player: {}", jhPlayer);
-    try {
-      jhPlayerDao.delete(jhPlayer);
-      logger.info("The JusticeHands' player deleted successfully.");
+    try (Connection connection = fvDataSource.getConnection()) {
+      try {
+        jhPlayerDao.delete(connection, jhPlayer);
+        connection.commit();
+        logger.info("The JusticeHands' player deleted successfully.");
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
+      }
     } catch (SQLException e) {
       logger.error("An SQL error occurs when trying to delete a JusticeHands' player.", e);
     }
