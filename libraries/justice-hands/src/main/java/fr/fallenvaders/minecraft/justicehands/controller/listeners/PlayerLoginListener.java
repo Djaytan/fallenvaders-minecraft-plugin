@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.justicehands.controller.listeners;
 
+import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
@@ -28,6 +29,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -43,16 +45,24 @@ import java.util.Set;
 @Singleton
 public class PlayerLoginListener implements Listener {
 
+  private final ComponentHelper componentHelper;
   private final JhSanctionService jhSanctionService;
+  private final Logger logger;
 
   /**
    * Constructor.
    *
    * @param jhSanctionService The JusticeHands' sanction service.
+   * @param logger The logger.
    */
   @Inject
-  public PlayerLoginListener(@NotNull JhSanctionService jhSanctionService) {
+  public PlayerLoginListener(
+      @NotNull ComponentHelper componentHelper,
+      @NotNull JhSanctionService jhSanctionService,
+      @NotNull Logger logger) {
+    this.componentHelper = componentHelper;
     this.jhSanctionService = jhSanctionService;
+    this.logger = logger;
   }
 
   /**
@@ -76,7 +86,9 @@ public class PlayerLoginListener implements Listener {
         ple.disallow(PlayerLoginEvent.Result.KICK_BANNED, loginBanComponent);
       }
     } catch (JusticeHandsException e) {
-      // TODO
+      logger.error("Failed to connect player on server.", e);
+      Component errorComponent = componentHelper.getErrorComponent();
+      ple.disallow(PlayerLoginEvent.Result.KICK_OTHER, errorComponent);
     }
   }
 }
