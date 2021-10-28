@@ -35,6 +35,16 @@ public class ComponentHelper {
       "Something went wrong during the connection. Please contact an administrator to report this error.";
 
   /**
+   * Returns the corresponding {@link Component} which embed the specified message.
+   *
+   * @param message The message to be embedded into the {@link Component}.
+   * @return The component which embed the specified message.
+   */
+  public Component getComponent(String message) {
+    return LegacyComponentSerializer.legacyAmpersand().deserialize(message);
+  }
+
+  /**
    * Returns an error {@link Component} which can be useful in case were something went wrong.
    *
    * @return An error component.
