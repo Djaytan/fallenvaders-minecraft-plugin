@@ -21,15 +21,13 @@ import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.service.JhSanctionService;
-import fr.fallenvaders.minecraft.justicehands.model.service.KeysKeeperBot;
 import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponent;
-import org.apache.commons.lang.ObjectUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -70,9 +68,10 @@ public class PlayerLoginListener implements Listener {
       if (!jhSanctions.isEmpty()) {
         JhSanction ban = jhSanctions.iterator().next();
         boolean isBanDef = ban.getSctnEndingDate() == null;
+        Component loginBanComponent = KeysKeeperComponent.loginBanComponent(ban, isBanDef);
         ple.disallow(
             PlayerLoginEvent.Result.KICK_BANNED,
-            KeysKeeperComponent.loginBanMessage(ban, isBanDef));
+          loginBanComponent);
       }
     } catch (JusticeHandsException e) {
       // TODO
