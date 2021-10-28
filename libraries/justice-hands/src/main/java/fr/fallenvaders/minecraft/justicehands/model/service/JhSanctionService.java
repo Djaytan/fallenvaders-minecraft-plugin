@@ -148,6 +148,14 @@ public class JhSanctionService {
     }
   }
 
+  /**
+   * Gets and returns all existing {@link JhSanction} of the specified {@link OfflinePlayer} where
+   * he is assigned as an inculpated one and where the sanction type match with the given one.
+   *
+   * @return All the {@link JhSanction} of the specified {@link OfflinePlayer} and {@link
+   *     SanctionType}.
+   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
+   */
   public @NotNull Set<JhSanction> getPlayerJhSanctions(
       @NotNull OfflinePlayer offlinePlayer, @NotNull SanctionType sanctionType)
       throws JusticeHandsException {
