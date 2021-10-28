@@ -17,16 +17,23 @@
 
 package fr.fallenvaders.minecraft.justicehands.controller.listeners;
 
+import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
+import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
+import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.service.JhSanctionService;
 import fr.fallenvaders.minecraft.justicehands.model.service.KeysKeeperBot;
 import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponent;
+import org.apache.commons.lang.ObjectUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Set;
 
 /**
  * Listener of {@link PlayerLoginEvent} in order to control player connections and prevents the ones
@@ -35,6 +42,7 @@ import javax.inject.Inject;
  * @author FallenVaders' dev team
  * @version 0.1.0
  */
+@Singleton
 public class PlayerLoginListener implements Listener {
 
   private final JhSanctionService jhSanctionService;
@@ -57,25 +65,17 @@ public class PlayerLoginListener implements Listener {
   @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
   public void onPlayerLogin(@NotNull PlayerLoginEvent ple) {
     try {
-      CJSanction playerActiveBan = KeysKeeperBot.getPlayerActiveBan(ple.getPlayer());
-
-      boolean isBanDef = false;
-      if ("bandef".equals(playerActiveBan.getType())) {
-        isBanDef = true;
-      }
-
-      if (isBanDef) {
+      Set<JhSanction> jhSanctions =
+          jhSanctionService.getActivePlayerJhSanctions(ple.getPlayer(), SanctionType.BAN);
+      if (!jhSanctions.isEmpty()) {
+        JhSanction ban = jhSanctions.iterator().next();
+        boolean isBanDef = ban.getSctnEndingDate() == null;
         ple.disallow(
             PlayerLoginEvent.Result.KICK_BANNED,
-            KeysKeeperComponent.loginBanDefMessage(playerActiveBan));
-      } else {
-        ple.disallow(
-            PlayerLoginEvent.Result.KICK_BANNED,
-            KeysKeeperComponent.loginBanMessage(playerActiveBan));
+            KeysKeeperComponent.loginBanMessage(ban, isBanDef));
       }
-    } catch (NullPointerException e) {
-      // Si la fonction playerActiveBan retourne un null, le joueur n'a pas de ban actif
-      return;
+    } catch (JusticeHandsException e) {
+      // TODO
     }
   }
 }
