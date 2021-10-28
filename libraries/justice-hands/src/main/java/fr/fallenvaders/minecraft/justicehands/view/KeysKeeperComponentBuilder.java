@@ -46,10 +46,32 @@ public class KeysKeeperComponentBuilder {
   public static final SimpleDateFormat SDF =
       new SimpleDateFormat(DAYTIME_PATTERN, new Locale("fr", "FR"));
 
-  public static final String LOGIN_BAN_DEF_MESSAGE =
-      "%s\n§cVous avez été banni définitivement du serveur pour la raison suivante : \n\n§bID de Sanction : §7%s§b - §7%s\n§bRaison : §7%s\n§bDate : §7%s";
-  public static final String LOGIN_BAN_MESSAGE =
-      "%s\n§cVous avez été banni temporairement du serveur pour la raison suivante : \n\n§bID de Sanction : §7%s§b - §7%s\n§bRaison : §7%s\n§bDate : §7%s §b- §7%s\n§bTemps restant : §7%s";
+  public static final String EJECTING_MESSAGE = """
+    %s
+    §cVous avez été éjecté du serveur pour la raison suivante :
+    §7ID de Sanction : %s§f - §7%s
+    
+    §cLa réalité de cette infraction a été établie, conformément au règlement du serveur que vous avez précédemment lu et approuvé.
+    §eCette sanction vous apportera donc §7%s points de sanction §eet sera enregistrée dans votre casier judiciaire.
+    §7Date de l'infraction : %s
+    """;
+  public static final String LOGIN_BAN_DEF_MESSAGE = """
+    %s
+    §cVous avez été banni définitivement du serveur pour la raison suivante :
+        
+    §bID de Sanction : §7%s§b - §7%s
+    §bRaison : §7%s
+    §bDate : §7%s
+    """;
+  public static final String LOGIN_BAN_MESSAGE = """
+    "%s
+    §cVous avez été banni temporairement du serveur pour la raison suivante :
+    
+    §bID de Sanction : §7%s§b - §7%s
+    §bRaison : §7%s
+    §bDate : §7%s §b- §7%s
+    §bTemps restant : §7%s
+    """;
 
   private final ComponentHelper componentHelper;
 
