@@ -184,6 +184,27 @@ public class JhSanctionService {
   }
 
   /**
+   * Gets and returns all active existing {@link JhSanction} of the specified {@link OfflinePlayer}
+   * where he is assigned as an inculpated one and where the {@link SanctionType} match with the
+   * given one.
+   *
+   * @return All the {@link JhSanction} of the specified {@link OfflinePlayer} and {@link
+   *     SanctionType}.
+   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
+   */
+  public @NotNull Set<JhSanction> getActivePlayerJhSanctions(
+      @NotNull OfflinePlayer offlinePlayer, @NotNull SanctionType sanctionType)
+      throws JusticeHandsException {
+    Set<JhSanction> jhSanctions = getPlayerJhSanctions(offlinePlayer);
+    return jhSanctions.stream()
+        .filter(
+            jhSanction ->
+                jhSanction.getSctnEndingDate().toInstant().isAfter(Instant.now())
+                    && jhSanction.getSctnType() == sanctionType)
+        .collect(Collectors.toSet());
+  }
+
+  /**
    * Saves the specified {@link JhSanction} into the model.
    *
    * @param jhSanction The JusticeHands' sanction to save into the model.
