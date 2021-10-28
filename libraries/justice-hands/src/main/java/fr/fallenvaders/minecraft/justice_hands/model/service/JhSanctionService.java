@@ -80,7 +80,7 @@ public class JhSanctionService {
       }
       return jhSanction;
     } catch (SQLException e) {
-      logger.error("An error occurs during the seek of a JusticeHands' sanction.", e);
+      logger.error("An error occurs preventing the seek of a JusticeHands' sanction.", e);
       throw new JusticeHandsException(
           String.format("Failed to seek the JusticeHands' sanction with ID '%d'.", id));
     }
@@ -89,7 +89,7 @@ public class JhSanctionService {
   /**
    * Gets and returns all existing {@link JhSanction}s of the model.
    *
-   * <p>The set is ordered from the older sanction in first position to the youngest in the last *
+   * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
    *
    * @return All the existing {@link JhSanction}s of the model.
@@ -106,14 +106,14 @@ public class JhSanctionService {
       }
       return jhSanctions;
     } catch (SQLException e) {
-      logger.error("An error occurs during the seek of all JusticeHands' sanctions.", e);
+      logger.error("An error occurs preventing the seek of all JusticeHands' sanctions.", e);
       throw new JusticeHandsException("Failed to seek all the existing JusticeHands' sanctions.");
     }
   }
 
   /**
    * Gets and returns all existing {@link JhSanction} of the specified {@link OfflinePlayer} where
-   * he is designed as an inculpated one.
+   * he is assigned as an inculpated one.
    *
    * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
@@ -124,7 +124,7 @@ public class JhSanctionService {
   public @NotNull Set<JhSanction> getPlayerJhSanctions(@NotNull OfflinePlayer offlinePlayer)
       throws JusticeHandsException {
     logger.info(
-        "Seek all JusticeHands' sanctions of the inculpated player '{}' with UUID '{}'",
+        "Seek all JusticeHands' sanctions of the inculpated player '{}' with UUID '{}'.",
         offlinePlayer.getName(),
         offlinePlayer.getUniqueId());
     try (Connection connection = fvDataSource.getConnection()) {
@@ -137,7 +137,7 @@ public class JhSanctionService {
       return jhSanctions;
     } catch (SQLException e) {
       logger.error(
-          "An error occurs during the seek of all JusticeHands' sanctions for the specified player.",
+          "An error occurs preventing the seek of all JusticeHands' sanctions for the specified player.",
           e);
       throw new JusticeHandsException(
           String.format(
