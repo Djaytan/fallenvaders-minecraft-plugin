@@ -19,8 +19,8 @@ package fr.fallenvaders.minecraft.justicehands.model.service;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
-import fr.fallenvaders.minecraft.justicehands.model.dao.JhSanctionDao;
-import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
+import fr.fallenvaders.minecraft.justicehands.model.dao.SanctionDao;
+import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -36,46 +36,46 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Class which offers services about the manipulation of {@link JhSanction}s in the model.
+ * Class which offers services about the manipulation of {@link Sanction}s in the model.
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
 @Singleton
-public class JhSanctionService {
+public class SanctionService {
 
   private final Logger logger;
-  private final JhSanctionDao jhSanctionDao;
+  private final SanctionDao sanctionDao;
   private final FvDataSource fvDataSource;
 
   /**
    * Constructor.
    *
    * @param logger The logger of FallenVaders' plugin.
-   * @param jhSanctionDao The {@link JhSanction} DAO.
+   * @param sanctionDao The {@link Sanction} DAO.
    * @param fvDataSource The FallenVaders' data source for DBMS.
    */
   @Inject
-  public JhSanctionService(
+  public SanctionService(
       @NotNull Logger logger,
-      @NotNull JhSanctionDao jhSanctionDao,
+      @NotNull SanctionDao sanctionDao,
       @NotNull FvDataSource fvDataSource) {
     this.logger = logger;
-    this.jhSanctionDao = jhSanctionDao;
+    this.sanctionDao = sanctionDao;
     this.fvDataSource = fvDataSource;
   }
 
   /**
-   * Gets and returns the {@link JhSanction} associated with the specified ID.
+   * Gets and returns the {@link Sanction} associated with the specified ID.
    *
-   * @param id The ID of the {@link JhSanction} to seek.
-   * @return The {@link JhSanction} associated with the specified ID.
+   * @param id The ID of the {@link Sanction} to seek.
+   * @return The {@link Sanction} associated with the specified ID.
    * @throws JusticeHandsException if the sought sanction fail to be found in the model.
    */
-  public @NotNull Optional<JhSanction> getJhSanction(int id) throws JusticeHandsException {
+  public @NotNull Optional<Sanction> getJhSanction(int id) throws JusticeHandsException {
     logger.info("Seek of the JusticeHands' sanction associated with the ID '{}'.", id);
     try (Connection connection = fvDataSource.getConnection()) {
-      Optional<JhSanction> jhSanction = jhSanctionDao.get(connection, Integer.toString(id));
+      Optional<Sanction> jhSanction = sanctionDao.get(connection, Integer.toString(id));
       if (jhSanction.isPresent()) {
         logger.info("JusticeHands' sanction found for the ID '{}': {}", id, jhSanction);
       } else {
@@ -90,24 +90,24 @@ public class JhSanctionService {
   }
 
   /**
-   * Gets and returns all existing {@link JhSanction}s of the model.
+   * Gets and returns all existing {@link Sanction}s of the model.
    *
    * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
    *
-   * @return All the existing {@link JhSanction}s of the model.
+   * @return All the existing {@link Sanction}s of the model.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<JhSanction> getJhSanctions() throws JusticeHandsException {
+  public @NotNull Set<Sanction> getJhSanctions() throws JusticeHandsException {
     logger.info("Seek of all existing JusticeHands' sanctions.");
     try (Connection connection = fvDataSource.getConnection()) {
-      Set<JhSanction> jhSanctions = jhSanctionDao.getAll(connection);
-      if (!jhSanctions.isEmpty()) {
-        logger.info("JusticeHands' sanctions found: {}", jhSanctions);
+      Set<Sanction> sanctions = sanctionDao.getAll(connection);
+      if (!sanctions.isEmpty()) {
+        logger.info("JusticeHands' sanctions found: {}", sanctions);
       } else {
         logger.warn("No JusticeHands' sanction found.");
       }
-      return jhSanctions;
+      return sanctions;
     } catch (SQLException e) {
       logger.error("An error occurs preventing the seek of all JusticeHands' sanctions.", e);
       throw new JusticeHandsException("Failed to seek all the existing JusticeHands' sanctions.");
@@ -115,29 +115,29 @@ public class JhSanctionService {
   }
 
   /**
-   * Gets and returns all existing {@link JhSanction} of the specified {@link OfflinePlayer} where
+   * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where
    * he is assigned as an inculpated one.
    *
    * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
    *
-   * @return All the {@link JhSanction} of the specified {@link OfflinePlayer}.
+   * @return All the {@link Sanction} of the specified {@link OfflinePlayer}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<JhSanction> getPlayerJhSanctions(@NotNull OfflinePlayer offlinePlayer)
+  public @NotNull Set<Sanction> getPlayerJhSanctions(@NotNull OfflinePlayer offlinePlayer)
       throws JusticeHandsException {
     logger.info(
         "Seek all JusticeHands' sanctions of the inculpated player '{}' with UUID '{}'.",
         offlinePlayer.getName(),
         offlinePlayer.getUniqueId());
     try (Connection connection = fvDataSource.getConnection()) {
-      Set<JhSanction> jhSanctions = jhSanctionDao.getFromPlayer(connection, offlinePlayer);
-      if (!jhSanctions.isEmpty()) {
-        logger.info("JusticeHands' sanctions found: {}", jhSanctions);
+      Set<Sanction> sanctions = sanctionDao.getFromPlayer(connection, offlinePlayer);
+      if (!sanctions.isEmpty()) {
+        logger.info("JusticeHands' sanctions found: {}", sanctions);
       } else {
         logger.warn("No JusticeHands' sanction found.");
       }
-      return jhSanctions;
+      return sanctions;
     } catch (SQLException e) {
       logger.error(
           "An error occurs preventing the seek of all JusticeHands' sanctions for the specified player.",
@@ -150,69 +150,69 @@ public class JhSanctionService {
   }
 
   /**
-   * Gets and returns all existing {@link JhSanction} of the specified {@link OfflinePlayer} where
+   * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where
    * he is assigned as an inculpated one and where the {@link SanctionType} match with the given
    * one.
    *
-   * @return All the {@link JhSanction} of the specified {@link OfflinePlayer} and {@link
+   * @return All the {@link Sanction} of the specified {@link OfflinePlayer} and {@link
    *     SanctionType}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<JhSanction> getPlayerJhSanctions(
+  public @NotNull Set<Sanction> getPlayerJhSanctions(
       @NotNull OfflinePlayer offlinePlayer, @NotNull SanctionType sanctionType)
       throws JusticeHandsException {
-    Set<JhSanction> jhSanctions = getPlayerJhSanctions(offlinePlayer);
-    return jhSanctions.stream()
-        .filter(jhSanction -> jhSanction.getSctnType() == sanctionType)
+    Set<Sanction> sanctions = getPlayerJhSanctions(offlinePlayer);
+    return sanctions.stream()
+        .filter(sanction -> sanction.getSctnType() == sanctionType)
         .collect(Collectors.toSet());
   }
 
   /**
-   * Gets and returns all active existing {@link JhSanction} of the specified {@link OfflinePlayer}
+   * Gets and returns all active existing {@link Sanction} of the specified {@link OfflinePlayer}
    * where he is assigned as an inculpated one.
    *
-   * @return All the {@link JhSanction} of the specified {@link OfflinePlayer}.
+   * @return All the {@link Sanction} of the specified {@link OfflinePlayer}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<JhSanction> getActivePlayerJhSanctions(@NotNull OfflinePlayer offlinePlayer)
+  public @NotNull Set<Sanction> getActivePlayerJhSanctions(@NotNull OfflinePlayer offlinePlayer)
       throws JusticeHandsException {
-    Set<JhSanction> jhSanctions = getPlayerJhSanctions(offlinePlayer);
-    return jhSanctions.stream()
-        .filter(jhSanction -> jhSanction.getSctnEndingDate().toInstant().isAfter(Instant.now()))
+    Set<Sanction> sanctions = getPlayerJhSanctions(offlinePlayer);
+    return sanctions.stream()
+        .filter(sanction -> sanction.getSctnEndingDate().toInstant().isAfter(Instant.now()))
         .collect(Collectors.toSet());
   }
 
   /**
-   * Gets and returns all active existing {@link JhSanction} of the specified {@link OfflinePlayer}
+   * Gets and returns all active existing {@link Sanction} of the specified {@link OfflinePlayer}
    * where he is assigned as an inculpated one and where the {@link SanctionType} match with the
    * given one.
    *
-   * @return All the {@link JhSanction} of the specified {@link OfflinePlayer} and {@link
+   * @return All the {@link Sanction} of the specified {@link OfflinePlayer} and {@link
    *     SanctionType}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<JhSanction> getActivePlayerJhSanctions(
+  public @NotNull Set<Sanction> getActivePlayerJhSanctions(
       @NotNull OfflinePlayer offlinePlayer, @NotNull SanctionType sanctionType)
       throws JusticeHandsException {
-    Set<JhSanction> jhSanctions = getPlayerJhSanctions(offlinePlayer);
-    return jhSanctions.stream()
+    Set<Sanction> sanctions = getPlayerJhSanctions(offlinePlayer);
+    return sanctions.stream()
         .filter(
-            jhSanction ->
-                jhSanction.getSctnEndingDate().toInstant().isAfter(Instant.now())
-                    && jhSanction.getSctnType() == sanctionType)
+          sanction ->
+                sanction.getSctnEndingDate().toInstant().isAfter(Instant.now())
+                    && sanction.getSctnType() == sanctionType)
         .collect(Collectors.toSet());
   }
 
   /**
-   * Saves the specified {@link JhSanction} into the model.
+   * Saves the specified {@link Sanction} into the model.
    *
-   * @param jhSanction The JusticeHands' sanction to save into the model.
+   * @param sanction The JusticeHands' sanction to save into the model.
    * @throws JusticeHandsException if the specified sanction fail to be registered in the model.
    */
-  public void saveJhSanction(@NotNull JhSanction jhSanction) throws JusticeHandsException {
-    logger.info("Try to save the following new JusticeHands' sanction: {}", jhSanction);
+  public void saveJhSanction(@NotNull Sanction sanction) throws JusticeHandsException {
+    logger.info("Try to save the following new JusticeHands' sanction: {}", sanction);
     try (Connection connection = fvDataSource.getConnection()) {
-      int rowCount = jhSanctionDao.save(connection, jhSanction);
+      int rowCount = sanctionDao.save(connection, sanction);
       if (rowCount > 0) {
         logger.info("The JusticeHands' sanction have been registered successfully.");
         if (rowCount > 1) {
@@ -224,23 +224,23 @@ public class JhSanctionService {
     } catch (SQLException | JusticeHandsException e) {
       logger.error("An error occurs preventing the save of a JusticeHands' sanction.", e);
       throw new JusticeHandsException(
-          String.format("Failed to register the new following sanction: %s", jhSanction));
+          String.format("Failed to register the new following sanction: %s", sanction));
     }
   }
 
   /**
-   * Updates the specified {@link JhSanction} in the model.
+   * Updates the specified {@link Sanction} in the model.
    *
-   * @param jhSanction The JusticeHands' sanction to update in the model.
+   * @param sanction The JusticeHands' sanction to update in the model.
    * @throws JusticeHandsException if the specified sanction fail to be updated in the model.
    */
-  public void updateJhSanction(@NotNull JhSanction jhSanction) throws JusticeHandsException {
+  public void updateJhSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info(
         "Try to update the JusticeHands' sanction with ID '{}' with this following new value: {}",
-        jhSanction.getSctnId(),
-        jhSanction);
+        sanction.getSctnId(),
+      sanction);
     try (Connection connection = fvDataSource.getConnection()) {
-      int rowCount = jhSanctionDao.update(connection, jhSanction);
+      int rowCount = sanctionDao.update(connection, sanction);
       if (rowCount > 0) {
         logger.info("The JusticeHands' sanction have been updated successfully.");
         if (rowCount > 1) {
@@ -250,25 +250,25 @@ public class JhSanctionService {
         throw new JusticeHandsException(
             String.format(
                 "The JusticeHands' sanction with ID '%d' doesn't exist and then can't be updated.",
-                jhSanction.getSctnId()));
+                sanction.getSctnId()));
       }
     } catch (SQLException | JusticeHandsException e) {
       logger.error("An error occurs preventing the update of a JusticeHands' sanction.", e);
       throw new JusticeHandsException(
-          String.format("Failed to update the sanction with ID '%s'.", jhSanction.getSctnId()));
+          String.format("Failed to update the sanction with ID '%s'.", sanction.getSctnId()));
     }
   }
 
   /**
-   * Deletes the specified {@link JhSanction} from the model.
+   * Deletes the specified {@link Sanction} from the model.
    *
-   * @param jhSanction The JusticeHands' sanction to delete from the model.
+   * @param sanction The JusticeHands' sanction to delete from the model.
    * @throws JusticeHandsException if the specified sanction fail to be deleted in the model.
    */
-  public void deleteJhSanction(@NotNull JhSanction jhSanction) throws JusticeHandsException {
-    logger.info("Try to delete the following JusticeHands' sanction: {}", jhSanction);
+  public void deleteJhSanction(@NotNull Sanction sanction) throws JusticeHandsException {
+    logger.info("Try to delete the following JusticeHands' sanction: {}", sanction);
     try (Connection connection = fvDataSource.getConnection()) {
-      int rowCount = jhSanctionDao.delete(connection, jhSanction);
+      int rowCount = sanctionDao.delete(connection, sanction);
       if (rowCount > 0) {
         logger.info("The JusticeHands' sanction have been deleted successfully.");
         if (rowCount > 1) {
@@ -278,12 +278,12 @@ public class JhSanctionService {
         throw new JusticeHandsException(
             String.format(
                 "The JusticeHands' sanction with ID '%d' doesn't exist and then can't be deleted.",
-                jhSanction.getSctnId()));
+                sanction.getSctnId()));
       }
     } catch (SQLException | JusticeHandsException e) {
       logger.error("An error occurs preventing the delete of a JusticeHands' sanction.", e);
       throw new JusticeHandsException(
-          String.format("Failed to delete the sanction with ID '%s'.", jhSanction.getSctnId()));
+          String.format("Failed to delete the sanction with ID '%s'.", sanction.getSctnId()));
     }
   }
 }

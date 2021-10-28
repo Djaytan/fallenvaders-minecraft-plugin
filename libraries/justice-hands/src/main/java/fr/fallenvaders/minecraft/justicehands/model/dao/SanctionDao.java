@@ -19,7 +19,7 @@ package fr.fallenvaders.minecraft.justicehands.model.dao;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
-import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
+import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +45,7 @@ import java.util.UUID;
  * @see FvDao
  */
 @Singleton
-public class JhSanctionDao implements FvDao<JhSanction> {
+public class SanctionDao implements FvDao<Sanction> {
 
   // TODO: FV-116, FV-117 - optimisation with cache
 
@@ -57,12 +57,12 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    * @param server The Bukkit server in which the JusticeHands' module is executed.
    */
   @Inject
-  public JhSanctionDao(@NotNull Server server) {
+  public SanctionDao(@NotNull Server server) {
     this.server = server;
   }
 
   /**
-   * Gets and returns the {@link JhSanction} which correspond to the specified ID from the model.
+   * Gets and returns the {@link Sanction} which correspond to the specified ID from the model.
    *
    * @param connection The connection to the DBMS.
    * @param strId The ID of the sought sanction.
@@ -70,7 +70,7 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public @NotNull Optional<JhSanction> get(@NotNull Connection connection, @NotNull String strId)
+  public @NotNull Optional<Sanction> get(@NotNull Connection connection, @NotNull String strId)
       throws SQLException {
     try (PreparedStatement stmt =
         connection.prepareStatement("SELECT * FROM fv_jh_sanction WHERE sctn_id = ?")) {
@@ -80,7 +80,7 @@ public class JhSanctionDao implements FvDao<JhSanction> {
   }
 
   /**
-   * Gets and returns all existing {@link JhSanction}s from the model.
+   * Gets and returns all existing {@link Sanction}s from the model.
    *
    * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
@@ -90,14 +90,14 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public @NotNull Set<JhSanction> getAll(@NotNull Connection connection) throws SQLException {
+  public @NotNull Set<Sanction> getAll(@NotNull Connection connection) throws SQLException {
     try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM fv_jh_sanction")) {
       return getSanctions(stmt);
     }
   }
 
   /**
-   * Gets and returns all existing {@link JhSanction}s where the specified {@link OfflinePlayer} is
+   * Gets and returns all existing {@link Sanction}s where the specified {@link OfflinePlayer} is
    * associated with them as an inculpated player.
    *
    * <p>The set is ordered from the older sanction in first position to the youngest in the last *
@@ -109,7 +109,7 @@ public class JhSanctionDao implements FvDao<JhSanction> {
    *     OfflinePlayer}.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
-  public @NotNull Set<JhSanction> getFromPlayer(
+  public @NotNull Set<Sanction> getFromPlayer(
       @NotNull Connection connection, @NotNull OfflinePlayer player) throws SQLException {
     try (PreparedStatement stmt =
         connection.prepareStatement(
@@ -120,15 +120,15 @@ public class JhSanctionDao implements FvDao<JhSanction> {
   }
 
   /**
-   * Saves a new {@link JhSanction} into the model.
+   * Saves a new {@link Sanction} into the model.
    *
    * @param connection The connection to the DBMS.
-   * @param jhSanction The JusticeHands' sanction to save.
+   * @param sanction The JusticeHands' sanction to save.
    * @return The number of affected rows.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public int save(@NotNull Connection connection, @NotNull JhSanction jhSanction)
+  public int save(@NotNull Connection connection, @NotNull Sanction sanction)
       throws SQLException {
     try (PreparedStatement stmt =
         connection.prepareStatement(
@@ -136,21 +136,21 @@ public class JhSanctionDao implements FvDao<JhSanction> {
                 + "sctn_reason, sctn_points, sctn_beginning_date, sctn_ending_date, "
                 + "sctn_author_player_uuid, sctn_type)"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
-      setSanction(jhSanction, stmt, false);
+      setSanction(sanction, stmt, false);
       return stmt.executeUpdate();
     }
   }
 
   /**
-   * Updates the specified {@link JhSanction} in the model.
+   * Updates the specified {@link Sanction} in the model.
    *
    * @param connection The connection to the DBMS.
-   * @param jhSanction The updates instance of the JusticeHands' sanction to update.
+   * @param sanction The updates instance of the JusticeHands' sanction to update.
    * @return The number of affected rows.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public int update(@NotNull Connection connection, @NotNull JhSanction jhSanction)
+  public int update(@NotNull Connection connection, @NotNull Sanction sanction)
       throws SQLException {
     try (PreparedStatement stmt =
         connection.prepareStatement(
@@ -158,73 +158,73 @@ public class JhSanctionDao implements FvDao<JhSanction> {
                 + "sctn_reason = ?, sctn_points = ?, sctn_beginning_date = ?, "
                 + "sctn_ending_date = ?, sctn_author_player_uuid = ?, sctn_type = ? "
                 + "WHERE sctn_id = ?")) {
-      setSanction(jhSanction, stmt, true);
+      setSanction(sanction, stmt, true);
       return stmt.executeUpdate();
     }
   }
 
   /**
-   * Deletes the specified {@link JhSanction} from the model.
+   * Deletes the specified {@link Sanction} from the model.
    *
    * @param connection The connection to the DBMS.
-   * @param jhSanction The JusticeHands' sanction to delete from the model.
+   * @param sanction The JusticeHands' sanction to delete from the model.
    * @return The number of affected rows.
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public int delete(@NotNull Connection connection, @NotNull JhSanction jhSanction)
+  public int delete(@NotNull Connection connection, @NotNull Sanction sanction)
       throws SQLException {
     try (PreparedStatement stmt =
         connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
-      stmt.setInt(1, jhSanction.getSctnId());
+      stmt.setInt(1, sanction.getSctnId());
       return stmt.executeUpdate();
     }
   }
 
-  private @NotNull JhSanction getSanction(@NotNull ResultSet rs) throws SQLException {
-    JhSanction jhSanction = new JhSanction(rs.getInt("sctn_id"));
-    jhSanction.setSctnInculpatedPlayer(
+  private @NotNull Sanction getSanction(@NotNull ResultSet rs) throws SQLException {
+    Sanction sanction = new Sanction(rs.getInt("sctn_id"));
+    sanction.setSctnInculpatedPlayer(
         server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_inculpated_player_uuid"))));
-    jhSanction.setSctnName(rs.getString("sctn_name"));
-    jhSanction.setSctnReason(rs.getString("sctn_reason"));
-    jhSanction.setSctnPoints(rs.getInt("sctn_points"));
-    jhSanction.setSctnBeginningDate(rs.getTimestamp("sctn_beginning_date"));
-    jhSanction.setSctnEndingDate(rs.getTimestamp("sctn_ending_date"));
-    jhSanction.setSctnAuthorPlayer(
+    sanction.setSctnName(rs.getString("sctn_name"));
+    sanction.setSctnReason(rs.getString("sctn_reason"));
+    sanction.setSctnPoints(rs.getInt("sctn_points"));
+    sanction.setSctnBeginningDate(rs.getTimestamp("sctn_beginning_date"));
+    sanction.setSctnEndingDate(rs.getTimestamp("sctn_ending_date"));
+    sanction.setSctnAuthorPlayer(
         server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_author_player_uuid"))));
-    jhSanction.setSctnType(SanctionType.valueOf(rs.getString("sctn_type")));
-    return jhSanction;
+    sanction.setSctnType(SanctionType.valueOf(rs.getString("sctn_type")));
+    return sanction;
   }
 
-  private @NotNull Set<JhSanction> getSanctions(@NotNull PreparedStatement stmt)
+  private @NotNull Set<Sanction> getSanctions(@NotNull PreparedStatement stmt)
       throws SQLException {
     ResultSet rs = stmt.executeQuery();
-    Set<JhSanction> jhSanctions = new LinkedHashSet<>(rs.getFetchSize());
+    Set<Sanction> sanctions = new LinkedHashSet<>(rs.getFetchSize());
     while (rs.next()) {
-      JhSanction jhSanction = getSanction(rs);
-      jhSanctions.add(jhSanction);
+      Sanction sanction = getSanction(rs);
+      sanctions.add(sanction);
     }
-    return jhSanctions;
+    return sanctions;
   }
 
   private void setSanction(
-      @NotNull JhSanction jhSanction, @NotNull PreparedStatement stmt, boolean idIsLast)
+    @NotNull Sanction sanction, @NotNull PreparedStatement stmt, boolean idIsLast)
       throws SQLException {
     int index = 1;
     boolean idIsFirst = !idIsLast;
     if (idIsFirst) {
-      stmt.setInt(index++, jhSanction.getSctnId());
+      stmt.setInt(index++, sanction.getSctnId());
     }
-    stmt.setString(index++, jhSanction.getSctnInculpatedPlayer().getUniqueId().toString());
-    stmt.setString(index++, jhSanction.getSctnName());
-    stmt.setString(index++, jhSanction.getSctnReason());
-    stmt.setInt(index++, jhSanction.getSctnPoints());
-    stmt.setTimestamp(index++, jhSanction.getSctnBeginningDate());
-    stmt.setTimestamp(index++, jhSanction.getSctnEndingDate());
-    stmt.setString(index++, jhSanction.getSctnAuthorPlayer().getUniqueId().toString());
-    stmt.setString(index++, jhSanction.getSctnType().name());
+    stmt.setString(index++, sanction.getSctnInculpatedPlayer().getUniqueId().toString());
+    stmt.setString(index++, sanction.getSctnName());
+    stmt.setString(index++, sanction.getSctnReason());
+    stmt.setInt(index++, sanction.getSctnPoints());
+    stmt.setTimestamp(index++, sanction.getSctnBeginningDate());
+    stmt.setTimestamp(index++, sanction.getSctnEndingDate());
+    stmt.setString(index++, sanction.getSctnAuthorPlayer().getUniqueId().toString());
+    stmt.setString(index++, sanction.getSctnType().name());
     if (idIsLast) {
-      stmt.setInt(index, jhSanction.getSctnId());
+      stmt.setInt(index, sanction.getSctnId());
     }
   }
 }

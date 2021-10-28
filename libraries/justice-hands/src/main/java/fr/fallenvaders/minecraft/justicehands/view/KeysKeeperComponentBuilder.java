@@ -20,7 +20,7 @@ package fr.fallenvaders.minecraft.justicehands.view;
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
-import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
+import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
@@ -86,45 +86,45 @@ public class KeysKeeperComponentBuilder {
   /**
    * Provides an ejecting message {@link Component}.
    *
-   * @param jhSanction The JusticeHands' sanction to be used for the ejecting message.
+   * @param sanction The JusticeHands' sanction to be used for the ejecting message.
    * @return The ejecting message component.
    */
-  public @NotNull Component ejectingMessageComponent(@NotNull JhSanction jhSanction) {
+  public @NotNull Component ejectingMessageComponent(@NotNull Sanction sanction) {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk"));
-    data.add(Integer.toString(jhSanction.getSctnId()));
-    data.add(jhSanction.getSctnName());
-    data.add(Integer.toString(jhSanction.getSctnPoints()));
-    data.add(SDF.format(jhSanction.getSctnBeginningDate().getTime()));
+    data.add(Integer.toString(sanction.getSctnId()));
+    data.add(sanction.getSctnName());
+    data.add(Integer.toString(sanction.getSctnPoints()));
+    data.add(SDF.format(sanction.getSctnBeginningDate().getTime()));
     return componentHelper.getComponent(String.format(EJECTING_MESSAGE, data.toArray()));
   }
 
   /**
    * Provides a ban message {@link Component}.
    *
-   * @param jhSanction The JusticeHands' sanction to be used for the ban message.
+   * @param sanction The JusticeHands' sanction to be used for the ban message.
    * @param isBanDef Tells if the ban is definitive or not.
    * @return The ban message component.
    * @throws JusticeHandsException if the ending date is null for a non-def ban.
    */
-  public @NotNull Component banMessageComponent(@NotNull JhSanction jhSanction, boolean isBanDef)
+  public @NotNull Component banMessageComponent(@NotNull Sanction sanction, boolean isBanDef)
       throws JusticeHandsException {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk"));
-    data.add(Integer.toString(jhSanction.getSctnId()));
-    data.add(jhSanction.getSctnName());
-    data.add(jhSanction.getSctnReason());
-    data.add(SDF.format(jhSanction.getSctnBeginningDate().getTime()));
+    data.add(Integer.toString(sanction.getSctnId()));
+    data.add(sanction.getSctnName());
+    data.add(sanction.getSctnReason());
+    data.add(SDF.format(sanction.getSctnBeginningDate().getTime()));
 
     String banMessage;
     if (isBanDef) {
       banMessage = LOGIN_BAN_DEF_MESSAGE;
     } else {
-      if (jhSanction.getSctnEndingDate() != null) {
-        data.add(SDF.format(jhSanction.getSctnEndingDate().getTime()));
+      if (sanction.getSctnEndingDate() != null) {
+        data.add(SDF.format(sanction.getSctnEndingDate().getTime()));
         data.add(
             GeneralUtils.timeRemaining(
-                jhSanction.getSctnEndingDate().getTime() - System.currentTimeMillis()));
+                sanction.getSctnEndingDate().getTime() - System.currentTimeMillis()));
         banMessage = LOGIN_BAN_MESSAGE;
       } else {
         throw new JusticeHandsException(

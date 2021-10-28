@@ -19,9 +19,9 @@ package fr.fallenvaders.minecraft.justicehands.controller.listeners;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
-import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
+import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
-import fr.fallenvaders.minecraft.justicehands.model.service.JhSanctionService;
+import fr.fallenvaders.minecraft.justicehands.model.service.SanctionService;
 import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponentBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
@@ -46,7 +46,7 @@ import java.util.Set;
 public class PlayerLoginListener implements Listener {
 
   private final ComponentHelper componentHelper;
-  private final JhSanctionService jhSanctionService;
+  private final SanctionService sanctionService;
   private final KeysKeeperComponentBuilder keysKeeperComponentBuilder;
   private final Logger logger;
 
@@ -54,18 +54,18 @@ public class PlayerLoginListener implements Listener {
    * Constructor.
    *
    * @param componentHelper The component helper.
-   * @param jhSanctionService The JusticeHands' sanction service.
+   * @param sanctionService The JusticeHands' sanction service.
    * @param keysKeeperComponentBuilder The Keys Keeper component builder.
    * @param logger The logger.
    */
   @Inject
   public PlayerLoginListener(
       @NotNull ComponentHelper componentHelper,
-      @NotNull JhSanctionService jhSanctionService,
+      @NotNull SanctionService sanctionService,
       @NotNull KeysKeeperComponentBuilder keysKeeperComponentBuilder,
       @NotNull Logger logger) {
     this.componentHelper = componentHelper;
-    this.jhSanctionService = jhSanctionService;
+    this.sanctionService = sanctionService;
     this.keysKeeperComponentBuilder = keysKeeperComponentBuilder;
     this.logger = logger;
   }
@@ -82,10 +82,10 @@ public class PlayerLoginListener implements Listener {
   @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
   public void onPlayerLogin(@NotNull PlayerLoginEvent ple) {
     try {
-      Set<JhSanction> jhSanctions =
-          jhSanctionService.getActivePlayerJhSanctions(ple.getPlayer(), SanctionType.BAN);
-      if (!jhSanctions.isEmpty()) {
-        JhSanction ban = jhSanctions.iterator().next();
+      Set<Sanction> sanctions =
+          sanctionService.getActivePlayerJhSanctions(ple.getPlayer(), SanctionType.BAN);
+      if (!sanctions.isEmpty()) {
+        Sanction ban = sanctions.iterator().next();
         boolean isBanDef = ban.getSctnEndingDate() == null;
         Component loginBanComponent = keysKeeperComponentBuilder.banMessageComponent(ban, isBanDef);
         ple.disallow(PlayerLoginEvent.Result.KICK_BANNED, loginBanComponent);

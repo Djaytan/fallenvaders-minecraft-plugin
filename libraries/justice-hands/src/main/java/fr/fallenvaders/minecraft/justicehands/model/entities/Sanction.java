@@ -32,7 +32,7 @@ import java.sql.Timestamp;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
-public class JhSanction {
+public class Sanction {
 
   private final int sctnId;
   private OfflinePlayer sctnInculpatedPlayer;
@@ -49,7 +49,7 @@ public class JhSanction {
    *
    * @param sctnId The ID of the sanction.
    */
-  public JhSanction(int sctnId) {
+  public Sanction(int sctnId) {
     this.sctnId = sctnId;
   }
 
