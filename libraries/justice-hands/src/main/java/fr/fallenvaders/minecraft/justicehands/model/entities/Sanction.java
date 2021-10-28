@@ -45,6 +45,15 @@ public class Sanction {
   /**
    * Constructor.
    *
+   * <p>Note: this one must be used only at the registration of a new sanction.
+   */
+  public Sanction() {
+    this(-1);
+  }
+
+  /**
+   * Constructor.
+   *
    * @param id The ID of the sanction.
    */
   public Sanction(int id) {
