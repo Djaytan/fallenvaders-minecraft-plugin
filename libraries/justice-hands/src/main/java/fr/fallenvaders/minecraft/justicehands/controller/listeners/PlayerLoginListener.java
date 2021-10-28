@@ -17,17 +17,45 @@
 
 package fr.fallenvaders.minecraft.justicehands.controller.listeners;
 
+import fr.fallenvaders.minecraft.justicehands.model.service.JhSanctionService;
 import fr.fallenvaders.minecraft.justicehands.model.service.KeysKeeperBot;
 import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponent;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.jetbrains.annotations.NotNull;
 
+import javax.inject.Inject;
+
+/**
+ * Listener of {@link PlayerLoginEvent} in order to control player connections and prevents the ones
+ * where the player in banned.
+ *
+ * @author FallenVaders' dev team
+ * @version 0.1.0
+ */
 public class PlayerLoginListener implements Listener {
 
-  // On vérifie lors du processus de login, si le joueur est ban
-  @EventHandler
-  public void PlayerLoginEvent(PlayerLoginEvent ple) {
+  private final JhSanctionService jhSanctionService;
+
+  /**
+   * Constructor.
+   *
+   * @param jhSanctionService The JusticeHands' sanction service.
+   */
+  @Inject
+  public PlayerLoginListener(@NotNull JhSanctionService jhSanctionService) {
+    this.jhSanctionService = jhSanctionService;
+  }
+
+  /**
+   * Listen of the {@link PlayerLoginEvent} in order to prevent the connections of banned players.
+   *
+   * @param ple The Bukkit player login event.
+   */
+  @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+  public void onPlayerLogin(@NotNull PlayerLoginEvent ple) {
     try {
       CJSanction playerActiveBan = KeysKeeperBot.getPlayerActiveBan(ple.getPlayer());
 
@@ -49,6 +77,5 @@ public class PlayerLoginListener implements Listener {
       // Si la fonction playerActiveBan retourne un null, le joueur n'a pas de ban actif
       return;
     }
-    ;
   }
 }
