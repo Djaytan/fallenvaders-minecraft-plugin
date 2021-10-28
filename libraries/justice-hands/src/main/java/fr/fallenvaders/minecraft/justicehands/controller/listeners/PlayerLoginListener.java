@@ -83,7 +83,7 @@ public class PlayerLoginListener implements Listener {
   public void onPlayerLogin(@NotNull PlayerLoginEvent ple) {
     try {
       Set<Sanction> sanctions =
-          sanctionService.getActivePlayerJhSanctions(ple.getPlayer(), SanctionType.BAN);
+          sanctionService.getActivePlayerSanctions(ple.getPlayer(), SanctionType.BAN);
       if (!sanctions.isEmpty()) {
         Sanction ban = sanctions.iterator().next();
         boolean isBanDef = ban.getEndingDate() == null;

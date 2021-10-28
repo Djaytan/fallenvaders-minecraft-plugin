@@ -72,7 +72,7 @@ public class SanctionService {
    * @return The {@link Sanction} associated with the specified ID.
    * @throws JusticeHandsException if the sought sanction fail to be found in the model.
    */
-  public @NotNull Optional<Sanction> getJhSanction(int id) throws JusticeHandsException {
+  public @NotNull Optional<Sanction> getSanction(int id) throws JusticeHandsException {
     logger.info("Seek of the JusticeHands' sanction associated with the ID '{}'.", id);
     try (Connection connection = fvDataSource.getConnection()) {
       Optional<Sanction> jhSanction = sanctionDao.get(connection, Integer.toString(id));
@@ -98,7 +98,7 @@ public class SanctionService {
    * @return All the existing {@link Sanction}s of the model.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<Sanction> getJhSanctions() throws JusticeHandsException {
+  public @NotNull Set<Sanction> getSanctions() throws JusticeHandsException {
     logger.info("Seek of all existing JusticeHands' sanctions.");
     try (Connection connection = fvDataSource.getConnection()) {
       Set<Sanction> sanctions = sanctionDao.getAll(connection);
@@ -115,8 +115,8 @@ public class SanctionService {
   }
 
   /**
-   * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where
-   * he is assigned as an inculpated one.
+   * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where he
+   * is assigned as an inculpated one.
    *
    * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
@@ -124,7 +124,7 @@ public class SanctionService {
    * @return All the {@link Sanction} of the specified {@link OfflinePlayer}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<Sanction> getPlayerJhSanctions(@NotNull OfflinePlayer offlinePlayer)
+  public @NotNull Set<Sanction> getPlayerSanctions(@NotNull OfflinePlayer offlinePlayer)
       throws JusticeHandsException {
     logger.info(
         "Seek all JusticeHands' sanctions of the inculpated player '{}' with UUID '{}'.",
@@ -150,18 +150,17 @@ public class SanctionService {
   }
 
   /**
-   * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where
-   * he is assigned as an inculpated one and where the {@link SanctionType} match with the given
-   * one.
+   * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where he
+   * is assigned as an inculpated one and where the {@link SanctionType} match with the given one.
    *
    * @return All the {@link Sanction} of the specified {@link OfflinePlayer} and {@link
    *     SanctionType}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<Sanction> getPlayerJhSanctions(
+  public @NotNull Set<Sanction> getPlayerSanctions(
       @NotNull OfflinePlayer offlinePlayer, @NotNull SanctionType sanctionType)
       throws JusticeHandsException {
-    Set<Sanction> sanctions = getPlayerJhSanctions(offlinePlayer);
+    Set<Sanction> sanctions = getPlayerSanctions(offlinePlayer);
     return sanctions.stream()
         .filter(sanction -> sanction.getType() == sanctionType)
         .collect(Collectors.toSet());
@@ -174,9 +173,9 @@ public class SanctionService {
    * @return All the {@link Sanction} of the specified {@link OfflinePlayer}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<Sanction> getActivePlayerJhSanctions(@NotNull OfflinePlayer offlinePlayer)
+  public @NotNull Set<Sanction> getActivePlayerSanctions(@NotNull OfflinePlayer offlinePlayer)
       throws JusticeHandsException {
-    Set<Sanction> sanctions = getPlayerJhSanctions(offlinePlayer);
+    Set<Sanction> sanctions = getPlayerSanctions(offlinePlayer);
     return sanctions.stream()
         .filter(sanction -> sanction.getEndingDate().toInstant().isAfter(Instant.now()))
         .collect(Collectors.toSet());
@@ -191,26 +190,26 @@ public class SanctionService {
    *     SanctionType}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<Sanction> getActivePlayerJhSanctions(
+  public @NotNull Set<Sanction> getActivePlayerSanctions(
       @NotNull OfflinePlayer offlinePlayer, @NotNull SanctionType sanctionType)
       throws JusticeHandsException {
-    Set<Sanction> sanctions = getPlayerJhSanctions(offlinePlayer);
+    Set<Sanction> sanctions = getPlayerSanctions(offlinePlayer);
     return sanctions.stream()
         .filter(
-          sanction ->
+            sanction ->
                 sanction.getEndingDate().toInstant().isAfter(Instant.now())
                     && sanction.getType() == sanctionType)
         .collect(Collectors.toSet());
   }
 
   /**
-   * Saves the specified {@link Sanction} into the model.
+   * Registers the specified {@link Sanction} into the model.
    *
    * @param sanction The JusticeHands' sanction to save into the model.
    * @throws JusticeHandsException if the specified sanction fail to be registered in the model.
    */
-  public void saveJhSanction(@NotNull Sanction sanction) throws JusticeHandsException {
-    logger.info("Try to save the following new JusticeHands' sanction: {}", sanction);
+  public void registerSanction(@NotNull Sanction sanction) throws JusticeHandsException {
+    logger.info("Try to register the following new JusticeHands' sanction: {}", sanction);
     try (Connection connection = fvDataSource.getConnection()) {
       int rowCount = sanctionDao.save(connection, sanction);
       if (rowCount > 0) {
@@ -222,7 +221,7 @@ public class SanctionService {
         throw new JusticeHandsException("Failed to register the new sanction into the model.");
       }
     } catch (SQLException | JusticeHandsException e) {
-      logger.error("An error occurs preventing the save of a JusticeHands' sanction.", e);
+      logger.error("An error occurs preventing the register of a JusticeHands' sanction.", e);
       throw new JusticeHandsException(
           String.format("Failed to register the new following sanction: %s", sanction));
     }
@@ -234,11 +233,11 @@ public class SanctionService {
    * @param sanction The JusticeHands' sanction to update in the model.
    * @throws JusticeHandsException if the specified sanction fail to be updated in the model.
    */
-  public void updateJhSanction(@NotNull Sanction sanction) throws JusticeHandsException {
+  public void updateSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info(
         "Try to update the JusticeHands' sanction with ID '{}' with this following new value: {}",
         sanction.getId(),
-      sanction);
+        sanction);
     try (Connection connection = fvDataSource.getConnection()) {
       int rowCount = sanctionDao.update(connection, sanction);
       if (rowCount > 0) {
@@ -265,7 +264,7 @@ public class SanctionService {
    * @param sanction The JusticeHands' sanction to delete from the model.
    * @throws JusticeHandsException if the specified sanction fail to be deleted in the model.
    */
-  public void deleteJhSanction(@NotNull Sanction sanction) throws JusticeHandsException {
+  public void deleteSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info("Try to delete the following JusticeHands' sanction: {}", sanction);
     try (Connection connection = fvDataSource.getConnection()) {
       int rowCount = sanctionDao.delete(connection, sanction);
