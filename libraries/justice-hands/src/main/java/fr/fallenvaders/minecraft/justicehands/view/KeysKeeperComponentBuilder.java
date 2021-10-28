@@ -22,13 +22,11 @@ import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -85,42 +83,34 @@ public class KeysKeeperComponentBuilder {
     this.componentHelper = componentHelper;
   }
 
-  public Component ejectingMessageCpnt(CJSanction sanction) {
-    String date = SDF.format(sanction.getTSDate().getTime());
-
-    final Component cpnt =
-        LegacyComponentSerializer.legacyAmpersand()
-            .deserialize(
-                String.format(
-                    "%s\n§cVous avez été éjecté du serveur pour la raison suivante : \n§7ID de Sanction : %s§f - §7%s\n\n§cLa réalité de cette infraction a été établie, conformément au réglèment du serveur\nque vous avez précédement lu et approuvé.\n§eCette sanction vous apportera donc §7%d points de sanction §eet sera enregistrée dans \nvotre casier judiciaire.\n§7Date de l'infraction : %s",
-                    GeneralUtils.getPrefix("kk"),
-                    sanction.getID(),
-                    sanction.getName(),
-                    sanction.getPoints(),
-                    date));
-
-    return cpnt;
+  public Component ejectingMessageComponent(JhSanction jhSanction) {
+    List<String> data = new ArrayList<>();
+    data.add(GeneralUtils.getPrefix("kk"));
+    data.add(Integer.toString(jhSanction.getSctnId()));
+    data.add(jhSanction.getSctnName());
+    data.add(Integer.toString(jhSanction.getSctnPoints()));
+    data.add(SDF.format(jhSanction.getSctnBeginningDate().getTime()));
+    return componentHelper.getComponent(String.format(EJECTING_MESSAGE, data.toArray()));
   }
 
-  public Component loginBanComponent(JhSanction jhSanction, boolean isBanDef)
+  public Component banMessageComponent(JhSanction jhSanction, boolean isBanDef)
       throws JusticeHandsException {
     List<String> data = new ArrayList<>();
-    data.add(GeneralUtils.getPrefix("kk")); // prefix
-    data.add(Integer.toString(jhSanction.getSctnId())); // sanction ID
-    data.add(jhSanction.getSctnName()); // sanction name
-    data.add(jhSanction.getSctnReason()); // sanction reason
-    data.add(SDF.format(jhSanction.getSctnBeginningDate().getTime())); // sanction beginning date
+    data.add(GeneralUtils.getPrefix("kk"));
+    data.add(Integer.toString(jhSanction.getSctnId()));
+    data.add(jhSanction.getSctnName());
+    data.add(jhSanction.getSctnReason());
+    data.add(SDF.format(jhSanction.getSctnBeginningDate().getTime()));
 
     String banMessage;
     if (isBanDef) {
       banMessage = LOGIN_BAN_DEF_MESSAGE;
     } else {
       if (jhSanction.getSctnEndingDate() != null) {
-        data.add(SDF.format(jhSanction.getSctnEndingDate().getTime())); // sanction ending date
+        data.add(SDF.format(jhSanction.getSctnEndingDate().getTime()));
         data.add(
             GeneralUtils.timeRemaining(
-                jhSanction.getSctnEndingDate().getTime()
-                    - System.currentTimeMillis())); // sanction remaining time
+                jhSanction.getSctnEndingDate().getTime() - System.currentTimeMillis()));
         banMessage = LOGIN_BAN_MESSAGE;
       } else {
         throw new JusticeHandsException(
@@ -128,6 +118,6 @@ public class KeysKeeperComponentBuilder {
       }
     }
 
-    return componentHelper.getComponent(String.format(banMessage, data));
+    return componentHelper.getComponent(String.format(banMessage, data.toArray()));
   }
 }
