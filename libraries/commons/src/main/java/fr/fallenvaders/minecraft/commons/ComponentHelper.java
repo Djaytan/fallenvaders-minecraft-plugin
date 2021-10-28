@@ -19,6 +19,7 @@ package fr.fallenvaders.minecraft.commons;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Singleton;
 
@@ -40,7 +41,7 @@ public class ComponentHelper {
    * @param message The message to be embedded into the {@link Component}.
    * @return The component which embed the specified message.
    */
-  public Component getComponent(String message) {
+  public @NotNull Component getComponent(@NotNull String message) {
     return LegacyComponentSerializer.legacyAmpersand().deserialize(message);
   }
 
@@ -49,7 +50,7 @@ public class ComponentHelper {
    *
    * @return An error component.
    */
-  public Component getErrorComponent() {
+  public @NotNull Component getErrorComponent() {
     return LegacyComponentSerializer.legacyAmpersand().deserialize(ERROR_MESSAGE);
   }
 }
