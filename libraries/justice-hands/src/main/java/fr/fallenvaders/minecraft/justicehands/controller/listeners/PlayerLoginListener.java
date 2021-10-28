@@ -22,7 +22,7 @@ import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.service.JhSanctionService;
-import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponent;
+import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponentBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -47,21 +47,26 @@ public class PlayerLoginListener implements Listener {
 
   private final ComponentHelper componentHelper;
   private final JhSanctionService jhSanctionService;
+  private final KeysKeeperComponentBuilder keysKeeperComponentBuilder;
   private final Logger logger;
 
   /**
    * Constructor.
    *
+   * @param componentHelper The component helper.
    * @param jhSanctionService The JusticeHands' sanction service.
+   * @param keysKeeperComponentBuilder The Keys Keeper component builder.
    * @param logger The logger.
    */
   @Inject
   public PlayerLoginListener(
       @NotNull ComponentHelper componentHelper,
       @NotNull JhSanctionService jhSanctionService,
+      @NotNull KeysKeeperComponentBuilder keysKeeperComponentBuilder,
       @NotNull Logger logger) {
     this.componentHelper = componentHelper;
     this.jhSanctionService = jhSanctionService;
+    this.keysKeeperComponentBuilder = keysKeeperComponentBuilder;
     this.logger = logger;
   }
 
@@ -82,7 +87,7 @@ public class PlayerLoginListener implements Listener {
       if (!jhSanctions.isEmpty()) {
         JhSanction ban = jhSanctions.iterator().next();
         boolean isBanDef = ban.getSctnEndingDate() == null;
-        Component loginBanComponent = KeysKeeperComponent.loginBanComponent(ban, isBanDef);
+        Component loginBanComponent = keysKeeperComponentBuilder.loginBanComponent(ban, isBanDef);
         ple.disallow(PlayerLoginEvent.Result.KICK_BANNED, loginBanComponent);
       }
     } catch (JusticeHandsException e) {

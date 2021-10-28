@@ -17,19 +17,30 @@
 
 package fr.fallenvaders.minecraft.justicehands.view;
 
+import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.jetbrains.annotations.NotNull;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class KeysKeeperComponent {
+/**
+ * Keys Keeper component class.
+ *
+ * @author FallenVaders' dev team
+ * @since 0.3.0
+ */
+@Singleton
+public class KeysKeeperComponentBuilder {
 
   public static final String DAYTIME_PATTERN = "dd/MM/yyyy HH:mm:ss";
   public static final SimpleDateFormat SDF =
@@ -40,7 +51,19 @@ public class KeysKeeperComponent {
   public static final String LOGIN_BAN_MESSAGE =
       "%s\n§cVous avez été banni temporairement du serveur pour la raison suivante : \n\n§bID de Sanction : §7%s§b - §7%s\n§bRaison : §7%s\n§bDate : §7%s §b- §7%s\n§bTemps restant : §7%s";
 
-  public static Component ejectingMessageCpnt(CJSanction sanction) {
+  private final ComponentHelper componentHelper;
+
+  /**
+   * Constructor.
+   *
+   * @param componentHelper The component helper.
+   */
+  @Inject
+  public KeysKeeperComponentBuilder(@NotNull ComponentHelper componentHelper) {
+    this.componentHelper = componentHelper;
+  }
+
+  public Component ejectingMessageCpnt(CJSanction sanction) {
     String date = SDF.format(sanction.getTSDate().getTime());
 
     final Component cpnt =
@@ -57,7 +80,7 @@ public class KeysKeeperComponent {
     return cpnt;
   }
 
-  public static Component loginBanComponent(JhSanction jhSanction, boolean isBanDef)
+  public Component loginBanComponent(JhSanction jhSanction, boolean isBanDef)
       throws JusticeHandsException {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk")); // prefix
@@ -83,6 +106,6 @@ public class KeysKeeperComponent {
       }
     }
 
-    return LegacyComponentSerializer.legacyAmpersand().deserialize(String.format(banMessage, data));
+    return componentHelper.getComponent(String.format(banMessage, data));
   }
 }
