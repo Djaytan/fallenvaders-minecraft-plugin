@@ -21,12 +21,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 public enum SanctionType {
-  // Liste de tous les types de sanction possible
   KICK("kick", "Kick ", ChatColor.GREEN, Material.GREEN_CONCRETE),
   MUTE("mute", "Mute ", ChatColor.BLUE, Material.BLUE_CONCRETE),
-  RISINGBAN("risingban", "Bannissement (transformé) ", ChatColor.YELLOW, Material.YELLOW_CONCRETE),
-  BAN("ban", "Bannissement ", ChatColor.GOLD, Material.ORANGE_CONCRETE),
-  BANDEF("bandef", "Banissement définitif ", ChatColor.RED, Material.RED_CONCRETE);
+  BAN("ban", "Bannissement ", ChatColor.GOLD, Material.ORANGE_CONCRETE);
 
   // Atrtibuts
   private String configName;
