@@ -173,7 +173,7 @@ public class Sanction {
    *
    * @return The author's UUID of the sanction.
    */
-  public @NotNull OfflinePlayer getAuthorPlayer() {
+  public @Nullable OfflinePlayer getAuthorPlayer() {
     return authorPlayer;
   }
 
@@ -182,7 +182,7 @@ public class Sanction {
    *
    * @param authorPlayer The author's UUID of the sanction.
    */
-  public void setAuthorPlayer(@NotNull OfflinePlayer authorPlayer) {
+  public void setAuthorPlayer(@Nullable OfflinePlayer authorPlayer) {
     this.authorPlayer = authorPlayer;
   }
 
