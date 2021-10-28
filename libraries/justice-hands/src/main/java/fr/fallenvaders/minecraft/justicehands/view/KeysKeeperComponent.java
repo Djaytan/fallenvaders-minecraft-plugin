@@ -57,7 +57,7 @@ public class KeysKeeperComponent {
     return cpnt;
   }
 
-  public static Component loginBanMessage(JhSanction jhSanction, boolean isBanDef)
+  public static Component loginBanComponent(JhSanction jhSanction, boolean isBanDef)
       throws JusticeHandsException {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk")); // prefix
