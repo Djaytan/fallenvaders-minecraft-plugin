@@ -19,6 +19,8 @@ package fr.fallenvaders.minecraft.justicehands.model.entities;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.Timestamp;
 
@@ -65,7 +67,7 @@ public class JhSanction {
    *
    * @return The inculpated player targeted by the sanction.
    */
-  public OfflinePlayer getSctnInculpatedPlayer() {
+  public @NotNull OfflinePlayer getSctnInculpatedPlayer() {
     return sctnInculpatedPlayer;
   }
 
@@ -74,7 +76,7 @@ public class JhSanction {
    *
    * @param sctnInculpatedPlayer The inculpated player targeted by the sanction.
    */
-  public void setSctnInculpatedPlayer(OfflinePlayer sctnInculpatedPlayer) {
+  public void setSctnInculpatedPlayer(@NotNull OfflinePlayer sctnInculpatedPlayer) {
     this.sctnInculpatedPlayer = sctnInculpatedPlayer;
   }
 
@@ -83,8 +85,7 @@ public class JhSanction {
    *
    * @return The name of the sanction.
    */
-  // TODO: replace this one by a reference to an existing sanction_type.
-  public String getSctnName() {
+  public @NotNull String getSctnName() {
     return sctnName;
   }
 
@@ -93,7 +94,7 @@ public class JhSanction {
    *
    * @param sctnName The name of the sanction.
    */
-  public void setSctnName(String sctnName) {
+  public void setSctnName(@NotNull String sctnName) {
     this.sctnName = sctnName;
   }
 
@@ -102,7 +103,7 @@ public class JhSanction {
    *
    * @return The reason of the sanction.
    */
-  public String getSctnReason() {
+  public @NotNull String getSctnReason() {
     return sctnReason;
   }
 
@@ -111,7 +112,7 @@ public class JhSanction {
    *
    * @param sctnReason The reason of the sanction.
    */
-  public void setSctnReason(String sctnReason) {
+  public void setSctnReason(@NotNull String sctnReason) {
     this.sctnReason = sctnReason;
   }
 
@@ -138,7 +139,7 @@ public class JhSanction {
    *
    * @return The beginning date of the sanction.
    */
-  public Timestamp getSctnBeginningDate() {
+  public @NotNull Timestamp getSctnBeginningDate() {
     return sctnBeginningDate;
   }
 
@@ -147,7 +148,7 @@ public class JhSanction {
    *
    * @param sctnBeginningDate The beginning date of the sanction.
    */
-  public void setSctnBeginningDate(Timestamp sctnBeginningDate) {
+  public void setSctnBeginningDate(@NotNull Timestamp sctnBeginningDate) {
     this.sctnBeginningDate = sctnBeginningDate;
   }
 
@@ -156,7 +157,7 @@ public class JhSanction {
    *
    * @return The ending date of the sanction.
    */
-  public Timestamp getSctnEndingDate() {
+  public @Nullable Timestamp getSctnEndingDate() {
     return sctnEndingDate;
   }
 
@@ -165,7 +166,7 @@ public class JhSanction {
    *
    * @param sctnEndingDate The ending date of the sanction.
    */
-  public void setSctnEndingDate(Timestamp sctnEndingDate) {
+  public void setSctnEndingDate(@Nullable Timestamp sctnEndingDate) {
     this.sctnEndingDate = sctnEndingDate;
   }
 
@@ -174,7 +175,7 @@ public class JhSanction {
    *
    * @return The author's UUID of the sanction.
    */
-  public OfflinePlayer getSctnAuthorPlayer() {
+  public @NotNull OfflinePlayer getSctnAuthorPlayer() {
     return sctnAuthorPlayer;
   }
 
@@ -183,7 +184,7 @@ public class JhSanction {
    *
    * @param sctnAuthorPlayer The author's UUID of the sanction.
    */
-  public void setSctnAuthorPlayer(OfflinePlayer sctnAuthorPlayer) {
+  public void setSctnAuthorPlayer(@NotNull OfflinePlayer sctnAuthorPlayer) {
     this.sctnAuthorPlayer = sctnAuthorPlayer;
   }
 
@@ -192,7 +193,7 @@ public class JhSanction {
    *
    * @return The type of the sanction (mute, ban, ...).
    */
-  public SanctionType getSctnType() {
+  public @NotNull SanctionType getSctnType() {
     return sctnType;
   }
 
@@ -201,7 +202,7 @@ public class JhSanction {
    *
    * @param sctnType The type of the sanction (mute, ban, ...).
    */
-  public void setSctnType(SanctionType sctnType) {
+  public void setSctnType(@NotNull SanctionType sctnType) {
     this.sctnType = sctnType;
   }
 
