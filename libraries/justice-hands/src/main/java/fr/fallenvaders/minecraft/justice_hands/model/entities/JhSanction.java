@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.justice_hands.model.entities;
 
-import fr.fallenvaders.minecraft.justice_hands.SanctionType;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.bukkit.OfflinePlayer;
 

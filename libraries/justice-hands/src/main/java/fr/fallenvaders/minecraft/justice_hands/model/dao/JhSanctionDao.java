@@ -18,7 +18,7 @@
 package fr.fallenvaders.minecraft.justice_hands.model.dao;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
-import fr.fallenvaders.minecraft.justice_hands.SanctionType;
+import fr.fallenvaders.minecraft.justice_hands.model.entities.SanctionType;
 import fr.fallenvaders.minecraft.justice_hands.model.entities.JhSanction;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;

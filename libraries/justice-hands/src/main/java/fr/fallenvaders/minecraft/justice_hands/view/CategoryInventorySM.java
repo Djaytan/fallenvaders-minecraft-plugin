@@ -1,13 +1,30 @@
-package fr.fallenvaders.minecraft.justice_hands.sanctionmanager.invmanager;
+/*
+ *  This file is part of the FallenVaders distribution (https://github.com/FallenVaders).
+ *  Copyright © 2021 Loïc DUBOIS-TERMOZ.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, version 3.
+ *
+ *  This program is distributed in the hope that it will be useful, but
+ *  WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *  General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package fr.fallenvaders.minecraft.justice_hands.view;
 
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
 import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
-import fr.fallenvaders.minecraft.justice_hands.SanctionType;
-import fr.fallenvaders.minecraft.justice_hands.keyskeeper.KeysKeeperBot;
-import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CategoriesList;
-import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.SanctionsAlgo;
-import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.objects.Categorie;
-import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.objects.Sanction;
+import fr.fallenvaders.minecraft.justice_hands.model.entities.SanctionType;
+import fr.fallenvaders.minecraft.justice_hands.model.service.KeysKeeperBot;
+import fr.fallenvaders.minecraft.justice_hands.view.viewmodel.CategoriesList;
+import fr.fallenvaders.minecraft.justice_hands.controller.SanctionsAlgo;
+import fr.fallenvaders.minecraft.justice_hands.view.viewmodel.Categorie;
+import fr.fallenvaders.minecraft.justice_hands.view.viewmodel.Sanction;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;

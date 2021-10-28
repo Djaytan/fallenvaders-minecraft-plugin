@@ -1,8 +1,8 @@
-package fr.fallenvaders.minecraft.justice_hands.sanctionmanager.invmanager;
+package fr.fallenvaders.minecraft.justice_hands.view;
 
 import fr.fallenvaders.minecraft.justice_hands.GeneralUtils;
-import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CategoriesList;
-import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.objects.Categorie;
+import fr.fallenvaders.minecraft.justice_hands.view.viewmodel.CategoriesList;
+import fr.fallenvaders.minecraft.justice_hands.view.viewmodel.Categorie;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;

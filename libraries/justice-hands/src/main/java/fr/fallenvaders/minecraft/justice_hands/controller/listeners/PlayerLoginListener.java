@@ -1,8 +1,24 @@
-package fr.fallenvaders.minecraft.justice_hands.keyskeeper.listeners;
+/*
+ *  This file is part of the FallenVaders distribution (https://github.com/FallenVaders).
+ *  Copyright © 2021 Loïc DUBOIS-TERMOZ.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, version 3.
+ *
+ *  This program is distributed in the hope that it will be useful, but
+ *  WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *  General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
-import fr.fallenvaders.minecraft.justice_hands.criminalrecords.objects.CJSanction;
-import fr.fallenvaders.minecraft.justice_hands.keyskeeper.KeysKeeperBot;
-import fr.fallenvaders.minecraft.justice_hands.keyskeeper.KeysKeeperComponent;
+package fr.fallenvaders.minecraft.justice_hands.controller.listeners;
+
+import fr.fallenvaders.minecraft.justice_hands.model.service.KeysKeeperBot;
+import fr.fallenvaders.minecraft.justice_hands.view.KeysKeeperComponent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;

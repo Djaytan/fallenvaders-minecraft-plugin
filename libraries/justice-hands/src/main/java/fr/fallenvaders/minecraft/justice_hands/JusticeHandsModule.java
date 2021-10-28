@@ -2,12 +2,11 @@ package fr.fallenvaders.minecraft.justice_hands;
 
 import co.aikar.commands.PaperCommandManager;
 import fr.fallenvaders.minecraft.commons.FvModule;
-import fr.fallenvaders.minecraft.justice_hands.criminalrecords.CommandCR;
-import fr.fallenvaders.minecraft.justice_hands.criminalrecords.listeners.PlayerJoinListener;
-import fr.fallenvaders.minecraft.justice_hands.keyskeeper.listeners.AsyncChatListener;
-import fr.fallenvaders.minecraft.justice_hands.keyskeeper.listeners.PlayerLoginListener;
-import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CategoriesList;
-import fr.fallenvaders.minecraft.justice_hands.sanctionmanager.CommandSM;
+import fr.fallenvaders.minecraft.justice_hands.controller.commands.CommandCR;
+import fr.fallenvaders.minecraft.justice_hands.controller.listeners.AsyncChatListener;
+import fr.fallenvaders.minecraft.justice_hands.controller.listeners.PlayerLoginListener;
+import fr.fallenvaders.minecraft.justice_hands.view.viewmodel.CategoriesList;
+import fr.fallenvaders.minecraft.justice_hands.controller.commands.CommandSM;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
