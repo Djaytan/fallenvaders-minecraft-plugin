@@ -86,7 +86,7 @@ public class PlayerLoginListener implements Listener {
           sanctionService.getActivePlayerJhSanctions(ple.getPlayer(), SanctionType.BAN);
       if (!sanctions.isEmpty()) {
         Sanction ban = sanctions.iterator().next();
-        boolean isBanDef = ban.getSctnEndingDate() == null;
+        boolean isBanDef = ban.getEndingDate() == null;
         Component loginBanComponent = keysKeeperComponentBuilder.banMessageComponent(ban, isBanDef);
         ple.disallow(PlayerLoginEvent.Result.KICK_BANNED, loginBanComponent);
       }

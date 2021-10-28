@@ -92,10 +92,10 @@ public class KeysKeeperComponentBuilder {
   public @NotNull Component ejectingMessageComponent(@NotNull Sanction sanction) {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk"));
-    data.add(Integer.toString(sanction.getSctnId()));
-    data.add(sanction.getSctnName());
-    data.add(Integer.toString(sanction.getSctnPoints()));
-    data.add(SDF.format(sanction.getSctnBeginningDate().getTime()));
+    data.add(Integer.toString(sanction.getId()));
+    data.add(sanction.getName());
+    data.add(Integer.toString(sanction.getPoints()));
+    data.add(SDF.format(sanction.getBeginningDate().getTime()));
     return componentHelper.getComponent(String.format(EJECTING_MESSAGE, data.toArray()));
   }
 
@@ -111,20 +111,20 @@ public class KeysKeeperComponentBuilder {
       throws JusticeHandsException {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk"));
-    data.add(Integer.toString(sanction.getSctnId()));
-    data.add(sanction.getSctnName());
-    data.add(sanction.getSctnReason());
-    data.add(SDF.format(sanction.getSctnBeginningDate().getTime()));
+    data.add(Integer.toString(sanction.getId()));
+    data.add(sanction.getName());
+    data.add(sanction.getReason());
+    data.add(SDF.format(sanction.getBeginningDate().getTime()));
 
     String banMessage;
     if (isBanDef) {
       banMessage = LOGIN_BAN_DEF_MESSAGE;
     } else {
-      if (sanction.getSctnEndingDate() != null) {
-        data.add(SDF.format(sanction.getSctnEndingDate().getTime()));
+      if (sanction.getEndingDate() != null) {
+        data.add(SDF.format(sanction.getEndingDate().getTime()));
         data.add(
             GeneralUtils.timeRemaining(
-                sanction.getSctnEndingDate().getTime() - System.currentTimeMillis()));
+                sanction.getEndingDate().getTime() - System.currentTimeMillis()));
         banMessage = LOGIN_BAN_MESSAGE;
       } else {
         throw new JusticeHandsException(

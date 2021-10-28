@@ -27,30 +27,28 @@ import java.sql.Timestamp;
 /**
  * This entity represents a JusticeHands' sanction.
  *
- * <p>Note: "sctn" means "sanction".
- *
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
 public class Sanction {
 
-  private final int sctnId;
-  private OfflinePlayer sctnInculpatedPlayer;
-  private String sctnName;
-  private String sctnReason;
-  private int sctnPoints;
-  private Timestamp sctnBeginningDate;
-  private Timestamp sctnEndingDate;
-  private OfflinePlayer sctnAuthorPlayer;
-  private SanctionType sctnType;
+  private final int id;
+  private OfflinePlayer inculpatedPlayer;
+  private String name;
+  private String reason;
+  private int points;
+  private Timestamp beginningDate;
+  private Timestamp endingDate;
+  private OfflinePlayer authorPlayer;
+  private SanctionType type;
 
   /**
    * Constructor.
    *
-   * @param sctnId The ID of the sanction.
+   * @param id The ID of the sanction.
    */
-  public Sanction(int sctnId) {
-    this.sctnId = sctnId;
+  public Sanction(int id) {
+    this.id = id;
   }
 
   /**
@@ -58,8 +56,8 @@ public class Sanction {
    *
    * @return The ID of the sanction.
    */
-  public int getSctnId() {
-    return sctnId;
+  public int getId() {
+    return id;
   }
 
   /**
@@ -67,17 +65,17 @@ public class Sanction {
    *
    * @return The inculpated player targeted by the sanction.
    */
-  public @NotNull OfflinePlayer getSctnInculpatedPlayer() {
-    return sctnInculpatedPlayer;
+  public @NotNull OfflinePlayer getInculpatedPlayer() {
+    return inculpatedPlayer;
   }
 
   /**
    * Setter.
    *
-   * @param sctnInculpatedPlayer The inculpated player targeted by the sanction.
+   * @param inculpatedPlayer The inculpated player targeted by the sanction.
    */
-  public void setSctnInculpatedPlayer(@NotNull OfflinePlayer sctnInculpatedPlayer) {
-    this.sctnInculpatedPlayer = sctnInculpatedPlayer;
+  public void setInculpatedPlayer(@NotNull OfflinePlayer inculpatedPlayer) {
+    this.inculpatedPlayer = inculpatedPlayer;
   }
 
   /**
@@ -85,17 +83,17 @@ public class Sanction {
    *
    * @return The name of the sanction.
    */
-  public @NotNull String getSctnName() {
-    return sctnName;
+  public @NotNull String getName() {
+    return name;
   }
 
   /**
    * Setter.
    *
-   * @param sctnName The name of the sanction.
+   * @param name The name of the sanction.
    */
-  public void setSctnName(@NotNull String sctnName) {
-    this.sctnName = sctnName;
+  public void setName(@NotNull String name) {
+    this.name = name;
   }
 
   /**
@@ -103,17 +101,17 @@ public class Sanction {
    *
    * @return The reason of the sanction.
    */
-  public @NotNull String getSctnReason() {
-    return sctnReason;
+  public @NotNull String getReason() {
+    return reason;
   }
 
   /**
    * Setter.
    *
-   * @param sctnReason The reason of the sanction.
+   * @param reason The reason of the sanction.
    */
-  public void setSctnReason(@NotNull String sctnReason) {
-    this.sctnReason = sctnReason;
+  public void setReason(@NotNull String reason) {
+    this.reason = reason;
   }
 
   /**
@@ -121,17 +119,17 @@ public class Sanction {
    *
    * @return The points of the sanction.
    */
-  public int getSctnPoints() {
-    return sctnPoints;
+  public int getPoints() {
+    return points;
   }
 
   /**
    * Setter.
    *
-   * @param sctnPoints The points of the sanction.
+   * @param points The points of the sanction.
    */
-  public void setSctnPoints(int sctnPoints) {
-    this.sctnPoints = sctnPoints;
+  public void setPoints(int points) {
+    this.points = points;
   }
 
   /**
@@ -139,17 +137,17 @@ public class Sanction {
    *
    * @return The beginning date of the sanction.
    */
-  public @NotNull Timestamp getSctnBeginningDate() {
-    return sctnBeginningDate;
+  public @NotNull Timestamp getBeginningDate() {
+    return beginningDate;
   }
 
   /**
    * Setter.
    *
-   * @param sctnBeginningDate The beginning date of the sanction.
+   * @param beginningDate The beginning date of the sanction.
    */
-  public void setSctnBeginningDate(@NotNull Timestamp sctnBeginningDate) {
-    this.sctnBeginningDate = sctnBeginningDate;
+  public void setBeginningDate(@NotNull Timestamp beginningDate) {
+    this.beginningDate = beginningDate;
   }
 
   /**
@@ -157,17 +155,17 @@ public class Sanction {
    *
    * @return The ending date of the sanction.
    */
-  public @Nullable Timestamp getSctnEndingDate() {
-    return sctnEndingDate;
+  public @Nullable Timestamp getEndingDate() {
+    return endingDate;
   }
 
   /**
    * Setter.
    *
-   * @param sctnEndingDate The ending date of the sanction.
+   * @param endingDate The ending date of the sanction.
    */
-  public void setSctnEndingDate(@Nullable Timestamp sctnEndingDate) {
-    this.sctnEndingDate = sctnEndingDate;
+  public void setEndingDate(@Nullable Timestamp endingDate) {
+    this.endingDate = endingDate;
   }
 
   /**
@@ -175,17 +173,17 @@ public class Sanction {
    *
    * @return The author's UUID of the sanction.
    */
-  public @NotNull OfflinePlayer getSctnAuthorPlayer() {
-    return sctnAuthorPlayer;
+  public @NotNull OfflinePlayer getAuthorPlayer() {
+    return authorPlayer;
   }
 
   /**
    * Setter.
    *
-   * @param sctnAuthorPlayer The author's UUID of the sanction.
+   * @param authorPlayer The author's UUID of the sanction.
    */
-  public void setSctnAuthorPlayer(@NotNull OfflinePlayer sctnAuthorPlayer) {
-    this.sctnAuthorPlayer = sctnAuthorPlayer;
+  public void setAuthorPlayer(@NotNull OfflinePlayer authorPlayer) {
+    this.authorPlayer = authorPlayer;
   }
 
   /**
@@ -193,17 +191,17 @@ public class Sanction {
    *
    * @return The type of the sanction (mute, ban, ...).
    */
-  public @NotNull SanctionType getSctnType() {
-    return sctnType;
+  public @NotNull SanctionType getType() {
+    return type;
   }
 
   /**
    * Setter.
    *
-   * @param sctnType The type of the sanction (mute, ban, ...).
+   * @param type The type of the sanction (mute, ban, ...).
    */
-  public void setSctnType(@NotNull SanctionType sctnType) {
-    this.sctnType = sctnType;
+  public void setType(@NotNull SanctionType type) {
+    this.type = type;
   }
 
   @Override

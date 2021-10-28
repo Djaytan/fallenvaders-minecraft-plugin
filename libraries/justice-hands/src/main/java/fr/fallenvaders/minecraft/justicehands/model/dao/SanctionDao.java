@@ -176,23 +176,23 @@ public class SanctionDao implements FvDao<Sanction> {
       throws SQLException {
     try (PreparedStatement stmt =
         connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
-      stmt.setInt(1, sanction.getSctnId());
+      stmt.setInt(1, sanction.getId());
       return stmt.executeUpdate();
     }
   }
 
   private @NotNull Sanction getSanction(@NotNull ResultSet rs) throws SQLException {
     Sanction sanction = new Sanction(rs.getInt("sctn_id"));
-    sanction.setSctnInculpatedPlayer(
+    sanction.setInculpatedPlayer(
         server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_inculpated_player_uuid"))));
-    sanction.setSctnName(rs.getString("sctn_name"));
-    sanction.setSctnReason(rs.getString("sctn_reason"));
-    sanction.setSctnPoints(rs.getInt("sctn_points"));
-    sanction.setSctnBeginningDate(rs.getTimestamp("sctn_beginning_date"));
-    sanction.setSctnEndingDate(rs.getTimestamp("sctn_ending_date"));
-    sanction.setSctnAuthorPlayer(
+    sanction.setName(rs.getString("sctn_name"));
+    sanction.setReason(rs.getString("sctn_reason"));
+    sanction.setPoints(rs.getInt("sctn_points"));
+    sanction.setBeginningDate(rs.getTimestamp("sctn_beginning_date"));
+    sanction.setEndingDate(rs.getTimestamp("sctn_ending_date"));
+    sanction.setAuthorPlayer(
         server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_author_player_uuid"))));
-    sanction.setSctnType(SanctionType.valueOf(rs.getString("sctn_type")));
+    sanction.setType(SanctionType.valueOf(rs.getString("sctn_type")));
     return sanction;
   }
 
@@ -213,18 +213,18 @@ public class SanctionDao implements FvDao<Sanction> {
     int index = 1;
     boolean idIsFirst = !idIsLast;
     if (idIsFirst) {
-      stmt.setInt(index++, sanction.getSctnId());
+      stmt.setInt(index++, sanction.getId());
     }
-    stmt.setString(index++, sanction.getSctnInculpatedPlayer().getUniqueId().toString());
-    stmt.setString(index++, sanction.getSctnName());
-    stmt.setString(index++, sanction.getSctnReason());
-    stmt.setInt(index++, sanction.getSctnPoints());
-    stmt.setTimestamp(index++, sanction.getSctnBeginningDate());
-    stmt.setTimestamp(index++, sanction.getSctnEndingDate());
-    stmt.setString(index++, sanction.getSctnAuthorPlayer().getUniqueId().toString());
-    stmt.setString(index++, sanction.getSctnType().name());
+    stmt.setString(index++, sanction.getInculpatedPlayer().getUniqueId().toString());
+    stmt.setString(index++, sanction.getName());
+    stmt.setString(index++, sanction.getReason());
+    stmt.setInt(index++, sanction.getPoints());
+    stmt.setTimestamp(index++, sanction.getBeginningDate());
+    stmt.setTimestamp(index++, sanction.getEndingDate());
+    stmt.setString(index++, sanction.getAuthorPlayer().getUniqueId().toString());
+    stmt.setString(index++, sanction.getType().name());
     if (idIsLast) {
-      stmt.setInt(index, sanction.getSctnId());
+      stmt.setInt(index, sanction.getId());
     }
   }
 }

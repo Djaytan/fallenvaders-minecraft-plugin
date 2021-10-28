@@ -163,7 +163,7 @@ public class SanctionService {
       throws JusticeHandsException {
     Set<Sanction> sanctions = getPlayerJhSanctions(offlinePlayer);
     return sanctions.stream()
-        .filter(sanction -> sanction.getSctnType() == sanctionType)
+        .filter(sanction -> sanction.getType() == sanctionType)
         .collect(Collectors.toSet());
   }
 
@@ -178,7 +178,7 @@ public class SanctionService {
       throws JusticeHandsException {
     Set<Sanction> sanctions = getPlayerJhSanctions(offlinePlayer);
     return sanctions.stream()
-        .filter(sanction -> sanction.getSctnEndingDate().toInstant().isAfter(Instant.now()))
+        .filter(sanction -> sanction.getEndingDate().toInstant().isAfter(Instant.now()))
         .collect(Collectors.toSet());
   }
 
@@ -198,8 +198,8 @@ public class SanctionService {
     return sanctions.stream()
         .filter(
           sanction ->
-                sanction.getSctnEndingDate().toInstant().isAfter(Instant.now())
-                    && sanction.getSctnType() == sanctionType)
+                sanction.getEndingDate().toInstant().isAfter(Instant.now())
+                    && sanction.getType() == sanctionType)
         .collect(Collectors.toSet());
   }
 
@@ -237,7 +237,7 @@ public class SanctionService {
   public void updateJhSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info(
         "Try to update the JusticeHands' sanction with ID '{}' with this following new value: {}",
-        sanction.getSctnId(),
+        sanction.getId(),
       sanction);
     try (Connection connection = fvDataSource.getConnection()) {
       int rowCount = sanctionDao.update(connection, sanction);
@@ -250,12 +250,12 @@ public class SanctionService {
         throw new JusticeHandsException(
             String.format(
                 "The JusticeHands' sanction with ID '%d' doesn't exist and then can't be updated.",
-                sanction.getSctnId()));
+                sanction.getId()));
       }
     } catch (SQLException | JusticeHandsException e) {
       logger.error("An error occurs preventing the update of a JusticeHands' sanction.", e);
       throw new JusticeHandsException(
-          String.format("Failed to update the sanction with ID '%s'.", sanction.getSctnId()));
+          String.format("Failed to update the sanction with ID '%s'.", sanction.getId()));
     }
   }
 
@@ -278,12 +278,12 @@ public class SanctionService {
         throw new JusticeHandsException(
             String.format(
                 "The JusticeHands' sanction with ID '%d' doesn't exist and then can't be deleted.",
-                sanction.getSctnId()));
+                sanction.getId()));
       }
     } catch (SQLException | JusticeHandsException e) {
       logger.error("An error occurs preventing the delete of a JusticeHands' sanction.", e);
       throw new JusticeHandsException(
-          String.format("Failed to delete the sanction with ID '%s'.", sanction.getSctnId()));
+          String.format("Failed to delete the sanction with ID '%s'.", sanction.getId()));
     }
   }
 }
