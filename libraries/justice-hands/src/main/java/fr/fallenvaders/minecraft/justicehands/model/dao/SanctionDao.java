@@ -18,18 +18,15 @@
 package fr.fallenvaders.minecraft.justicehands.model.dao;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
-import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
+import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -128,8 +125,7 @@ public class SanctionDao implements FvDao<Sanction> {
    * @throws SQLException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public int save(@NotNull Connection connection, @NotNull Sanction sanction)
-      throws SQLException {
+  public int save(@NotNull Connection connection, @NotNull Sanction sanction) throws SQLException {
     try (PreparedStatement stmt =
         connection.prepareStatement(
             "INSERT INTO fv_jh_sanction (sctn_inculpated_player_uuid, sctn_name, "
@@ -182,22 +178,31 @@ public class SanctionDao implements FvDao<Sanction> {
   }
 
   private @NotNull Sanction getSanction(@NotNull ResultSet rs) throws SQLException {
-    Sanction sanction = new Sanction(rs.getInt("sctn_id"));
-    sanction.setInculpatedPlayer(
-        server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_inculpated_player_uuid"))));
-    sanction.setName(rs.getString("sctn_name"));
-    sanction.setReason(rs.getString("sctn_reason"));
-    sanction.setPoints(rs.getInt("sctn_points"));
-    sanction.setBeginningDate(rs.getTimestamp("sctn_beginning_date"));
-    sanction.setEndingDate(rs.getTimestamp("sctn_ending_date"));
-    sanction.setAuthorPlayer(
-        server.getOfflinePlayer(UUID.fromString(rs.getString("sctn_author_player_uuid"))));
-    sanction.setType(SanctionType.valueOf(rs.getString("sctn_type")));
+    int id = rs.getInt("sctn_id");
+    String inculpatedPlayerUuid = rs.getString("sctn_inculpated_player_uuid");
+    String name = rs.getString("sctn_name");
+    String reason = rs.getString("sctn_reason");
+    int points = rs.getInt("sctn_points");
+    Timestamp beginningDate = rs.getTimestamp("sctn_beginning_date");
+    Timestamp endingDate = rs.getTimestamp("sctn_ending_date");
+    String authorUuid = rs.getString("sctn_author_player_uuid");
+    String type = rs.getString("sctn_type");
+
+    Sanction sanction = new Sanction(id);
+    sanction.setInculpatedPlayer(server.getOfflinePlayer(UUID.fromString(inculpatedPlayerUuid)));
+    sanction.setName(name);
+    sanction.setReason(reason);
+    sanction.setPoints(points);
+    sanction.setBeginningDate(beginningDate);
+    sanction.setEndingDate(endingDate);
+    if (authorUuid != null) {
+      sanction.setAuthorPlayer(server.getOfflinePlayer(UUID.fromString(authorUuid)));
+    }
+    sanction.setType(SanctionType.valueOf(type));
     return sanction;
   }
 
-  private @NotNull Set<Sanction> getSanctions(@NotNull PreparedStatement stmt)
-      throws SQLException {
+  private @NotNull Set<Sanction> getSanctions(@NotNull PreparedStatement stmt) throws SQLException {
     ResultSet rs = stmt.executeQuery();
     Set<Sanction> sanctions = new LinkedHashSet<>(rs.getFetchSize());
     while (rs.next()) {
@@ -208,7 +213,7 @@ public class SanctionDao implements FvDao<Sanction> {
   }
 
   private void setSanction(
-    @NotNull Sanction sanction, @NotNull PreparedStatement stmt, boolean idIsLast)
+      @NotNull Sanction sanction, @NotNull PreparedStatement stmt, boolean idIsLast)
       throws SQLException {
     int index = 1;
     boolean idIsFirst = !idIsLast;
