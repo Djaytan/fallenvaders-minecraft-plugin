@@ -21,6 +21,7 @@ import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.dao.JhSanctionDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.JhSanction;
+import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Class which offers services about the manipulation of {@link JhSanction}s in the model.
@@ -146,6 +148,15 @@ public class JhSanctionService {
     }
   }
 
+  public @NotNull Set<JhSanction> getPlayerJhSanctions(
+      @NotNull OfflinePlayer offlinePlayer, @NotNull SanctionType sanctionType)
+      throws JusticeHandsException {
+    Set<JhSanction> jhSanctions = getPlayerJhSanctions(offlinePlayer);
+    return jhSanctions.stream()
+        .filter(jhSanction -> jhSanction.getSctnType() == sanctionType)
+        .collect(Collectors.toSet());
+  }
+  
   /**
    * Saves the specified {@link JhSanction} into the model.
    *
