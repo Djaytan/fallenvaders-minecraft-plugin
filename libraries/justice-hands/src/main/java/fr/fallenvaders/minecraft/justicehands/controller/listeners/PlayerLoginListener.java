@@ -58,6 +58,10 @@ public class PlayerLoginListener implements Listener {
   /**
    * Listen of the {@link PlayerLoginEvent} in order to prevent the connections of banned players.
    *
+   * <p>Note: JusticeHands have the last word concerning the connection of a player or not and must
+   * override previous allow/disallow decisions and messages. So it's why no check of {@link
+   * PlayerLoginEvent.Result} state are realized.
+   *
    * @param ple The Bukkit player login event.
    */
   @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
