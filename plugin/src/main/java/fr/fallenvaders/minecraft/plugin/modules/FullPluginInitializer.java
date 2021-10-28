@@ -18,7 +18,7 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
 import fr.fallenvaders.minecraft.commons.FvModule;
-import fr.fallenvaders.minecraft.justice_hands.JusticeHandsModule;
+import fr.fallenvaders.minecraft.justicehands.JusticeHandsModule;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
