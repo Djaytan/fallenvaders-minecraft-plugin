@@ -30,6 +30,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -150,7 +152,8 @@ public class JhSanctionService {
 
   /**
    * Gets and returns all existing {@link JhSanction} of the specified {@link OfflinePlayer} where
-   * he is assigned as an inculpated one and where the sanction type match with the given one.
+   * he is assigned as an inculpated one and where the {@link SanctionType} match with the given
+   * one.
    *
    * @return All the {@link JhSanction} of the specified {@link OfflinePlayer} and {@link
    *     SanctionType}.
@@ -164,7 +167,22 @@ public class JhSanctionService {
         .filter(jhSanction -> jhSanction.getSctnType() == sanctionType)
         .collect(Collectors.toSet());
   }
-  
+
+  /**
+   * Gets and returns all active existing {@link JhSanction} of the specified {@link OfflinePlayer}
+   * where he is assigned as an inculpated one.
+   *
+   * @return All the {@link JhSanction} of the specified {@link OfflinePlayer}.
+   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
+   */
+  public @NotNull Set<JhSanction> getActivePlayerJhSanctions(@NotNull OfflinePlayer offlinePlayer)
+      throws JusticeHandsException {
+    Set<JhSanction> jhSanctions = getPlayerJhSanctions(offlinePlayer);
+    return jhSanctions.stream()
+        .filter(jhSanction -> jhSanction.getSctnEndingDate().toInstant().isAfter(Instant.now()))
+        .collect(Collectors.toSet());
+  }
+
   /**
    * Saves the specified {@link JhSanction} into the model.
    *
