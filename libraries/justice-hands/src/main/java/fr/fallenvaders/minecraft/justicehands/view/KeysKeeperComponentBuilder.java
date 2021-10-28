@@ -83,6 +83,12 @@ public class KeysKeeperComponentBuilder {
     this.componentHelper = componentHelper;
   }
 
+  /**
+   * Provides an ejecting message {@link Component}.
+   *
+   * @param jhSanction The JusticeHands' sanction to be used for the ejecting message.
+   * @return The ejecting message component.
+   */
   public Component ejectingMessageComponent(JhSanction jhSanction) {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk"));
@@ -93,6 +99,14 @@ public class KeysKeeperComponentBuilder {
     return componentHelper.getComponent(String.format(EJECTING_MESSAGE, data.toArray()));
   }
 
+  /**
+   * Provides a ban message {@link Component}.
+   *
+   * @param jhSanction The JusticeHands' sanction to be used for the ban message.
+   * @param isBanDef Tells if the ban is definitive or not.
+   * @return The ban message component.
+   * @throws JusticeHandsException if the ending date is null for a non-def ban.
+   */
   public Component banMessageComponent(JhSanction jhSanction, boolean isBanDef)
       throws JusticeHandsException {
     List<String> data = new ArrayList<>();
