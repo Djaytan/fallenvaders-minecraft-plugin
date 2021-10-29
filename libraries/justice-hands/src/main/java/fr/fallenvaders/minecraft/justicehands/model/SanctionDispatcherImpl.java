@@ -17,16 +17,15 @@
 
 package fr.fallenvaders.minecraft.justicehands.model;
 
-import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponentBuilder;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
-
-import javax.inject.Inject;
 
 /**
  * This class is an implementation of the {@link SanctionDispatcher} interface.
@@ -34,6 +33,7 @@ import javax.inject.Inject;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
+@Singleton
 public class SanctionDispatcherImpl implements SanctionDispatcher {
 
   private final KeysKeeperComponentBuilder keysKeeperComponentBuilder;
