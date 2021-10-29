@@ -73,27 +73,30 @@ public class SanctionController {
   /**
    * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where he
    * is assigned as an inculpated one.
-   * TODO: add params
    *
+   * @param player The player.
    * @return All the {@link Sanction} of the specified {@link OfflinePlayer}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<Sanction> getPlayerSanctions(@NotNull OfflinePlayer offlinePlayer) throws JusticeHandsException {
-    return sanctionService.getPlayerSanctions(offlinePlayer);
+  public @NotNull Set<Sanction> getPlayerSanctions(@NotNull OfflinePlayer player)
+      throws JusticeHandsException {
+    return sanctionService.getPlayerSanctions(player);
   }
 
   /**
    * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where he
    * is assigned as an inculpated one and where the {@link SanctionType} match with the given one.
    *
+   * @param player The player.
+   * @param sanctionType The type of sanction.
    * @return All the {@link Sanction} of the specified {@link OfflinePlayer} and {@link
    *     SanctionType}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getPlayerSanctions(
-      @NotNull OfflinePlayer offlinePlayer, @NotNull SanctionType sanctionType)
+      @NotNull OfflinePlayer player, @NotNull SanctionType sanctionType)
       throws JusticeHandsException {
-    Set<Sanction> sanctions = getPlayerSanctions(offlinePlayer);
+    Set<Sanction> sanctions = getPlayerSanctions(player);
     return sanctions.stream()
         .filter(sanction -> sanction.getType() == sanctionType)
         .collect(Collectors.toSet());
@@ -103,12 +106,13 @@ public class SanctionController {
    * Gets and returns all active existing {@link Sanction} of the specified {@link OfflinePlayer}
    * where he is assigned as an inculpated one.
    *
+   * @param player The player.
    * @return All the {@link Sanction} of the specified {@link OfflinePlayer}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<Sanction> getActivePlayerSanctions(@NotNull OfflinePlayer offlinePlayer)
+  public @NotNull Set<Sanction> getActivePlayerSanctions(@NotNull OfflinePlayer player)
       throws JusticeHandsException {
-    Set<Sanction> sanctions = getPlayerSanctions(offlinePlayer);
+    Set<Sanction> sanctions = getPlayerSanctions(player);
     return sanctions.stream()
         .filter(sanction -> sanction.getEndingDate().toInstant().isAfter(Instant.now()))
         .collect(Collectors.toSet());
@@ -119,14 +123,16 @@ public class SanctionController {
    * where he is assigned as an inculpated one and where the {@link SanctionType} match with the
    * given one.
    *
+   * @param player The player.
+   * @param sanctionType The type of sanction.
    * @return All the {@link Sanction} of the specified {@link OfflinePlayer} and {@link
    *     SanctionType}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getActivePlayerSanctions(
-      @NotNull OfflinePlayer offlinePlayer, @NotNull SanctionType sanctionType)
+      @NotNull OfflinePlayer player, @NotNull SanctionType sanctionType)
       throws JusticeHandsException {
-    Set<Sanction> sanctions = getPlayerSanctions(offlinePlayer);
+    Set<Sanction> sanctions = getPlayerSanctions(player);
     return sanctions.stream()
         .filter(
             sanction ->

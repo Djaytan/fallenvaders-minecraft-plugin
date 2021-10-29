@@ -21,7 +21,6 @@ import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.dao.SanctionDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
-import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -30,10 +29,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.Instant;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Class which offers services about the manipulation of {@link Sanction}s in the model.
@@ -121,17 +118,18 @@ public class SanctionService {
    * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
    *
+   * @param player The player.
    * @return All the {@link Sanction} of the specified {@link OfflinePlayer}.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
-  public @NotNull Set<Sanction> getPlayerSanctions(@NotNull OfflinePlayer offlinePlayer)
+  public @NotNull Set<Sanction> getPlayerSanctions(@NotNull OfflinePlayer player)
       throws JusticeHandsException {
     logger.info(
         "Seek all JusticeHands' sanctions of the inculpated player '{}' with UUID '{}'.",
-        offlinePlayer.getName(),
-        offlinePlayer.getUniqueId());
+        player.getName(),
+        player.getUniqueId());
     try (Connection connection = fvDataSource.getConnection()) {
-      Set<Sanction> sanctions = sanctionDao.getFromPlayer(connection, offlinePlayer);
+      Set<Sanction> sanctions = sanctionDao.getFromPlayer(connection, player);
       if (!sanctions.isEmpty()) {
         logger.info("JusticeHands' sanctions found: {}", sanctions);
       } else {
