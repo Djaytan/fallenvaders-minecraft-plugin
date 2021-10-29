@@ -34,8 +34,8 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 /**
- * Listener of {@link PlayerLoginEvent} in order to control player connections and prevents the ones
- * where the player in banned.
+ * Listener of {@link PlayerLoginEvent} in order to control player connections and to prevent them
+ * when player is banned.
  *
  * @author FallenVaders' dev team
  * @version 0.1.0
@@ -75,23 +75,23 @@ public class PlayerLoginListener implements Listener {
    * override previous allow/disallow decisions and messages. So it's why no check of {@link
    * PlayerLoginEvent.Result} state are realized.
    *
-   * @param ple The Bukkit player login event.
+   * @param event The player login event.
    */
   @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-  public void onPlayerLogin(@NotNull PlayerLoginEvent ple) {
+  public void onPlayerLogin(@NotNull PlayerLoginEvent event) {
     try {
       Sanction ban =
           sanctionController
-              .getActivePlayerSanction(ple.getPlayer(), SanctionType.BAN)
+              .getActivePlayerSanction(event.getPlayer(), SanctionType.BAN)
               .orElse(null);
       if (ban != null) {
         Component loginBanComponent = keysKeeperComponentBuilder.banMessageComponent(ban);
-        ple.disallow(PlayerLoginEvent.Result.KICK_BANNED, loginBanComponent);
+        event.disallow(PlayerLoginEvent.Result.KICK_BANNED, loginBanComponent);
       }
     } catch (JusticeHandsException e) {
       logger.error("Failed to connect player on server.", e);
       Component errorComponent = componentHelper.getErrorComponent();
-      ple.disallow(PlayerLoginEvent.Result.KICK_OTHER, errorComponent);
+      event.disallow(PlayerLoginEvent.Result.KICK_OTHER, errorComponent);
     }
   }
 }
