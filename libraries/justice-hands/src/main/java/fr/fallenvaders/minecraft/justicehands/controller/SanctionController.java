@@ -115,9 +115,7 @@ public class SanctionController {
   public @NotNull Set<Sanction> getActivePlayerSanctions(@NotNull OfflinePlayer player)
       throws JusticeHandsException {
     Set<Sanction> sanctions = getPlayerSanctions(player);
-    return sanctions.stream()
-        .filter(sanction -> sanction.getEndingDate().toInstant().isAfter(Instant.now()))
-        .collect(Collectors.toSet());
+    return sanctions.stream().filter(this::isActiveSanction).collect(Collectors.toSet());
   }
 
   /**
@@ -136,10 +134,8 @@ public class SanctionController {
       throws JusticeHandsException {
     Set<Sanction> sanctions = getPlayerSanctions(player);
     return sanctions.stream()
-        .filter(
-            sanction ->
-                sanction.getEndingDate().toInstant().isAfter(Instant.now())
-                    && sanction.getType() == sanctionType)
+        .filter(this::isActiveSanction)
+        .filter(sanction -> sanction.getType() == sanctionType)
         .collect(Collectors.toSet());
   }
 
@@ -208,5 +204,13 @@ public class SanctionController {
       player = (Player) author;
     }
     return player;
+  }
+
+  private boolean isActiveSanction(@NotNull Sanction sanction) {
+    boolean isBanDef = sanction.getType() == SanctionType.BAN && sanction.getEndingDate() == null;
+    boolean isActive =
+        sanction.getEndingDate() != null
+            && sanction.getEndingDate().toInstant().isAfter(Instant.now());
+    return isBanDef || isActive;
   }
 }
