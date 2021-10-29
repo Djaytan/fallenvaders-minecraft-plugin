@@ -151,7 +151,7 @@ public class SanctionController {
     try {
       Sanction sanction =
           sanctionPlayer(player, name, reason, points, null, author, SanctionType.KICK);
-      player.kick(keysKeeperComponentBuilder.ejectingMessageComponent(sanction));
+      player.kick(keysKeeperComponentBuilder.kickMessage(sanction));
     } catch (JusticeHandsException e) {
       logger.error("Failed to kick player.", e);
       // TODO: show error message in view

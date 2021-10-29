@@ -87,7 +87,7 @@ public class KeysKeeperComponentBuilder {
    * @param sanction The JusticeHands' sanction to be used for the ejecting message.
    * @return The ejecting message component.
    */
-  public @NotNull Component ejectingMessageComponent(@NotNull Sanction sanction) {
+  public @NotNull Component kickMessage(@NotNull Sanction sanction) {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk"));
     data.add(Integer.toString(sanction.getId()));
@@ -103,7 +103,7 @@ public class KeysKeeperComponentBuilder {
    * @param ban The JusticeHands' ban sanction to be used for the ban message.
    * @return The ban message component.
    */
-  public @NotNull Component banMessageComponent(@NotNull Sanction ban) {
+  public @NotNull Component banMessage(@NotNull Sanction ban) {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk"));
     data.add(Integer.toString(ban.getId()));

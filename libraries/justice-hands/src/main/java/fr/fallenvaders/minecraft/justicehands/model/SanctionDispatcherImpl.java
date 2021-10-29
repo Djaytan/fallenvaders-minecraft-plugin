@@ -65,7 +65,7 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
     OfflinePlayer player = sanction.getInculpatedPlayer();
     if (player.isOnline()) {
       Player p = (Player) player;
-      p.kick(keysKeeperComponentBuilder.ejectingMessageComponent(sanction));
+      p.kick(keysKeeperComponentBuilder.kickMessage(sanction));
       logger.info("Inculpated player kicked.");
     } else {
       logger.info("Failed to kick player: he is currently disconnected.");
@@ -76,7 +76,7 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
     OfflinePlayer player = sanction.getInculpatedPlayer();
     if (player.isOnline()) {
       Player p = (Player) player;
-      p.kick(keysKeeperComponentBuilder.banMessageComponent(sanction));
+      p.kick(keysKeeperComponentBuilder.banMessage(sanction));
     }
     logger.info("Inculpated player banned.");
   }
