@@ -102,34 +102,28 @@ public class KeysKeeperComponentBuilder {
   /**
    * Provides a ban message {@link Component}.
    *
-   * @param sanction The JusticeHands' sanction to be used for the ban message.
-   * @param isBanDef Tells if the ban is definitive or not.
+   * @param ban The JusticeHands' ban sanction to be used for the ban message.
    * @return The ban message component.
-   * @throws JusticeHandsException if the ending date is null for a non-def ban.
    */
-  public @NotNull Component banMessageComponent(@NotNull Sanction sanction, boolean isBanDef)
+  public @NotNull Component banMessageComponent(@NotNull Sanction ban)
       throws JusticeHandsException {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk"));
-    data.add(Integer.toString(sanction.getId()));
-    data.add(sanction.getName());
-    data.add(sanction.getReason());
-    data.add(SDF.format(sanction.getBeginningDate().getTime()));
+    data.add(Integer.toString(ban.getId()));
+    data.add(ban.getName());
+    data.add(ban.getReason());
+    data.add(SDF.format(ban.getBeginningDate().getTime()));
 
     String banMessage;
+    boolean isBanDef = ban.getEndingDate() == null;
     if (isBanDef) {
       banMessage = LOGIN_BAN_DEF_MESSAGE;
     } else {
-      if (sanction.getEndingDate() != null) {
-        data.add(SDF.format(sanction.getEndingDate().getTime()));
-        data.add(
-            GeneralUtils.timeRemaining(
-                sanction.getEndingDate().getTime() - System.currentTimeMillis()));
-        banMessage = LOGIN_BAN_MESSAGE;
-      } else {
-        throw new JusticeHandsException(
-            "The ending date for a non-definitive ban mustn't be null.");
-      }
+      data.add(SDF.format(ban.getEndingDate().getTime()));
+      data.add(
+          GeneralUtils.timeRemaining(
+            ban.getEndingDate().getTime() - System.currentTimeMillis()));
+      banMessage = LOGIN_BAN_MESSAGE;
     }
 
     return componentHelper.getComponent(String.format(banMessage, data.toArray()));
