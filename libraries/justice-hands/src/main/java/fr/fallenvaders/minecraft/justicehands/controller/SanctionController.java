@@ -78,25 +78,42 @@ public class SanctionController {
       int points,
       @NotNull CommandSender author) {
     try {
-      checkAuthorValidity(author);
-      Timestamp beginningDate = new Timestamp(System.currentTimeMillis());
-
-      // TODO: use builder class instead
-      Sanction sanction = new Sanction();
-      sanction.setInculpatedPlayer(player);
-      sanction.setName(name);
-      sanction.setReason(reason);
-      sanction.setPoints(points);
-      sanction.setBeginningDate(beginningDate);
-      sanction.setEndingDate(null);
-      sanction.setAuthorPlayer(convertAuthor(author));
-      sanction.setType(SanctionType.KICK);
-      sanctionService.registerSanction(sanction);
+      Sanction sanction =
+          sanctionPlayer(player, name, reason, points, null, author, SanctionType.KICK);
       player.kick(keysKeeperComponentBuilder.ejectingMessageComponent(sanction));
     } catch (JusticeHandsException e) {
       logger.error("Failed to kick player.", e);
       // TODO: show error message in view
     }
+  }
+
+  private Sanction sanctionPlayer(
+      @NotNull Player player,
+      @NotNull String name,
+      @NotNull String reason,
+      int points,
+      @Nullable Duration duration,
+      @NotNull CommandSender author,
+      @NotNull SanctionType sanctionType)
+      throws JusticeHandsException {
+    checkAuthorValidity(author);
+    Timestamp beginningDate = new Timestamp(System.currentTimeMillis());
+    Timestamp endingDate = null;
+    if (duration != null) {
+      endingDate = new Timestamp(System.currentTimeMillis() + duration.toMillis());
+    }
+
+    Sanction sanction = new Sanction();
+    sanction.setInculpatedPlayer(player);
+    sanction.setName(name);
+    sanction.setReason(reason);
+    sanction.setPoints(points);
+    sanction.setBeginningDate(beginningDate);
+    sanction.setEndingDate(endingDate);
+    sanction.setAuthorPlayer(convertAuthor(author));
+    sanction.setType(sanctionType);
+    sanctionService.registerSanction(sanction);
+    return sanction;
   }
 
   private void checkAuthorValidity(@NotNull CommandSender author) throws JusticeHandsException {
