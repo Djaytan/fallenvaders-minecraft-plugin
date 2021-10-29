@@ -143,7 +143,7 @@ public class SanctionService {
       throw new JusticeHandsException(
           String.format(
               "Failed to seek the sanctions of the inculpated player '%s' with UUID '%s'.",
-              offlinePlayer.getName(), offlinePlayer.getUniqueId()));
+              player.getName(), player.getUniqueId()));
     }
   }
 
