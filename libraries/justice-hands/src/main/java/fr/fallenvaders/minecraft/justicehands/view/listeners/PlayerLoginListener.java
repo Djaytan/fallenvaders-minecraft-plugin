@@ -19,10 +19,12 @@ package fr.fallenvaders.minecraft.justicehands.view.listeners;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
+import fr.fallenvaders.minecraft.justicehands.controller.SanctionController;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
-import fr.fallenvaders.minecraft.justicehands.model.service.SanctionService;
 import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponentBuilder;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,10 +32,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.Set;
 
 /**
  * Listener of {@link PlayerLoginEvent} in order to control player connections and prevents the ones
@@ -46,28 +44,28 @@ import java.util.Set;
 public class PlayerLoginListener implements Listener {
 
   private final ComponentHelper componentHelper;
-  private final SanctionService sanctionService;
   private final KeysKeeperComponentBuilder keysKeeperComponentBuilder;
   private final Logger logger;
+  private final SanctionController sanctionController;
 
   /**
    * Constructor.
    *
    * @param componentHelper The component helper.
-   * @param sanctionService The JusticeHands' sanction service.
    * @param keysKeeperComponentBuilder The Keys Keeper component builder.
    * @param logger The logger.
+   * @param sanctionController The sanction controller.
    */
   @Inject
   public PlayerLoginListener(
       @NotNull ComponentHelper componentHelper,
-      @NotNull SanctionService sanctionService,
       @NotNull KeysKeeperComponentBuilder keysKeeperComponentBuilder,
-      @NotNull Logger logger) {
+      @NotNull Logger logger,
+      @NotNull SanctionController sanctionController) {
     this.componentHelper = componentHelper;
-    this.sanctionService = sanctionService;
     this.keysKeeperComponentBuilder = keysKeeperComponentBuilder;
     this.logger = logger;
+    this.sanctionController = sanctionController;
   }
 
   /**
@@ -82,10 +80,11 @@ public class PlayerLoginListener implements Listener {
   @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
   public void onPlayerLogin(@NotNull PlayerLoginEvent ple) {
     try {
-      Set<Sanction> sanctions =
-          sanctionService.getActivePlayerSanctions(ple.getPlayer(), SanctionType.BAN);
-      if (!sanctions.isEmpty()) {
-        Sanction ban = sanctions.iterator().next();
+      Sanction ban =
+          sanctionController
+              .getActivePlayerSanction(ple.getPlayer(), SanctionType.BAN)
+              .orElse(null);
+      if (ban != null) {
         Component loginBanComponent = keysKeeperComponentBuilder.banMessageComponent(ban);
         ple.disallow(PlayerLoginEvent.Result.KICK_BANNED, loginBanComponent);
       }
