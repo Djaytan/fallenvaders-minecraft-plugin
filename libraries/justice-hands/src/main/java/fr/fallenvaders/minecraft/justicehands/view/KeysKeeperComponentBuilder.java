@@ -19,17 +19,15 @@ package fr.fallenvaders.minecraft.justicehands.view;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
-import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
-import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Keys Keeper component class.
@@ -105,8 +103,7 @@ public class KeysKeeperComponentBuilder {
    * @param ban The JusticeHands' ban sanction to be used for the ban message.
    * @return The ban message component.
    */
-  public @NotNull Component banMessageComponent(@NotNull Sanction ban)
-      throws JusticeHandsException {
+  public @NotNull Component banMessageComponent(@NotNull Sanction ban) {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk"));
     data.add(Integer.toString(ban.getId()));
