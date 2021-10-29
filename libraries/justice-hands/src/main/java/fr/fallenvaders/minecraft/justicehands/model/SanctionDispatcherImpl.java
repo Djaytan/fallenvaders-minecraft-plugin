@@ -1,0 +1,80 @@
+/*
+ *  This file is part of the FallenVaders distribution (https://github.com/FallenVaders).
+ *  Copyright © 2021 Loïc DUBOIS-TERMOZ.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, version 3.
+ *
+ *  This program is distributed in the hope that it will be useful, but
+ *  WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *  General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package fr.fallenvaders.minecraft.justicehands.model;
+
+import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
+import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
+import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
+import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponentBuilder;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+
+import javax.inject.Inject;
+
+/**
+ * This class is an implementation of the {@link SanctionDispatcher} interface.
+ */
+public class SanctionDispatcherImpl implements SanctionDispatcher {
+
+  private final KeysKeeperComponentBuilder keysKeeperComponentBuilder;
+  private final Logger logger;
+
+  /**
+   * Constructor.
+   *
+   * @param keysKeeperComponentBuilder The Keys Keeper component builder.
+   * @param logger The logger.
+   */
+  @Inject
+  public SanctionDispatcherImpl(@NotNull KeysKeeperComponentBuilder keysKeeperComponentBuilder, @NotNull Logger logger) {
+    this.keysKeeperComponentBuilder = keysKeeperComponentBuilder;
+    this.logger = logger;
+  }
+
+  @Override
+  public void dispatchSanction(@NotNull Sanction sanction) {
+    logger.info("Dispatch sanction: {}", sanction);
+    if (sanction.getType() == SanctionType.KICK) {
+      kick(sanction);
+    } else if (sanction.getType() == SanctionType.BAN) {
+      ban(sanction);
+    }
+  }
+
+  private void kick(@NotNull Sanction sanction) {
+    OfflinePlayer player = sanction.getInculpatedPlayer();
+    if (player.isOnline()) {
+      Player p = (Player) player;
+      p.kick(keysKeeperComponentBuilder.ejectingMessageComponent(sanction));
+      logger.info("Inculpated player kicked.");
+    } else {
+      logger.info("Failed to kick player: he is currently disconnected.");
+    }
+  }
+
+  private void ban(@NotNull Sanction sanction) {
+    OfflinePlayer player = sanction.getInculpatedPlayer();
+    if (player.isOnline()) {
+      Player p = (Player) player;
+      p.kick(keysKeeperComponentBuilder.banMessageComponent(sanction));
+    }
+    logger.info("Inculpated player banned.");
+  }
+}
