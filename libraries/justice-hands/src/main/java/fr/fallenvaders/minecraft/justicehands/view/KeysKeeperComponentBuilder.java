@@ -82,18 +82,18 @@ public class KeysKeeperComponentBuilder {
   }
 
   /**
-   * Provides an ejecting message {@link Component}.
+   * Provides a kick message {@link Component}.
    *
-   * @param sanction The JusticeHands' sanction to be used for the ejecting message.
-   * @return The ejecting message component.
+   * @param kick The kick sanction to be used for the kick message.
+   * @return The kick message component.
    */
-  public @NotNull Component kickMessage(@NotNull Sanction sanction) {
+  public @NotNull Component kickMessage(@NotNull Sanction kick) {
     List<String> data = new ArrayList<>();
     data.add(GeneralUtils.getPrefix("kk"));
-    data.add(Integer.toString(sanction.getId()));
-    data.add(sanction.getName());
-    data.add(Integer.toString(sanction.getPoints()));
-    data.add(SDF.format(sanction.getBeginningDate().getTime()));
+    data.add(Integer.toString(kick.getId()));
+    data.add(kick.getName());
+    data.add(Integer.toString(kick.getPoints()));
+    data.add(SDF.format(kick.getBeginningDate().getTime()));
     return componentHelper.getComponent(String.format(EJECTING_MESSAGE, data.toArray()));
   }
 
