@@ -20,17 +20,20 @@ package fr.fallenvaders.minecraft.justicehands.model.dao;
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
-import org.jetbrains.annotations.NotNull;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Server;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * JusticeHands' DAO class about manipulation of sanctions in the model.

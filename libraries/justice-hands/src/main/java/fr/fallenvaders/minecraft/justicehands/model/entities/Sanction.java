@@ -17,12 +17,11 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.entities;
 
+import java.sql.Timestamp;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.sql.Timestamp;
 
 /**
  * This entity represents a JusticeHands' sanction.

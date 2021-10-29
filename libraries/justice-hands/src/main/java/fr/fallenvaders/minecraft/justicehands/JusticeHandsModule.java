@@ -3,17 +3,16 @@ package fr.fallenvaders.minecraft.justicehands;
 import co.aikar.commands.PaperCommandManager;
 import fr.fallenvaders.minecraft.commons.FvModule;
 import fr.fallenvaders.minecraft.justicehands.view.commands.CommandCR;
+import fr.fallenvaders.minecraft.justicehands.view.commands.CommandSM;
 import fr.fallenvaders.minecraft.justicehands.view.listeners.AsyncChatListener;
 import fr.fallenvaders.minecraft.justicehands.view.listeners.PlayerLoginListener;
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.CategoriesList;
-import fr.fallenvaders.minecraft.justicehands.view.commands.CommandSM;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * Entry point class for JusticeHands module.

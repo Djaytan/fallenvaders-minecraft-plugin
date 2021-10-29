@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.justicehands.model;
 
-import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import org.jetbrains.annotations.NotNull;
 
