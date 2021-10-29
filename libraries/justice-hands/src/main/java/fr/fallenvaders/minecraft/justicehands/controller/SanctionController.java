@@ -18,6 +18,7 @@
 package fr.fallenvaders.minecraft.justicehands.controller;
 
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
+import fr.fallenvaders.minecraft.justicehands.model.SanctionDispatcher;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.service.SanctionService;
@@ -46,25 +47,28 @@ import org.slf4j.Logger;
 @Singleton
 public class SanctionController {
 
-  private final Logger logger;
-
   private final KeysKeeperComponentBuilder keysKeeperComponentBuilder;
+  private final Logger logger;
+  private final SanctionDispatcher sanctionDispatcher;
   private final SanctionService sanctionService;
 
   /**
    * Constructor.
    *
-   * @param logger The logger.
    * @param keysKeeperComponentBuilder The Keys Keeper component builder.
+   * @param logger The logger.
+   * @param sanctionDispatcher The sanction dispatcher.
    * @param sanctionService The sanction service.
    */
   @Inject
   public SanctionController(
-      @NotNull Logger logger,
       @NotNull KeysKeeperComponentBuilder keysKeeperComponentBuilder,
+      @NotNull Logger logger,
+      @NotNull SanctionDispatcher sanctionDispatcher,
       @NotNull SanctionService sanctionService) {
-    this.logger = logger;
     this.keysKeeperComponentBuilder = keysKeeperComponentBuilder;
+    this.logger = logger;
+    this.sanctionDispatcher = sanctionDispatcher;
     this.sanctionService = sanctionService;
   }
 
@@ -186,6 +190,7 @@ public class SanctionController {
     sanction.setAuthorPlayer(convertAuthor(author));
     sanction.setType(sanctionType);
     sanctionService.registerSanction(sanction);
+    sanctionDispatcher.dispatchSanction(sanction);
     return sanction;
   }
 
