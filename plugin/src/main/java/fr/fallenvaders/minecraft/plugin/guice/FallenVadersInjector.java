@@ -20,10 +20,9 @@ package fr.fallenvaders.minecraft.plugin.guice;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import java.util.Objects;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 /**
  * Applies Dependency Injection pattern through Guice library.
