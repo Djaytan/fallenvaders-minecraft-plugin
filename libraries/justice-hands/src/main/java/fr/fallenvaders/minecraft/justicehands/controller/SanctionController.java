@@ -162,22 +162,6 @@ public class SanctionController {
     }
   }
 
-  /**
-   * Gets the current sanction of the {@link OfflinePlayer} if exists.
-   *
-   * @param player The player.
-   * @return The current sanction of the {@link OfflinePlayer} if exists.
-   */
-  public Optional<Sanction> getCurrentPlayerSanction(@NotNull OfflinePlayer player) {
-    Sanction sanction = null;
-    try {
-      // TODO: complete
-    } catch (JusticeHandsException e) {
-      // TODO: show error message in view
-    }
-    return Optional.ofNullable(sanction);
-  }
-
   private Sanction sanctionPlayer(
       @NotNull Player player,
       @NotNull String name,
