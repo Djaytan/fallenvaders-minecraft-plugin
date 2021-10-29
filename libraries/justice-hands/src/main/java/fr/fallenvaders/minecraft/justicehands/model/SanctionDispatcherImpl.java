@@ -30,6 +30,9 @@ import javax.inject.Inject;
 
 /**
  * This class is an implementation of the {@link SanctionDispatcher} interface.
+ *
+ * @author FallenVaders' dev team
+ * @since 0.3.0
  */
 public class SanctionDispatcherImpl implements SanctionDispatcher {
 
