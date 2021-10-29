@@ -26,6 +26,7 @@ import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponentBuilder;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
@@ -119,24 +120,21 @@ public class SanctionController {
   }
 
   /**
-   * Gets and returns all active existing {@link Sanction} of the specified {@link OfflinePlayer}
+   * Gets and returns the active existing {@link Sanction} of the specified {@link OfflinePlayer}
    * where he is assigned as an inculpated one and where the {@link SanctionType} match with the
    * given one.
    *
    * @param player The player.
    * @param sanctionType The type of sanction.
-   * @return All the {@link Sanction} of the specified {@link OfflinePlayer} and {@link
-   *     SanctionType}.
-   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
+   * @return The {@link Sanction} of the specified {@link OfflinePlayer} and {@link SanctionType}.
+   * @throws JusticeHandsException if the sought sanction fail to be found in the model.
    */
-  public @NotNull Set<Sanction> getActivePlayerSanctions(
+  public @NotNull Optional<Sanction> getActivePlayerSanction(
       @NotNull OfflinePlayer player, @NotNull SanctionType sanctionType)
       throws JusticeHandsException {
-    Set<Sanction> sanctions = getPlayerSanctions(player);
-    return sanctions.stream()
-        .filter(this::isActiveSanction)
+    return getPlayerSanctions(player).stream()
         .filter(sanction -> sanction.getType() == sanctionType)
-        .collect(Collectors.toSet());
+        .findFirst();
   }
 
   /**
@@ -160,7 +158,7 @@ public class SanctionController {
     }
   }
 
-  private Sanction sanctionPlayer(
+  private @NotNull Sanction sanctionPlayer(
       @NotNull Player player,
       @NotNull String name,
       @NotNull String reason,
