@@ -34,6 +34,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.sql.Timestamp;
 import java.time.Duration;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * This class lead sanctions attribution over server.
@@ -85,6 +87,22 @@ public class SanctionController {
       logger.error("Failed to kick player.", e);
       // TODO: show error message in view
     }
+  }
+
+  /**
+   * Gets the current sanction of the {@link OfflinePlayer} if exists.
+   *
+   * @param player The player.
+   * @return The current sanction of the {@link OfflinePlayer} if exists.
+   */
+  public Optional<Sanction> getCurrentPlayerSanction(@NotNull OfflinePlayer player) {
+    Sanction sanction = null;
+    try {
+      // TODO: complete
+    } catch (JusticeHandsException e) {
+      // TODO: show error message in view
+    }
+    return Optional.ofNullable(sanction);
   }
 
   private Sanction sanctionPlayer(
