@@ -41,7 +41,7 @@ public interface ReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param id The ID of the entity instance in the model.
    * @return The entity instance corresponding to the specified ID if it exists.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if the read of the entity fail.
    */
   @NotNull
   Optional<T> get(@NotNull Connection connection, @NotNull String id) throws DaoException;
@@ -51,7 +51,7 @@ public interface ReadOnlyDao<T> {
    *
    * @param connection The connection to the DBMS.
    * @return The list of existing entity instances in the model.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if the read of the entities fail.
    */
   @NotNull
   Set<T> getAll(@NotNull Connection connection) throws DaoException;

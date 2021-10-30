@@ -43,7 +43,7 @@ public interface Dao<T> extends ReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param t The entity instance to save in the model.
    * @return The number of affected rows.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if the save of the entity fail.
    */
   int save(@NotNull Connection connection, @NotNull T t) throws DaoException;
 
@@ -53,7 +53,7 @@ public interface Dao<T> extends ReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param t The entity instance to update in the model.
    * @return The number of affected rows.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if the update of the entity fail.
    */
   int update(@NotNull Connection connection, @NotNull T t) throws DaoException;
 
@@ -63,7 +63,7 @@ public interface Dao<T> extends ReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param t The entity instance to delete from the model.
    * @return The number of affected rows.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if the deletion of the entity fail.
    */
   int delete(@NotNull Connection connection, @NotNull T t) throws DaoException;
 }
