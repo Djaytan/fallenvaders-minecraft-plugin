@@ -65,10 +65,8 @@ public class SanctionDao implements Dao<Sanction> {
   /**
    * Gets and returns the {@link Sanction} which correspond to the specified ID from the model.
    *
-   * @param connection The connection to the DBMS.
    * @param strId The ID of the sought sanction.
    * @return The JusticeHands' sanction associated to the specified ID if it exists.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @Override
   public @NotNull Optional<Sanction> get(@NotNull Connection connection, @NotNull String strId)
@@ -88,9 +86,7 @@ public class SanctionDao implements Dao<Sanction> {
    * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
    *
-   * @param connection The connection to the DBMS.
    * @return The list of all existing JusticeHands' sanctions.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @Override
   public @NotNull Set<Sanction> getAll(@NotNull Connection connection) throws DaoException {
@@ -108,11 +104,9 @@ public class SanctionDao implements Dao<Sanction> {
    * <p>The set is ordered from the older sanction in first position to the youngest in the last *
    * position.
    *
-   * @param connection The connection to the DBMS.
    * @param player The Bukkit offline player.
    * @return The list of all existing JusticeHands' sanctions for the specified {@link
    *     OfflinePlayer}.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   public @NotNull Set<Sanction> getFromPlayer(
       @NotNull Connection connection, @NotNull OfflinePlayer player) throws DaoException {
@@ -129,10 +123,7 @@ public class SanctionDao implements Dao<Sanction> {
   /**
    * Saves a new {@link Sanction} into the model.
    *
-   * @param connection The connection to the DBMS.
    * @param sanction The JusticeHands' sanction to save.
-   * @return The number of affected rows.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @Override
   public int save(@NotNull Connection connection, @NotNull Sanction sanction) throws DaoException {
@@ -152,10 +143,7 @@ public class SanctionDao implements Dao<Sanction> {
   /**
    * Updates the specified {@link Sanction} in the model.
    *
-   * @param connection The connection to the DBMS.
    * @param sanction The updates instance of the JusticeHands' sanction to update.
-   * @return The number of affected rows.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @Override
   public int update(@NotNull Connection connection, @NotNull Sanction sanction)
@@ -176,10 +164,7 @@ public class SanctionDao implements Dao<Sanction> {
   /**
    * Deletes the specified {@link Sanction} from the model.
    *
-   * @param connection The connection to the DBMS.
    * @param sanction The JusticeHands' sanction to delete from the model.
-   * @return The number of affected rows.
-   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @Override
   public int delete(@NotNull Connection connection, @NotNull Sanction sanction)
