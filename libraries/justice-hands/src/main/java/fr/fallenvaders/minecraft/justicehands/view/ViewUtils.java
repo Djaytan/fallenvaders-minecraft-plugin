@@ -94,4 +94,14 @@ public class ViewUtils {
     item.setItemMeta(meta);
     return item;
   }
+
+  /**
+   * Stringify a boolean value.
+   *
+   * @param b The boolean value.
+   * @return The string boolean value.
+   */
+  public String stringify(boolean b) {
+    return b ? "§aOui" : "§cNon";
+  }
 }
