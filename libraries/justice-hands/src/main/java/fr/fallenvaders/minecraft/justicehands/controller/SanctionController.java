@@ -182,6 +182,14 @@ public class SanctionController {
     sanction.setEndingDate(endingDate);
     sanction.setAuthorPlayer(convertAuthor(author));
     sanction.setType(sanctionType);
+
+    /*
+     * The priority is the registration of the sanction in model before the dispatch.
+     * If dispatch fail, the user can opt to alternative solutions (send message to player and then
+     * use Minecraft vanilla kick command if needed in case of kick or ban).
+     * Finally, the dispatch mustn't fail because we expect here that the sanction is
+     * well-defined.
+     */
     sanctionService.registerSanction(sanction);
     sanctionDispatcher.dispatchSanction(sanction);
     return sanction;
