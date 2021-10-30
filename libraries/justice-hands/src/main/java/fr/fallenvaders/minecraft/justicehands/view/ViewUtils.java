@@ -18,15 +18,20 @@
 package fr.fallenvaders.minecraft.justicehands.view;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
+import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -39,7 +44,7 @@ import org.jetbrains.annotations.NotNull;
 @Singleton
 public class ViewUtils {
 
-  /** Prefixes of the module */
+  /* Prefixes of the module */
   public static final String PREFIX_CR = "§7[§6CriminalRecords§7] §r";
   public static final String PREFIX_MT = "§7[§cModeratorTools§7] §r";
   public static final String PREFIX_SM = "§7[§9SanctionManager§7] §r";
@@ -56,7 +61,43 @@ public class ViewUtils {
    */
   @Inject
   public ViewUtils(@NotNull ComponentHelper componentHelper) {
-    this.componentHelper= componentHelper;
+    this.componentHelper = componentHelper;
+  }
+
+  /**
+   * Provides the target {@link Player}'s head.
+   *
+   * @param target The target player.
+   * @return The head of the targeted {@link Player}.
+   */
+  public ItemStack getHead(Player target) {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    Sanction sanction; // TODO: complete
+    String targetStatus = stringify(target.isOnline());
+    String firstPlayed = sdf.format(new Date(target.getFirstPlayed()));
+    String lastPlayed =
+        target.isOnline() ? sdf.format(new Date(target.getLastLogin())) : "connecté";
+
+    ItemStack targetHead = new ItemStack(Material.PLAYER_HEAD);
+    SkullMeta headMeta = (SkullMeta) targetHead.getItemMeta();
+    headMeta.setOwningPlayer(target);
+    headMeta.displayName(componentHelper.getComponent("§cInformations sur le joueur:"));
+
+    List<String> loreStr = new ArrayList<>();
+    loreStr.add("§7Pseudo: §f" + target.getName());
+    loreStr.add("§7Grade: §fTODO"); // TODO: complete
+    loreStr.add("§7Points de sanctions: §6TODO"); // TODO: complete
+    loreStr.add("§7AchievementPoints: §fTODO"); // TODO: complete
+    loreStr.add("§7Connecté: " + targetStatus);
+    loreStr.add("§7Première connexion: §f" + firstPlayed);
+    loreStr.add("§7Dernière déconnexion : §f" + lastPlayed);
+
+    List<Component> lore =
+        loreStr.stream().map(componentHelper::getComponent).collect(Collectors.toList());
+    headMeta.lore(lore);
+    targetHead.setItemMeta(headMeta);
+
+    return targetHead;
   }
 
   /**
