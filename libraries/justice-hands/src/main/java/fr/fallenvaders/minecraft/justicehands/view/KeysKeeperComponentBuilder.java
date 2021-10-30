@@ -19,6 +19,7 @@ package fr.fallenvaders.minecraft.justicehands.view;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
+import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class KeysKeeperComponentBuilder {
     §eCette sanction vous apportera donc §7%s points de sanction §eet sera enregistrée dans votre casier judiciaire.
     §7Date de l'infraction : %s
     """;
+  public static final String MUTE_MESSAGE = "%s§cTu ne peux pas parler, tu es réduit au silence pendant encore §b%s§c.";
   public static final String LOGIN_BAN_DEF_MESSAGE = """
     %s
     §cVous avez été banni définitivement du serveur pour la raison suivante :
@@ -118,11 +120,28 @@ public class KeysKeeperComponentBuilder {
     } else {
       data.add(SDF.format(ban.getEndingDate().getTime()));
       data.add(
-          GeneralUtils.timeRemaining(
-            ban.getEndingDate().getTime() - System.currentTimeMillis()));
+          GeneralUtils.timeRemaining(ban.getEndingDate().getTime() - System.currentTimeMillis()));
       banMessage = LOGIN_BAN_MESSAGE;
     }
 
     return componentHelper.getComponent(String.format(banMessage, data.toArray()));
+  }
+
+  /**
+   * Provides a mute message {@link Component}.
+   *
+   * @param mute The mute sanction.
+   * @return The mute message component.
+   * @throws JusticeHandsException if the mute sanction isn't properly defined.
+   */
+  public @NotNull Component muteMessage(@NotNull Sanction mute) throws JusticeHandsException {
+    if (mute.getEndingDate() == null) {
+      throw new JusticeHandsException("The ending date of a mute sanction can't be null.");
+    }
+    long timeRemaining = mute.getEndingDate().getTime() - System.currentTimeMillis();
+    List<Object> data = new ArrayList<>(2);
+    data.add(GeneralUtils.getPrefix("kk"));
+    data.add(GeneralUtils.timeRemaining(timeRemaining));
+    return componentHelper.getComponent(String.format(MUTE_MESSAGE, data.toArray()));
   }
 }
