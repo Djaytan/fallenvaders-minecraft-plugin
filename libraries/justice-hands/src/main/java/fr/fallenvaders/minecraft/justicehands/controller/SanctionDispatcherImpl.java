@@ -15,11 +15,10 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.justicehands.model;
+package fr.fallenvaders.minecraft.justicehands.controller;
 
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
-import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.view.SanctionComponentBuilder;
 import javax.inject.Inject;
 import javax.inject.Singleton;
