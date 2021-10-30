@@ -43,7 +43,7 @@ public class KeysKeeperComponentBuilder {
   public static final SimpleDateFormat SDF =
       new SimpleDateFormat(DAYTIME_PATTERN, new Locale("fr", "FR"));
 
-  public static final String EJECTING_MESSAGE = """
+  public static final String KICK_MESSAGE = """
     %s
     §cVous avez été éjecté du serveur pour la raison suivante :
     §7ID de Sanction : %s§f - §7%s
@@ -53,7 +53,7 @@ public class KeysKeeperComponentBuilder {
     §7Date de l'infraction : %s
     """;
   public static final String MUTE_MESSAGE = "%s§cTu ne peux pas parler, tu es réduit au silence pendant encore §b%s§c.";
-  public static final String LOGIN_BAN_DEF_MESSAGE = """
+  public static final String BAN_DEF_MESSAGE = """
     %s
     §cVous avez été banni définitivement du serveur pour la raison suivante :
         
@@ -61,7 +61,7 @@ public class KeysKeeperComponentBuilder {
     §bRaison : §7%s
     §bDate : §7%s
     """;
-  public static final String LOGIN_BAN_MESSAGE = """
+  public static final String BAN_MESSAGE = """
     "%s
     §cVous avez été banni temporairement du serveur pour la raison suivante :
     
@@ -96,7 +96,7 @@ public class KeysKeeperComponentBuilder {
     data.add(kick.getName());
     data.add(Integer.toString(kick.getPoints()));
     data.add(SDF.format(kick.getBeginningDate().getTime()));
-    return componentHelper.getComponent(String.format(EJECTING_MESSAGE, data.toArray()));
+    return componentHelper.getComponent(String.format(KICK_MESSAGE, data.toArray()));
   }
 
   /**
@@ -116,12 +116,12 @@ public class KeysKeeperComponentBuilder {
     String banMessage;
     boolean isBanDef = ban.getEndingDate() == null;
     if (isBanDef) {
-      banMessage = LOGIN_BAN_DEF_MESSAGE;
+      banMessage = BAN_DEF_MESSAGE;
     } else {
       data.add(SDF.format(ban.getEndingDate().getTime()));
       data.add(
           GeneralUtils.timeRemaining(ban.getEndingDate().getTime() - System.currentTimeMillis()));
-      banMessage = LOGIN_BAN_MESSAGE;
+      banMessage = BAN_MESSAGE;
     }
 
     return componentHelper.getComponent(String.format(banMessage, data.toArray()));
