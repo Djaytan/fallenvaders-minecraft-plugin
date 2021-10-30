@@ -72,7 +72,7 @@ public class ViewUtils {
    * @param target The target player.
    * @return The head of the targeted {@link Player}.
    */
-  public ItemStack getHead(Player target) {
+  public @NotNull ItemStack getHead(@NotNull Player target) {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     Sanction sanction; // TODO: complete
     String targetStatus = stringify(target.isOnline());
