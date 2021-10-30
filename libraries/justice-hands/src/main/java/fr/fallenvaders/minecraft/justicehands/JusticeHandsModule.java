@@ -27,61 +27,44 @@ public final class JusticeHandsModule extends FvModule {
   public static final String MODULE_NAME = "justice-hands";
 
   private final FileConfiguration config;
-  private final JavaPlugin plugin;
   private final PaperCommandManager paperCommandManager;
-  private final PluginManager pluginManager;
 
   private final SanctionManagerCommand sanctionManagerCommand;
   private final CriminalRecordCommand criminalRecordCommand;
 
-  private final AsyncChatListener asyncChatListener;
-  private final PlayerLoginListener playerLoginListener;
+  private final ListenersInitializer listenersInitializer;
 
   /**
    * Constructor.
    *
    * @param config The Bukkit plugin config file instance.
-   * @param plugin The Bukkit plugin.
    * @param paperCommandManager The Paper command manager of aïkar lib.
-   * @param pluginManager The Bukkit plugin manager.
    * @param sanctionManagerCommand The sanction manager Bukkit command.
    * @param criminalRecordCommand The criminal record Bukkit command.
-   * @param asyncChatListener The async chat listener.
-   * @param playerLoginListener The player login listener.
+   * @param listenersInitializer The listeners initializer.
    */
   @Inject
   public JusticeHandsModule(
       @NotNull FileConfiguration config,
-      @NotNull JavaPlugin plugin,
       @NotNull PaperCommandManager paperCommandManager,
-      @NotNull PluginManager pluginManager,
       @NotNull SanctionManagerCommand sanctionManagerCommand,
       @NotNull CriminalRecordCommand criminalRecordCommand,
-      @NotNull AsyncChatListener asyncChatListener,
-      @NotNull PlayerLoginListener playerLoginListener) {
+      @NotNull ListenersInitializer listenersInitializer) {
     super(MODULE_NAME);
     this.config = config;
-    this.plugin = plugin;
     this.paperCommandManager = paperCommandManager;
-    this.pluginManager = pluginManager;
     this.sanctionManagerCommand = sanctionManagerCommand;
     this.criminalRecordCommand = criminalRecordCommand;
-    this.asyncChatListener = asyncChatListener;
-    this.playerLoginListener = playerLoginListener;
+    this.listenersInitializer = listenersInitializer;
   }
 
   @Override
   public void onEnable() {
     activeCommands();
-    activeListeners();
+    listenersInitializer.initialize();
 
     // Load sanctions from config folder
     CategoriesList.getSanctionsConfig(config);
-  }
-
-  private void activeListeners() {
-    pluginManager.registerEvents(asyncChatListener, plugin);
-    pluginManager.registerEvents(playerLoginListener, plugin);
   }
 
   private void activeCommands() {
