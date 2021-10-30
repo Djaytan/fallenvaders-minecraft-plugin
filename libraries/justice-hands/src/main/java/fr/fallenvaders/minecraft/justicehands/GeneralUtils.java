@@ -136,6 +136,10 @@ public class GeneralUtils {
     // final long WEEK = DAY * 7;
     final long MOUNTH = DAY * 30;
 
+    if (timeDifference < 0) {
+      timeDifference = 0;
+    }
+
     int mounths = (int) (timeDifference / MOUNTH);
     int days = (int) ((timeDifference % MOUNTH) / DAY);
     int hours = (int) ((timeDifference % DAY) / HOUR);
