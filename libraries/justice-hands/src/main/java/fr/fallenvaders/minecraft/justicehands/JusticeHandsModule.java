@@ -2,8 +2,8 @@ package fr.fallenvaders.minecraft.justicehands;
 
 import co.aikar.commands.PaperCommandManager;
 import fr.fallenvaders.minecraft.commons.FvModule;
-import fr.fallenvaders.minecraft.justicehands.view.commands.CommandCR;
-import fr.fallenvaders.minecraft.justicehands.view.commands.CommandSM;
+import fr.fallenvaders.minecraft.justicehands.view.commands.CriminalRecordCommand;
+import fr.fallenvaders.minecraft.justicehands.view.commands.SanctionManagerCommand;
 import fr.fallenvaders.minecraft.justicehands.view.listeners.AsyncChatListener;
 import fr.fallenvaders.minecraft.justicehands.view.listeners.PlayerLoginListener;
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.CategoriesList;
@@ -26,40 +26,48 @@ public final class JusticeHandsModule extends FvModule {
   /** This is the module's name. */
   public static final String MODULE_NAME = "justice-hands";
 
-  private final JavaPlugin plugin;
-  private final PluginManager pluginManager;
   private final FileConfiguration config;
-
+  private final JavaPlugin plugin;
   private final PaperCommandManager paperCommandManager;
+  private final PluginManager pluginManager;
 
-  private final CommandSM commandSM;
-  private final CommandCR commandCR;
+  private final SanctionManagerCommand sanctionManagerCommand;
+  private final CriminalRecordCommand criminalRecordCommand;
+
+  private final AsyncChatListener asyncChatListener;
+  private final PlayerLoginListener playerLoginListener;
 
   /**
    * Constructor.
    *
-   * @param plugin The Bukkit plugin.
-   * @param pluginManager The Bukkit plugin manager.
-   * @param paperCommandManager The Paper command manager of aïkar lib.
-   * @param commandCR The criminal record Bukkit command.
-   * @param commandSM The sanction manager Bukkit command.
    * @param config The Bukkit plugin config file instance.
+   * @param plugin The Bukkit plugin.
+   * @param paperCommandManager The Paper command manager of aïkar lib.
+   * @param pluginManager The Bukkit plugin manager.
+   * @param sanctionManagerCommand The sanction manager Bukkit command.
+   * @param criminalRecordCommand The criminal record Bukkit command.
+   * @param asyncChatListener The async chat listener.
+   * @param playerLoginListener The player login listener.
    */
   @Inject
   public JusticeHandsModule(
+      @NotNull FileConfiguration config,
       @NotNull JavaPlugin plugin,
-      @NotNull PluginManager pluginManager,
       @NotNull PaperCommandManager paperCommandManager,
-      @NotNull CommandCR commandCR,
-      @NotNull CommandSM commandSM,
-      @NotNull FileConfiguration config) {
+      @NotNull PluginManager pluginManager,
+      @NotNull SanctionManagerCommand sanctionManagerCommand,
+      @NotNull CriminalRecordCommand criminalRecordCommand,
+      @NotNull AsyncChatListener asyncChatListener,
+      @NotNull PlayerLoginListener playerLoginListener) {
     super(MODULE_NAME);
-    this.plugin = plugin;
-    this.pluginManager = pluginManager;
-    this.paperCommandManager = paperCommandManager;
-    this.commandCR = commandCR;
-    this.commandSM = commandSM;
     this.config = config;
+    this.plugin = plugin;
+    this.paperCommandManager = paperCommandManager;
+    this.pluginManager = pluginManager;
+    this.sanctionManagerCommand = sanctionManagerCommand;
+    this.criminalRecordCommand = criminalRecordCommand;
+    this.asyncChatListener = asyncChatListener;
+    this.playerLoginListener = playerLoginListener;
   }
 
   @Override
@@ -72,14 +80,12 @@ public final class JusticeHandsModule extends FvModule {
   }
 
   private void activeListeners() {
-    pluginManager.registerEvents(new PlayerJoinListener(), plugin);
-    pluginManager.registerEvents(new AsyncChatListener(), plugin);
-    pluginManager.registerEvents(new PlayerLoginListener(), plugin);
+    pluginManager.registerEvents(asyncChatListener, plugin);
+    pluginManager.registerEvents(playerLoginListener, plugin);
   }
 
   private void activeCommands() {
-    plugin.getCommand("cr").setExecutor(commandCR);
-    // getCommand("mt").setExecutor(new CommandMT(this));
-    plugin.getCommand("sm").setExecutor(commandSM);
+    plugin.getCommand("cr").setExecutor(criminalRecordCommand);
+    plugin.getCommand("sm").setExecutor(sanctionManagerCommand);
   }
 }
