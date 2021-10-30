@@ -49,16 +49,18 @@ public class ListenersInitializer {
    * @param playerLoginListener The player login listener.
    */
   @Inject
-  public ListenersInitializer(@NotNull JavaPlugin plugin, @NotNull PluginManager pluginManager, @NotNull AsyncChatListener asyncChatListener, @NotNull PlayerLoginListener playerLoginListener) {
+  public ListenersInitializer(
+      @NotNull JavaPlugin plugin,
+      @NotNull PluginManager pluginManager,
+      @NotNull AsyncChatListener asyncChatListener,
+      @NotNull PlayerLoginListener playerLoginListener) {
     this.plugin = plugin;
     this.pluginManager = pluginManager;
     this.asyncChatListener = asyncChatListener;
     this.playerLoginListener = playerLoginListener;
   }
 
-  /**
-   * Initializes listeners of the module.
-   */
+  /** Initializes listeners of the module. */
   public void initialize() {
     pluginManager.registerEvents(asyncChatListener, plugin);
     pluginManager.registerEvents(playerLoginListener, plugin);

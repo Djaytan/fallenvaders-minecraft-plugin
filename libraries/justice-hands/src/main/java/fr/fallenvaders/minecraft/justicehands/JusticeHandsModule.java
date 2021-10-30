@@ -2,16 +2,10 @@ package fr.fallenvaders.minecraft.justicehands;
 
 import co.aikar.commands.PaperCommandManager;
 import fr.fallenvaders.minecraft.commons.FvModule;
-import fr.fallenvaders.minecraft.justicehands.view.commands.CriminalRecordCommand;
-import fr.fallenvaders.minecraft.justicehands.view.commands.SanctionManagerCommand;
-import fr.fallenvaders.minecraft.justicehands.view.listeners.AsyncChatListener;
-import fr.fallenvaders.minecraft.justicehands.view.listeners.PlayerLoginListener;
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.CategoriesList;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -29,9 +23,7 @@ public final class JusticeHandsModule extends FvModule {
   private final FileConfiguration config;
   private final PaperCommandManager paperCommandManager;
 
-  private final SanctionManagerCommand sanctionManagerCommand;
-  private final CriminalRecordCommand criminalRecordCommand;
-
+  private final CommandsInitializer commandsInitializer;
   private final ListenersInitializer listenersInitializer;
 
   /**
@@ -39,36 +31,28 @@ public final class JusticeHandsModule extends FvModule {
    *
    * @param config The Bukkit plugin config file instance.
    * @param paperCommandManager The Paper command manager of aïkar lib.
-   * @param sanctionManagerCommand The sanction manager Bukkit command.
-   * @param criminalRecordCommand The criminal record Bukkit command.
-   * @param listenersInitializer The listeners initializer.
+   * @param commandsInitializer The initializer of Bukkit commands.
+   * @param listenersInitializer The initializer of Bukkit listeners.
    */
   @Inject
   public JusticeHandsModule(
       @NotNull FileConfiguration config,
       @NotNull PaperCommandManager paperCommandManager,
-      @NotNull SanctionManagerCommand sanctionManagerCommand,
-      @NotNull CriminalRecordCommand criminalRecordCommand,
+      @NotNull CommandsInitializer commandsInitializer,
       @NotNull ListenersInitializer listenersInitializer) {
     super(MODULE_NAME);
     this.config = config;
     this.paperCommandManager = paperCommandManager;
-    this.sanctionManagerCommand = sanctionManagerCommand;
-    this.criminalRecordCommand = criminalRecordCommand;
+    this.commandsInitializer = commandsInitializer;
     this.listenersInitializer = listenersInitializer;
   }
 
   @Override
   public void onEnable() {
-    activeCommands();
+    commandsInitializer.initialize();
     listenersInitializer.initialize();
 
     // Load sanctions from config folder
     CategoriesList.getSanctionsConfig(config);
-  }
-
-  private void activeCommands() {
-    plugin.getCommand("cr").setExecutor(criminalRecordCommand);
-    plugin.getCommand("sm").setExecutor(sanctionManagerCommand);
   }
 }
