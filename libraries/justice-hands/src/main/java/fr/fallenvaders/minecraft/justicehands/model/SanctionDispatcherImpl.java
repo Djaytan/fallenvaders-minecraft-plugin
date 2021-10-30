@@ -17,11 +17,13 @@
 
 package fr.fallenvaders.minecraft.justicehands.model;
 
+import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.view.SanctionComponentBuilder;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -46,18 +48,24 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
    * @param logger The logger.
    */
   @Inject
-  public SanctionDispatcherImpl(@NotNull SanctionComponentBuilder sanctionComponentBuilder, @NotNull Logger logger) {
+  public SanctionDispatcherImpl(
+      @NotNull SanctionComponentBuilder sanctionComponentBuilder, @NotNull Logger logger) {
     this.sanctionComponentBuilder = sanctionComponentBuilder;
     this.logger = logger;
   }
 
   @Override
-  public void dispatchSanction(@NotNull Sanction sanction) {
+  public void dispatchSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info("Dispatch sanction: {}", sanction);
-    if (sanction.getType() == SanctionType.KICK) {
-      kick(sanction);
-    } else if (sanction.getType() == SanctionType.BAN) {
-      ban(sanction);
+    try {
+      switch (sanction.getType()) {
+        case KICK -> kick(sanction);
+        case MUTE -> mute(sanction);
+        case BAN -> ban(sanction);
+      }
+    } catch (JusticeHandsException e) {
+      logger.error("Failed to dispatch sanction.", e);
+      throw new JusticeHandsException("Failed to dispatch sanction.");
     }
   }
 
@@ -68,7 +76,17 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
       p.kick(sanctionComponentBuilder.kickMessage(sanction));
       logger.info("Inculpated player kicked.");
     } else {
+      // TODO: two options: make an exception in this case, or convert kick to a warning which can kick the player under certain criteria.
       logger.info("Failed to kick player: he is currently disconnected.");
+    }
+  }
+
+  private void mute(@NotNull Sanction mute) throws JusticeHandsException {
+    OfflinePlayer player = mute.getInculpatedPlayer();
+    if (player.isOnline()) {
+      Player p = (Player) player;
+      Component muteMessage = sanctionComponentBuilder.muteMessage(mute);
+      p.sendMessage(muteMessage);
     }
   }
 

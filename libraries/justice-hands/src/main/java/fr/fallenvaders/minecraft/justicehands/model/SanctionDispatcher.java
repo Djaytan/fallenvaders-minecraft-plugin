@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.justicehands.model;
 
+import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,6 +34,7 @@ public interface SanctionDispatcher {
    * Dispatches the specified {@link Sanction} on server.
    *
    * @param sanction The sanction to dispatched on server.
+   * @throws JusticeHandsException if something went wrong during the dispatch of the sanction.
    */
-  void dispatchSanction(@NotNull Sanction sanction);
+  void dispatchSanction(@NotNull Sanction sanction) throws JusticeHandsException;
 }
