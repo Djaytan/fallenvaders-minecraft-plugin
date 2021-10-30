@@ -148,15 +148,14 @@ public class SanctionController {
       int points,
       @NotNull CommandSender author) {
     try {
-      Sanction sanction =
-          sanctionPlayer(player, name, reason, points, null, author, SanctionType.KICK);
+      sanctionPlayer(player, name, reason, points, null, author, SanctionType.KICK);
     } catch (JusticeHandsException e) {
       logger.error("Failed to kick player.", e);
       // TODO: show error message in view
     }
   }
 
-  private @NotNull Sanction sanctionPlayer(
+  private void sanctionPlayer(
       @NotNull Player player,
       @NotNull String name,
       @NotNull String reason,
@@ -191,7 +190,6 @@ public class SanctionController {
      */
     sanctionService.registerSanction(sanction);
     sanctionDispatcher.dispatchSanction(sanction);
-    return sanction;
   }
 
   private void checkAuthorValidity(@NotNull CommandSender author) throws JusticeHandsException {
@@ -204,8 +202,8 @@ public class SanctionController {
 
   private @Nullable OfflinePlayer convertAuthor(@NotNull CommandSender author) {
     OfflinePlayer player = null;
-    if (author instanceof Player) {
-      player = (Player) author;
+    if (author instanceof Player p) {
+      player = p;
     }
     return player;
   }
