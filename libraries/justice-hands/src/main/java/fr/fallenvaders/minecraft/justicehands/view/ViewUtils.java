@@ -22,7 +22,6 @@ import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -140,11 +139,11 @@ public class ViewUtils {
   }
 
   /**
-   * Provides {@link ItemStack} which indicate that criminal record is empty (i.e. no sanctions
-   * recorded until the call of this method).
+   * Provides an {@link ItemStack} which indicate that the criminal record is empty (i.e. no
+   * sanctions recorded until the call of this method).
    *
-   * <p>If the sanction type is specified, it only indicates that no sanctions of this type have been
-   * recorded.
+   * <p>If the sanction type is specified, it only indicates that no sanctions of this type have
+   * been recorded.
    *
    * @param sanctionType (optional) The type of sanction sought.
    * @return The item indicator of an empty criminal record.
@@ -163,6 +162,24 @@ public class ViewUtils {
           componentHelper.getComponent(
               String.format("§7est vide, aucun %s.", sanctionType.name().toLowerCase())));
     }
+    meta.lore(lore);
+    item.setItemMeta(meta);
+    return item;
+  }
+
+  /**
+   * Provides an {@link ItemStack} which indicate that the sanction category is empty.
+   *
+   * @return The item indicator of an empty sanction category.
+   */
+  public @NotNull ItemStack emptySanctionCategory() {
+    ItemStack item = new ItemStack(Material.BARRIER);
+    ItemMeta meta = item.getItemMeta();
+    meta.displayName(componentHelper.getComponent("§cCatégorie vide"));
+    List<Component> lore = new ArrayList<>(3);
+    lore.add(componentHelper.getComponent(""));
+    lore.add(componentHelper.getComponent("§7La catégorie ne contient"));
+    lore.add(componentHelper.getComponent("§7aucune sanction."));
     meta.lore(lore);
     item.setItemMeta(meta);
     return item;
