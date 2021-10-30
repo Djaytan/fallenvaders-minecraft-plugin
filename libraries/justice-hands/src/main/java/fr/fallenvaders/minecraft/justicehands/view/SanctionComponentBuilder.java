@@ -37,7 +37,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 0.3.0
  */
 @Singleton
-public class KeysKeeperComponentBuilder {
+public class SanctionComponentBuilder {
 
   public static final String DAYTIME_PATTERN = "dd/MM/yyyy HH:mm:ss";
   public static final SimpleDateFormat SDF =
@@ -79,7 +79,7 @@ public class KeysKeeperComponentBuilder {
    * @param componentHelper The component helper.
    */
   @Inject
-  public KeysKeeperComponentBuilder(@NotNull ComponentHelper componentHelper) {
+  public SanctionComponentBuilder(@NotNull ComponentHelper componentHelper) {
     this.componentHelper = componentHelper;
   }
 

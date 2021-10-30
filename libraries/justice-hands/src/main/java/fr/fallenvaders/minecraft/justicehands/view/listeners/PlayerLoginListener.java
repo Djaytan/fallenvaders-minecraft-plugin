@@ -22,7 +22,7 @@ import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionController;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
-import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponentBuilder;
+import fr.fallenvaders.minecraft.justicehands.view.SanctionComponentBuilder;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
@@ -44,7 +44,7 @@ import org.slf4j.Logger;
 public class PlayerLoginListener implements Listener {
 
   private final ComponentHelper componentHelper;
-  private final KeysKeeperComponentBuilder keysKeeperComponentBuilder;
+  private final SanctionComponentBuilder sanctionComponentBuilder;
   private final Logger logger;
   private final SanctionController sanctionController;
 
@@ -52,18 +52,18 @@ public class PlayerLoginListener implements Listener {
    * Constructor.
    *
    * @param componentHelper The component helper.
-   * @param keysKeeperComponentBuilder The Keys Keeper component builder.
+   * @param sanctionComponentBuilder The Keys Keeper component builder.
    * @param logger The logger.
    * @param sanctionController The sanction controller.
    */
   @Inject
   public PlayerLoginListener(
       @NotNull ComponentHelper componentHelper,
-      @NotNull KeysKeeperComponentBuilder keysKeeperComponentBuilder,
+      @NotNull SanctionComponentBuilder sanctionComponentBuilder,
       @NotNull Logger logger,
       @NotNull SanctionController sanctionController) {
     this.componentHelper = componentHelper;
-    this.keysKeeperComponentBuilder = keysKeeperComponentBuilder;
+    this.sanctionComponentBuilder = sanctionComponentBuilder;
     this.logger = logger;
     this.sanctionController = sanctionController;
   }
@@ -85,7 +85,7 @@ public class PlayerLoginListener implements Listener {
               .getActivePlayerSanction(event.getPlayer(), SanctionType.BAN)
               .orElse(null);
       if (ban != null) {
-        Component loginBanComponent = keysKeeperComponentBuilder.banMessage(ban);
+        Component loginBanComponent = sanctionComponentBuilder.banMessage(ban);
         event.disallow(PlayerLoginEvent.Result.KICK_BANNED, loginBanComponent);
       }
     } catch (JusticeHandsException e) {

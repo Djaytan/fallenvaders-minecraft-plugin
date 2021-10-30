@@ -19,7 +19,7 @@ package fr.fallenvaders.minecraft.justicehands.model;
 
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
-import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponentBuilder;
+import fr.fallenvaders.minecraft.justicehands.view.SanctionComponentBuilder;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
@@ -36,18 +36,18 @@ import org.slf4j.Logger;
 @Singleton
 public class SanctionDispatcherImpl implements SanctionDispatcher {
 
-  private final KeysKeeperComponentBuilder keysKeeperComponentBuilder;
+  private final SanctionComponentBuilder sanctionComponentBuilder;
   private final Logger logger;
 
   /**
    * Constructor.
    *
-   * @param keysKeeperComponentBuilder The Keys Keeper component builder.
+   * @param sanctionComponentBuilder The Keys Keeper component builder.
    * @param logger The logger.
    */
   @Inject
-  public SanctionDispatcherImpl(@NotNull KeysKeeperComponentBuilder keysKeeperComponentBuilder, @NotNull Logger logger) {
-    this.keysKeeperComponentBuilder = keysKeeperComponentBuilder;
+  public SanctionDispatcherImpl(@NotNull SanctionComponentBuilder sanctionComponentBuilder, @NotNull Logger logger) {
+    this.sanctionComponentBuilder = sanctionComponentBuilder;
     this.logger = logger;
   }
 
@@ -65,7 +65,7 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
     OfflinePlayer player = sanction.getInculpatedPlayer();
     if (player.isOnline()) {
       Player p = (Player) player;
-      p.kick(keysKeeperComponentBuilder.kickMessage(sanction));
+      p.kick(sanctionComponentBuilder.kickMessage(sanction));
       logger.info("Inculpated player kicked.");
     } else {
       logger.info("Failed to kick player: he is currently disconnected.");
@@ -76,7 +76,7 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
     OfflinePlayer player = sanction.getInculpatedPlayer();
     if (player.isOnline()) {
       Player p = (Player) player;
-      p.kick(keysKeeperComponentBuilder.banMessage(sanction));
+      p.kick(sanctionComponentBuilder.banMessage(sanction));
     }
     logger.info("Inculpated player banned.");
   }

@@ -22,7 +22,7 @@ import fr.fallenvaders.minecraft.justicehands.model.SanctionDispatcher;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.service.SanctionService;
-import fr.fallenvaders.minecraft.justicehands.view.KeysKeeperComponentBuilder;
+import fr.fallenvaders.minecraft.justicehands.view.SanctionComponentBuilder;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
@@ -48,7 +48,7 @@ import org.slf4j.Logger;
 @Singleton
 public class SanctionController {
 
-  private final KeysKeeperComponentBuilder keysKeeperComponentBuilder;
+  private final SanctionComponentBuilder sanctionComponentBuilder;
   private final Logger logger;
   private final SanctionDispatcher sanctionDispatcher;
   private final SanctionService sanctionService;
@@ -56,18 +56,18 @@ public class SanctionController {
   /**
    * Constructor.
    *
-   * @param keysKeeperComponentBuilder The Keys Keeper component builder.
+   * @param sanctionComponentBuilder The Keys Keeper component builder.
    * @param logger The logger.
    * @param sanctionDispatcher The sanction dispatcher.
    * @param sanctionService The sanction service.
    */
   @Inject
   public SanctionController(
-      @NotNull KeysKeeperComponentBuilder keysKeeperComponentBuilder,
+      @NotNull SanctionComponentBuilder sanctionComponentBuilder,
       @NotNull Logger logger,
       @NotNull SanctionDispatcher sanctionDispatcher,
       @NotNull SanctionService sanctionService) {
-    this.keysKeeperComponentBuilder = keysKeeperComponentBuilder;
+    this.sanctionComponentBuilder = sanctionComponentBuilder;
     this.logger = logger;
     this.sanctionDispatcher = sanctionDispatcher;
     this.sanctionService = sanctionService;
