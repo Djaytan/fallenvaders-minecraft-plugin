@@ -17,9 +17,12 @@
 
 package fr.fallenvaders.minecraft.justicehands.view.commands;
 
-import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justicehands.view.InventoryBuilderSM;
+import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
+import java.util.UUID;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,10 +30,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.UUID;
-
+/**
+ * This class represents the sanction manager {@link CommandExecutor}.
+ *
+ * @author FallenVaders' dev team
+ * @since 0.1.0
+ */
 @Singleton
 public class SanctionManagerCommand implements CommandExecutor {
 
