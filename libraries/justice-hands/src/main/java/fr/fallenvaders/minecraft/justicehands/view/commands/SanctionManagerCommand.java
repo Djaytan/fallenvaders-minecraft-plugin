@@ -58,7 +58,7 @@ public class SanctionManagerCommand implements CommandExecutor {
         Player moderator = (Player) sender;
         if (args.length == 0) {
           moderator.sendMessage(
-              GeneralUtils.getPrefix("SM") + "§cSyntaxe incomplète, il manque un argument.");
+            ViewUtils.PREFIX_SM + "§cSyntaxe incomplète, il manque un argument.");
           moderator.sendMessage(
               "     §7/" + cmd.getName().toString().toLowerCase() + " §7<joueur>");
         } else if (args.length == 1 && args[0] != null) {
@@ -70,18 +70,18 @@ public class SanctionManagerCommand implements CommandExecutor {
                 moderator, targetUUID, config); // Ouverture de l'inventaire SM du joueur target.
           } else {
             moderator.sendMessage(
-                GeneralUtils.getPrefix("SM")
+                ViewUtils.PREFIX_SM
                     + "§cCe joueur ne s'est jamais connecté sur le serveur.");
           }
         }
         return true;
       } else {
         sender.sendMessage(
-            GeneralUtils.getPrefix("SM")
+          ViewUtils.PREFIX_SM
                 + "§cTu dois être sur le serveur pour éxécuter cette commande.");
       }
     } else {
-      sender.sendMessage(GeneralUtils.getPrefix("SM") + "§cTu n'as pas accès à cette commande.");
+      sender.sendMessage(ViewUtils.PREFIX_SM + "§cTu n'as pas accès à cette commande.");
     }
     return false;
   }
