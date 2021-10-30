@@ -17,17 +17,18 @@
 
 package fr.fallenvaders.minecraft.justicehands.view.commands;
 
-import fr.fallenvaders.minecraft.justicehands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justicehands.view.InventoryBuilderCR;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
-import java.util.UUID;
+import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This class represents the criminal record {@link CommandExecutor}.
@@ -37,6 +38,18 @@ import org.jetbrains.annotations.NotNull;
  */
 @Singleton
 public class CriminalRecordCommand implements CommandExecutor {
+
+  private final Server server;
+
+  /**
+   * Constructor.
+   *
+   * @param server The Bukkit server.
+   */
+  @Inject
+  public CriminalRecordCommand(@NotNull Server server) {
+    this.server = server;
+  }
 
   /**
    * This is the execution definition of the criminal record {@link Command}.
@@ -60,31 +73,33 @@ public class CriminalRecordCommand implements CommandExecutor {
         if (args.length == 0) {
           moderator.sendMessage(
               ViewUtils.PREFIX_CR + "§cSyntaxe incomplète, il manque un argument.");
-          moderator.sendMessage(
-              "     §7/" + cmd.getName().toString().toLowerCase() + " §7<joueur>");
-        } else if (args.length == 1 && args[0] != null) {
-          try {
-            UUID playerUUID = Bukkit.getPlayer(args[0]).getUniqueId();
-            if (JusticeHandsModule.getSqlPA().hasAccount(playerUUID)) {
-              UUID targetUUID =
-                  JusticeHandsModule.getSqlPA().getAccount(Bukkit.getPlayer(args[0]).getUniqueId());
-
-              InventoryBuilderCR.openMainMenu(
-                  moderator, targetUUID); // Ouverture de l'inventaire SM du joueur target.
-            }
-          } catch (Exception e) {
+          moderator.sendMessage("     §7/" + cmd.getName().toLowerCase() + " §7<joueur>");
+        } else if (args.length >= 1) {
+          String playerName = args[0];
+          OfflinePlayer player = getPlayer(playerName);
+          if (player != null) {
+            InventoryBuilderCR.openMainMenu(moderator, player.getUniqueId());
+          } else {
             moderator.sendMessage(
                 ViewUtils.PREFIX_CR + "§cCe joueur ne s'est jamais connecté sur le serveur.");
           }
         }
-        return true;
       } else {
         sender.sendMessage(
-            ViewUtils.PREFIX_CR + "§cTu dois être sur le serveur pour éxécuter cette commande.");
+            ViewUtils.PREFIX_CR + "§cTu dois être sur le serveur pour exécuter cette commande.");
       }
     } else {
       sender.sendMessage(ViewUtils.PREFIX_CR + "§cTu n'as pas accès à cette commande.");
     }
-    return false;
+    return true;
+  }
+
+  private @Nullable OfflinePlayer getPlayer(String playerName) {
+    OfflinePlayer player = server.getPlayer(playerName);
+    if (player == null) {
+      player = server.getOfflinePlayerIfCached(playerName);
+    }
+    // TODO: FV-134 - store in database pair playerName-playerUuid
+    return player;
   }
 }
