@@ -20,11 +20,6 @@ package fr.fallenvaders.minecraft.commons.sql;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * This is a DAO interface which ask setting up at least CRUD operations for a given entity type in
@@ -48,9 +43,9 @@ public interface FvDao<T> extends FvReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param t The entity instance to save in the model.
    * @return The number of affected rows.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws FvDaoException if something went wrong during database access or stuffs like this.
    */
-  int save(@NotNull Connection connection, @NotNull T t) throws SQLException;
+  int save(@NotNull Connection connection, @NotNull T t) throws FvDaoException;
 
   /**
    * Updates the entity instance {@link T} in the model.
@@ -58,9 +53,9 @@ public interface FvDao<T> extends FvReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param t The entity instance to update in the model.
    * @return The number of affected rows.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws FvDaoException if something went wrong during database access or stuffs like this.
    */
-  int update(@NotNull Connection connection, @NotNull T t) throws SQLException;
+  int update(@NotNull Connection connection, @NotNull T t) throws FvDaoException;
 
   /**
    * Deletes the entity instance {@link T} from the model.
@@ -68,7 +63,7 @@ public interface FvDao<T> extends FvReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param t The entity instance to delete from the model.
    * @return The number of affected rows.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws FvDaoException if something went wrong during database access or stuffs like this.
    */
-  int delete(@NotNull Connection connection, @NotNull T t) throws SQLException;
+  int delete(@NotNull Connection connection, @NotNull T t) throws FvDaoException;
 }

@@ -18,7 +18,6 @@
 package fr.fallenvaders.minecraft.commons.sql;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
  * This is a DAO interface which ask setting up at least read operations for a given entity type in
  * order to manage the model by abstracting storage processes.
  *
- * For more information, see {@link FvDao}.
+ * <p>For more information, see {@link FvDao}.
  *
  * @author Voltariuss
  * @since 0.3.0
@@ -42,18 +41,18 @@ public interface FvReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param id The ID of the entity instance in the model.
    * @return The entity instance corresponding to the specified ID if it exists.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws FvDaoException if something went wrong during database access or stuffs like this.
    */
   @NotNull
-  Optional<T> get(@NotNull Connection connection, @NotNull String id) throws SQLException;
+  Optional<T> get(@NotNull Connection connection, @NotNull String id) throws FvDaoException;
 
   /**
    * Reads all the existing entity instances {@link T} in the model.
    *
    * @param connection The connection to the DBMS.
    * @return The list of existing entity instances in the model.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws FvDaoException if something went wrong during database access or stuffs like this.
    */
   @NotNull
-  Set<T> getAll(@NotNull Connection connection) throws SQLException;
+  Set<T> getAll(@NotNull Connection connection) throws FvDaoException;
 }
