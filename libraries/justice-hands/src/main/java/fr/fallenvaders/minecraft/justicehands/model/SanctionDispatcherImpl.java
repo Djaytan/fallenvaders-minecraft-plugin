@@ -69,11 +69,11 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
     }
   }
 
-  private void kick(@NotNull Sanction sanction) {
-    OfflinePlayer player = sanction.getInculpatedPlayer();
+  private void kick(@NotNull Sanction kick) {
+    OfflinePlayer player = kick.getInculpatedPlayer();
     if (player.isOnline()) {
       Player p = (Player) player;
-      p.kick(sanctionComponentBuilder.kickMessage(sanction));
+      p.kick(sanctionComponentBuilder.kickMessage(kick));
       logger.info("Inculpated player kicked.");
     } else {
       // TODO: two options: make an exception in this case, or convert kick to a warning which can kick the player under certain criteria.
@@ -90,11 +90,11 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
     }
   }
 
-  private void ban(@NotNull Sanction sanction) {
-    OfflinePlayer player = sanction.getInculpatedPlayer();
+  private void ban(@NotNull Sanction ban) {
+    OfflinePlayer player = ban.getInculpatedPlayer();
     if (player.isOnline()) {
       Player p = (Player) player;
-      p.kick(sanctionComponentBuilder.banMessage(sanction));
+      p.kick(sanctionComponentBuilder.banMessage(ban));
     }
     logger.info("Inculpated player banned.");
   }
