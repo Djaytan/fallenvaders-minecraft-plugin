@@ -15,13 +15,13 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.commons.sql;
+package fr.fallenvaders.minecraft.commons.dao;
 
 import org.jetbrains.annotations.NotNull;
 
 /**
  * This class represents the DAO exception which may be thrown during an operation of a {@link
- * FvDao} implementation.
+ * Dao} implementation.
  *
  * <p>The use of a custom exception permit to make an abstraction which prevent the service layer to
  * depend on specific dependencies of DAO layer (e.g. DBMS, FileConfiguration, ...).
@@ -29,14 +29,14 @@ import org.jetbrains.annotations.NotNull;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
-public class FvDaoException extends Exception {
+public class DaoException extends Exception {
 
   /**
    * Constructor.
    *
    * @param message The exception's description message.
    */
-  public FvDaoException(@NotNull String message) {
+  public DaoException(@NotNull String message) {
     super(message);
   }
 
@@ -46,7 +46,7 @@ public class FvDaoException extends Exception {
    * @param message The exception's description message.
    * @param cause The cause of the exception.
    */
-  public FvDaoException(@NotNull String message, @NotNull Throwable cause) {
+  public DaoException(@NotNull String message, @NotNull Throwable cause) {
     super(message, cause);
   }
 }

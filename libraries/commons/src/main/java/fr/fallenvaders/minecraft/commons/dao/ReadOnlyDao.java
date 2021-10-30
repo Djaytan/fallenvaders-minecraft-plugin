@@ -15,7 +15,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.commons.sql;
+package fr.fallenvaders.minecraft.commons.dao;
 
 import java.sql.Connection;
 import java.util.Optional;
@@ -26,14 +26,14 @@ import org.jetbrains.annotations.NotNull;
  * This is a DAO interface which ask setting up at least read operations for a given entity type in
  * order to manage the model by abstracting storage processes.
  *
- * <p>For more information, see {@link FvDao}.
+ * <p>For more information, see {@link Dao}.
  *
  * @author Voltariuss
  * @since 0.3.0
  * @param <T> The type of the entity involved in the DAO-implementation.
- * @see FvDao
+ * @see Dao
  */
-public interface FvReadOnlyDao<T> {
+public interface ReadOnlyDao<T> {
 
   /**
    * Reads a specific entity instance {@link T} in the model according to the specified ID argument.
@@ -41,18 +41,18 @@ public interface FvReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param id The ID of the entity instance in the model.
    * @return The entity instance corresponding to the specified ID if it exists.
-   * @throws FvDaoException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @NotNull
-  Optional<T> get(@NotNull Connection connection, @NotNull String id) throws FvDaoException;
+  Optional<T> get(@NotNull Connection connection, @NotNull String id) throws DaoException;
 
   /**
    * Reads all the existing entity instances {@link T} in the model.
    *
    * @param connection The connection to the DBMS.
    * @return The list of existing entity instances in the model.
-   * @throws FvDaoException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @NotNull
-  Set<T> getAll(@NotNull Connection connection) throws FvDaoException;
+  Set<T> getAll(@NotNull Connection connection) throws DaoException;
 }

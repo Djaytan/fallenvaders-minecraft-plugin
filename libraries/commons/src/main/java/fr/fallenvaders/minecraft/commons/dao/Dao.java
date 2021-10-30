@@ -15,7 +15,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.commons.sql;
+package fr.fallenvaders.minecraft.commons.dao;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +35,7 @@ import java.sql.Connection;
  * @since 0.3.0
  * @param <T> The type of the entity involved in the DAO-implementation.
  */
-public interface FvDao<T> extends FvReadOnlyDao<T> {
+public interface Dao<T> extends ReadOnlyDao<T> {
 
   /**
    * Saves a new entity instance {@link T} in the model.
@@ -43,9 +43,9 @@ public interface FvDao<T> extends FvReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param t The entity instance to save in the model.
    * @return The number of affected rows.
-   * @throws FvDaoException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
-  int save(@NotNull Connection connection, @NotNull T t) throws FvDaoException;
+  int save(@NotNull Connection connection, @NotNull T t) throws DaoException;
 
   /**
    * Updates the entity instance {@link T} in the model.
@@ -53,9 +53,9 @@ public interface FvDao<T> extends FvReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param t The entity instance to update in the model.
    * @return The number of affected rows.
-   * @throws FvDaoException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
-  int update(@NotNull Connection connection, @NotNull T t) throws FvDaoException;
+  int update(@NotNull Connection connection, @NotNull T t) throws DaoException;
 
   /**
    * Deletes the entity instance {@link T} from the model.
@@ -63,7 +63,7 @@ public interface FvDao<T> extends FvReadOnlyDao<T> {
    * @param connection The connection to the DBMS.
    * @param t The entity instance to delete from the model.
    * @return The number of affected rows.
-   * @throws FvDaoException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
-  int delete(@NotNull Connection connection, @NotNull T t) throws FvDaoException;
+  int delete(@NotNull Connection connection, @NotNull T t) throws DaoException;
 }
