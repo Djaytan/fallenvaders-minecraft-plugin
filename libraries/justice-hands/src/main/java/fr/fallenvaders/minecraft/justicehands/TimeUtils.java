@@ -31,11 +31,11 @@ import org.jetbrains.annotations.NotNull;
 public class TimeUtils {
 
   /* Millisecond conversion constants */
-  private static final long NB_MS_IN_SECOND = 1000L;
-  private static final long NB_MS_IN_MINUTE = NB_MS_IN_SECOND * 60L;
-  private static final long NB_MS_IN_HOUR = NB_MS_IN_MINUTE * 60L;
-  private static final long NB_MS_IN_DAY = NB_MS_IN_HOUR * 60L;
-  private static final long NB_MS_IN_MONTH = NB_MS_IN_DAY * 30L;
+  public static final long NB_MS_IN_SECOND = 1000L;
+  public static final long NB_MS_IN_MINUTE = NB_MS_IN_SECOND * 60L;
+  public static final long NB_MS_IN_HOUR = NB_MS_IN_MINUTE * 60L;
+  public static final long NB_MS_IN_DAY = NB_MS_IN_HOUR * 60L;
+  public static final long NB_MS_IN_MONTH = NB_MS_IN_DAY * 30L;
 
   /**
    * States the remaining time in a French string format.
