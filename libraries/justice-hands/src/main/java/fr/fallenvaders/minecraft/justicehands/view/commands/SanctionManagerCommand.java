@@ -32,7 +32,7 @@ import javax.inject.Singleton;
 import java.util.UUID;
 
 @Singleton
-public class CommandSM implements CommandExecutor {
+public class SanctionManagerCommand implements CommandExecutor {
 
   private FileConfiguration config;
 
@@ -42,7 +42,7 @@ public class CommandSM implements CommandExecutor {
    * @param config The plugin config.
    */
   @Inject
-  public CommandSM(FileConfiguration config) {
+  public SanctionManagerCommand(FileConfiguration config) {
     this.config = config;
   }
 
