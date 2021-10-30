@@ -17,9 +17,10 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.dao;
 
-import fr.fallenvaders.minecraft.commons.sql.FvDao;
-import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
+import fr.fallenvaders.minecraft.commons.dao.Dao;
+import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
+import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,14 +39,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * JusticeHands' DAO class about manipulation of sanctions in the model.
  *
- * <p>For more information about DAO pattern, see {@link FvDao} interface Javadoc.
+ * <p>For more information about DAO pattern, see {@link Dao} interface Javadoc.
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
- * @see FvDao
+ * @see Dao
  */
 @Singleton
-public class SanctionDao implements FvDao<Sanction> {
+public class SanctionDao implements Dao<Sanction> {
 
   // TODO: FV-116, FV-117 - optimisation with cache
 
@@ -67,15 +68,17 @@ public class SanctionDao implements FvDao<Sanction> {
    * @param connection The connection to the DBMS.
    * @param strId The ID of the sought sanction.
    * @return The JusticeHands' sanction associated to the specified ID if it exists.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @Override
   public @NotNull Optional<Sanction> get(@NotNull Connection connection, @NotNull String strId)
-      throws SQLException {
+      throws DaoException {
     try (PreparedStatement stmt =
         connection.prepareStatement("SELECT * FROM fv_jh_sanction WHERE sctn_id = ?")) {
       stmt.setInt(1, Integer.parseInt(strId));
       return getSanctions(stmt).stream().findFirst();
+    } catch (SQLException e) {
+      throw new DaoException("Failed to read the sanction.", e);
     }
   }
 
@@ -87,12 +90,14 @@ public class SanctionDao implements FvDao<Sanction> {
    *
    * @param connection The connection to the DBMS.
    * @return The list of all existing JusticeHands' sanctions.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public @NotNull Set<Sanction> getAll(@NotNull Connection connection) throws SQLException {
+  public @NotNull Set<Sanction> getAll(@NotNull Connection connection) throws DaoException {
     try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM fv_jh_sanction")) {
       return getSanctions(stmt);
+    } catch (SQLException e) {
+      throw new DaoException("Failed to read the sanctions.", e);
     }
   }
 
@@ -107,15 +112,17 @@ public class SanctionDao implements FvDao<Sanction> {
    * @param player The Bukkit offline player.
    * @return The list of all existing JusticeHands' sanctions for the specified {@link
    *     OfflinePlayer}.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   public @NotNull Set<Sanction> getFromPlayer(
-      @NotNull Connection connection, @NotNull OfflinePlayer player) throws SQLException {
+      @NotNull Connection connection, @NotNull OfflinePlayer player) throws DaoException {
     try (PreparedStatement stmt =
         connection.prepareStatement(
             "SELECT * FROM fv_jh_sanction WHERE sctn_inculpated_player_uuid = ?")) {
       stmt.setString(1, player.getUniqueId().toString());
       return getSanctions(stmt);
+    } catch (SQLException e) {
+      throw new DaoException("Failed to read the sanctions.", e);
     }
   }
 
@@ -125,10 +132,10 @@ public class SanctionDao implements FvDao<Sanction> {
    * @param connection The connection to the DBMS.
    * @param sanction The JusticeHands' sanction to save.
    * @return The number of affected rows.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @Override
-  public int save(@NotNull Connection connection, @NotNull Sanction sanction) throws SQLException {
+  public int save(@NotNull Connection connection, @NotNull Sanction sanction) throws DaoException {
     try (PreparedStatement stmt =
         connection.prepareStatement(
             "INSERT INTO fv_jh_sanction (sctn_inculpated_player_uuid, sctn_name, "
@@ -137,6 +144,8 @@ public class SanctionDao implements FvDao<Sanction> {
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
       setSanction(sanction, stmt, false);
       return stmt.executeUpdate();
+    } catch (SQLException e) {
+      throw new DaoException("Failed to save the sanction.", e);
     }
   }
 
@@ -146,11 +155,11 @@ public class SanctionDao implements FvDao<Sanction> {
    * @param connection The connection to the DBMS.
    * @param sanction The updates instance of the JusticeHands' sanction to update.
    * @return The number of affected rows.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @Override
   public int update(@NotNull Connection connection, @NotNull Sanction sanction)
-      throws SQLException {
+      throws DaoException {
     try (PreparedStatement stmt =
         connection.prepareStatement(
             "UPDATE fv_jh_sanction SET sctn_inculpated_player_uuid = ?, sctn_name = ?, "
@@ -159,6 +168,8 @@ public class SanctionDao implements FvDao<Sanction> {
                 + "WHERE sctn_id = ?")) {
       setSanction(sanction, stmt, true);
       return stmt.executeUpdate();
+    } catch (SQLException e) {
+      throw new DaoException("Failed to update the sanction.", e);
     }
   }
 
@@ -168,15 +179,17 @@ public class SanctionDao implements FvDao<Sanction> {
    * @param connection The connection to the DBMS.
    * @param sanction The JusticeHands' sanction to delete from the model.
    * @return The number of affected rows.
-   * @throws SQLException if something went wrong during database access or stuffs like this.
+   * @throws DaoException if something went wrong during database access or stuffs like this.
    */
   @Override
   public int delete(@NotNull Connection connection, @NotNull Sanction sanction)
-      throws SQLException {
+      throws DaoException {
     try (PreparedStatement stmt =
         connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
       stmt.setInt(1, sanction.getId());
       return stmt.executeUpdate();
+    } catch (SQLException e) {
+      throw new DaoException("Failed to delete the sanction.", e);
     }
   }
 
