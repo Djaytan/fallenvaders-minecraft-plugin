@@ -55,7 +55,7 @@ public class SanctionDao implements Dao<Sanction> {
   /**
    * Constructor.
    *
-   * @param server The Bukkit server in which the JusticeHands' module is executed.
+   * @param server The Bukkit server.
    */
   @Inject
   public SanctionDao(@NotNull Server server) {
@@ -66,7 +66,7 @@ public class SanctionDao implements Dao<Sanction> {
    * Gets and returns the {@link Sanction} which correspond to the specified ID from the model.
    *
    * @param strId The ID of the sought sanction.
-   * @return The JusticeHands' sanction associated to the specified ID if it exists.
+   * @return The sanction associated to the specified ID if it exists.
    */
   @Override
   public @NotNull Optional<Sanction> get(@NotNull Connection connection, @NotNull String strId)
@@ -86,7 +86,7 @@ public class SanctionDao implements Dao<Sanction> {
    * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
    *
-   * @return The list of all existing JusticeHands' sanctions.
+   * @return The list of all existing sanctions.
    */
   @Override
   public @NotNull Set<Sanction> getAll(@NotNull Connection connection) throws DaoException {
@@ -101,12 +101,11 @@ public class SanctionDao implements Dao<Sanction> {
    * Gets and returns all existing {@link Sanction}s where the specified {@link OfflinePlayer} is
    * associated with them as an inculpated player.
    *
-   * <p>The set is ordered from the older sanction in first position to the youngest in the last *
+   * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
    *
    * @param player The Bukkit offline player.
-   * @return The list of all existing JusticeHands' sanctions for the specified {@link
-   *     OfflinePlayer}.
+   * @return The list of all existing sanctions for the specified {@link OfflinePlayer}.
    */
   public @NotNull Set<Sanction> getFromPlayer(
       @NotNull Connection connection, @NotNull OfflinePlayer player) throws DaoException {
@@ -123,7 +122,7 @@ public class SanctionDao implements Dao<Sanction> {
   /**
    * Saves a new {@link Sanction} into the model.
    *
-   * @param sanction The JusticeHands' sanction to save.
+   * @param sanction The sanction to save.
    */
   @Override
   public int save(@NotNull Connection connection, @NotNull Sanction sanction) throws DaoException {
@@ -143,7 +142,7 @@ public class SanctionDao implements Dao<Sanction> {
   /**
    * Updates the specified {@link Sanction} in the model.
    *
-   * @param sanction The updates instance of the JusticeHands' sanction to update.
+   * @param sanction The updated sanction's instance to replicate in model.
    */
   @Override
   public int update(@NotNull Connection connection, @NotNull Sanction sanction)
@@ -164,7 +163,7 @@ public class SanctionDao implements Dao<Sanction> {
   /**
    * Deletes the specified {@link Sanction} from the model.
    *
-   * @param sanction The JusticeHands' sanction to delete from the model.
+   * @param sanction The sanction to delete from the model.
    */
   @Override
   public int delete(@NotNull Connection connection, @NotNull Sanction sanction)
