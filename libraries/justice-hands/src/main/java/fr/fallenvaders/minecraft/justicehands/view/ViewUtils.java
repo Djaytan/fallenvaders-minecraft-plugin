@@ -82,7 +82,7 @@ public class ViewUtils {
    *
    * @return The next page button.
    */
-  public ItemStack nextPage() {
+  public @NotNull ItemStack nextPage() {
     ItemStack item = new ItemStack(CHANGE_PAGE_ITEM);
     ItemMeta meta = item.getItemMeta();
     meta.displayName(componentHelper.getComponent("§7Page suivante"));
@@ -101,7 +101,7 @@ public class ViewUtils {
    * @param b The boolean value.
    * @return The string boolean value.
    */
-  public String stringify(boolean b) {
+  public @NotNull String stringify(boolean b) {
     return b ? "§aOui" : "§cNon";
   }
 }
