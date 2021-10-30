@@ -18,7 +18,6 @@
 package fr.fallenvaders.minecraft.justicehands.view.listeners;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
-import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionController;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
@@ -32,7 +31,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 

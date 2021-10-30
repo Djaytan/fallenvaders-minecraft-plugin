@@ -75,6 +75,9 @@ public class PlayerLoginListener implements Listener {
    * override previous allow/disallow decisions and messages. So it's why no check of {@link
    * PlayerLoginEvent.Result} state are realized.
    *
+   * <p>Note 2: In case of a problem during ban sanction recovering of the player, the connection is
+   * blocked.
+   *
    * @param event The player login event.
    */
   @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
