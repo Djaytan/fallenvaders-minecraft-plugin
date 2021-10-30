@@ -19,8 +19,10 @@ package fr.fallenvaders.minecraft.justicehands.view;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
+import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +35,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Utils class about components creations (inventory buttons, stringify some data like boolean,
@@ -83,7 +86,7 @@ public class ViewUtils {
     headMeta.setOwningPlayer(target);
     headMeta.displayName(componentHelper.getComponent("§cInformations sur le joueur:"));
 
-    List<String> loreStr = new ArrayList<>();
+    List<String> loreStr = new ArrayList<>(7);
     loreStr.add("§7Pseudo: §f" + target.getName());
     loreStr.add("§7Grade: §fTODO"); // TODO: complete
     loreStr.add("§7Points de sanctions: §6TODO"); // TODO: complete
@@ -131,6 +134,35 @@ public class ViewUtils {
     lore.add(componentHelper.getComponent(""));
     lore.add(componentHelper.getComponent("   §cCLIC DROIT"));
     lore.add(componentHelper.getComponent("§f<<Page suivante"));
+    meta.lore(lore);
+    item.setItemMeta(meta);
+    return item;
+  }
+
+  /**
+   * Provides {@link ItemStack} which indicate that criminal record is empty (i.e. no sanctions
+   * recorded until the call of this method).
+   *
+   * <p>If the sanction type is specified, it only indicates that no sanctions of this type have been
+   * recorded.
+   *
+   * @param sanctionType (optional) The type of sanction sought.
+   * @return The item indicator of an empty criminal record.
+   */
+  public @NotNull ItemStack emptyCriminalRecord(@Nullable SanctionType sanctionType) {
+    ItemStack item = new ItemStack(Material.BARRIER);
+    ItemMeta meta = item.getItemMeta();
+    meta.displayName(componentHelper.getComponent("§cCasier judiciaire vide"));
+    List<Component> lore = new ArrayList<>(3);
+    lore.add(componentHelper.getComponent(""));
+    lore.add(componentHelper.getComponent("§7Le casier judiciaire du joueur"));
+    if (sanctionType == null) {
+      lore.add(componentHelper.getComponent("§7est vide, aucune sanction."));
+    } else {
+      lore.add(
+          componentHelper.getComponent(
+              String.format("§7est vide, aucun %s.", sanctionType.name().toLowerCase())));
+    }
     meta.lore(lore);
     item.setItemMeta(meta);
     return item;
