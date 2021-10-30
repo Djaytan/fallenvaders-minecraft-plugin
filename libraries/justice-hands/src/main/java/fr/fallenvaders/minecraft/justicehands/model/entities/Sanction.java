@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.entities;
 
+import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import java.sql.Timestamp;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.bukkit.OfflinePlayer;

@@ -15,7 +15,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.justicehands.model.entities;
+package fr.fallenvaders.minecraft.justicehands.model;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

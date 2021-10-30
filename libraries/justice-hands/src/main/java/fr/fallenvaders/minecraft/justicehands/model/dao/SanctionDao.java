@@ -19,7 +19,7 @@ package fr.fallenvaders.minecraft.justicehands.model.dao;
 
 import fr.fallenvaders.minecraft.commons.sql.FvDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
-import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
+import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

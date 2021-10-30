@@ -18,7 +18,7 @@
 package fr.fallenvaders.minecraft.justicehands.view;
 
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsModule;
-import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
+import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

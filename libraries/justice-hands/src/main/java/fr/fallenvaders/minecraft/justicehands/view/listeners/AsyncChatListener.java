@@ -21,7 +21,7 @@ import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionController;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
-import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
+import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.view.SanctionComponentBuilder;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import javax.inject.Inject;

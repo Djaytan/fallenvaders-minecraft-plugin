@@ -18,7 +18,7 @@
 package fr.fallenvaders.minecraft.justicehands.view;
 
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
-import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
+import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
