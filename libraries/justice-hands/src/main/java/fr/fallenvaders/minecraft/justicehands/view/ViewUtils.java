@@ -58,4 +58,40 @@ public class ViewUtils {
   public ViewUtils(@NotNull ComponentHelper componentHelper) {
     this.componentHelper= componentHelper;
   }
+
+  /**
+   * Provides the previous page button for GUI.
+   *
+   * @return The previous page button.
+   */
+  public @NotNull ItemStack previousPage() {
+    ItemStack item = new ItemStack(CHANGE_PAGE_ITEM);
+    ItemMeta meta = item.getItemMeta();
+    meta.displayName(componentHelper.getComponent("§7Page précédente"));
+    List<Component> lore = new ArrayList<>(3);
+    lore.add(componentHelper.getComponent(""));
+    lore.add(componentHelper.getComponent("   §cCLIC DROIT"));
+    lore.add(componentHelper.getComponent("§f<<Page précédente"));
+    meta.lore(lore);
+    item.setItemMeta(meta);
+    return item;
+  }
+
+  /**
+   * Provides the next page button for GUI.
+   *
+   * @return The next page button.
+   */
+  public ItemStack nextPage() {
+    ItemStack item = new ItemStack(CHANGE_PAGE_ITEM);
+    ItemMeta meta = item.getItemMeta();
+    meta.displayName(componentHelper.getComponent("§7Page suivante"));
+    List<Component> lore = new ArrayList<>(3);
+    lore.add(componentHelper.getComponent(""));
+    lore.add(componentHelper.getComponent("   §cCLIC DROIT"));
+    lore.add(componentHelper.getComponent("§f<<Page suivante"));
+    meta.lore(lore);
+    item.setItemMeta(meta);
+    return item;
+  }
 }
