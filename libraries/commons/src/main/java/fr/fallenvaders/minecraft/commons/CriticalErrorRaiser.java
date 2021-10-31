@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.commons;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -44,7 +45,7 @@ public interface CriticalErrorRaiser {
    *
    * @param message The description message of the critical error.
    */
-  void raiseError(@Nullable String message);
+  void raiseError(@NotNull String message);
 
   /**
    * Raises the critical error by applying a special treatment.
@@ -52,5 +53,5 @@ public interface CriticalErrorRaiser {
    * @param message The description message of the critical error.
    * @param cause The cause of the critical error.
    */
-  void raiseError(@Nullable String message, @Nullable Throwable cause);
+  void raiseError(@NotNull String message, @Nullable Throwable cause);
 }

@@ -54,18 +54,17 @@ public class CriticalPluginErrorRaiser implements CriticalErrorRaiser {
   }
 
   @Override
-  public void raiseError(@Nullable String message) {
+  public void raiseError(@NotNull String message) {
     raiseError(message, null);
   }
 
   @Override
-  public void raiseError(@Nullable String message, @Nullable Throwable cause) {
-    if (message != null) {
-      if (cause != null) {
-        logger.error(message, cause);
-      } else {
-        logger.error(message);
-      }
+  public void raiseError(@NotNull String message, @Nullable Throwable cause) {
+    logger.error("Critical error raised! Disabling plugin...");
+    if (cause != null) {
+      logger.error(message, cause);
+    } else {
+      logger.error(message);
     }
     pluginManager.disablePlugin(plugin);
   }
