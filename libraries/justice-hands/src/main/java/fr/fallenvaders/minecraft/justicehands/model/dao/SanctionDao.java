@@ -66,12 +66,6 @@ public class SanctionDao implements Dao<Sanction> {
     this.server = server;
   }
 
-  /**
-   * Gets and returns the {@link Sanction} which correspond to the specified ID from the model.
-   *
-   * @param strId The ID of the sought sanction.
-   * @return The sanction associated to the specified ID if it exists.
-   */
   @Override
   public @NotNull Optional<Sanction> get(@NotNull String strId) throws DaoException {
     try (Connection connection = fvDataSource.getConnection();
@@ -89,8 +83,6 @@ public class SanctionDao implements Dao<Sanction> {
    *
    * <p>The set is ordered from the older sanction in first position to the youngest in the last
    * position.
-   *
-   * @return The list of all existing sanctions.
    */
   @Override
   public @NotNull Set<Sanction> getAll() throws DaoException {
@@ -124,11 +116,6 @@ public class SanctionDao implements Dao<Sanction> {
     }
   }
 
-  /**
-   * Saves a new {@link Sanction} into the model.
-   *
-   * @param sanction The sanction to save.
-   */
   @Override
   public int save(@NotNull Sanction sanction) throws DaoException {
     try (Connection connection = fvDataSource.getConnection();
@@ -145,11 +132,6 @@ public class SanctionDao implements Dao<Sanction> {
     }
   }
 
-  /**
-   * Updates the specified {@link Sanction} in the model.
-   *
-   * @param sanction The updated sanction's instance to replicate in model.
-   */
   @Override
   public int update(@NotNull Sanction sanction) throws DaoException {
     try (Connection connection = fvDataSource.getConnection();
@@ -166,11 +148,6 @@ public class SanctionDao implements Dao<Sanction> {
     }
   }
 
-  /**
-   * Deletes the specified {@link Sanction} from the model.
-   *
-   * @param sanction The sanction to delete from the model.
-   */
   @Override
   public int delete(@NotNull Sanction sanction) throws DaoException {
     try (Connection connection = fvDataSource.getConnection();
