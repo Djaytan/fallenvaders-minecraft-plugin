@@ -42,6 +42,7 @@ public interface ReadOnlyDao<T> {
    * @throws DaoException if the read of the entity fail.
    */
   @NotNull
+  // TODO: create DaoId class instead with implementations like StringDaoId, IntDaoId, ...
   Optional<T> get(@NotNull String id) throws DaoException;
 
   /**

@@ -29,189 +29,28 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
+ *
+ * @param id The ID of the sanction.
+ * @param inculpatedPlayer The inculpated player of the sanction.
+ * @param name The name of the sanction.
+ * @param reason The reason of the sanction.
+ * @param points The number of points of the sanction.
+ * @param beginningDate The beginning date of the sanction.
+ * @param endingDate The ending date of the sanction (null in cases of kick or ban def for example).
+ * @param authorPlayer The author of the sanction (null means console is the author).
+ * @param type The type of sanction.
  */
-public class Sanction {
-
-  private final int id;
-  private OfflinePlayer inculpatedPlayer;
-  private String name;
-  private String reason;
-  private int points;
-  private Timestamp beginningDate;
-  private Timestamp endingDate;
-  private OfflinePlayer authorPlayer;
-  private SanctionType type;
-
-  /**
-   * Constructor.
-   *
-   * <p>Note: this one must be used only at the registration of a new sanction.
-   */
-  public Sanction() {
-    this(-1);
-  }
-
-  /**
-   * Constructor.
-   *
-   * @param id The ID of the sanction.
-   */
-  public Sanction(int id) {
-    this.id = id;
-  }
-
-  /**
-   * Getter.
-   *
-   * @return The ID of the sanction.
-   */
-  public int getId() {
-    return id;
-  }
-
-  /**
-   * Getter.
-   *
-   * @return The inculpated player targeted by the sanction.
-   */
-  public @NotNull OfflinePlayer getInculpatedPlayer() {
-    return inculpatedPlayer;
-  }
-
-  /**
-   * Setter.
-   *
-   * @param inculpatedPlayer The inculpated player targeted by the sanction.
-   */
-  public void setInculpatedPlayer(@NotNull OfflinePlayer inculpatedPlayer) {
-    this.inculpatedPlayer = inculpatedPlayer;
-  }
-
-  /**
-   * Getter.
-   *
-   * @return The name of the sanction.
-   */
-  public @NotNull String getName() {
-    return name;
-  }
-
-  /**
-   * Setter.
-   *
-   * @param name The name of the sanction.
-   */
-  public void setName(@NotNull String name) {
-    this.name = name;
-  }
-
-  /**
-   * Getter.
-   *
-   * @return The reason of the sanction.
-   */
-  public @NotNull String getReason() {
-    return reason;
-  }
-
-  /**
-   * Setter.
-   *
-   * @param reason The reason of the sanction.
-   */
-  public void setReason(@NotNull String reason) {
-    this.reason = reason;
-  }
-
-  /**
-   * Getter.
-   *
-   * @return The points of the sanction.
-   */
-  public int getPoints() {
-    return points;
-  }
-
-  /**
-   * Setter.
-   *
-   * @param points The points of the sanction.
-   */
-  public void setPoints(int points) {
-    this.points = points;
-  }
-
-  /**
-   * Getter.
-   *
-   * @return The beginning date of the sanction.
-   */
-  public @NotNull Timestamp getBeginningDate() {
-    return beginningDate;
-  }
-
-  /**
-   * Setter.
-   *
-   * @param beginningDate The beginning date of the sanction.
-   */
-  public void setBeginningDate(@NotNull Timestamp beginningDate) {
-    this.beginningDate = beginningDate;
-  }
-
-  /**
-   * Getter.
-   *
-   * @return The ending date of the sanction.
-   */
-  public @Nullable Timestamp getEndingDate() {
-    return endingDate;
-  }
-
-  /**
-   * Setter.
-   *
-   * @param endingDate The ending date of the sanction.
-   */
-  public void setEndingDate(@Nullable Timestamp endingDate) {
-    this.endingDate = endingDate;
-  }
-
-  /**
-   * Getter.
-   *
-   * @return The author's UUID of the sanction.
-   */
-  public @Nullable OfflinePlayer getAuthorPlayer() {
-    return authorPlayer;
-  }
-
-  /**
-   * Setter.
-   *
-   * @param authorPlayer The author's UUID of the sanction.
-   */
-  public void setAuthorPlayer(@Nullable OfflinePlayer authorPlayer) {
-    this.authorPlayer = authorPlayer;
-  }
-
-  /**
-   * Getter.
-   *
-   * @return The type of the sanction (mute, ban, ...).
-   */
-  public @NotNull SanctionType getType() {
-    return type;
-  }
-
-  /**
-   * Setter.
-   *
-   * @param type The type of the sanction (mute, ban, ...).
-   */
-  public void setType(@NotNull SanctionType type) {
-    this.type = type;
-  }
+// TODO: rename it to RecordedSanction to remove ambiguities
+public record Sanction (
+    int id,
+    @NotNull OfflinePlayer inculpatedPlayer,
+    @NotNull String name,
+    @NotNull String reason,
+    int points,
+    @NotNull Timestamp beginningDate,
+    @Nullable Timestamp endingDate,
+    @Nullable OfflinePlayer authorPlayer,
+    @NotNull SanctionType type) {
 
   @Override
   public String toString() {
