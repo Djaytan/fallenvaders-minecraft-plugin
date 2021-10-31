@@ -172,7 +172,7 @@ public class SanctionDao implements Dao<Sanction> {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
-      stmt.setInt(1, sanction.getId());
+      stmt.setInt(1, sanction.id());
       int rowCount = stmt.executeUpdate();
       if (rowCount == 0) {
         throw new DaoException("No sanction deleted in database.");
@@ -193,21 +193,18 @@ public class SanctionDao implements Dao<Sanction> {
     int points = rs.getInt("sctn_points");
     Timestamp beginningDate = rs.getTimestamp("sctn_beginning_date");
     Timestamp endingDate = rs.getTimestamp("sctn_ending_date");
-    String authorUuid = rs.getString("sctn_author_player_uuid");
-    String type = rs.getString("sctn_type");
+    String authorPlayerUuid = rs.getString("sctn_author_player_uuid");
+    String typeStr = rs.getString("sctn_type");
 
-    Sanction sanction = new Sanction(id);
-    sanction.setInculpatedPlayer(server.getOfflinePlayer(UUID.fromString(inculpatedPlayerUuid)));
-    sanction.setName(name);
-    sanction.setReason(reason);
-    sanction.setPoints(points);
-    sanction.setBeginningDate(beginningDate);
-    sanction.setEndingDate(endingDate);
-    if (authorUuid != null) {
-      sanction.setAuthorPlayer(server.getOfflinePlayer(UUID.fromString(authorUuid)));
-    }
-    sanction.setType(SanctionType.valueOf(type));
-    return sanction;
+    OfflinePlayer inculpatedPlayer = server.getOfflinePlayer(UUID.fromString(inculpatedPlayerUuid));
+    OfflinePlayer authorPlayer =
+        authorPlayerUuid != null
+            ? server.getOfflinePlayer(UUID.fromString(authorPlayerUuid))
+            : null;
+    SanctionType type = SanctionType.valueOf(typeStr);
+
+    return new Sanction(
+        id, inculpatedPlayer, name, reason, points, beginningDate, endingDate, authorPlayer, type);
   }
 
   private @NotNull Set<Sanction> getSanctions(@NotNull PreparedStatement stmt) throws SQLException {
@@ -221,27 +218,33 @@ public class SanctionDao implements Dao<Sanction> {
   }
 
   private void setSanction(
-      @NotNull Sanction sanction, @NotNull PreparedStatement stmt, boolean idIsLast)
+      @NotNull Sanction sanction, @NotNull PreparedStatement stmt, boolean hasId)
       throws SQLException {
+    int id = sanction.id();
+    OfflinePlayer inculpatedPlayer = sanction.inculpatedPlayer();
+    String name = sanction.name();
+    String reason = sanction.reason();
+    int points = sanction.points();
+    Timestamp beginningDate = sanction.beginningDate();
+    Timestamp endingDate = sanction.endingDate();
+    OfflinePlayer authorPlayer = sanction.authorPlayer();
+    SanctionType type = sanction.type();
+
+    String inculpatedPlayerUuid = inculpatedPlayer.getUniqueId().toString();
+    String authorPlayerUuid = authorPlayer != null ? authorPlayer.getUniqueId().toString() : null;
+    String typeStr = type.name();
+
     int index = 1;
-    boolean idIsFirst = !idIsLast;
-    if (idIsFirst) {
-      stmt.setInt(index++, sanction.getId());
-    }
-    stmt.setString(index++, sanction.getInculpatedPlayer().getUniqueId().toString());
-    stmt.setString(index++, sanction.getName());
-    stmt.setString(index++, sanction.getReason());
-    stmt.setInt(index++, sanction.getPoints());
-    stmt.setTimestamp(index++, sanction.getBeginningDate());
-    stmt.setTimestamp(index++, sanction.getEndingDate());
-    stmt.setString(
-        index++,
-        sanction.getAuthorPlayer() != null
-            ? sanction.getAuthorPlayer().getUniqueId().toString()
-            : null);
-    stmt.setString(index++, sanction.getType().name());
-    if (idIsLast) {
-      stmt.setInt(index, sanction.getId());
+    stmt.setString(index++, inculpatedPlayerUuid);
+    stmt.setString(index++, name);
+    stmt.setString(index++, reason);
+    stmt.setInt(index++, points);
+    stmt.setTimestamp(index++, beginningDate);
+    stmt.setTimestamp(index++, endingDate);
+    stmt.setString(index++, authorPlayerUuid);
+    stmt.setString(index, typeStr);
+    if (hasId) {
+      stmt.setInt(++index, id);
     }
   }
 }
