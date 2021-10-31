@@ -71,7 +71,6 @@ public class SanctionService {
       }
       return jhSanction;
     } catch (DaoException e) {
-      // TODO: remove all unnecessary JusticeHands'
       logger.error("An error occurs preventing the seek of the sanction.");
       throw new JusticeHandsException(
           String.format("Failed to seek the sanction with ID '%d'.", id), e);
@@ -148,17 +147,9 @@ public class SanctionService {
   public void registerSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info("Try to register the following new sanction: {}", sanction);
     try {
-      int rowCount = sanctionDao.save(sanction);
-      if (rowCount > 0) {
-        logger.info("The sanction have been registered successfully.");
-        if (rowCount > 1) {
-          logger.warn("More than one sanction have been registered...");
-        }
-      } else {
-        // TODO: remove this DAO logic from service layer
-        throw new JusticeHandsException("Failed to register the new sanction into the model.");
-      }
-    } catch (DaoException | JusticeHandsException e) {
+      sanctionDao.save(sanction);
+      logger.info("The sanction have been registered successfully.");
+    } catch (DaoException e) {
       logger.error("An error occurs preventing the register of a sanction.");
       throw new JusticeHandsException(
           String.format("Failed to register the new following sanction: %s", sanction), e);
@@ -177,19 +168,9 @@ public class SanctionService {
         sanction.getId(),
         sanction);
     try {
-      int rowCount = sanctionDao.update(sanction);
-      if (rowCount > 0) {
-        logger.info("The sanction have been updated successfully.");
-        if (rowCount > 1) {
-          logger.warn("More than one sanction have been updated...");
-        }
-      } else {
-        throw new JusticeHandsException(
-            String.format(
-                "The sanction with ID '%d' doesn't exist and then can't be updated.",
-                sanction.getId()));
-      }
-    } catch (DaoException | JusticeHandsException e) {
+      sanctionDao.update(sanction);
+      logger.info("The sanction have been updated successfully.");
+    } catch (DaoException e) {
       logger.error("An error occurs preventing the update of a sanction.");
       throw new JusticeHandsException(
           String.format("Failed to update the sanction with ID '%s'.", sanction.getId()), e);
@@ -205,19 +186,9 @@ public class SanctionService {
   public void deleteSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info("Try to delete the following sanction: {}", sanction);
     try {
-      int rowCount = sanctionDao.delete(sanction);
-      if (rowCount > 0) {
-        logger.info("The sanction have been deleted successfully.");
-        if (rowCount > 1) {
-          logger.warn("More than one sanction have been deleted...");
-        }
-      } else {
-        throw new JusticeHandsException(
-            String.format(
-                "The sanction with ID '%d' doesn't exist and then can't be deleted.",
-                sanction.getId()));
-      }
-    } catch (DaoException | JusticeHandsException e) {
+      sanctionDao.delete(sanction);
+      logger.info("The sanction have been deleted successfully.");
+    } catch (DaoException e) {
       logger.error("An error occurs preventing the delete of a sanction.");
       throw new JusticeHandsException(
           String.format("Failed to delete the sanction with ID '%s'.", sanction.getId()), e);
