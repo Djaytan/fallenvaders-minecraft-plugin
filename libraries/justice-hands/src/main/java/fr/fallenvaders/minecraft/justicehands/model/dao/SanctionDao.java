@@ -19,6 +19,7 @@ package fr.fallenvaders.minecraft.justicehands.model.dao;
 
 import fr.fallenvaders.minecraft.commons.dao.Dao;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
+import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import java.sql.Connection;
@@ -50,15 +51,18 @@ public class SanctionDao implements Dao<Sanction> {
 
   // TODO: FV-116, FV-117 - optimisation with cache
 
+  private final FvDataSource fvDataSource;
   private final Server server;
 
   /**
    * Constructor.
    *
+   * @param fvDataSource The FallenVaders' data source.
    * @param server The Bukkit server.
    */
   @Inject
-  public SanctionDao(@NotNull Server server) {
+  public SanctionDao(@NotNull FvDataSource fvDataSource, @NotNull Server server) {
+    this.fvDataSource = fvDataSource;
     this.server = server;
   }
 
@@ -69,10 +73,10 @@ public class SanctionDao implements Dao<Sanction> {
    * @return The sanction associated to the specified ID if it exists.
    */
   @Override
-  public @NotNull Optional<Sanction> get(@NotNull Connection connection, @NotNull String strId)
-      throws DaoException {
-    try (PreparedStatement stmt =
-        connection.prepareStatement("SELECT * FROM fv_jh_sanction WHERE sctn_id = ?")) {
+  public @NotNull Optional<Sanction> get(@NotNull String strId) throws DaoException {
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt =
+            connection.prepareStatement("SELECT * FROM fv_jh_sanction WHERE sctn_id = ?")) {
       stmt.setInt(1, Integer.parseInt(strId));
       return getSanctions(stmt).stream().findFirst();
     } catch (SQLException e) {
@@ -89,8 +93,9 @@ public class SanctionDao implements Dao<Sanction> {
    * @return The list of all existing sanctions.
    */
   @Override
-  public @NotNull Set<Sanction> getAll(@NotNull Connection connection) throws DaoException {
-    try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM fv_jh_sanction")) {
+  public @NotNull Set<Sanction> getAll() throws DaoException {
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM fv_jh_sanction")) {
       return getSanctions(stmt);
     } catch (SQLException e) {
       throw new DaoException("Failed to read the sanctions.", e);
@@ -107,11 +112,11 @@ public class SanctionDao implements Dao<Sanction> {
    * @param player The Bukkit offline player.
    * @return The list of all existing sanctions for the specified {@link OfflinePlayer}.
    */
-  public @NotNull Set<Sanction> getFromPlayer(
-      @NotNull Connection connection, @NotNull OfflinePlayer player) throws DaoException {
-    try (PreparedStatement stmt =
-        connection.prepareStatement(
-            "SELECT * FROM fv_jh_sanction WHERE sctn_inculpated_player_uuid = ?")) {
+  public @NotNull Set<Sanction> getFromPlayer(@NotNull OfflinePlayer player) throws DaoException {
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt =
+            connection.prepareStatement(
+                "SELECT * FROM fv_jh_sanction WHERE sctn_inculpated_player_uuid = ?")) {
       stmt.setString(1, player.getUniqueId().toString());
       return getSanctions(stmt);
     } catch (SQLException e) {
@@ -125,13 +130,14 @@ public class SanctionDao implements Dao<Sanction> {
    * @param sanction The sanction to save.
    */
   @Override
-  public int save(@NotNull Connection connection, @NotNull Sanction sanction) throws DaoException {
-    try (PreparedStatement stmt =
-        connection.prepareStatement(
-            "INSERT INTO fv_jh_sanction (sctn_inculpated_player_uuid, sctn_name, "
-                + "sctn_reason, sctn_points, sctn_beginning_date, sctn_ending_date, "
-                + "sctn_author_player_uuid, sctn_type)"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
+  public int save(@NotNull Sanction sanction) throws DaoException {
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt =
+            connection.prepareStatement(
+                "INSERT INTO fv_jh_sanction (sctn_inculpated_player_uuid, sctn_name, "
+                    + "sctn_reason, sctn_points, sctn_beginning_date, sctn_ending_date, "
+                    + "sctn_author_player_uuid, sctn_type)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
       setSanction(sanction, stmt, false);
       return stmt.executeUpdate();
     } catch (SQLException e) {
@@ -145,14 +151,14 @@ public class SanctionDao implements Dao<Sanction> {
    * @param sanction The updated sanction's instance to replicate in model.
    */
   @Override
-  public int update(@NotNull Connection connection, @NotNull Sanction sanction)
-      throws DaoException {
-    try (PreparedStatement stmt =
-        connection.prepareStatement(
-            "UPDATE fv_jh_sanction SET sctn_inculpated_player_uuid = ?, sctn_name = ?, "
-                + "sctn_reason = ?, sctn_points = ?, sctn_beginning_date = ?, "
-                + "sctn_ending_date = ?, sctn_author_player_uuid = ?, sctn_type = ? "
-                + "WHERE sctn_id = ?")) {
+  public int update(@NotNull Sanction sanction) throws DaoException {
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt =
+            connection.prepareStatement(
+                "UPDATE fv_jh_sanction SET sctn_inculpated_player_uuid = ?, sctn_name = ?, "
+                    + "sctn_reason = ?, sctn_points = ?, sctn_beginning_date = ?, "
+                    + "sctn_ending_date = ?, sctn_author_player_uuid = ?, sctn_type = ? "
+                    + "WHERE sctn_id = ?")) {
       setSanction(sanction, stmt, true);
       return stmt.executeUpdate();
     } catch (SQLException e) {
@@ -166,10 +172,10 @@ public class SanctionDao implements Dao<Sanction> {
    * @param sanction The sanction to delete from the model.
    */
   @Override
-  public int delete(@NotNull Connection connection, @NotNull Sanction sanction)
-      throws DaoException {
-    try (PreparedStatement stmt =
-        connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
+  public int delete(@NotNull Sanction sanction) throws DaoException {
+    try (Connection connection = fvDataSource.getConnection();
+        PreparedStatement stmt =
+            connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
       stmt.setInt(1, sanction.getId());
       return stmt.executeUpdate();
     } catch (SQLException e) {
