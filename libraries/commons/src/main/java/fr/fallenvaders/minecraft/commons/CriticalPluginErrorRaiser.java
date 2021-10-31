@@ -26,13 +26,13 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 /**
- * This is an implementation class {@link CriticalError} in case of FallenVaders' plugin.
+ * This is an implementation class {@link CriticalErrorRaiser} in case of FallenVaders' plugin.
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
 @Singleton
-public class CriticalPluginError implements CriticalError {
+public class CriticalPluginErrorRaiser implements CriticalErrorRaiser {
 
   private final JavaPlugin plugin;
   private final Logger logger;
@@ -46,7 +46,7 @@ public class CriticalPluginError implements CriticalError {
    * @param pluginManager The Bukkit plugin manager.
    */
   @Inject
-  public CriticalPluginError(
+  public CriticalPluginErrorRaiser(
       @NotNull JavaPlugin plugin, @NotNull Logger logger, @NotNull PluginManager pluginManager) {
     this.plugin = plugin;
     this.logger = logger;

@@ -21,8 +21,8 @@ import co.aikar.commands.PaperCommandManager;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import fr.fallenvaders.minecraft.commons.CriticalError;
-import fr.fallenvaders.minecraft.commons.CriticalPluginError;
+import fr.fallenvaders.minecraft.commons.CriticalErrorRaiser;
+import fr.fallenvaders.minecraft.commons.CriticalPluginErrorRaiser;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionDispatcher;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionDispatcherImpl;
 import fr.fallenvaders.minecraft.plugin.modules.FullPluginInitializer;
@@ -60,7 +60,7 @@ public final class FallenVadersModule extends AbstractModule {
     bind(PluginInitializer.class).to(FullPluginInitializer.class);
 
     /* Commons */
-    bind(CriticalError.class).to(CriticalPluginError.class);
+    bind(CriticalErrorRaiser.class).to(CriticalPluginErrorRaiser.class);
 
     /* JusticeHands */
     bind(SanctionDispatcher.class).to(SanctionDispatcherImpl.class);

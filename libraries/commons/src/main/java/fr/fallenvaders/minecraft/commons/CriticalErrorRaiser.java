@@ -37,7 +37,7 @@ import org.jetbrains.annotations.Nullable;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
-public interface CriticalError {
+public interface CriticalErrorRaiser {
 
   /**
    * Raises the critical error by applying a special treatment.
