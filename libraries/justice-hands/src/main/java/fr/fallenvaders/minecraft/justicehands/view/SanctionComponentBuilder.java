@@ -105,7 +105,7 @@ public class SanctionComponentBuilder {
   /**
    * Provides a ban message {@link Component}.
    *
-   * @param ban The JusticeHands' ban sanction to be used for the ban message.
+   * @param ban The ban sanction to be used for the ban message.
    * @return The ban message component.
    */
   public @NotNull Component banMessage(@NotNull Sanction ban) {

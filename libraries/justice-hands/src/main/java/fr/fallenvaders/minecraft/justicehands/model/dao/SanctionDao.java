@@ -38,7 +38,7 @@ import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * JusticeHands' DAO class about manipulation of sanctions in the model.
+ * DAO class about manipulation of sanctions in the model.
  *
  * <p>For more information about DAO pattern, see {@link Dao} interface Javadoc.
  *

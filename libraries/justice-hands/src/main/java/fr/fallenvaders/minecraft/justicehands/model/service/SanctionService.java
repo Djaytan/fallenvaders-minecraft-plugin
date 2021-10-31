@@ -61,20 +61,20 @@ public class SanctionService {
    * @throws JusticeHandsException if the sought sanction fail to be found in the model.
    */
   public @NotNull Optional<Sanction> getSanction(int id) throws JusticeHandsException {
-    logger.info("Seek of the JusticeHands' sanction associated with the ID '{}'.", id);
+    logger.info("Seek of the sanction associated with the ID '{}'.", id);
     try {
       Optional<Sanction> jhSanction = sanctionDao.get(Integer.toString(id));
       if (jhSanction.isPresent()) {
-        logger.info("JusticeHands' sanction found for the ID '{}': {}", id, jhSanction);
+        logger.info("Sanction found for the ID '{}': {}", id, jhSanction);
       } else {
-        logger.warn("No JusticeHands' sanction found for ID '{}'.", id);
+        logger.warn("No sanction found for ID '{}'.", id);
       }
       return jhSanction;
     } catch (DaoException e) {
       // TODO: remove all unnecessary JusticeHands'
-      logger.error("An error occurs preventing the seek of the JusticeHands' sanction.");
+      logger.error("An error occurs preventing the seek of the sanction.");
       throw new JusticeHandsException(
-          String.format("Failed to seek the JusticeHands' sanction with ID '%d'.", id), e);
+          String.format("Failed to seek the sanction with ID '%d'.", id), e);
     }
   }
 
@@ -88,19 +88,18 @@ public class SanctionService {
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getSanctions() throws JusticeHandsException {
-    logger.info("Seek of all existing JusticeHands' sanctions.");
+    logger.info("Seek of all existing sanctions.");
     try {
       Set<Sanction> sanctions = sanctionDao.getAll();
       if (!sanctions.isEmpty()) {
-        logger.info("JusticeHands' sanctions found: {}", sanctions);
+        logger.info("Sanctions found: {}", sanctions);
       } else {
-        logger.warn("No JusticeHands' sanction found.");
+        logger.warn("No sanction found.");
       }
       return sanctions;
     } catch (DaoException e) {
-      logger.error("An error occurs preventing the seek of all JusticeHands' sanctions.");
-      throw new JusticeHandsException(
-          "Failed to seek all the existing JusticeHands' sanctions.", e);
+      logger.error("An error occurs preventing the seek of all sanctions.");
+      throw new JusticeHandsException("Failed to seek all the existing sanctions.", e);
     }
   }
 
@@ -118,20 +117,20 @@ public class SanctionService {
   public @NotNull Set<Sanction> getPlayerSanctions(@NotNull OfflinePlayer player)
       throws JusticeHandsException {
     logger.info(
-        "Seek all JusticeHands' sanctions of the inculpated player '{}' with UUID '{}'.",
+        "Seek all sanctions of the inculpated player '{}' with UUID '{}'.",
         player.getName(),
         player.getUniqueId());
     try {
       Set<Sanction> sanctions = sanctionDao.getFromPlayer(player);
       if (!sanctions.isEmpty()) {
-        logger.info("JusticeHands' sanctions found: {}", sanctions);
+        logger.info("Sanctions found: {}", sanctions);
       } else {
-        logger.warn("No JusticeHands' sanction found.");
+        logger.warn("No sanction found.");
       }
       return sanctions;
     } catch (DaoException e) {
       logger.error(
-          "An error occurs preventing the seek of all JusticeHands' sanctions for the specified player.");
+          "An error occurs preventing the seek of all sanctions for the specified player.");
       throw new JusticeHandsException(
           String.format(
               "Failed to seek the sanctions of the inculpated player '%s' with UUID '%s'.",
@@ -143,15 +142,15 @@ public class SanctionService {
   /**
    * Registers the specified {@link Sanction} into the model.
    *
-   * @param sanction The JusticeHands' sanction to save into the model.
+   * @param sanction The sanction to save into the model.
    * @throws JusticeHandsException if the specified sanction fail to be registered in the model.
    */
   public void registerSanction(@NotNull Sanction sanction) throws JusticeHandsException {
-    logger.info("Try to register the following new JusticeHands' sanction: {}", sanction);
+    logger.info("Try to register the following new sanction: {}", sanction);
     try {
       int rowCount = sanctionDao.save(sanction);
       if (rowCount > 0) {
-        logger.info("The JusticeHands' sanction have been registered successfully.");
+        logger.info("The sanction have been registered successfully.");
         if (rowCount > 1) {
           logger.warn("More than one sanction have been registered...");
         }
@@ -160,7 +159,7 @@ public class SanctionService {
         throw new JusticeHandsException("Failed to register the new sanction into the model.");
       }
     } catch (DaoException | JusticeHandsException e) {
-      logger.error("An error occurs preventing the register of a JusticeHands' sanction.");
+      logger.error("An error occurs preventing the register of a sanction.");
       throw new JusticeHandsException(
           String.format("Failed to register the new following sanction: %s", sanction), e);
     }
@@ -169,29 +168,29 @@ public class SanctionService {
   /**
    * Updates the specified {@link Sanction} in the model.
    *
-   * @param sanction The JusticeHands' sanction to update in the model.
+   * @param sanction The sanction to update in the model.
    * @throws JusticeHandsException if the specified sanction fail to be updated in the model.
    */
   public void updateSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info(
-        "Try to update the JusticeHands' sanction with ID '{}' with this following new value: {}",
+        "Try to update the sanction with ID '{}' with this following new value: {}",
         sanction.getId(),
         sanction);
     try {
       int rowCount = sanctionDao.update(sanction);
       if (rowCount > 0) {
-        logger.info("The JusticeHands' sanction have been updated successfully.");
+        logger.info("The sanction have been updated successfully.");
         if (rowCount > 1) {
           logger.warn("More than one sanction have been updated...");
         }
       } else {
         throw new JusticeHandsException(
             String.format(
-                "The JusticeHands' sanction with ID '%d' doesn't exist and then can't be updated.",
+                "The sanction with ID '%d' doesn't exist and then can't be updated.",
                 sanction.getId()));
       }
     } catch (DaoException | JusticeHandsException e) {
-      logger.error("An error occurs preventing the update of a JusticeHands' sanction.");
+      logger.error("An error occurs preventing the update of a sanction.");
       throw new JusticeHandsException(
           String.format("Failed to update the sanction with ID '%s'.", sanction.getId()), e);
     }
@@ -200,26 +199,26 @@ public class SanctionService {
   /**
    * Deletes the specified {@link Sanction} from the model.
    *
-   * @param sanction The JusticeHands' sanction to delete from the model.
+   * @param sanction The sanction to delete from the model.
    * @throws JusticeHandsException if the specified sanction fail to be deleted in the model.
    */
   public void deleteSanction(@NotNull Sanction sanction) throws JusticeHandsException {
-    logger.info("Try to delete the following JusticeHands' sanction: {}", sanction);
+    logger.info("Try to delete the following sanction: {}", sanction);
     try {
       int rowCount = sanctionDao.delete(sanction);
       if (rowCount > 0) {
-        logger.info("The JusticeHands' sanction have been deleted successfully.");
+        logger.info("The sanction have been deleted successfully.");
         if (rowCount > 1) {
           logger.warn("More than one sanction have been deleted...");
         }
       } else {
         throw new JusticeHandsException(
             String.format(
-                "The JusticeHands' sanction with ID '%d' doesn't exist and then can't be deleted.",
+                "The sanction with ID '%d' doesn't exist and then can't be deleted.",
                 sanction.getId()));
       }
     } catch (DaoException | JusticeHandsException e) {
-      logger.error("An error occurs preventing the delete of a JusticeHands' sanction.");
+      logger.error("An error occurs preventing the delete of a sanction.");
       throw new JusticeHandsException(
           String.format("Failed to delete the sanction with ID '%s'.", sanction.getId()), e);
     }

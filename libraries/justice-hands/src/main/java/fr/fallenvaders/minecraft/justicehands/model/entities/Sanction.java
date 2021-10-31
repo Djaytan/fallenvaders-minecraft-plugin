@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * This entity represents a JusticeHands' sanction.
+ * This entity represents a sanction.
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
