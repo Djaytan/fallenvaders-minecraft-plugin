@@ -18,10 +18,9 @@
 package fr.fallenvaders.minecraft.justicehands.controller;
 
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
-import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
+import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.service.SanctionService;
-import fr.fallenvaders.minecraft.justicehands.view.SanctionComponentBuilder;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
@@ -47,7 +46,6 @@ import org.slf4j.Logger;
 @Singleton
 public class SanctionController {
 
-  private final SanctionComponentBuilder sanctionComponentBuilder;
   private final Logger logger;
   private final SanctionDispatcher sanctionDispatcher;
   private final SanctionService sanctionService;
@@ -55,18 +53,15 @@ public class SanctionController {
   /**
    * Constructor.
    *
-   * @param sanctionComponentBuilder The Keys Keeper component builder.
    * @param logger The logger.
    * @param sanctionDispatcher The sanction dispatcher.
    * @param sanctionService The sanction service.
    */
   @Inject
   public SanctionController(
-      @NotNull SanctionComponentBuilder sanctionComponentBuilder,
       @NotNull Logger logger,
       @NotNull SanctionDispatcher sanctionDispatcher,
       @NotNull SanctionService sanctionService) {
-    this.sanctionComponentBuilder = sanctionComponentBuilder;
     this.logger = logger;
     this.sanctionDispatcher = sanctionDispatcher;
     this.sanctionService = sanctionService;
