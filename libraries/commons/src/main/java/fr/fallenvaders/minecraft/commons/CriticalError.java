@@ -37,20 +37,20 @@ import org.jetbrains.annotations.Nullable;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
-public interface CriticalException {
+public interface CriticalError {
 
   /**
-   * Raises the critical exception by applying a special treatment.
+   * Raises the critical error by applying a special treatment.
    *
-   * @param message The description message of the critical exception.
+   * @param message The description message of the critical error.
    */
-  void raiseException(@Nullable String message);
+  void raiseError(@Nullable String message);
 
   /**
-   * Raises the critical exception by applying a special treatment.
+   * Raises the critical error by applying a special treatment.
    *
-   * @param message The description message of the critical exception.
-   * @param cause The cause of the critical exception.
+   * @param message The description message of the critical error.
+   * @param cause The cause of the critical error.
    */
-  void raiseException(@Nullable String message, @Nullable Throwable cause);
+  void raiseError(@Nullable String message, @Nullable Throwable cause);
 }
