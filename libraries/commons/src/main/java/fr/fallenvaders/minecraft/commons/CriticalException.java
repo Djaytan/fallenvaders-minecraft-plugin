@@ -17,6 +17,8 @@
 
 package fr.fallenvaders.minecraft.commons;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This class may be used in situations of critical errors which should never happen in most of the
  * cases with big potential consequences.
@@ -40,6 +42,8 @@ public interface CriticalException {
   /**
    * Raises the critical exception by applying a special treat. In can be the disabling of the
    * plugin like it's the case for {@link CriticalPluginException}.
+   *
+   * @param message The description message of the critical exception.
    */
-  void raiseException();
+  void raiseException(@NotNull String message);
 }
