@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.dao;
 
+import fr.fallenvaders.minecraft.commons.CriticalErrorRaiser;
 import fr.fallenvaders.minecraft.commons.dao.Dao;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
@@ -36,7 +37,6 @@ import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 
 /**
  * DAO class about manipulation of sanctions in the model.
@@ -52,22 +52,24 @@ public class SanctionDao implements Dao<Sanction> {
 
   // TODO: FV-116, FV-117 - optimisation with cache
 
+  private final CriticalErrorRaiser criticalErrorRaiser;
   private final FvDataSource fvDataSource;
-  private final Logger logger;
   private final Server server;
 
   /**
    * Constructor.
    *
+   * @param criticalErrorRaiser The critical error raiser.
    * @param fvDataSource The FallenVaders' data source.
-   * @param logger The logger.
    * @param server The Bukkit server.
    */
   @Inject
   public SanctionDao(
-      @NotNull FvDataSource fvDataSource, @NotNull Logger logger, @NotNull Server server) {
+      @NotNull CriticalErrorRaiser criticalErrorRaiser,
+      @NotNull FvDataSource fvDataSource,
+      @NotNull Server server) {
     this.fvDataSource = fvDataSource;
-    this.logger = logger;
+    this.criticalErrorRaiser = criticalErrorRaiser;
     this.server = server;
   }
 
@@ -136,7 +138,7 @@ public class SanctionDao implements Dao<Sanction> {
         throw new DaoException("No sanction registered in database.");
       }
       if (rowCount > 1) {
-        logger.error("More than one sanction have been registered!");
+        criticalErrorRaiser.raiseError("More than one sanction have been registered!");
       }
     } catch (SQLException | DaoException e) {
       throw new DaoException("Failed to save the sanction.", e);
@@ -158,7 +160,7 @@ public class SanctionDao implements Dao<Sanction> {
         throw new DaoException("No sanction updated in database.");
       }
       if (rowCount > 1) {
-        logger.error("More than one sanction have been updated!");
+        criticalErrorRaiser.raiseError("More than one sanction have been updated!");
       }
     } catch (SQLException e) {
       throw new DaoException("Failed to update the sanction.", e);
@@ -176,7 +178,7 @@ public class SanctionDao implements Dao<Sanction> {
         throw new DaoException("No sanction deleted in database.");
       }
       if (rowCount > 1) {
-        logger.error("More than one sanction have been deleted!");
+        criticalErrorRaiser.raiseError("More than one sanction have been deleted!");
       }
     } catch (SQLException e) {
       throw new DaoException("Failed to delete the sanction.", e);
