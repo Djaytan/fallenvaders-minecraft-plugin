@@ -209,7 +209,11 @@ public class SanctionDao implements Dao<Sanction> {
     stmt.setInt(index++, sanction.getPoints());
     stmt.setTimestamp(index++, sanction.getBeginningDate());
     stmt.setTimestamp(index++, sanction.getEndingDate());
-    stmt.setString(index++, sanction.getAuthorPlayer().getUniqueId().toString());
+    stmt.setString(
+        index++,
+        sanction.getAuthorPlayer() != null
+            ? sanction.getAuthorPlayer().getUniqueId().toString()
+            : null);
     stmt.setString(index++, sanction.getType().name());
     if (idIsLast) {
       stmt.setInt(index, sanction.getId());
