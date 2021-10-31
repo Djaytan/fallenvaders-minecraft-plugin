@@ -39,26 +39,23 @@ public interface Dao<T> extends ReadOnlyDao<T> {
    * Saves a new entity instance {@link T} in the model.
    *
    * @param t The entity to save in the model.
-   * @return The number of affected rows.
    * @throws DaoException if the save of the entity fail.
    */
-  int save(@NotNull T t) throws DaoException;
+  void save(@NotNull T t) throws DaoException;
 
   /**
    * Updates the entity instance {@link T} in the model.
    *
    * @param t The updated entity's instance to replicate in the model.
-   * @return The number of affected rows.
    * @throws DaoException if the update of the entity fail.
    */
-  int update(@NotNull T t) throws DaoException;
+  void update(@NotNull T t) throws DaoException;
 
   /**
    * Deletes the entity instance {@link T} from the model.
    *
    * @param t The entity to delete from the model.
-   * @return The number of affected rows.
    * @throws DaoException if the deletion of the entity fail.
    */
-  int delete(@NotNull T t) throws DaoException;
+  void delete(@NotNull T t) throws DaoException;
 }
