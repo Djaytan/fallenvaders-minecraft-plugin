@@ -18,6 +18,7 @@
 package fr.fallenvaders.minecraft.commons;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +31,7 @@ import org.slf4j.Logger;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
+@Singleton
 public class CriticalPluginError implements CriticalError {
 
   private final JavaPlugin plugin;
