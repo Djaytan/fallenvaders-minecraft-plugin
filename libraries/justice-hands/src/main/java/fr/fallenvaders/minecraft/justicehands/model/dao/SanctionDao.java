@@ -36,6 +36,7 @@ import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 /**
  * DAO class about manipulation of sanctions in the model.
@@ -52,17 +53,21 @@ public class SanctionDao implements Dao<Sanction> {
   // TODO: FV-116, FV-117 - optimisation with cache
 
   private final FvDataSource fvDataSource;
+  private final Logger logger;
   private final Server server;
 
   /**
    * Constructor.
    *
    * @param fvDataSource The FallenVaders' data source.
+   * @param logger The logger.
    * @param server The Bukkit server.
    */
   @Inject
-  public SanctionDao(@NotNull FvDataSource fvDataSource, @NotNull Server server) {
+  public SanctionDao(
+      @NotNull FvDataSource fvDataSource, @NotNull Logger logger, @NotNull Server server) {
     this.fvDataSource = fvDataSource;
+    this.logger = logger;
     this.server = server;
   }
 
@@ -117,7 +122,7 @@ public class SanctionDao implements Dao<Sanction> {
   }
 
   @Override
-  public int save(@NotNull Sanction sanction) throws DaoException {
+  public void save(@NotNull Sanction sanction) throws DaoException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement(
@@ -126,14 +131,20 @@ public class SanctionDao implements Dao<Sanction> {
                     + "sctn_author_player_uuid, sctn_type)"
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
       setSanction(sanction, stmt, false);
-      return stmt.executeUpdate();
-    } catch (SQLException e) {
+      int rowCount = stmt.executeUpdate();
+      if (rowCount == 0) {
+        throw new DaoException("No sanction registered in database.");
+      }
+      if (rowCount > 1) {
+        logger.error("More than one sanction have been registered!");
+      }
+    } catch (SQLException | DaoException e) {
       throw new DaoException("Failed to save the sanction.", e);
     }
   }
 
   @Override
-  public int update(@NotNull Sanction sanction) throws DaoException {
+  public void update(@NotNull Sanction sanction) throws DaoException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement(
@@ -142,19 +153,31 @@ public class SanctionDao implements Dao<Sanction> {
                     + "sctn_ending_date = ?, sctn_author_player_uuid = ?, sctn_type = ? "
                     + "WHERE sctn_id = ?")) {
       setSanction(sanction, stmt, true);
-      return stmt.executeUpdate();
+      int rowCount = stmt.executeUpdate();
+      if (rowCount == 0) {
+        throw new DaoException("No sanction updated in database.");
+      }
+      if (rowCount > 1) {
+        logger.error("More than one sanction have been updated!");
+      }
     } catch (SQLException e) {
       throw new DaoException("Failed to update the sanction.", e);
     }
   }
 
   @Override
-  public int delete(@NotNull Sanction sanction) throws DaoException {
+  public void delete(@NotNull Sanction sanction) throws DaoException {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {
       stmt.setInt(1, sanction.getId());
-      return stmt.executeUpdate();
+      int rowCount = stmt.executeUpdate();
+      if (rowCount == 0) {
+        throw new DaoException("No sanction deleted in database.");
+      }
+      if (rowCount > 1) {
+        logger.error("More than one sanction have been deleted!");
+      }
     } catch (SQLException e) {
       throw new DaoException("Failed to delete the sanction.", e);
     }
