@@ -19,8 +19,6 @@ package fr.fallenvaders.minecraft.commons.dao;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Connection;
-
 /**
  * This is a DAO interface which ask setting up at least CRUD operations for a given entity type in
  * order to manage the model by abstracting storage processes. This logic permits to make the model
@@ -40,30 +38,27 @@ public interface Dao<T> extends ReadOnlyDao<T> {
   /**
    * Saves a new entity instance {@link T} in the model.
    *
-   * @param connection The connection to the DBMS.
    * @param t The entity to save in the model.
    * @return The number of affected rows.
    * @throws DaoException if the save of the entity fail.
    */
-  int save(@NotNull Connection connection, @NotNull T t) throws DaoException;
+  int save(@NotNull T t) throws DaoException;
 
   /**
    * Updates the entity instance {@link T} in the model.
    *
-   * @param connection The connection to the DBMS.
    * @param t The updated entity's instance to replicate in the model.
    * @return The number of affected rows.
    * @throws DaoException if the update of the entity fail.
    */
-  int update(@NotNull Connection connection, @NotNull T t) throws DaoException;
+  int update(@NotNull T t) throws DaoException;
 
   /**
    * Deletes the entity instance {@link T} from the model.
    *
-   * @param connection The connection to the DBMS.
    * @param t The entity to delete from the model.
    * @return The number of affected rows.
    * @throws DaoException if the deletion of the entity fail.
    */
-  int delete(@NotNull Connection connection, @NotNull T t) throws DaoException;
+  int delete(@NotNull T t) throws DaoException;
 }

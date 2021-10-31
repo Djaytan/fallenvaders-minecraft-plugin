@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.commons.dao;
 
-import java.sql.Connection;
 import java.util.Optional;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
@@ -38,21 +37,19 @@ public interface ReadOnlyDao<T> {
   /**
    * Reads a specific entity instance {@link T} in the model according to the specified ID argument.
    *
-   * @param connection The connection to the DBMS.
    * @param id The ID of the entity instance in the model.
    * @return The entity instance corresponding to the specified ID if it exists.
    * @throws DaoException if the read of the entity fail.
    */
   @NotNull
-  Optional<T> get(@NotNull Connection connection, @NotNull String id) throws DaoException;
+  Optional<T> get(@NotNull String id) throws DaoException;
 
   /**
    * Reads all the existing entity instances {@link T} in the model.
    *
-   * @param connection The connection to the DBMS.
    * @return The list of existing entity instances in the model.
    * @throws DaoException if the read of the entities fail.
    */
   @NotNull
-  Set<T> getAll(@NotNull Connection connection) throws DaoException;
+  Set<T> getAll() throws DaoException;
 }
