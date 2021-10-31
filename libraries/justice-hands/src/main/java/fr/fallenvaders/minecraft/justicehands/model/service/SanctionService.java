@@ -67,7 +67,7 @@ public class SanctionService {
       if (jhSanction.isPresent()) {
         logger.info("Sanction found for the ID '{}': {}", id, jhSanction);
       } else {
-        logger.warn("No sanction found for ID '{}'.", id);
+        logger.info("No sanction found for ID '{}'.", id);
       }
       return jhSanction;
     } catch (DaoException e) {
@@ -93,6 +93,7 @@ public class SanctionService {
       if (!sanctions.isEmpty()) {
         logger.info("Sanctions found: {}", sanctions);
       } else {
+        // In production, this warning may uncover an error
         logger.warn("No sanction found.");
       }
       return sanctions;
@@ -124,7 +125,7 @@ public class SanctionService {
       if (!sanctions.isEmpty()) {
         logger.info("Sanctions found: {}", sanctions);
       } else {
-        logger.warn("No sanction found.");
+        logger.info("No sanction found.");
       }
       return sanctions;
     } catch (DaoException e) {
