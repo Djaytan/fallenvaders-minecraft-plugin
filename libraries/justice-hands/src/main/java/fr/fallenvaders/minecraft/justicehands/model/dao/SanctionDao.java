@@ -138,7 +138,7 @@ public class SanctionDao implements Dao<Sanction> {
         throw new DaoException("No sanction registered in database.");
       }
       if (rowCount > 1) {
-        criticalErrorRaiser.raiseError("More than one sanction have been registered!");
+        criticalErrorRaiser.raise("More than one sanction have been registered!");
       }
     } catch (SQLException | DaoException e) {
       throw new DaoException("Failed to save the sanction.", e);
@@ -160,7 +160,7 @@ public class SanctionDao implements Dao<Sanction> {
         throw new DaoException("No sanction updated in database.");
       }
       if (rowCount > 1) {
-        criticalErrorRaiser.raiseError("More than one sanction have been updated!");
+        criticalErrorRaiser.raise("More than one sanction have been updated!");
       }
     } catch (SQLException e) {
       throw new DaoException("Failed to update the sanction.", e);
@@ -178,7 +178,7 @@ public class SanctionDao implements Dao<Sanction> {
         throw new DaoException("No sanction deleted in database.");
       }
       if (rowCount > 1) {
-        criticalErrorRaiser.raiseError("More than one sanction have been deleted!");
+        criticalErrorRaiser.raise("More than one sanction have been deleted!");
       }
     } catch (SQLException e) {
       throw new DaoException("Failed to delete the sanction.", e);

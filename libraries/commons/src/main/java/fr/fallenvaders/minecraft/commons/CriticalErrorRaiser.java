@@ -45,7 +45,7 @@ public interface CriticalErrorRaiser {
    *
    * @param message The description message of the critical error.
    */
-  void raiseError(@NotNull String message);
+  void raise(@NotNull String message);
 
   /**
    * Raises the critical error by applying a special treatment.
@@ -53,5 +53,5 @@ public interface CriticalErrorRaiser {
    * @param message The description message of the critical error.
    * @param cause The cause of the critical error.
    */
-  void raiseError(@NotNull String message, @Nullable Throwable cause);
+  void raise(@NotNull String message, @Nullable Throwable cause);
 }
