@@ -51,13 +51,14 @@ public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
 
   @Override
   public @NotNull Optional<SanctionCategory> get(@NotNull String id) throws DaoException {
-
-    return Optional.empty();
+    return getSanctionCategories().stream()
+        .filter(sanctionCategory -> sanctionCategory.id().equals(id))
+        .findFirst();
   }
 
   @Override
   public @NotNull Set<SanctionCategory> getAll() throws DaoException {
-    return null;
+    return getSanctionCategories();
   }
 
   private @NotNull Set<SanctionCategory> getSanctionCategories() throws DaoException {
