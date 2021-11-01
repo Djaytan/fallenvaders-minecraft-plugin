@@ -19,29 +19,27 @@ package fr.fallenvaders.minecraft.justicehands.model.dao;
 
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
-import fr.fallenvaders.minecraft.justicehands.model.entities.PredefinedSanction;
+import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import java.util.Optional;
 import java.util.Set;
-import javax.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * DAO class about manipulation of {@link PredefinedSanction}s in the model.
+ * DAO class about manipulation of {@link SanctionCategory}s in the model.
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
  * @see ReadOnlyDao
  */
-@Singleton
-public class PredefinedSanctionDao implements ReadOnlyDao<PredefinedSanction> {
+public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
 
   @Override
-  public @NotNull Optional<PredefinedSanction> get(@NotNull String id) throws DaoException {
+  public @NotNull Optional<SanctionCategory> get(@NotNull String id) throws DaoException {
     return Optional.empty();
   }
 
   @Override
-  public @NotNull Set<PredefinedSanction> getAll() throws DaoException {
+  public @NotNull Set<SanctionCategory> getAll() throws DaoException {
     return null;
   }
 }
