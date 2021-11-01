@@ -34,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @param id The id of the predefined sanction.
  * @param name The name of the predefined sanction.
+ * @param categoryName The name of the category of the sanction.
  * @param description The description of the predefined sanction.
  * @param points The number of points associated with the predefined sanction.
  * @param type The type of the predefined sanction.
@@ -41,6 +42,7 @@ import org.jetbrains.annotations.NotNull;
 public record PredefinedSanction(
     long id,
     @NotNull String name,
+    @NotNull String categoryName,
     @NotNull String description,
     int points,
     @NotNull SanctionType type) {}
