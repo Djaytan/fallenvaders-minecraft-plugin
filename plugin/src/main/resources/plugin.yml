@@ -3,234 +3,234 @@ version: ${project.version}
 api-version: ${minecraft.api.version}
 description: ${project.description}
 depend:
-    - SmartInvs
+  - SmartInvs
 main: fr.fallenvaders.minecraft.plugin.FallenVadersPlugin
 website: https://www.fallenvaders.fr
 
 commands:
-    ping:
-        aliases: [ ms ]
-        description: Test de connexion.
-    mailbox:
-        description: commande du plugin mailbox.
-    fightsession:
-        description: Principal command.
-        aliases:
-            - fight
-            - fights
-            - fs
-    cr:
-        description: CriminalRecords (Casiers Judiciaires)
-        aliases: cj
-    sm:
-        description: SanctionManager (Générateur de sanction)
-        aliases: sanction
-    mt:
-        description: ModeratorTools (Outils de modération)
-        aliases: modtools
-    event:
-        permission: admin.event
-        description: Gestion des événements.
+  ping:
+    aliases: [ ms ]
+    description: Test de connexion.
+  mailbox:
+    description: commande du plugin mailbox.
+  fightsession:
+    description: Principal command.
+    aliases:
+      - fight
+      - fights
+      - fs
+  cr:
+    description: CriminalRecords (Casiers Judiciaires)
+    aliases: cj
+  sm:
+    description: SanctionManager (Générateur de sanction)
+    aliases: sanction
+  mt:
+    description: ModeratorTools (Outils de modération)
+    aliases: modtools
+  event:
+    permission: admin.event
+    description: Gestion des événements.
 
 permissions:
-    mailbox.admin:
-        description: Toutes les permissions du plugin.
-        default: op
-        children:
-            - mailbox.openmenu.*
-            - mailbox.letter.*
-            - mailbox.item.*
-            - mailbox.check.*
+  mailbox.admin:
+    description: Toutes les permissions du plugin.
+    default: op
+    children:
+      - mailbox.openmenu.*
+      - mailbox.letter.*
+      - mailbox.item.*
+      - mailbox.check.*
 
-    mailbox.openmenu.*:
-        description: Permission d'ouvrir toutes les boîtes de récéptions.
-        children:
-            - mailbox.openmenu.self
-            - mailbox.openmenu.other
-    mailbox.openmenu.self:
-        description: Permission d'ouvrir sa propre boîte de récéption.
-        default: true
-    mailbox.openmenu.other:
-        description: Permission d'ouvrir la boîte de récéption des autres joueurs.
+  mailbox.openmenu.*:
+    description: Permission d'ouvrir toutes les boîtes de récéptions.
+    children:
+      - mailbox.openmenu.self
+      - mailbox.openmenu.other
+  mailbox.openmenu.self:
+    description: Permission d'ouvrir sa propre boîte de récéption.
+    default: true
+  mailbox.openmenu.other:
+    description: Permission d'ouvrir la boîte de récéption des autres joueurs.
 
-    mailbox.letter.*:
-        description: Permissions d'envoyer, de répondre et de lire les lettres.
-        children:
-            - mailbox.letter.delete.*
-            - mailbox.letter.reply.*
-            - mailbox.letter.send.*
-            - mailbox.letter.read.*
-            - mailbox.letter.markall.*
+  mailbox.letter.*:
+    description: Permissions d'envoyer, de répondre et de lire les lettres.
+    children:
+      - mailbox.letter.delete.*
+      - mailbox.letter.reply.*
+      - mailbox.letter.send.*
+      - mailbox.letter.read.*
+      - mailbox.letter.markall.*
 
-    mailbox.letter.delete.*:
-        description: Permissions pour supprimer des lettres.
-        children:
-            - mailbox.letter.delete.self
-            - mailbox.letter.delete.other
-    mailbox.letter.delete.self:
-        default: true
-        description: Permission de supprimer des lettre de sa boite.
-    mailbox.letter.delete.other:
-        description: Permission de supprimer des lettre de la boite d'un autre joueur.
-    mailbox.letter.reply.*:
-        description: Permission de répondre a une lettre.
-        children:
-            - mailbox.letter.reply.self
-            - mailbox.letter.reply.other
-    mailbox.letter.reply.self:
-        description: Permission de répondre a une lettre dont vous êtes le destinataire.
-        default: true
-    mailbox.letter.reply.other:
-        description: Permission de répondre a une lettre dont vous n'êtes pas le destinataire.
-    mailbox.letter.read.*:
-        description: Permissions de lire les lettres.
-        children:
-            - mailbox.letter.read.self
-            - mailbox.letter.read.other
-    mailbox.letter.read.self:
-        description: Permission de lire ses lettres reçues.
-        default: true
-    mailbox.letter.read.other:
-        description: Permission de lire les lettre reçu par d'autres joueurs.
-    mailbox.letter.markall.*:
-        description: Permission de marquer des lettres comme ayant été lues.
-        children:
-            - mailbox.letter.markall.self
-            - mailbox.letter.markall.other
-    mailbox.letter.markall.self:
-        description: Permission de marquer ses lettres comme ayant été lues.
-    mailbox.letter.markall.other:
-        description: Permission de marquer les lettres d'autres joueurs comme ayant été lues.
+  mailbox.letter.delete.*:
+    description: Permissions pour supprimer des lettres.
+    children:
+      - mailbox.letter.delete.self
+      - mailbox.letter.delete.other
+  mailbox.letter.delete.self:
+    default: true
+    description: Permission de supprimer des lettre de sa boite.
+  mailbox.letter.delete.other:
+    description: Permission de supprimer des lettre de la boite d'un autre joueur.
+  mailbox.letter.reply.*:
+    description: Permission de répondre a une lettre.
+    children:
+      - mailbox.letter.reply.self
+      - mailbox.letter.reply.other
+  mailbox.letter.reply.self:
+    description: Permission de répondre a une lettre dont vous êtes le destinataire.
+    default: true
+  mailbox.letter.reply.other:
+    description: Permission de répondre a une lettre dont vous n'êtes pas le destinataire.
+  mailbox.letter.read.*:
+    description: Permissions de lire les lettres.
+    children:
+      - mailbox.letter.read.self
+      - mailbox.letter.read.other
+  mailbox.letter.read.self:
+    description: Permission de lire ses lettres reçues.
+    default: true
+  mailbox.letter.read.other:
+    description: Permission de lire les lettre reçu par d'autres joueurs.
+  mailbox.letter.markall.*:
+    description: Permission de marquer des lettres comme ayant été lues.
+    children:
+      - mailbox.letter.markall.self
+      - mailbox.letter.markall.other
+  mailbox.letter.markall.self:
+    description: Permission de marquer ses lettres comme ayant été lues.
+  mailbox.letter.markall.other:
+    description: Permission de marquer les lettres d'autres joueurs comme ayant été lues.
 
-    mailbox.item.*:
-        description: Permission d'envoyer, de supprimer et de recupérer des objets.
-        children:
-            - mailbox.item.send
-            - mailbox.item.recover
-            - mailbox.item.delete
-    mailbox.item.send:
-        description: Permission d'envoyer des objets
-    mailbox.item.recover.*:
-        description: Permission de recuperer les objets des boites.
-        children:
-            - mailbox.recover.item.self
-            - mailbox.recover.item.other
-    mailbox.item.recover.self:
-        description: Permission de recuperer ses objets de sa boite d'objet
-        default: true
-    mailbox.item.recover.other:
-        description: Permission de recuperer les objets dans la boite de reception d'autres joueurs.
-    mailbox.item.delete.*:
-        description: Permissions pour supprimer des objets
-        children:
-            - mailbox.item.delete.self
-            - mailbox.item.delete.other
-    mailbox.item.delete.self:
-        description: Permission de supprimer ses objets de sa boîte de récéption d'objets.
-    mailbox.item.delete.other:
-        description: permission de supprimer des objets de la boîte de récéption d'autres joueurs.
-    mailbox.check.*:
-        description: Permissions de demander l'état des boîtes de récéptions.
-        children:
-            - mailbox.check.self
-            - mailbox.check.other
-    mailbox.check.self:
-        description: Permission de demander l'état de sa boîte de récéption.
-    mailbox.check.other:
-        description: Permission de demander l'état de la boîte de récéption d'autres joueurs.
+  mailbox.item.*:
+    description: Permission d'envoyer, de supprimer et de recupérer des objets.
+    children:
+      - mailbox.item.send
+      - mailbox.item.recover
+      - mailbox.item.delete
+  mailbox.item.send:
+    description: Permission d'envoyer des objets
+  mailbox.item.recover.*:
+    description: Permission de recuperer les objets des boites.
+    children:
+      - mailbox.recover.item.self
+      - mailbox.recover.item.other
+  mailbox.item.recover.self:
+    description: Permission de recuperer ses objets de sa boite d'objet
+    default: true
+  mailbox.item.recover.other:
+    description: Permission de recuperer les objets dans la boite de reception d'autres joueurs.
+  mailbox.item.delete.*:
+    description: Permissions pour supprimer des objets
+    children:
+      - mailbox.item.delete.self
+      - mailbox.item.delete.other
+  mailbox.item.delete.self:
+    description: Permission de supprimer ses objets de sa boîte de récéption d'objets.
+  mailbox.item.delete.other:
+    description: permission de supprimer des objets de la boîte de récéption d'autres joueurs.
+  mailbox.check.*:
+    description: Permissions de demander l'état des boîtes de récéptions.
+    children:
+      - mailbox.check.self
+      - mailbox.check.other
+  mailbox.check.self:
+    description: Permission de demander l'état de sa boîte de récéption.
+  mailbox.check.other:
+    description: Permission de demander l'état de la boîte de récéption d'autres joueurs.
 
-    mailbox.send.*:
-        description: Permissions pour les choix des cibles.
-        children:
-            - mailbox.send.standard
-            - mailbox.send.announce
-    mailbox.send.announce:
-        description: Permission d'envoyer une lettre a plusieurs destinataires à la fois.
-    mailbox.send.standard:
-        description: Permission d'effectuer un envoie.
-        default: true
+  mailbox.send.*:
+    description: Permissions pour les choix des cibles.
+    children:
+      - mailbox.send.standard
+      - mailbox.send.announce
+  mailbox.send.announce:
+    description: Permission d'envoyer une lettre a plusieurs destinataires à la fois.
+  mailbox.send.standard:
+    description: Permission d'effectuer un envoie.
+    default: true
 
-    fightsession.group.admin:
-        description: All permissions of the plugin.
-        op: true
-        children:
-            fightsession.reload: true
-            fightsession.help: true
-            fightsession.time: true
-            fightsession.targets: true
+  fightsession.group.admin:
+    description: All permissions of the plugin.
+    op: true
+    children:
+      fightsession.reload: true
+      fightsession.help: true
+      fightsession.time: true
+      fightsession.targets: true
 
-    fightsession.group.player:
-        description: Permissions help, targets and time (for players).
-        default: true
-        children:
-            fightsession.help: true
-            fightsession.time: true
-            fightsession.targets: true
+  fightsession.group.player:
+    description: Permissions help, targets and time (for players).
+    default: true
+    children:
+      fightsession.help: true
+      fightsession.time: true
+      fightsession.targets: true
 
-    fightsession.reload:
-        description: Needed to reload the plugin.
-    fightsession.help:
-        description: Needed to view the help (/help) message.
-    fightsession.time:
-        description: Needed to view the time left when in fight.
-    fightsession.targets:
-        description: Needed to view the targets when in fight.
+  fightsession.reload:
+    description: Needed to reload the plugin.
+  fightsession.help:
+    description: Needed to view the help (/help) message.
+  fightsession.time:
+    description: Needed to view the time left when in fight.
+  fightsession.targets:
+    description: Needed to view the targets when in fight.
 
-    justicehands.pl:
-        description: Accès total au plugin JusticeHands.
-        children:
-            justicehands.cr: true
-            justicehands.mt: true
-            justicehands.sm: true
+  justicehands.pl:
+    description: Accès total au plugin JusticeHands.
+    children:
+      justicehands.cr: true
+      justicehands.mt: true
+      justicehands.sm: true
 
-    justicehands.cr:
-        description: Accès complet sur les casiers judiciaires et édition de sanctions.
-        children:
-            justicehands.cr.admin: true
-            justicehands.cr.mod: true
-            justicehands.cr.joueur: true
+  justicehands.cr:
+    description: Accès complet sur les casiers judiciaires et édition de sanctions.
+    children:
+      justicehands.cr.admin: true
+      justicehands.cr.mod: true
+      justicehands.cr.joueur: true
 
-    justicehands.sm:
-        description: Accès complet sur l'attribution de sanction.
-        children:
-            justicehands.sm.use: true
-            justicehands.sm.kick: true
-            justicehands.sm.mute: true
-            justicehands.sm.ban: true
-            justicehands.sm.bandef: true
-            justicehands.sm.custom: true
+  justicehands.sm:
+    description: Accès complet sur l'attribution de sanction.
+    children:
+      justicehands.sm.use: true
+      justicehands.sm.kick: true
+      justicehands.sm.mute: true
+      justicehands.sm.ban: true
+      justicehands.sm.bandef: true
+      justicehands.sm.custom: true
 
-    justicehands.cr.admin:
-        description: CriminalRecords - Accès Administrateur
-        children:
-            justicehands.cr.override: true
-            justicehands.cr.delete.kick: true
-            justicehands.cr.delete.mute: true
-            justicehands.cr.delete.risingban: true
-            justicehands.cr.delete.ban: true
-            justicehands.cr.delete.bandef: true
-            justicehands.cr.contestation.kick: true
-            justicehands.cr.contestation.mute: true
-            justicehands.cr.contestation.risingban: true
-            justicehands.cr.contestation.ban: true
-            justicehands.cr.contestation.bandef: true
-            justicehands.cr.visionall: true
-            justicehands.cr.mod: true
-            justicehands.cr.joueur: true
+  justicehands.cr.admin:
+    description: CriminalRecords - Accès Administrateur
+    children:
+      justicehands.cr.override: true
+      justicehands.cr.delete.kick: true
+      justicehands.cr.delete.mute: true
+      justicehands.cr.delete.risingban: true
+      justicehands.cr.delete.ban: true
+      justicehands.cr.delete.bandef: true
+      justicehands.cr.contestation.kick: true
+      justicehands.cr.contestation.mute: true
+      justicehands.cr.contestation.risingban: true
+      justicehands.cr.contestation.ban: true
+      justicehands.cr.contestation.bandef: true
+      justicehands.cr.visionall: true
+      justicehands.cr.mod: true
+      justicehands.cr.joueur: true
 
-    justicehands.cr.mod:
-        description: CriminalRecords - Accès Modérateur
-        children:
-            justicehands.cr.immune: true
-            justicehands.cr.unmute: true
-            justicehands.cr.visionmedium: true
-            justicehands.cr.joueur: true
+  justicehands.cr.mod:
+    description: CriminalRecords - Accès Modérateur
+    children:
+      justicehands.cr.immune: true
+      justicehands.cr.unmute: true
+      justicehands.cr.visionmedium: true
+      justicehands.cr.joueur: true
 
-    justicehands.cr.joueur:
-        description: CriminalRecords - Accès Joueur
-        children:
-            justicehands.cr.getid: true
-            justicehands.cr.visionlow: true
-            justicehands.cr.open.other: true
-            justicehands.cr.open.yourself: true
-            justicehands.cr.use: true
+  justicehands.cr.joueur:
+    description: CriminalRecords - Accès Joueur
+    children:
+      justicehands.cr.getid: true
+      justicehands.cr.visionlow: true
+      justicehands.cr.open.other: true
+      justicehands.cr.open.yourself: true
+      justicehands.cr.use: true

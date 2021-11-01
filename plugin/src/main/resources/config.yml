@@ -9,12 +9,12 @@ database:
   password: 'password'
 
 timer_options:
-    display_mode: "bossbar" # Or: none
-    refresh_mode: "ticks" # Or: seconds
-    time_format: "#0.00" # Or: #0.0 or #0
-    bossbar_display_otions:
-        color: "yellow"
-        style: "segmented_10"
+  display_mode: "bossbar" # Or: none
+  refresh_mode: "ticks" # Or: seconds
+  time_format: "#0.00" # Or: #0.0 or #0
+  bossbar_display_otions:
+    color: "yellow"
+    style: "segmented_10"
 
 AllowChorus: true
 AllowEnderpearls: true
@@ -22,211 +22,211 @@ AllowEnderpearls: true
 action_on_leave: "kill_player" #Or: "drop_inventory_in_chest" or "drop_inventory_in_world" or "destroy_inventory" or "none"
 
 message_levels:
-    info: "&e"
-    notification: "&a"
-    warning: "&c"
-    faillure: "&c"
-    error: "&4"
+  info: "&e"
+  notification: "&a"
+  warning: "&c"
+  faillure: "&c"
+  error: "&4"
 
 # JusticeHands module config
 justicehands:
-    sanctionmanager:
-        #
-        # Il faut penser à mettre la ponctuation en fin de raison.
-        # Le plugin ne s'en charge pas. (Question esthétique)
-        #
-        #
-        # Informations concernant les points :
-        #
-        # Il y a deux types différents de sanctions utilisant une date d'expiration
-        #   - mute
-        #   - ban (bannissement temporaire)
-        #
-        # Pour un mute, par défaut  chaque point vaut 1 minute :
-        # Mute (en minutes) = points*1
-        #
-        # Pour un bannissement temporaire, par défaut chaque 10 points vaut 1 jour:
-        # Ban (en jours) = points/10
-        #
-        # L'attribution des points ci-dessous peut se faire en réfléchissant de la sorte :
-        #   Si un joueur n'as jamais eu de sanction, de combien
-        #   sera la durée de sa PREMIERE sanction ?
-        #
-        # Si le joueur a un trop gros nombre de points sur son casier judiciaire,
-        # la dernière sanction qui lui sera attribué pourra se transformer en ban temporaire
-        #
-        # Le reste du plugin s'en charge tout seul, selon le nombre de points marqués
-        # en dessous:
-        #
-        MainMenu:
-            lines: 3
-            playerhead-line: 0
-            playerhead-colum: 4
-        points-system:
-            mute-min-points : 1 #Combien de points vaut 1 minute de mute ? (defaut : 1)
-            ban-day-points : 10 #Combien de points vaut 1 jour de ban ? (defaut : 1)
-            risingban-points: 100 #Seuil de transformation de sanction en ban (defaut : 100)
-        categories:
-            Général:
-                main-line-slot: 1
-                main-colum-slot: 2
-                description: Description à faire !
-                sanctions:
-                    1:
-                        name: Limite de doubles comptes atteinte
-                        reason: Trop de doubles comptes. Contestation ? dornacraft.fr/forum/
-                        points: 0
-                        initial-type: bandef
-                    2:
-                        name: Payback / Litige
-                        reason: Récupération d'une partie ou entiereté de son argent réel dépensé sur le serveur.
-                        points: 0
-                        initial-type: bandef
-            Chat:
-                main-line-slot: 1
-                main-colum-slot: 4
-                description: Description à faire !
-                sanctions:
-                    1:
-                        name: Insulte - Joueur
-                        reason: Insulte envers un joueur.
-                        points: 20
-                        initial-type: mute
-                    2:
-                        name: Insulte - Membre du staff.
-                        reason: Insulte envers un membre du staff.
-                        points: 40
-                        initial-type: mute
-                    3:
-                        name: Spam - Public
-                        reason: Spam sur le chat public.
-                        points: 10
-                        initial-type: mute
-                    4:
-                        name: Harcelement
-                        reason: Harcèle un joueur en messages privés.
-                        points: 20
-                        initial-type: mute
-                    5:
-                        name: Menaces de mort
-                        reason: Enonce des menaces de mort en privé ou public.
-                        points: 70
-                        initial-type: ban
-                    6:
-                        name: Menaces (général)
-                        reason: Enonce des menaces en privé ou public.
-                        points: 50
-                        initial-type: mute
-                    7:
-                        name: Pub (Pour de la concurrence)
-                        reason: Effectue de la pub sur le serveur.
-                        points: 20
-                        initial-type: mute
-                    8:
-                        name: Informations confidentielles
-                        reason: Dévoile des informations confidentielles
-                        points: 60
-                        initial-type: mute
-                    9:
-                        name: Rabaissement (psychologique)
-                        reason: Rabaisse un joueur dans le chat
-                        points: 40
-                        initial-type: mute
-            Jeu:
-                main-line-slot: 1
-                main-colum-slot: 6
-                description: Description à faire !
-                sanctions:
-                    1:
-                        name: Client modifié
-                        reason: Utilisisation d'un clien modifié non autorisé par notre réglement.
-                        points: 250
-                        initial-type: ban
-                    2:
-                        name: Lags volontaires
-                        reason: Génération de lags volontaires.
-                        points: 10
-                        initial-type: kick
-                    3:
-                        name: Marché noir
-                        reason: Création d'un marché noir virtuel/réel au sein du serveur.
-                        points: 150
-                        initial-type: ban
+  sanctionmanager:
+    #
+    # Il faut penser à mettre la ponctuation en fin de raison.
+    # Le plugin ne s'en charge pas. (Question esthétique)
+    #
+    #
+    # Informations concernant les points :
+    #
+    # Il y a deux types différents de sanctions utilisant une date d'expiration
+    #   - mute
+    #   - ban (bannissement temporaire)
+    #
+    # Pour un mute, par défaut  chaque point vaut 1 minute :
+    # Mute (en minutes) = points*1
+    #
+    # Pour un bannissement temporaire, par défaut chaque 10 points vaut 1 jour:
+    # Ban (en jours) = points/10
+    #
+    # L'attribution des points ci-dessous peut se faire en réfléchissant de la sorte :
+    #   Si un joueur n'as jamais eu de sanction, de combien
+    #   sera la durée de sa PREMIERE sanction ?
+    #
+    # Si le joueur a un trop gros nombre de points sur son casier judiciaire,
+    # la dernière sanction qui lui sera attribué pourra se transformer en ban temporaire
+    #
+    # Le reste du plugin s'en charge tout seul, selon le nombre de points marqués
+    # en dessous:
+    #
+    MainMenu:
+      lines: 3
+      playerhead-line: 0
+      playerhead-colum: 4
+    points-system:
+      mute-min-points: 1 #Combien de points vaut 1 minute de mute ? (defaut : 1)
+      ban-day-points: 10 #Combien de points vaut 1 jour de ban ? (defaut : 1)
+      risingban-points: 100 #Seuil de transformation de sanction en ban (defaut : 100)
+    categories:
+      Général:
+        main-line-slot: 1
+        main-colum-slot: 2
+        description: Description à faire !
+        sanctions:
+          1:
+            name: Limite de doubles comptes atteinte
+            reason: Trop de doubles comptes. Contestation ? dornacraft.fr/forum/
+            points: 0
+            initial-type: bandef
+          2:
+            name: Payback / Litige
+            reason: Récupération d'une partie ou entiereté de son argent réel dépensé sur le serveur.
+            points: 0
+            initial-type: bandef
+      Chat:
+        main-line-slot: 1
+        main-colum-slot: 4
+        description: Description à faire !
+        sanctions:
+          1:
+            name: Insulte - Joueur
+            reason: Insulte envers un joueur.
+            points: 20
+            initial-type: mute
+          2:
+            name: Insulte - Membre du staff.
+            reason: Insulte envers un membre du staff.
+            points: 40
+            initial-type: mute
+          3:
+            name: Spam - Public
+            reason: Spam sur le chat public.
+            points: 10
+            initial-type: mute
+          4:
+            name: Harcelement
+            reason: Harcèle un joueur en messages privés.
+            points: 20
+            initial-type: mute
+          5:
+            name: Menaces de mort
+            reason: Enonce des menaces de mort en privé ou public.
+            points: 70
+            initial-type: ban
+          6:
+            name: Menaces (général)
+            reason: Enonce des menaces en privé ou public.
+            points: 50
+            initial-type: mute
+          7:
+            name: Pub (Pour de la concurrence)
+            reason: Effectue de la pub sur le serveur.
+            points: 20
+            initial-type: mute
+          8:
+            name: Informations confidentielles
+            reason: Dévoile des informations confidentielles
+            points: 60
+            initial-type: mute
+          9:
+            name: Rabaissement (psychologique)
+            reason: Rabaisse un joueur dans le chat
+            points: 40
+            initial-type: mute
+      Jeu:
+        main-line-slot: 1
+        main-colum-slot: 6
+        description: Description à faire !
+        sanctions:
+          1:
+            name: Client modifié
+            reason: Utilisisation d'un clien modifié non autorisé par notre réglement.
+            points: 250
+            initial-type: ban
+          2:
+            name: Lags volontaires
+            reason: Génération de lags volontaires.
+            points: 10
+            initial-type: kick
+          3:
+            name: Marché noir
+            reason: Création d'un marché noir virtuel/réel au sein du serveur.
+            points: 150
+            initial-type: ban
 
 # MiniEvents module config
 config-event:
-    event-world:
-        name: "Event_World"
+  event-world:
+    name: "Event_World"
 
-    spleef:
-        players:
-            min-players: 5
-            max-players: 15
-        spawns:
-            spawn-on-join:
-                x: 1000.5
-                y: 100.5
-                z: 1000.5
-                yaw: -90
-                pitch: 0
-            spawn-arene:
-                x: 1029.5
-                y: 95.5
-                z: 1000.5
-                yaw: -90
-                pitch: 0
-        water-detection:
-            y: 86
-        messages:
-        #Ici seront mis ulterieurement les messages custom de l'événement en lui même
+  spleef:
+    players:
+      min-players: 5
+      max-players: 15
+    spawns:
+      spawn-on-join:
+        x: 1000.5
+        y: 100.5
+        z: 1000.5
+        yaw: -90
+        pitch: 0
+      spawn-arene:
+        x: 1029.5
+        y: 95.5
+        z: 1000.5
+        yaw: -90
+        pitch: 0
+    water-detection:
+      y: 86
+    messages:
+    #Ici seront mis ulterieurement les messages custom de l'événement en lui même
 
-    enclume:
-        timer-between-waves:
-            time: 10
-        players:
-            min-players: 10
-            max-players: 30
-        spawns:
-            spawn-on-join:
-                x: 500.5
-                y: 100.5
-                z: 1000.5
-                yaw: -90
-                pitch: 0
-            spawn-arene:
-                x: 510.5
-                y: 103.5
-                z: 988.5
-                yaw: -90
-                pitch: 0
-        spawning-area:
-            first-point:
-                x: 510
-                z: 988
-            second-point:
-                x: 534
-                z: 1012
-            #COUCHE D'APPARITION DES ENCLUMES
-            y: 123
-        messages:
-        #Ici seront mis ulterieurement les messages custom de l'événement en lui même
+  enclume:
+    timer-between-waves:
+      time: 10
+    players:
+      min-players: 10
+      max-players: 30
+    spawns:
+      spawn-on-join:
+        x: 500.5
+        y: 100.5
+        z: 1000.5
+        yaw: -90
+        pitch: 0
+      spawn-arene:
+        x: 510.5
+        y: 103.5
+        z: 988.5
+        yaw: -90
+        pitch: 0
+    spawning-area:
+      first-point:
+        x: 510
+        z: 988
+      second-point:
+        x: 534
+        z: 1012
+      #COUCHE D'APPARITION DES ENCLUMES
+      y: 123
+    messages:
+    #Ici seront mis ulterieurement les messages custom de l'événement en lui même
 
-    bowspleef:
-        players:
-            min-players: 5
-            max-players: 15
-        spawns:
-            spawn-on-join:
-                x: 1000.5
-                y: 100.5
-                z: 1000.5
-                yaw: -90
-                pitch: 0
-            spawn-arene:
-                x: 1029.5
-                y: 95.5
-                z: 1000.5
-                yaw: -90
-                pitch: 0
-        messages:
-        #Ici seront mis ulterieurement les messages custom de l'événement en lui même
+  bowspleef:
+    players:
+      min-players: 5
+      max-players: 15
+    spawns:
+      spawn-on-join:
+        x: 1000.5
+        y: 100.5
+        z: 1000.5
+        yaw: -90
+        pitch: 0
+      spawn-arene:
+        x: 1029.5
+        y: 95.5
+        z: 1000.5
+        yaw: -90
+        pitch: 0
+    messages:
+    #Ici seront mis ulterieurement les messages custom de l'événement en lui même
