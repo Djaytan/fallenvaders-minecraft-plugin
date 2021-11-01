@@ -19,7 +19,6 @@ package fr.fallenvaders.minecraft.justicehands.view;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
-import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `fv_jh_sanction`
 (
-  `sctn_id`                              INT(255) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `sctn_id`                     INT(255) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `sctn_inculpated_player_uuid` CHAR(255)         NOT NULL,
   `sctn_name`                   CHAR(255)         NOT NULL,
   `sctn_reason`                 CHAR(255)         NOT NULL,

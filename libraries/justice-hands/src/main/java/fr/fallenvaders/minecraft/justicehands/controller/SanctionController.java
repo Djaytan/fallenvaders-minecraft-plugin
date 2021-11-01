@@ -95,7 +95,7 @@ public class SanctionController {
       throws JusticeHandsException {
     Set<Sanction> sanctions = getPlayerSanctions(player);
     return sanctions.stream()
-        .filter(sanction -> sanction.getType() == sanctionType)
+        .filter(sanction -> sanction.type() == sanctionType)
         .collect(Collectors.toSet());
   }
 
@@ -127,23 +127,23 @@ public class SanctionController {
       @NotNull OfflinePlayer player, @NotNull SanctionType sanctionType)
       throws JusticeHandsException {
     return getPlayerSanctions(player).stream()
-        .filter(sanction -> sanction.getType() == sanctionType)
+        .filter(sanction -> sanction.type() == sanctionType)
         .findFirst();
   }
 
   /**
    * Kicks the specified {@link Player} from server by creating a {@link Sanction}.
    *
-   * @param player The player to kick from the server.
+   * @param inculpated The inculpated player to kick from the server.
    */
   public void kickPlayer(
-      @NotNull Player player,
+      @NotNull Player inculpated,
       @NotNull String name,
       @NotNull String reason,
       int points,
       @NotNull CommandSender author) {
     try {
-      sanctionPlayer(player, name, reason, points, null, author, SanctionType.KICK);
+      sanctionPlayer(inculpated, name, reason, points, null, author, SanctionType.KICK);
     } catch (JusticeHandsException e) {
       logger.error("Failed to kick player.", e);
       // TODO: show error message in view
@@ -151,37 +151,34 @@ public class SanctionController {
   }
 
   private void sanctionPlayer(
-      @NotNull Player player,
+      @NotNull Player inculpated,
       @NotNull String name,
       @NotNull String reason,
       int points,
       @Nullable Duration duration,
       @NotNull CommandSender author,
-      @NotNull SanctionType sanctionType)
+      @NotNull SanctionType type)
       throws JusticeHandsException {
     checkAuthorValidity(author);
+
     Timestamp beginningDate = new Timestamp(System.currentTimeMillis());
     Timestamp endingDate = null;
     if (duration != null) {
       endingDate = new Timestamp(System.currentTimeMillis() + duration.toMillis());
     }
+    OfflinePlayer authorPlayer = convertAuthor(author);
 
-    Sanction sanction = new Sanction();
-    sanction.setInculpatedPlayer(player);
-    sanction.setName(name);
-    sanction.setReason(reason);
-    sanction.setPoints(points);
-    sanction.setBeginningDate(beginningDate);
-    sanction.setEndingDate(endingDate);
-    sanction.setAuthorPlayer(convertAuthor(author));
-    sanction.setType(sanctionType);
+    Sanction sanction =
+        new Sanction(
+            inculpated, name, reason, points, beginningDate, endingDate, authorPlayer, type);
 
     /*
      * The priority is the registration of the sanction in model before the dispatch.
-     * If dispatch fail, the user can opt to alternative solutions (send message to player and then
-     * use Minecraft vanilla kick command if needed in case of kick or ban).
-     * Finally, the dispatch mustn't fail because we expect here that the sanction is
-     * well-defined.
+     * If dispatch fail, the author can opt to alternative solutions (send message to player and
+     * then use Minecraft vanilla kick command if needed in case of kick or ban). Then, the program
+     * can take the relay when player try to reconnect when he is banned.
+     * Furthermore, the dispatch mustn't fail because we expect here that the sanction is
+     * well-defined and shouldn't throw exception in this case.
      */
     sanctionService.registerSanction(sanction);
     sanctionDispatcher.dispatchSanction(sanction);
@@ -204,10 +201,10 @@ public class SanctionController {
   }
 
   private boolean isActiveSanction(@NotNull Sanction sanction) {
-    boolean isBanDef = sanction.getType() == SanctionType.BAN && sanction.getEndingDate() == null;
+    boolean isBanDef = sanction.type() == SanctionType.BAN && sanction.endingDate() == null;
     boolean isActive =
-        sanction.getEndingDate() != null
-            && sanction.getEndingDate().toInstant().isAfter(Instant.now());
+        sanction.endingDate() != null
+            && sanction.endingDate().toInstant().isAfter(Instant.now());
     return isBanDef || isActive;
   }
 }

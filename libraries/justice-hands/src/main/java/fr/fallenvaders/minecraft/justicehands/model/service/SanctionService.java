@@ -166,7 +166,7 @@ public class SanctionService {
   public void updateSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info(
         "Try to update the sanction with ID '{}' with this following new value: {}",
-        sanction.getId(),
+        sanction.id(),
         sanction);
     try {
       sanctionDao.update(sanction);
@@ -174,7 +174,7 @@ public class SanctionService {
     } catch (DaoException e) {
       logger.error("An error occurs preventing the update of a sanction.");
       throw new JusticeHandsException(
-          String.format("Failed to update the sanction with ID '%s'.", sanction.getId()), e);
+          String.format("Failed to update the sanction with ID '%s'.", sanction.id()), e);
     }
   }
 
@@ -192,7 +192,7 @@ public class SanctionService {
     } catch (DaoException e) {
       logger.error("An error occurs preventing the delete of a sanction.");
       throw new JusticeHandsException(
-          String.format("Failed to delete the sanction with ID '%s'.", sanction.getId()), e);
+          String.format("Failed to delete the sanction with ID '%s'.", sanction.id()), e);
     }
   }
 }

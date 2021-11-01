@@ -57,7 +57,7 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
   public void dispatchSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info("Dispatch sanction: {}", sanction);
     try {
-      switch (sanction.getType()) {
+      switch (sanction.type()) {
         case KICK -> kick(sanction);
         case MUTE -> mute(sanction);
         case BAN -> ban(sanction);
@@ -69,7 +69,7 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
   }
 
   private void kick(@NotNull Sanction kick) {
-    OfflinePlayer player = kick.getInculpatedPlayer();
+    OfflinePlayer player = kick.inculpatedPlayer();
     if (player.isOnline()) {
       Player p = (Player) player;
       p.kick(sanctionComponentBuilder.kickMessage(kick));
@@ -81,7 +81,7 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
   }
 
   private void mute(@NotNull Sanction mute) throws JusticeHandsException {
-    OfflinePlayer player = mute.getInculpatedPlayer();
+    OfflinePlayer player = mute.inculpatedPlayer();
     if (player.isOnline()) {
       Player p = (Player) player;
       Component muteMessage = sanctionComponentBuilder.muteMessage(mute);
@@ -90,7 +90,7 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
   }
 
   private void ban(@NotNull Sanction ban) {
-    OfflinePlayer player = ban.getInculpatedPlayer();
+    OfflinePlayer player = ban.inculpatedPlayer();
     if (player.isOnline()) {
       Player p = (Player) player;
       p.kick(sanctionComponentBuilder.banMessage(ban));
