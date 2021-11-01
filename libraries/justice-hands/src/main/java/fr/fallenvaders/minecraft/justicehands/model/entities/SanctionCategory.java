@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
  * @param predefinedSanctions The {@link PredefinedSanction}s nested the category.
  */
 public record SanctionCategory(
-    long id,
+    @NotNull String id,
     @NotNull String name,
     @NotNull String description,
     @NotNull Set<PredefinedSanction> predefinedSanctions) {}

@@ -39,7 +39,7 @@ import org.jetbrains.annotations.NotNull;
  * @param type The type of the predefined sanction.
  */
 public record PredefinedSanction(
-    long id,
+    @NotNull String id,
     @NotNull String name,
     @NotNull String description,
     int points,
