@@ -20,8 +20,11 @@ package fr.fallenvaders.minecraft.justicehands.model.dao;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.PredefinedSanction;
+import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +38,18 @@ import org.jetbrains.annotations.NotNull;
 @Singleton
 public class PredefinedSanctionDao implements ReadOnlyDao<PredefinedSanction> {
 
+  private final SanctionCategoryDao sanctionCategoryDao;
+
+  /**
+   * Constructor.
+   *
+   * @param sanctionCategoryDao The {@link SanctionCategory} DAO.
+   */
+  @Inject
+  public PredefinedSanctionDao(@NotNull SanctionCategoryDao sanctionCategoryDao) {
+    this.sanctionCategoryDao = sanctionCategoryDao;
+  }
+
   @Override
   public @NotNull Optional<PredefinedSanction> get(@NotNull String id) throws DaoException {
     return Optional.empty();
@@ -43,5 +58,14 @@ public class PredefinedSanctionDao implements ReadOnlyDao<PredefinedSanction> {
   @Override
   public @NotNull Set<PredefinedSanction> getAll() throws DaoException {
     return null;
+  }
+
+  private @NotNull Set<PredefinedSanction> getPredefinedSanctions() throws DaoException {
+    Set<PredefinedSanction> predefinedSanctions = new LinkedHashSet<>();
+    sanctionCategoryDao
+        .getAll()
+        .forEach(
+            sanctionCategory -> predefinedSanctions.addAll(sanctionCategory.predefinedSanctions()));
+    return predefinedSanctions;
   }
 }
