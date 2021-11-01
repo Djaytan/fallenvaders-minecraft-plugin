@@ -25,6 +25,8 @@ import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +38,7 @@ import org.jetbrains.annotations.NotNull;
  * @since 0.3.0
  * @see ReadOnlyDao
  */
+@Singleton
 public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
 
   private final FileConfiguration config;
@@ -45,6 +48,7 @@ public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
    *
    * @param config The Bukkit config file.
    */
+  @Inject
   public SanctionCategoryDao(@NotNull FileConfiguration config) {
     this.config = config;
   }
