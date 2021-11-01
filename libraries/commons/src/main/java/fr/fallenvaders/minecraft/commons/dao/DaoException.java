@@ -33,6 +33,13 @@ public class DaoException extends Exception {
 
   /**
    * Constructor.
+   */
+  public DaoException() {
+    super();
+  }
+
+  /**
+   * Constructor.
    *
    * @param message The exception's description message.
    */
