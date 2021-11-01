@@ -19,9 +19,14 @@ package fr.fallenvaders.minecraft.justicehands.model.dao;
 
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
+import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
+import fr.fallenvaders.minecraft.justicehands.model.entities.PredefinedSanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,13 +38,60 @@ import org.jetbrains.annotations.NotNull;
  */
 public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
 
+  private final FileConfiguration config;
+
+  /**
+   * Constructor.
+   *
+   * @param config The Bukkit config file.
+   */
+  public SanctionCategoryDao(@NotNull FileConfiguration config) {
+    this.config = config;
+  }
+
   @Override
   public @NotNull Optional<SanctionCategory> get(@NotNull String id) throws DaoException {
+
     return Optional.empty();
   }
 
   @Override
   public @NotNull Set<SanctionCategory> getAll() throws DaoException {
     return null;
+  }
+
+  private @NotNull Set<SanctionCategory> getSanctionCategories() throws DaoException {
+    Set<SanctionCategory> sanctionCategories = new LinkedHashSet<>();
+    try {
+      ConfigurationSection categories =
+          config.getConfigurationSection("justicehands.sanctions-scale.categories");
+      for (String categoryKey : categories.getKeys(false)) {
+        ConfigurationSection category = categories.getConfigurationSection(categoryKey);
+        String categoryName = category.getString("name");
+        String categoryDescription = category.getString("description");
+        Set<PredefinedSanction> predefinedSanctions = new LinkedHashSet<>();
+        ConfigurationSection sanctions = category.getConfigurationSection("sanctions");
+        for (String sanctionKey : sanctions.getKeys(false)) {
+          ConfigurationSection sanction = sanctions.getConfigurationSection(sanctionKey);
+          String sanctionName = sanction.getString("name");
+          String sanctionDescription = sanction.getString("description");
+          int sanctionPoints = sanction.getInt("points");
+          String sanctionTypeStr = sanction.getString("type");
+          SanctionType sanctionType = SanctionType.valueOf(sanctionTypeStr);
+          PredefinedSanction predefinedSanction =
+              new PredefinedSanction(
+                  sanctionKey, sanctionName, sanctionDescription, sanctionPoints, sanctionType);
+          predefinedSanctions.add(predefinedSanction);
+        }
+        SanctionCategory sanctionCategory =
+            new SanctionCategory(
+                categoryKey, categoryName, categoryDescription, predefinedSanctions);
+        sanctionCategories.add(sanctionCategory);
+      }
+    } catch (NullPointerException e) {
+      // TODO: FV-135 - THIS IS BAD!!! But it require a lib to facilitate config creation
+      throw new DaoException("Failed to read the config file.", e);
+    }
+    return sanctionCategories;
   }
 }
