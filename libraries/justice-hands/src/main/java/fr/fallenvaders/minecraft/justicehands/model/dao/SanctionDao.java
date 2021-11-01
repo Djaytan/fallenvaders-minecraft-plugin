@@ -41,8 +41,6 @@ import org.jetbrains.annotations.NotNull;
 /**
  * DAO class about manipulation of {@link Sanction}s in the model.
  *
- * <p>For more information about DAO pattern, see {@link Dao} interface Javadoc.
- *
  * @author FallenVaders' dev team
  * @since 0.3.0
  * @see Dao
