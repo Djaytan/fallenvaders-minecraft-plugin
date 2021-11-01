@@ -52,12 +52,14 @@ public class PredefinedSanctionDao implements ReadOnlyDao<PredefinedSanction> {
 
   @Override
   public @NotNull Optional<PredefinedSanction> get(@NotNull String id) throws DaoException {
-    return Optional.empty();
+    return getPredefinedSanctions().stream()
+        .filter(predefinedSanction -> predefinedSanction.id().equals(id))
+        .findFirst();
   }
 
   @Override
   public @NotNull Set<PredefinedSanction> getAll() throws DaoException {
-    return null;
+    return getPredefinedSanctions();
   }
 
   private @NotNull Set<PredefinedSanction> getPredefinedSanctions() throws DaoException {
