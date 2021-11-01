@@ -17,30 +17,22 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.entities;
 
-import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
+import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This entity represent a predefined sanction.
- *
- * <p>Predefined sanctions have only the purpose to create {@link Sanction} by replicating
- * information. After the creation of this one, no binding are kept between them. This approach
- * permit letting predefined sanctions evolved independently of {@link Sanction}s. This is
- * particularly useful in case predefined sanctions are regularly review to adapt points,
- * type, description, ...
+ * This entity represent a category of {@link PredefinedSanction}s.
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
  *
- * @param id The id of the predefined sanction.
- * @param name The name of the predefined sanction.
- * @param description The description of the predefined sanction.
- * @param points The number of points associated with the predefined sanction.
- * @param type The type of the predefined sanction.
+ * @param id The ID of the category.
+ * @param name The name of the category.
+ * @param description The description of the category.
+ * @param predefinedSanctions The {@link PredefinedSanction}s nested the category.
  */
-public record PredefinedSanction(
+public record SanctionCategory(
     long id,
     @NotNull String name,
     @NotNull String description,
-    int points,
-    @NotNull SanctionType type) {}
+    @NotNull Set<PredefinedSanction> predefinedSanctions) {}
