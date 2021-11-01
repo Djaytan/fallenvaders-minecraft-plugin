@@ -52,6 +52,30 @@ public record Sanction (
     @Nullable OfflinePlayer authorPlayer,
     @NotNull SanctionType type) {
 
+  /**
+   * Constructor.
+   *
+   * @param inculpatedPlayer The inculpated player of the sanction.
+   * @param name The name of the sanction.
+   * @param reason The reason of the sanction.
+   * @param points The number of points of the sanction.
+   * @param beginningDate The beginning date of the sanction.
+   * @param endingDate The ending date of the sanction (null in cases of kick or ban def for example).
+   * @param authorPlayer The author of the sanction (null means console is the author).
+   * @param type The type of sanction.
+   */
+  public Sanction(
+    @NotNull OfflinePlayer inculpatedPlayer,
+    @NotNull String name,
+    @NotNull String reason,
+    int points,
+    @NotNull Timestamp beginningDate,
+    @Nullable Timestamp endingDate,
+    @Nullable OfflinePlayer authorPlayer,
+    @NotNull SanctionType type) {
+    this(-1, inculpatedPlayer, name, reason, points, beginningDate, endingDate, authorPlayer, type);
+  }
+
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this);
