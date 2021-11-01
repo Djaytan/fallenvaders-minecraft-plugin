@@ -27,6 +27,14 @@ import org.jetbrains.annotations.Nullable;
 /**
  * This entity represents a sanction.
  *
+ * <p>Most of the time, a sanction should be created based on an existing
+ * {@link PredefinedSanction}. This ensures a good follow of sanctions scales defined by
+ * FallenVaders' staff team.
+ *
+ * <p>When no {@link PredefinedSanction} fit the current case from which the moderator must give a
+ * sanction, it's possible to directly create one. However, this usage must be limited as
+ * much as possible by created new {@link PredefinedSanction} as soon as possible.
+ *
  * @author FallenVaders' dev team
  * @since 0.3.0
  *
@@ -40,7 +48,6 @@ import org.jetbrains.annotations.Nullable;
  * @param authorPlayer The author of the sanction (null means console is the author).
  * @param type The type of sanction.
  */
-// TODO: rename it to RecordedSanction to remove ambiguities
 public record Sanction (
     int id,
     @NotNull OfflinePlayer inculpatedPlayer,
