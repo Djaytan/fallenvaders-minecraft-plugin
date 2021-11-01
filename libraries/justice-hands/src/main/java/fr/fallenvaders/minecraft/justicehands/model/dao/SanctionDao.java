@@ -39,7 +39,7 @@ import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * DAO class about manipulation of sanctions in the model.
+ * DAO class about manipulation of {@link Sanction}s in the model.
  *
  * <p>For more information about DAO pattern, see {@link Dao} interface Javadoc.
  *
