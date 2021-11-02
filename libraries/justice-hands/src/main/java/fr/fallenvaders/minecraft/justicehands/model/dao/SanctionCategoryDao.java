@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.dao;
 
-import fr.fallenvaders.minecraft.commons.dao.Dao;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
@@ -71,15 +70,16 @@ public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
     Set<SanctionCategory> sanctionCategories = new LinkedHashSet<>();
     try {
       ConfigurationSection categories =
-          config.getConfigurationSection("justicehands.sanctions-scale.categories");
+          Objects.requireNonNull(
+              config.getConfigurationSection("justicehands.sanctions-scale.categories"));
 
       for (String categoryKey : categories.getKeys(false)) {
-        ConfigurationSection category = categories.getConfigurationSection(categoryKey);
+        ConfigurationSection category =
+            Objects.requireNonNull(categories.getConfigurationSection(categoryKey));
         SanctionCategory sanctionCategory = getSanctionCategory(category, categoryKey);
         sanctionCategories.add(sanctionCategory);
       }
     } catch (NullPointerException e) {
-      // TODO: FV-135 - THIS IS BAD!!! But it require a lib to facilitate config creation
       throw new DaoException("Failed to read the config file.", e);
     }
     return sanctionCategories;
@@ -87,26 +87,39 @@ public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
 
   private @NotNull SanctionCategory getSanctionCategory(
       @NotNull ConfigurationSection category, @NotNull String categoryKey) {
-    String categoryName = category.getString("name");
-    String categoryDescription = category.getString("description");
+    Objects.requireNonNull(category);
+    Objects.requireNonNull(categoryKey);
+
     Set<PredefinedSanction> predefinedSanctions = new LinkedHashSet<>();
-    ConfigurationSection sanctions = category.getConfigurationSection("sanctions");
+
+    String categoryName = Objects.requireNonNull(category.getString("name"));
+    String categoryDescription = Objects.requireNonNull(category.getString("description"));
+    ConfigurationSection sanctions =
+        Objects.requireNonNull(category.getConfigurationSection("sanctions"));
+
     for (String sanctionKey : sanctions.getKeys(false)) {
-      ConfigurationSection sanction = sanctions.getConfigurationSection(sanctionKey);
+      ConfigurationSection sanction =
+          Objects.requireNonNull(sanctions.getConfigurationSection(sanctionKey));
       PredefinedSanction predefinedSanction = getPredefinedSanction(sanction, sanctionKey);
       predefinedSanctions.add(predefinedSanction);
     }
+
     return new SanctionCategory(
         categoryKey, categoryName, categoryDescription, predefinedSanctions);
   }
 
   private @NotNull PredefinedSanction getPredefinedSanction(
       @NotNull ConfigurationSection sanction, @NotNull String sanctionKey) {
-    String sanctionName = sanction.getString("name");
-    String sanctionDescription = sanction.getString("description");
+    Objects.requireNonNull(sanction);
+    Objects.requireNonNull(sanctionKey);
+
+    String sanctionName = Objects.requireNonNull(sanction.getString("name"));
+    String sanctionDescription = Objects.requireNonNull(sanction.getString("description"));
     int sanctionPoints = sanction.getInt("points");
-    String sanctionTypeStr = sanction.getString("type");
+    String sanctionTypeStr = Objects.requireNonNull(sanction.getString("type"));
+
     SanctionType sanctionType = SanctionType.valueOf(sanctionTypeStr);
+
     return new PredefinedSanction(
         sanctionKey, sanctionName, sanctionDescription, sanctionPoints, sanctionType);
   }
