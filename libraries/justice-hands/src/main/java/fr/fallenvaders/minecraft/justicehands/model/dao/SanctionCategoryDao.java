@@ -17,12 +17,14 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.dao;
 
+import fr.fallenvaders.minecraft.commons.dao.Dao;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.PredefinedSanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import javax.inject.Inject;
@@ -70,27 +72,10 @@ public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
     try {
       ConfigurationSection categories =
           config.getConfigurationSection("justicehands.sanctions-scale.categories");
+
       for (String categoryKey : categories.getKeys(false)) {
         ConfigurationSection category = categories.getConfigurationSection(categoryKey);
-        String categoryName = category.getString("name");
-        String categoryDescription = category.getString("description");
-        Set<PredefinedSanction> predefinedSanctions = new LinkedHashSet<>();
-        ConfigurationSection sanctions = category.getConfigurationSection("sanctions");
-        for (String sanctionKey : sanctions.getKeys(false)) {
-          ConfigurationSection sanction = sanctions.getConfigurationSection(sanctionKey);
-          String sanctionName = sanction.getString("name");
-          String sanctionDescription = sanction.getString("description");
-          int sanctionPoints = sanction.getInt("points");
-          String sanctionTypeStr = sanction.getString("type");
-          SanctionType sanctionType = SanctionType.valueOf(sanctionTypeStr);
-          PredefinedSanction predefinedSanction =
-              new PredefinedSanction(
-                  sanctionKey, sanctionName, sanctionDescription, sanctionPoints, sanctionType);
-          predefinedSanctions.add(predefinedSanction);
-        }
-        SanctionCategory sanctionCategory =
-            new SanctionCategory(
-                categoryKey, categoryName, categoryDescription, predefinedSanctions);
+        SanctionCategory sanctionCategory = getSanctionCategory(category, categoryKey);
         sanctionCategories.add(sanctionCategory);
       }
     } catch (NullPointerException e) {
@@ -98,5 +83,31 @@ public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
       throw new DaoException("Failed to read the config file.", e);
     }
     return sanctionCategories;
+  }
+
+  private @NotNull SanctionCategory getSanctionCategory(
+      @NotNull ConfigurationSection category, @NotNull String categoryKey) {
+    String categoryName = category.getString("name");
+    String categoryDescription = category.getString("description");
+    Set<PredefinedSanction> predefinedSanctions = new LinkedHashSet<>();
+    ConfigurationSection sanctions = category.getConfigurationSection("sanctions");
+    for (String sanctionKey : sanctions.getKeys(false)) {
+      ConfigurationSection sanction = sanctions.getConfigurationSection(sanctionKey);
+      PredefinedSanction predefinedSanction = getPredefinedSanction(sanction, sanctionKey);
+      predefinedSanctions.add(predefinedSanction);
+    }
+    return new SanctionCategory(
+        categoryKey, categoryName, categoryDescription, predefinedSanctions);
+  }
+
+  private @NotNull PredefinedSanction getPredefinedSanction(
+      @NotNull ConfigurationSection sanction, @NotNull String sanctionKey) {
+    String sanctionName = sanction.getString("name");
+    String sanctionDescription = sanction.getString("description");
+    int sanctionPoints = sanction.getInt("points");
+    String sanctionTypeStr = sanction.getString("type");
+    SanctionType sanctionType = SanctionType.valueOf(sanctionTypeStr);
+    return new PredefinedSanction(
+        sanctionKey, sanctionName, sanctionDescription, sanctionPoints, sanctionType);
   }
 }
