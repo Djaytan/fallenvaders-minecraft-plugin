@@ -24,13 +24,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * GUI inventory entity.
  *
+ * @param id The ID of the GUI inventory.
  * @param nbLines The number of lines of the GUI inventory.
  * @param items The {@link GuiInventoryItem}s embedded in the GUI inventory.
  *
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
-public record GuiInventory (int nbLines, @NotNull List<GuiInventoryItem> items) {
+public record GuiInventory (@NotNull String id, int nbLines, @NotNull List<GuiInventoryItem> items) {
 
   /**
    * Returns the {@link GuiInventoryItem} which match with the specified ID.
