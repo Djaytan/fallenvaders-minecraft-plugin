@@ -18,6 +18,7 @@
 package fr.fallenvaders.minecraft.justicehands.model.entities;
 
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -43,4 +44,10 @@ public record PredefinedSanction(
     @NotNull String name,
     @NotNull String description,
     int points,
-    @NotNull SanctionType type) {}
+    @NotNull SanctionType type) {
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
+  }
+}

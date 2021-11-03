@@ -19,6 +19,7 @@ package fr.fallenvaders.minecraft.justicehands.model.entities;
 
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -43,5 +44,10 @@ public record GuiInventory (@NotNull String id, int nbLines, @NotNull List<GuiIn
     return items.stream()
       .filter(item -> item.id().equals(id))
       .findFirst();
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
   }
 }

@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.entities;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,4 +34,10 @@ import org.jetbrains.annotations.NotNull;
 public record GuiInventoryItem (
     @NotNull String id,
     @NotNull GuiInventoryItemLocation itemLocation,
-    @NotNull ItemStack item) {}
+    @NotNull ItemStack item) {
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
+  }
+}
