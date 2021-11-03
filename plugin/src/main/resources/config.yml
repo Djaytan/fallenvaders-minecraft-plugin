@@ -28,8 +28,95 @@ message_levels:
   faillure: "&c"
   error: "&4"
 
-# JusticeHands module config
+# JusticeHands module
 justicehands:
+  sanctions-scale:
+    categories:
+      general:
+        name: 'Général'
+        description: 'Sanctions générales'
+        sanctions:
+          double-account:
+            name: 'Double comptes'
+            description: 'Limite de double comptes atteinte.'
+            points: 0
+            type: 'BAN'
+          payback:
+            name: 'Payback / Litige'
+            description: 'Récupération d''une partie ou entièreté de son argent réel dépensé sur le serveur.'
+            points: 0
+            type: 'BAN'
+
+      chat:
+        name: 'Chat'
+        description: 'Sanctions spécifiques à l''utilisation du chat.'
+        sanctions:
+          insult-player:
+            name: 'Insulte - Joueur'
+            description: 'Insulte envers un joueur.'
+            points: 20
+            type: 'MUTE'
+          insult-staff:
+            name: 'Insulte - Membre du staff'
+            description: 'Insulte envers un membre du staff.'
+            points: 40
+            type: 'MUTE'
+          spam-public:
+            name: 'Spam - Public'
+            description: 'Spam dans le chat public.'
+            points: 10
+            type: 'MUTE'
+          harassment:
+            name: 'Harcèlement'
+            description: 'Harcèle un joueur en messages privés.'
+            points: 20
+            type: 'MUTE'
+          death-threat:
+            name: 'Menaces de mort'
+            description: 'Énonce des menaces de mort en privé ou public.'
+            points: 70
+            type: 'BAN'
+          threat:
+            name: 'Menaces (général)'
+            description: 'Énonce des menaces en privé ou public.'
+            points: 50
+            type: 'MUTE'
+          pub:
+            name: 'Pub (Pour de la concurrence ou non)'
+            description: 'Effectue de la pub sur le serveur.'
+            points: 20
+            type: 'MUTE'
+          confidential-information:
+            name: 'Informations confidentielles'
+            description: 'Dévoile des informations confidentielles.'
+            points: 60
+            type: 'MUTE'
+          belittling:
+            name: 'Rabaissement (psychologique)'
+            description: 'Rabaisse un joueur dans le chat.'
+            points: 40
+            type: 'MUTE'
+
+      jeu:
+        name: 'Jeu'
+        description: 'Sanctions spécifiques aux actions en jeu.'
+        sanctions:
+          hacked-client:
+            name: 'Client modifié'
+            reason: 'Utilisation d''un client modifié non autorisé par notre règlement.'
+            points: 250
+            initial-type: 'BAN'
+          causing-lags:
+            name: 'Lags volontaires'
+            reason: 'Génération de lags volontairement.'
+            points: 10
+            initial-type: 'KICK'
+          black-market:
+            name: 'Marché noir'
+            reason: 'Création d''un marché noir virtuel/réel au sein du serveur.'
+            points: 150
+            initial-type: 'BAN'
+
   sanctionmanager:
     #
     # Il faut penser à mettre la ponctuation en fin de raison.
@@ -82,76 +169,6 @@ justicehands:
             reason: Récupération d'une partie ou entiereté de son argent réel dépensé sur le serveur.
             points: 0
             initial-type: bandef
-      Chat:
-        main-line-slot: 1
-        main-colum-slot: 4
-        description: Description à faire !
-        sanctions:
-          1:
-            name: Insulte - Joueur
-            reason: Insulte envers un joueur.
-            points: 20
-            initial-type: mute
-          2:
-            name: Insulte - Membre du staff.
-            reason: Insulte envers un membre du staff.
-            points: 40
-            initial-type: mute
-          3:
-            name: Spam - Public
-            reason: Spam sur le chat public.
-            points: 10
-            initial-type: mute
-          4:
-            name: Harcelement
-            reason: Harcèle un joueur en messages privés.
-            points: 20
-            initial-type: mute
-          5:
-            name: Menaces de mort
-            reason: Enonce des menaces de mort en privé ou public.
-            points: 70
-            initial-type: ban
-          6:
-            name: Menaces (général)
-            reason: Enonce des menaces en privé ou public.
-            points: 50
-            initial-type: mute
-          7:
-            name: Pub (Pour de la concurrence)
-            reason: Effectue de la pub sur le serveur.
-            points: 20
-            initial-type: mute
-          8:
-            name: Informations confidentielles
-            reason: Dévoile des informations confidentielles
-            points: 60
-            initial-type: mute
-          9:
-            name: Rabaissement (psychologique)
-            reason: Rabaisse un joueur dans le chat
-            points: 40
-            initial-type: mute
-      Jeu:
-        main-line-slot: 1
-        main-colum-slot: 6
-        description: Description à faire !
-        sanctions:
-          1:
-            name: Client modifié
-            reason: Utilisisation d'un clien modifié non autorisé par notre réglement.
-            points: 250
-            initial-type: ban
-          2:
-            name: Lags volontaires
-            reason: Génération de lags volontaires.
-            points: 10
-            initial-type: kick
-          3:
-            name: Marché noir
-            reason: Création d'un marché noir virtuel/réel au sein du serveur.
-            points: 150
-            initial-type: ban
 
 # MiniEvents module config
 config-event:
