@@ -30,6 +30,18 @@ message_levels:
 
 # JusticeHands module
 justicehands:
+  inventories:
+    main:
+      number-lines: 3
+      items:
+        player-head:
+          location:
+            line: 0
+            column: 4
+          item:
+            ==: org.bukkit.inventory.ItemStack
+            type: PLAYER_HEAD
+            amount: 1
   sanctions-scale:
     categories:
       general:
@@ -46,7 +58,6 @@ justicehands:
             description: 'Récupération d''une partie ou entièreté de son argent réel dépensé sur le serveur.'
             points: 0
             type: 'BAN'
-
       chat:
         name: 'Chat'
         description: 'Sanctions spécifiques à l''utilisation du chat.'
@@ -96,7 +107,6 @@ justicehands:
             description: 'Rabaisse un joueur dans le chat.'
             points: 40
             type: 'MUTE'
-
       jeu:
         name: 'Jeu'
         description: 'Sanctions spécifiques aux actions en jeu.'
@@ -116,8 +126,6 @@ justicehands:
             reason: 'Création d''un marché noir virtuel/réel au sein du serveur.'
             points: 150
             initial-type: 'BAN'
-
-  sanctionmanager:
     #
     # Il faut penser à mettre la ponctuation en fin de raison.
     # Le plugin ne s'en charge pas. (Question esthétique)
@@ -145,30 +153,6 @@ justicehands:
     # Le reste du plugin s'en charge tout seul, selon le nombre de points marqués
     # en dessous:
     #
-    MainMenu:
-      lines: 3
-      playerhead-line: 0
-      playerhead-colum: 4
-    points-system:
-      mute-min-points: 1 #Combien de points vaut 1 minute de mute ? (defaut : 1)
-      ban-day-points: 10 #Combien de points vaut 1 jour de ban ? (defaut : 1)
-      risingban-points: 100 #Seuil de transformation de sanction en ban (defaut : 100)
-    categories:
-      Général:
-        main-line-slot: 1
-        main-colum-slot: 2
-        description: Description à faire !
-        sanctions:
-          1:
-            name: Limite de doubles comptes atteinte
-            reason: Trop de doubles comptes. Contestation ? dornacraft.fr/forum/
-            points: 0
-            initial-type: bandef
-          2:
-            name: Payback / Litige
-            reason: Récupération d'une partie ou entiereté de son argent réel dépensé sur le serveur.
-            points: 0
-            initial-type: bandef
 
 # MiniEvents module config
 config-event:
