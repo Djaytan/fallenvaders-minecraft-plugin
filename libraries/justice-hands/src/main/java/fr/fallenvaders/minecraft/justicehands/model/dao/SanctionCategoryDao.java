@@ -87,6 +87,7 @@ public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
 
   private @NotNull SanctionCategory getSanctionCategory(
       @NotNull ConfigurationSection category, @NotNull String categoryKey) {
+    // TODO: simplify it with getObject use maybe
     Objects.requireNonNull(category);
     Objects.requireNonNull(categoryKey);
 
