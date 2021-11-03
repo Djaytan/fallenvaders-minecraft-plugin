@@ -88,7 +88,7 @@ public class SanctionCategoryService {
   public @NotNull Set<SanctionCategory> getCategories() throws JusticeHandsException {
     try {
       Set<SanctionCategory> sanctionCategories = sanctionCategoryDao.getAll();
-      logger.info("All the sanction categories recovered.");
+      logger.info("All the sanction categories have been recovered.");
       logger.debug("Sanction categories found: {}", sanctionCategories);
       return sanctionCategories;
     } catch (DaoException e) {
