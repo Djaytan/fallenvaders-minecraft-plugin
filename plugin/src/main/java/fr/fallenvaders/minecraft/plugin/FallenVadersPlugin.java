@@ -20,6 +20,7 @@ package fr.fallenvaders.minecraft.plugin;
 import fr.fallenvaders.minecraft.plugin.guice.FallenVadersInjector;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleService;
 import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
+import fr.minuskube.inv.InventoryManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;
@@ -34,13 +35,17 @@ import javax.inject.Singleton;
 @Singleton
 public final class FallenVadersPlugin extends JavaPlugin {
 
-  @Inject private PluginInitializer moduleRegInit;
+  @Inject private InventoryManager inventoryManager;
   @Inject private ModuleService moduleService;
+  @Inject private PluginInitializer moduleRegInit;
 
   @Override
   public void onLoad() {
     // Guice setup
     FallenVadersInjector.inject(this);
+
+    // SmartInv initialization
+    inventoryManager.init();
 
     // Modules initialization
     moduleRegInit.initialize();
