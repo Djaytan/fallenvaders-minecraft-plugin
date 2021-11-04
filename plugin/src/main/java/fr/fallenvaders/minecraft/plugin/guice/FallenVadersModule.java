@@ -27,6 +27,7 @@ import fr.fallenvaders.minecraft.justicehands.controller.SanctionDispatcher;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionDispatcherImpl;
 import fr.fallenvaders.minecraft.plugin.modules.FullPluginInitializer;
 import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
+import fr.minuskube.inv.InventoryManager;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -104,13 +105,19 @@ public final class FallenVadersModule extends AbstractModule {
 
   @Provides
   @Singleton
-  public @NotNull Logger getSLF4JLogger() {
+  public @NotNull Logger providesSLF4JLogger() {
     return plugin.getSLF4JLogger();
   }
 
   @Provides
   @Singleton
-  public @NotNull PaperCommandManager getPaperCommandManager() {
+  public @NotNull PaperCommandManager providesPaperCommandManager() {
     return new PaperCommandManager(plugin);
+  }
+
+  @Provides
+  @Singleton
+  public @NotNull InventoryManager providesInventoryManager() {
+    return new InventoryManager(plugin);
   }
 }
