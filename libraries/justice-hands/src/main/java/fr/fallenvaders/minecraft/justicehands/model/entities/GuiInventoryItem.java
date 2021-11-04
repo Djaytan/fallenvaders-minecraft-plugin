@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
  * The {@link GuiInventory} item entity.
  *
  * @param id The ID of the {@link GuiInventory} item.
- * @param itemLocation The location of the {@link GuiInventory} item.
+ * @param location The location of the {@link GuiInventory} item.
  * @param item The {@link ItemStack} which represent the {@link GuiInventory} item.
  *
  * @author FallenVaders' dev team
@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public record GuiInventoryItem (
     @NotNull String id,
-    @NotNull GuiInventoryItemLocation itemLocation,
+    @NotNull GuiInventoryItemLocation location,
     @NotNull ItemStack item) {
 
   @Override
