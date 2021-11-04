@@ -15,7 +15,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.justicehands.view;
+package fr.fallenvaders.minecraft.justicehands.view.gui;
 
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsModule;

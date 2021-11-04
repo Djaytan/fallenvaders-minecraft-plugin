@@ -17,7 +17,7 @@
 
 package fr.fallenvaders.minecraft.justicehands.view.commands;
 
-import fr.fallenvaders.minecraft.justicehands.view.InventoryBuilderSM;
+import fr.fallenvaders.minecraft.justicehands.view.gui.InventoryBuilderSM;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import javax.inject.Inject;
 import javax.inject.Singleton;

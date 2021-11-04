@@ -1,4 +1,21 @@
-package fr.fallenvaders.minecraft.justicehands.view;
+/*
+ *  This file is part of the FallenVaders distribution (https://github.com/FallenVaders).
+ *  Copyright © 2021 Loïc DUBOIS-TERMOZ.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, version 3.
+ *
+ *  This program is distributed in the hope that it will be useful, but
+ *  WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *  General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package fr.fallenvaders.minecraft.justicehands.view.gui;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
@@ -8,6 +25,7 @@ import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItem;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItemLocation;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
+import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;

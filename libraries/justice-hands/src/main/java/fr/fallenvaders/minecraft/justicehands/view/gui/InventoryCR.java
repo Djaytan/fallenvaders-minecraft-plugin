@@ -15,10 +15,11 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.justicehands.view;
+package fr.fallenvaders.minecraft.justicehands.view.gui;
 
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
+import fr.fallenvaders.minecraft.justicehands.view.SanctionStatistics;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;

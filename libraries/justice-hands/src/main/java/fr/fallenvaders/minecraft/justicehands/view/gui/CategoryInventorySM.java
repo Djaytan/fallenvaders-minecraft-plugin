@@ -15,16 +15,10 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.justicehands.view;
+package fr.fallenvaders.minecraft.justicehands.view.gui;
 
-import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
-import fr.fallenvaders.minecraft.justicehands.JusticeHandsModule;
-import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionType;
-import fr.fallenvaders.minecraft.justicehands.model.service.KeysKeeperBot;
-import fr.fallenvaders.minecraft.justicehands.view.viewmodel.CategoriesList;
-import fr.fallenvaders.minecraft.justicehands.controller.SanctionsAlgo;
-import fr.fallenvaders.minecraft.justicehands.view.viewmodel.Categorie;
-import fr.fallenvaders.minecraft.justicehands.view.viewmodel.Sanction;
+import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
+import fr.fallenvaders.minecraft.justicehands.model.SanctionsAlgo;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
@@ -43,11 +37,11 @@ import java.util.Arrays;
 import java.util.UUID;
 
 public class CategoryInventorySM implements InventoryProvider {
-  private Categorie currentCategorie;
+  private Category currentCategory;
 
   // Constructeur
-  public CategoryInventorySM(Categorie currentCategorie) {
-    this.currentCategorie = currentCategorie;
+  public CategoryInventorySM(Category currentCategory) {
+    this.currentCategory = currentCategory;
   }
 
   @Override
@@ -56,10 +50,10 @@ public class CategoryInventorySM implements InventoryProvider {
     Player player = Bukkit.getPlayer(UUID.fromString(inventory.getId()));
     contents.set(0, 0, ClickableItem.empty(GeneralUtils.getTargetHead(player)));
     contents.fillRow(1, ClickableItem.empty(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1)));
-    for (Categorie categorie : CategoriesList.getCategoriesList()) {
+    for (Category category : CategoriesList.getCategoriesList()) {
 
-      ItemStack itemCat = getCategoryItem(categorie);
-      if (currentCategorie.getName().equals(categorie.getName())) {
+      ItemStack itemCat = getCategoryItem(category);
+      if (currentCategory.getName().equals(category.getName())) {
         ItemMeta meta = itemCat.getItemMeta();
         meta.addEnchant(Enchantment.DURABILITY, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -69,25 +63,25 @@ public class CategoryInventorySM implements InventoryProvider {
           0,
           9
               - CategoriesList.getCategoriesList().size()
-              + CategoriesList.getCategoriesList().indexOf(categorie),
+              + CategoriesList.getCategoriesList().indexOf(category),
           ClickableItem.of(
               itemCat,
               e -> {
                 if (e.isLeftClick()) {
-                  this.currentCategorie = categorie;
+                  this.currentCategory = category;
                   init(moderator, contents);
-                  InventoryBuilderSM.openCategoryMenu(categorie, moderator, player);
+                  InventoryBuilderSM.openCategoryMenu(category, moderator, player);
                 }
               }));
     }
 
     // Création de la page si cette dernière n'est pas vide
-    if (currentCategorie.getSanctionsList().size() > 0) {
-      ClickableItem[] sanctions = new ClickableItem[currentCategorie.getSanctionsList().size()];
+    if (currentCategory.getSanctionsList().size() > 0) {
+      ClickableItem[] sanctions = new ClickableItem[currentCategory.getSanctionsList().size()];
       Pagination p = contents.pagination();
 
       for (int i = 0; i < sanctions.length; i++) {
-        Sanction sanction = currentCategorie.getSanctionsList().get(i);
+        Sanction sanction = currentCategory.getSanctionsList().get(i);
         sanctions[i] =
             ClickableItem.of(
                 getSanctionItem(sanction),
@@ -96,8 +90,8 @@ public class CategoryInventorySM implements InventoryProvider {
                     if (moderator.hasPermission(
                         "justicehands.sm." + sanction.getInitialType().toLowerCase())) {
                       SanctionsAlgo.generateSanction(sanction, moderator, player);
-                      KeysKeeperBot.kickPlayer(
-                          player, JusticeHandsModule.getSqlSM().getLastSanction(player));
+                      // KeysKeeperBot.kickPlayer(
+                      //    player, JusticeHandsModule.getSqlSM().getLastSanction(player));
                     } else {
                       SanctionType type = SanctionType.getType(sanction.getInitialType());
                       moderator.sendMessage(
@@ -143,11 +137,11 @@ public class CategoryInventorySM implements InventoryProvider {
   }
 
   // Récupère l'item représentatif d'une catégorie:
-  private static ItemStack getCategoryItem(Categorie categorie) {
+  private static ItemStack getCategoryItem(Category category) {
     ItemStack item = new ItemStack(Material.CHEST);
     ItemMeta meta = item.getItemMeta();
-    meta.setDisplayName("§4Catégorie: §c" + categorie.getName());
-    meta.setLore(Arrays.asList("", categorie.getDesc()));
+    meta.setDisplayName("§4Catégorie: §c" + category.getName());
+    meta.setLore(Arrays.asList("", category.getDesc()));
     item.setItemMeta(meta);
     return item;
   }

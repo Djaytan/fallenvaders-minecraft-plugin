@@ -19,7 +19,6 @@ package fr.fallenvaders.minecraft.justicehands.model;
 
 import fr.fallenvaders.minecraft.justicehands.GeneralUtils;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsModule;
-import fr.fallenvaders.minecraft.justicehands.view.viewmodel.Sanction;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

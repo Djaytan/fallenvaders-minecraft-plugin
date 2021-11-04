@@ -21,6 +21,7 @@ import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.TimeUtils;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
+import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
