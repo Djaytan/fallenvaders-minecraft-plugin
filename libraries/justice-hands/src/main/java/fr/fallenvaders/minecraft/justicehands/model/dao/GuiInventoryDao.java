@@ -114,8 +114,8 @@ public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
     Objects.requireNonNull(inventoryItemKey);
 
     GuiInventoryItemLocation location =
-        Objects.requireNonNull(inventoryItem.getObject("location", GuiInventoryItemLocation.class));
-    ItemStack item = Objects.requireNonNull(inventoryItem.getItemStack("item"));
+        inventoryItem.getObject("location", GuiInventoryItemLocation.class);
+    ItemStack item = inventoryItem.getItemStack("item");
 
     return new GuiInventoryItem(inventoryItemKey, location, item);
   }

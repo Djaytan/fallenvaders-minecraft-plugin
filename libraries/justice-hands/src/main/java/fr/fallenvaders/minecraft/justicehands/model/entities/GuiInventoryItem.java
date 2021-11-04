@@ -20,6 +20,7 @@ package fr.fallenvaders.minecraft.justicehands.model.entities;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The {@link GuiInventory} item entity.
@@ -33,8 +34,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public record GuiInventoryItem (
     @NotNull String id,
-    @NotNull GuiInventoryItemLocation location,
-    @NotNull ItemStack item) {
+    @Nullable GuiInventoryItemLocation location,
+    @Nullable ItemStack item) {
 
   @Override
   public String toString() {
