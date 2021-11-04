@@ -21,7 +21,6 @@ import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.TimeUtils;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
-import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,10 +95,10 @@ public class SanctionComponentBuilder {
   public @NotNull Component kickMessage(@NotNull Sanction kick) {
     List<String> data = new ArrayList<>();
     data.add(ViewUtils.PREFIX_KK);
-    data.add(Integer.toString(kick.getId()));
-    data.add(kick.getName());
-    data.add(Integer.toString(kick.getPoints()));
-    data.add(SDF.format(kick.getBeginningDate().getTime()));
+    data.add(Integer.toString(kick.id()));
+    data.add(kick.name());
+    data.add(Integer.toString(kick.points()));
+    data.add(SDF.format(kick.beginningDate().getTime()));
     return componentHelper.getComponent(String.format(KICK_MESSAGE, data.toArray()));
   }
 
@@ -112,18 +111,18 @@ public class SanctionComponentBuilder {
   public @NotNull Component banMessage(@NotNull Sanction ban) {
     List<String> data = new ArrayList<>();
     data.add(ViewUtils.PREFIX_KK);
-    data.add(Integer.toString(ban.getId()));
-    data.add(ban.getName());
-    data.add(ban.getReason());
-    data.add(SDF.format(ban.getBeginningDate().getTime()));
+    data.add(Integer.toString(ban.id()));
+    data.add(ban.name());
+    data.add(ban.reason());
+    data.add(SDF.format(ban.beginningDate().getTime()));
 
     String banMessage;
-    boolean isBanDef = ban.getEndingDate() == null;
+    boolean isBanDef = ban.endingDate() == null;
     if (isBanDef) {
       banMessage = BAN_DEF_MESSAGE;
     } else {
-      data.add(SDF.format(ban.getEndingDate().getTime()));
-      data.add(timeUtils.remainingTime(ban.getEndingDate().getTime() - System.currentTimeMillis()));
+      data.add(SDF.format(ban.endingDate().getTime()));
+      data.add(timeUtils.remainingTime(ban.endingDate().getTime() - System.currentTimeMillis()));
       banMessage = BAN_MESSAGE;
     }
 
@@ -138,10 +137,10 @@ public class SanctionComponentBuilder {
    * @throws JusticeHandsException if the mute sanction isn't properly defined.
    */
   public @NotNull Component muteMessage(@NotNull Sanction mute) throws JusticeHandsException {
-    if (mute.getEndingDate() == null) {
+    if (mute.endingDate() == null) {
       throw new JusticeHandsException("The ending date of a mute sanction can't be null.");
     }
-    long remainingTime = mute.getEndingDate().getTime() - System.currentTimeMillis();
+    long remainingTime = mute.endingDate().getTime() - System.currentTimeMillis();
     List<Object> data = new ArrayList<>(2);
     data.add(ViewUtils.PREFIX_KK);
     data.add(timeUtils.remainingTime(remainingTime));
