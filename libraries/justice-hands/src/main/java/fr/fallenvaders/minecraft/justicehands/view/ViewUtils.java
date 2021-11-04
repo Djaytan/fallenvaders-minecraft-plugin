@@ -69,10 +69,9 @@ public class ViewUtils {
    * Provides the target {@link Player}'s head.
    *
    * @param target The target player.
-   * @param totalSanctionsPoints The total number of sanctions points of the player.
    * @return The head of the targeted {@link Player}.
    */
-  public @NotNull ItemStack getHead(@NotNull Player target, int totalSanctionsPoints) {
+  public @NotNull ItemStack getHead(@NotNull Player target) {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     String targetStatus = stringify(target.isOnline());
     String firstPlayed = sdf.format(new Date(target.getFirstPlayed()));
@@ -87,7 +86,7 @@ public class ViewUtils {
     List<String> loreStr = new ArrayList<>(7);
     loreStr.add("§7Pseudo: §f" + target.getName());
     loreStr.add("§7Grade: §fTODO"); // TODO: complete
-    loreStr.add("§7Points de sanctions: §6" + totalSanctionsPoints);
+    loreStr.add("§7Points de sanctions: §6TODO"); // TODO: complete
     loreStr.add("§7AchievementPoints: §fTODO"); // TODO: complete
     loreStr.add("§7Connecté: " + targetStatus);
     loreStr.add("§7Première connexion: §f" + firstPlayed);
