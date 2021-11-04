@@ -51,7 +51,6 @@ import org.slf4j.Logger;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
-@Singleton
 public class MainInventoryProvider implements InventoryProvider {
 
   private static final String GUI_INVENTORY_ID = "main";
