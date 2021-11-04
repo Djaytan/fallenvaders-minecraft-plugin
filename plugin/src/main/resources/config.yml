@@ -38,10 +38,10 @@ justicehands:
           location:
             line: 0
             column: 4
+        category:
           item:
             ==: org.bukkit.inventory.ItemStack
-            type: PLAYER_HEAD
-            amount: 1
+            type: CHEST
   sanctions-scale:
     categories:
       general:
