@@ -53,7 +53,7 @@ public class GuiInventoryController {
    * @return The expected {@link GuiInventory}.
    * @throws JusticeHandsException if an error occurs or the specified ID is wrong.
    */
-  public GuiInventory getInventory(@NotNull String id) throws JusticeHandsException {
+  public GuiInventory getGuiInventory(@NotNull String id) throws JusticeHandsException {
     return guiInventoryService
         .getGuiInventory(id)
         .orElseThrow(() -> new JusticeHandsException("Wrong ID specified."));
