@@ -25,7 +25,7 @@ import fr.fallenvaders.minecraft.justicehands.model.entities.PredefinedSanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
-import fr.fallenvaders.minecraft.justicehands.view.gui.provider.MainInventoryProvider;
+import fr.fallenvaders.minecraft.justicehands.view.gui.provider.SanctionManagerMainProvider;
 import fr.minuskube.inv.SmartInventory;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -51,23 +51,23 @@ public class SanctionManagerView {
   private final InteractiveInventoryBuilder interactiveInventoryBuilder;
 
   /* Inventory Providers */
-  private final MainInventoryProvider mainInventoryProvider;
+  private final SanctionManagerMainProvider sanctionManagerMainProvider;
 
   /**
    * Constructor.
    *
    * @param guiInventoryController The {@link GuiInventoryController}.
    * @param interactiveInventoryBuilder The {@link InteractiveInventoryBuilder}.
-   * @param mainInventoryProvider The {@link MainInventoryProvider}.
+   * @param sanctionManagerMainProvider The {@link SanctionManagerMainProvider}.
    */
   @Inject
   public SanctionManagerView(
       @NotNull GuiInventoryController guiInventoryController,
       @NotNull InteractiveInventoryBuilder interactiveInventoryBuilder,
-      @NotNull MainInventoryProvider mainInventoryProvider) {
+      @NotNull SanctionManagerMainProvider sanctionManagerMainProvider) {
     this.guiInventoryController = guiInventoryController;
     this.interactiveInventoryBuilder = interactiveInventoryBuilder;
-    this.mainInventoryProvider = mainInventoryProvider;
+    this.sanctionManagerMainProvider = sanctionManagerMainProvider;
   }
 
   /**
@@ -83,23 +83,28 @@ public class SanctionManagerView {
     Preconditions.checkNotNull(target);
 
     GuiInventory mainGuiInventory =
-        guiInventoryController.getGuiInventory(MainInventoryProvider.GUI_INVENTORY_ID);
+        guiInventoryController.getGuiInventory(SanctionManagerMainProvider.GUI_INVENTORY_ID);
     int nbLines = mainGuiInventory.nbLines();
 
     String id = target.getUniqueId().toString();
     String title = String.format("§7[§9%s§7]" + "§7> §cMenu principal", target.getName());
 
     SmartInventory menu =
-        interactiveInventoryBuilder.build(mainInventoryProvider, id, title, nbLines);
+        interactiveInventoryBuilder.build(sanctionManagerMainProvider, id, title, nbLines);
     menu.open(opener);
   }
 
   /**
    * Opens the specific view of the corresponding {@link SanctionCategory}.
    *
+   * @param opener The {@link Player} opener of the menu.
+   * @param target The target {@link OfflinePlayer} needed to open the menu.
    * @param sanctionCategory The {@link SanctionCategory} to use in the menu creation.
    */
-  public void openCategoryMenu(@NotNull SanctionCategory sanctionCategory) {
+  public void openCategoryMenu(
+      @NotNull Player opener,
+      @NotNull OfflinePlayer target,
+      @NotNull SanctionCategory sanctionCategory) {
     String title = String.format("%s§7> §c%s", ViewUtils.PREFIX_SM, sanctionCategory.name());
     // TODO: complete
   }

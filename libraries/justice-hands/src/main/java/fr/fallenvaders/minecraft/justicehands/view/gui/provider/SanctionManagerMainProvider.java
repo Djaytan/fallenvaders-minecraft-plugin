@@ -15,7 +15,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.justicehands.view.gui;
+package fr.fallenvaders.minecraft.justicehands.view.gui.provider;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
@@ -26,6 +26,7 @@ import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItem;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItemLocation;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
+import fr.fallenvaders.minecraft.justicehands.view.gui.SanctionManagerView;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
@@ -51,9 +52,11 @@ import org.slf4j.Logger;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
-public class MainInventoryProvider implements InventoryProvider {
+@Singleton
+public class SanctionManagerMainProvider implements InventoryProvider {
 
-  private static final String GUI_INVENTORY_ID = "main";
+  public static final String GUI_INVENTORY_ID = "main";
+
   private static final String PLAYER_HEAD_ITEM_ID = "player-head";
   private static final String CATEGORY_ITEM_ID = "category";
 
@@ -61,6 +64,7 @@ public class MainInventoryProvider implements InventoryProvider {
   private final GuiInventory guiInventory;
   private final Logger logger;
   private final SanctionCategoryController sanctionCategoryController;
+  private final SanctionManagerView sanctionManagerView;
   private final ViewUtils viewUtils;
 
   /**
@@ -70,20 +74,23 @@ public class MainInventoryProvider implements InventoryProvider {
    * @param guiInventoryController The {@link GuiInventoryController}.
    * @param logger The {@link Logger}.
    * @param sanctionCategoryController The {@link SanctionCategoryController}.
+   * @param sanctionManagerView The {@link SanctionManagerView}.
    * @param viewUtils The {@link ViewUtils}.
    */
   @Inject
-  public MainInventoryProvider(
+  public SanctionManagerMainProvider(
       @NotNull ComponentHelper componentHelper,
       @NotNull GuiInventoryController guiInventoryController,
       @NotNull Logger logger,
       @NotNull SanctionCategoryController sanctionCategoryController,
+      @NotNull SanctionManagerView sanctionManagerView,
       @NotNull ViewUtils viewUtils)
       throws JusticeHandsException {
     this.componentHelper = componentHelper;
-    this.guiInventory = guiInventoryController.getInventory(GUI_INVENTORY_ID);
+    this.guiInventory = guiInventoryController.getGuiInventory(GUI_INVENTORY_ID);
     this.logger = logger;
     this.sanctionCategoryController = sanctionCategoryController;
+    this.sanctionManagerView = sanctionManagerView;
     this.viewUtils = viewUtils;
   }
 
@@ -92,12 +99,12 @@ public class MainInventoryProvider implements InventoryProvider {
     SmartInventory inventory = contents.inventory();
 
     try {
-      Player inventoryOwner = Bukkit.getPlayer(UUID.fromString(inventory.getId()));
-      if (inventoryOwner == null) {
+      Player target = Bukkit.getPlayer(UUID.fromString(inventory.getId()));
+      if (target == null) {
         throw new JusticeHandsException("No player owner of the GUI inventory found.");
       }
-      setPlayerHead(inventoryOwner, contents);
-      setCategories(moderator, inventoryOwner, contents);
+      setPlayerHead(target, contents);
+      setCategories(moderator, target, contents);
     } catch (JusticeHandsException e) {
       logger.error("Failed to load main GUI inventory.", e);
       // TODO: notification to player
@@ -128,22 +135,20 @@ public class MainInventoryProvider implements InventoryProvider {
     return categoryItem;
   }
 
-  private void setPlayerHead(@NotNull Player inventoryOwner, @NotNull InventoryContents contents)
+  private void setPlayerHead(@NotNull Player target, @NotNull InventoryContents contents)
       throws JusticeHandsException {
     GuiInventoryItem item =
         guiInventory
             .getItem(PLAYER_HEAD_ITEM_ID)
             .orElseThrow(() -> new JusticeHandsException("Failed to create the GUI inventory."));
     GuiInventoryItemLocation location = Objects.requireNonNull(item.location());
-    ItemStack playerHead = viewUtils.getHead(inventoryOwner);
+    ItemStack playerHead = viewUtils.getHead(target);
 
     contents.set(location.line(), location.column(), ClickableItem.empty(playerHead));
   }
 
   private void setCategories(
-      @NotNull Player moderator,
-      @NotNull Player inventoryOwner,
-      @NotNull InventoryContents contents)
+      @NotNull Player moderator, @NotNull Player target, @NotNull InventoryContents contents)
       throws JusticeHandsException {
     for (SanctionCategory sanctionCategory : sanctionCategoryController.getCategories()) {
       contents.set(
@@ -153,7 +158,7 @@ public class MainInventoryProvider implements InventoryProvider {
               getCategoryItem(sanctionCategory),
               e -> {
                 if (e.isLeftClick() || e.isRightClick() || e.isShiftClick()) {
-                  InventoryBuilderSM.openCategoryMenu(sanctionCategory, moderator, inventoryOwner);
+                  sanctionManagerView.openCategoryMenu(moderator, target, sanctionCategory);
                 }
               }));
     }
