@@ -30,18 +30,21 @@ message_levels:
 
 # JusticeHands module
 justicehands:
-  inventories:
-    main:
-      number-lines: 3
-      items:
-        player-head:
-          location:
-            line: 0
-            column: 4
-        category:
-          item:
-            ==: org.bukkit.inventory.ItemStack
-            type: CHEST
+  gui:
+    clickable-items:
+      sanction-category: &sanction-category
+        item:
+          ==: org.bukkit.inventory.ItemStack
+          type: CHEST
+    inventories:
+      main:
+        number-lines: 3
+        items:
+          player-head:
+            location:
+              line: 0
+              column: 4
+          sanction-category: *sanction-category
   sanctions-scale:
     categories:
       general:

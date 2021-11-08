@@ -21,7 +21,6 @@ import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItem;
-import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItemLocation;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -32,7 +31,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -45,15 +43,20 @@ import org.jetbrains.annotations.NotNull;
 public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
 
   private final FileConfiguration config;
+  private final GenericGuiInventoryItemDao genericGuiInventoryItemDao;
 
   /**
    * Constructor.
    *
    * @param config The config file.
+   * @param genericGuiInventoryItemDao The {@link GenericGuiInventoryItemDao}.
    */
   @Inject
-  public GuiInventoryDao(@NotNull FileConfiguration config) {
+  public GuiInventoryDao(
+      @NotNull FileConfiguration config,
+      @NotNull GenericGuiInventoryItemDao genericGuiInventoryItemDao) {
     this.config = config;
+    this.genericGuiInventoryItemDao = genericGuiInventoryItemDao;
   }
 
   @Override
@@ -68,12 +71,12 @@ public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
     return getGuiInventories();
   }
 
-  private Set<GuiInventory> getGuiInventories() throws DaoException {
+  private @NotNull Set<GuiInventory> getGuiInventories() throws DaoException {
     // TODO: simplify it with getObject use maybe
     Set<GuiInventory> guiInventories = new LinkedHashSet<>();
     try {
       ConfigurationSection inventories =
-          Objects.requireNonNull(config.getConfigurationSection("justicehands.inventories"));
+          Objects.requireNonNull(config.getConfigurationSection("justicehands.gui.inventories"));
 
       for (String inventoryKey : inventories.getKeys(false)) {
         ConfigurationSection inventory =
@@ -87,7 +90,7 @@ public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
     return guiInventories;
   }
 
-  private GuiInventory getGuiInventory(
+  private @NotNull GuiInventory getGuiInventory(
       @NotNull ConfigurationSection inventory, @NotNull String inventoryKey) {
     Objects.requireNonNull(inventory);
     Objects.requireNonNull(inventoryKey);
@@ -101,22 +104,11 @@ public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
     for (String inventoryItemKey : inventoryItems.getKeys(false)) {
       ConfigurationSection inventoryItem =
           Objects.requireNonNull(inventoryItems.getConfigurationSection(inventoryItemKey));
-      GuiInventoryItem guiInventoryItem = getGuiInventoryItem(inventoryItem, inventoryItemKey);
+      GuiInventoryItem guiInventoryItem =
+          genericGuiInventoryItemDao.getGuiInventoryItem(inventoryItem, inventoryItemKey);
       items.add(guiInventoryItem);
     }
 
     return new GuiInventory(inventoryKey, nbLines, items);
-  }
-
-  private GuiInventoryItem getGuiInventoryItem(
-      @NotNull ConfigurationSection inventoryItem, @NotNull String inventoryItemKey) {
-    Objects.requireNonNull(inventoryItem);
-    Objects.requireNonNull(inventoryItemKey);
-
-    GuiInventoryItemLocation location =
-        inventoryItem.getObject("location", GuiInventoryItemLocation.class);
-    ItemStack item = inventoryItem.getItemStack("item");
-
-    return new GuiInventoryItem(inventoryItemKey, location, item);
   }
 }

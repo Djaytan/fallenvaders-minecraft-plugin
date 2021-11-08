@@ -17,11 +17,13 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.service;
 
+import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
+import fr.fallenvaders.minecraft.justicehands.model.dao.GenericGuiInventoryItemDao;
 import fr.fallenvaders.minecraft.justicehands.model.dao.GuiInventoryDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
-import java.util.Objects;
+import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItem;
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -37,18 +39,24 @@ import org.slf4j.Logger;
 @Singleton
 public class GuiInventoryService {
 
+  private final GenericGuiInventoryItemDao genericGuiInventoryItemDao;
   private final GuiInventoryDao guiInventoryDao;
   private final Logger logger;
 
   /**
    * Constructor.
    *
-   * @param guiInventoryDao The {@link GuiInventory} DAO.
-   * @param logger The logger.
+   * @param genericGuiInventoryItemDao The {@link GuiInventoryService}.
+   * @param guiInventoryDao The {@link GuiInventoryDao}.
+   * @param logger The {@link Logger}.
    */
   @Inject
-  public GuiInventoryService(@NotNull GuiInventoryDao guiInventoryDao, @NotNull Logger logger) {
+  public GuiInventoryService(
+      @NotNull GenericGuiInventoryItemDao genericGuiInventoryItemDao,
+      @NotNull GuiInventoryDao guiInventoryDao,
+      @NotNull Logger logger) {
     this.guiInventoryDao = guiInventoryDao;
+    this.genericGuiInventoryItemDao = genericGuiInventoryItemDao;
     this.logger = logger;
   }
 
@@ -61,7 +69,7 @@ public class GuiInventoryService {
    * @throws JusticeHandsException if a problem occurs during the search in the model.
    */
   public Optional<GuiInventory> getGuiInventory(@NotNull String id) throws JusticeHandsException {
-    Objects.requireNonNull(id);
+    Preconditions.checkNotNull(id);
 
     try {
       Optional<GuiInventory> guiInventory = guiInventoryDao.get(id);
@@ -71,6 +79,31 @@ public class GuiInventoryService {
     } catch (DaoException e) {
       throw new JusticeHandsException(
           String.format("An error prevent the recovering of the GUI inventory with ID '%s'.", id),
+          e);
+    }
+  }
+
+  /**
+   * Recovers and returns the corresponding generic {@link GuiInventoryItem} from the model which
+   * match with the specified ID.
+   *
+   * @param id The ID of the targeted generic {@link GuiInventoryItem}.
+   * @return The generic {@link GuiInventoryItem} from the model which match with the specified ID.
+   * @throws JusticeHandsException if a problem occurs during the search in the model.
+   */
+  public Optional<GuiInventoryItem> getGenericGuiItem(@NotNull String id)
+      throws JusticeHandsException {
+    Preconditions.checkNotNull(id);
+
+    try {
+      Optional<GuiInventoryItem> genericGuiItem = genericGuiInventoryItemDao.get(id);
+      logger.info("GUI inventory item with ID '{}' found.", id);
+      logger.debug("GUI inventory item found: {}", genericGuiItem);
+      return genericGuiItem;
+    } catch (DaoException e) {
+      throw new JusticeHandsException(
+          String.format(
+              "An error prevent the recovering of the GUI inventory item with ID '%s'.", id),
           e);
     }
   }
