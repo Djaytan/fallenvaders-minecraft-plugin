@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -46,6 +47,13 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
+/**
+ * Sanction manager's category inventory provider class.
+ *
+ * @author FallenVaders' dev team
+ * @since 0.3.0
+ */
+@Singleton
 public class SanctionManagerCategoryProvider implements InventoryProvider {
 
   private final Logger logger;
