@@ -36,6 +36,7 @@ import org.slf4j.Logger;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
+// TODO: rename it GuiService (more generic and shorter)
 @Singleton
 public class GuiInventoryService {
 

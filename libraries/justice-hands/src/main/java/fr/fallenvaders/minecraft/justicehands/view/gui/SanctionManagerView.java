@@ -25,7 +25,7 @@ import fr.fallenvaders.minecraft.justicehands.model.entities.PredefinedSanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
-import fr.fallenvaders.minecraft.justicehands.view.gui.provider.SanctionManagerMainProvider;
+import fr.fallenvaders.minecraft.justicehands.view.gui.inventories.SanctionManagerMainProvider;
 import fr.minuskube.inv.SmartInventory;
 import javax.inject.Inject;
 import javax.inject.Singleton;

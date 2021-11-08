@@ -32,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
+// TODO: rename it GuiItem (shorter)
 public record GuiInventoryItem (
     @NotNull String id,
     @Nullable GuiInventoryItemLocation location,

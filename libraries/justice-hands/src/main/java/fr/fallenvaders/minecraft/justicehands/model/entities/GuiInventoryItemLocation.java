@@ -28,6 +28,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author FallenVaders' dev team
  * @since 0.3.0
  */
+// TODO: rename it GuiLocation (shorter)
 public record GuiInventoryItemLocation(int line, int column) {
 
   @Override
