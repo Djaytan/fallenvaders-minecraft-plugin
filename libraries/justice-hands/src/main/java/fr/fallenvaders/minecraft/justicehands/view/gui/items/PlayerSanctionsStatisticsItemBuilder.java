@@ -15,49 +15,53 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.fallenvaders.minecraft.justicehands.view;
+package fr.fallenvaders.minecraft.justicehands.view.gui.items;
 
+import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsModule;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
+import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
+import fr.minuskube.inv.ClickableItem;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.inject.Singleton;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
-public class SanctionStatistics {
+/**
+ * The builder class of player {@link Sanction}s statistics.
+ *
+ * @author FallenVaders' dev team
+ * @since 0.3.0
+ */
+@Singleton
+public class PlayerSanctionsStatisticsItemBuilder {
 
-  public static ItemStack getPlayerStatistics(
-      List<CJSanction> playerAllSanctionList, Player target) {
-    // Lors de la requête SQL, les sanctions sont classées de la plus récente à la plus ancienne
+  private final ComponentHelper componentHelper;
 
-    List<CJSanction> activeSanctionList = new ArrayList<CJSanction>();
-    List<CJSanction> bansList = new ArrayList<CJSanction>();
-    List<CJSanction> mutesList = new ArrayList<CJSanction>();
-    List<CJSanction> kicksList = new ArrayList<CJSanction>();
+  /**
+   * Constructor.
+   *
+   * @param componentHelper The {@link ComponentHelper}.
+   */
+  public PlayerSanctionsStatisticsItemBuilder(@NotNull ComponentHelper componentHelper) {
+    this.componentHelper = componentHelper;
+  }
 
-    // Tri des sanctions
-    if (playerAllSanctionList.size() > 0) {
-      for (CJSanction sanction : playerAllSanctionList) {
-        if (!(sanction.getState().equals("cancel") || sanction.getState().equals("delete"))) {
-          // Type : ban, bandef, risingban
-          if (sanction.getType().contains("ban")) {
-            bansList.add(sanction);
-            // Type : mute
-          } else if (sanction.getType().equals("mute")) {
-            mutesList.add(sanction);
-            // Type : kick
-          } else if (sanction.getType().equals("kick")) {
-            kicksList.add(sanction);
-          }
-          activeSanctionList.add(sanction);
-        }
-      }
-    }
+  public @NotNull ClickableItem build(@NotNull OfflinePlayer target) {
+    List<CJSanction> activeSanctionList = new ArrayList<>();
+    List<CJSanction> bansList = new ArrayList<>();
+    List<CJSanction> mutesList = new ArrayList<>();
+    List<CJSanction> kicksList = new ArrayList<>();
 
     // Récupération du nombre de sanction de chaque type en utilisant les listes
     double nbrSanction = activeSanctionList.size();
@@ -135,36 +139,50 @@ public class SanctionStatistics {
       playerAllPoints += sanction.getPoints();
     }
 
-    // Création de l'item servant à afficher les statistiques du joueur en question
     ItemStack stats = new ItemStack(Material.KNOWLEDGE_BOOK);
     ItemMeta infos = stats.getItemMeta();
-    infos.setDisplayName("§c§lStatistiques du joueur §7" + target.getName() + " §c§l:");
+    infos.displayName(
+        componentHelper.getComponent(
+            "§c§lStatistiques du joueur §7" + target.getName() + " §c§l:"));
 
-    List<String> lores = new ArrayList<String>();
-    lores.add("§6Nombre de bannissements: §e" + (int) nbrBans + " (" + prcBan + "%)");
-    lores.add("§3Nombre de mutes: §b" + (int) nbrMutes + " (" + prcMute + "%)");
-    lores.add("§2Nombre de kicks: §a" + (int) nbrKicks + " (" + prcKick + "%)");
-    lores.add("");
-    lores.add("§fDernière sanction:");
-    lores.add("§7  - ID: §8" + lastSanctionID);
-    lores.add("§7  - Date: §8" + lastSanctionDate);
-    lores.add("§7  - Type: " + lastSanctionType);
-    lores.add("");
-    lores.add("§6Premier bannissement: §7" + firstBanDate + " §8§o(" + firstBanID + ")");
-    lores.add("§3Premier mute: §7" + firstMuteDate + " §8§o(" + firstMuteID + ")");
-    lores.add("§2Premier kick: §7" + firstKickDate + " §8§o(" + firstKickID + ")");
-    lores.add("");
-    lores.add("§6Dernier bannissement: §7" + lastBanDate + " §8§o(" + lastBanID + ")");
-    lores.add("§3Dernier mute: §7" + lastMuteDate + " §8§o(" + lastMuteID + ")");
-    lores.add("§2Dernier kick: §7" + lastKickDate + " §8§o(" + lastKickID + ")");
-    lores.add("");
-    lores.add("§fNombre actuel de points: §6" + playerActualPoints);
-    lores.add("§fNombre total de points obtenus: §e" + playerAllPoints);
-    lores.add("");
-    lores.add("§4CLIC DROIT §cpour imprimer dans le tchat.");
-    lores.add("§7(!) §oRécupération possible via les logs.");
-    infos.setLore(lores);
+    List<String> strLore = new ArrayList<>();
+    strLore.add("§6Nombre de bannissements: §e" + (int) nbrBans + " (" + prcBan + "%)");
+    strLore.add("§3Nombre de mutes: §b" + (int) nbrMutes + " (" + prcMute + "%)");
+    strLore.add("§2Nombre de kicks: §a" + (int) nbrKicks + " (" + prcKick + "%)");
+    strLore.add("");
+    strLore.add("§fDernière sanction:");
+    strLore.add("§7  - ID: §8" + lastSanctionID);
+    strLore.add("§7  - Date: §8" + lastSanctionDate);
+    strLore.add("§7  - Type: " + lastSanctionType);
+    strLore.add("");
+    strLore.add("§6Premier bannissement: §7" + firstBanDate + " §8§o(" + firstBanID + ")");
+    strLore.add("§3Premier mute: §7" + firstMuteDate + " §8§o(" + firstMuteID + ")");
+    strLore.add("§2Premier kick: §7" + firstKickDate + " §8§o(" + firstKickID + ")");
+    strLore.add("");
+    strLore.add("§6Dernier bannissement: §7" + lastBanDate + " §8§o(" + lastBanID + ")");
+    strLore.add("§3Dernier mute: §7" + lastMuteDate + " §8§o(" + lastMuteID + ")");
+    strLore.add("§2Dernier kick: §7" + lastKickDate + " §8§o(" + lastKickID + ")");
+    strLore.add("");
+    strLore.add("§fNombre actuel de points: §6" + playerActualPoints);
+    strLore.add("§fNombre total de points obtenus: §e" + playerAllPoints);
+    strLore.add("");
+    strLore.add("§4CLIC DROIT §cpour imprimer dans le tchat.");
+    strLore.add("§7(!) §oRécupération possible via les logs.");
+
+    List<Component> lore =
+        strLore.stream().map(componentHelper::getComponent).collect(Collectors.toList());
+    infos.lore(lore);
     stats.setItemMeta(infos);
     return stats;
+  }
+
+  private @NotNull String getPercentage(
+      @NotNull Set<Sanction> sanctions, @NotNull SanctionType sanctionType) {
+    DecimalFormat df = new DecimalFormat("#.##");
+    long nbSanctionsType =
+            sanctions.stream()
+                .filter(sanction -> Objects.equals(sanction.type(), sanctionType))
+                .count();
+    return df.format(nbSanctionsType * 100 / sanctions.size());
   }
 }

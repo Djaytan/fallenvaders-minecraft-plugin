@@ -32,7 +32,7 @@ public enum SanctionType {
   private Material clayColor;
 
   // Constructeur
-  private SanctionType(
+  SanctionType(
       final String configName,
       final String visualName,
       final ChatColor visualColor,

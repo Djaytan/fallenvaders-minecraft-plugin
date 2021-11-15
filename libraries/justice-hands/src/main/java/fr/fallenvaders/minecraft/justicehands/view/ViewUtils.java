@@ -121,4 +121,14 @@ public class ViewUtils {
   public @NotNull String stringify(boolean b) {
     return b ? "§aOui" : "§cNon";
   }
+
+  /**
+   * Normalizes the amount of {@link ItemStack} by ensuring the retuning value is between 1 and 64.
+   *
+   * @param amount The initial amount to normalize.
+   * @return The normalizes amount between 1 and 64 for {@link ItemStack}.
+   */
+  public int normalizeItemAmount(int amount) {
+    return Math.min(Math.max(amount, 1), 64);
+  }
 }
