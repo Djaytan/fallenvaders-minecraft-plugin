@@ -31,8 +31,6 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
-import fr.minuskube.inv.content.Pagination;
-import fr.minuskube.inv.content.SlotIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -146,24 +144,13 @@ public class SanctionManagerCategoryProvider implements InventoryProvider {
         sanctionManagerViewContainer.getCurrentSanctionCategory();
     int nbPredefinedSanctions = currentSanctionCategory.predefinedSanctions().size();
     if (nbPredefinedSanctions > 0) {
-      List<ClickableItem> predefinedSanctions = new ArrayList<>(nbPredefinedSanctions);
+      List<ClickableItem> clickableItems = new ArrayList<>(nbPredefinedSanctions);
 
       for (PredefinedSanction predefinedSanction : currentSanctionCategory.predefinedSanctions()) {
-        predefinedSanctions.add(
-            predefinedSanctionItemBuilder.build(opener, target, predefinedSanction));
+        clickableItems.add(predefinedSanctionItemBuilder.build(opener, target, predefinedSanction));
       }
 
-      Pagination pagination = contents.pagination();
-      pagination.setItems(predefinedSanctions.toArray(new ClickableItem[0]));
-      pagination.setItemsPerPage(27);
-      pagination.addToIterator(contents.newIterator(SlotIterator.Type.HORIZONTAL, 2, 0));
-
-      if (!pagination.isFirst()) {
-        contents.set(5, 0, paginationItemBuilder.buildPreviousPage(opener, contents));
-      }
-      if (!pagination.isLast()) {
-        contents.set(5, 0, paginationItemBuilder.buildNextPage(opener, contents));
-      }
+      viewUtils.setPagination(opener, contents, clickableItems, 27);
     } else {
       contents.set(3, 4, ClickableItem.empty(viewUtils.emptySanctionCategory()));
     }

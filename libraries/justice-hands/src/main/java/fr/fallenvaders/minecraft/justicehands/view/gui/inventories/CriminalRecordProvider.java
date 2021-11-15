@@ -32,7 +32,6 @@ import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
 import fr.minuskube.inv.content.Pagination;
-import fr.minuskube.inv.content.SlotIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -158,16 +157,7 @@ public class CriminalRecordProvider implements InventoryProvider {
         clickableItems.add(sanctionItemBuilder.build(sanction));
       }
 
-      pagination.setItems(clickableItems.toArray(new ClickableItem[0]));
-      pagination.setItemsPerPage(27);
-      pagination.addToIterator(contents.newIterator(SlotIterator.Type.HORIZONTAL, 2, 0));
-
-      if (!pagination.isFirst()) {
-        contents.set(5, 0, paginationItemBuilder.buildPreviousPage(opener, contents));
-      }
-      if (!pagination.isLast()) {
-        contents.set(5, 0, paginationItemBuilder.buildNextPage(opener, contents));
-      }
+      viewUtils.setPagination(opener, contents, clickableItems, 27);
     } else {
       contents.set(3, 4, ClickableItem.empty(viewUtils.emptyCriminalRecord(filter)));
     }

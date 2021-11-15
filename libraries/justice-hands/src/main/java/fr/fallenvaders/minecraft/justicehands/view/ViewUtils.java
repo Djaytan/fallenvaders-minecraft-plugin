@@ -19,19 +19,21 @@ package fr.fallenvaders.minecraft.justicehands.view;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
-import java.text.SimpleDateFormat;
+import fr.fallenvaders.minecraft.justicehands.view.gui.items.PaginationItemBuilder;
+import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.content.InventoryContents;
+import fr.minuskube.inv.content.Pagination;
+import fr.minuskube.inv.content.SlotIterator;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,15 +56,20 @@ public class ViewUtils {
   private static final Material CHANGE_PAGE_ITEM = Material.ARROW;
 
   private final ComponentHelper componentHelper;
+  private final PaginationItemBuilder paginationItemBuilder;
 
   /**
    * Constructor.
    *
-   * @param componentHelper The component helper.
+   * @param componentHelper The {@link ComponentHelper}.
+   * @param paginationItemBuilder The {@link PaginationItemBuilder}.
    */
   @Inject
-  public ViewUtils(@NotNull ComponentHelper componentHelper) {
+  public ViewUtils(
+      @NotNull ComponentHelper componentHelper,
+      @NotNull PaginationItemBuilder paginationItemBuilder) {
     this.componentHelper = componentHelper;
+    this.paginationItemBuilder = paginationItemBuilder;
   }
 
   /**
@@ -130,5 +137,31 @@ public class ViewUtils {
    */
   public int normalizeItemAmount(int amount) {
     return Math.min(Math.max(amount, 1), 64);
+  }
+
+  /**
+   * Sets pagination in the {@link InventoryContents}.
+   *
+   * @param opener The {@link Player} opener of the {@link Inventory}.
+   * @param contents The {@link InventoryContents}.
+   * @param clickableItems The {@link ClickableItem}s to paginate in the {@link Inventory}.
+   * @param itemPerPage The number of items per page.
+   */
+  public void setPagination(
+      @NotNull Player opener,
+      @NotNull InventoryContents contents,
+      @NotNull List<ClickableItem> clickableItems,
+      int itemPerPage) {
+    Pagination pagination = contents.pagination();
+    pagination.setItems(clickableItems.toArray(new ClickableItem[0]));
+    pagination.setItemsPerPage(itemPerPage);
+    pagination.addToIterator(contents.newIterator(SlotIterator.Type.HORIZONTAL, 2, 0));
+
+    if (!pagination.isFirst()) {
+      contents.set(5, 0, paginationItemBuilder.buildPreviousPage(opener, contents));
+    }
+    if (!pagination.isLast()) {
+      contents.set(5, 0, paginationItemBuilder.buildNextPage(opener, contents));
+    }
   }
 }
