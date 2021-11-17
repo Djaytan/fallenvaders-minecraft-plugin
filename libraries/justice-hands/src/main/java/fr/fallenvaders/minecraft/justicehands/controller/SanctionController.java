@@ -158,6 +158,8 @@ public class SanctionController {
       @NotNull CommandSender author,
       @NotNull SanctionType type)
       throws JusticeHandsException {
+    Preconditions.checkArgument(points >= 0,
+      "The number of points of the sanction can't be lower than 0.");
     checkAuthorValidity(author);
 
     Timestamp beginningDate = new Timestamp(System.currentTimeMillis());
@@ -183,12 +185,9 @@ public class SanctionController {
     sanctionDispatcher.dispatchSanction(sanction);
   }
 
-  private void checkAuthorValidity(@NotNull CommandSender author) throws JusticeHandsException {
-    boolean isValid = author instanceof Player || author instanceof ConsoleCommandSender;
-    if (!isValid) {
-      throw new JusticeHandsException(
-          "Invalid sanction: only Player and ConsoleCommandSender can be an author.");
-    }
+  private void checkAuthorValidity(@NotNull CommandSender author) {
+    Preconditions.checkArgument(author instanceof Player || author instanceof ConsoleCommandSender,
+      "Invalid sanction: only Player and ConsoleCommandSender can be an author.");
   }
 
   private @Nullable OfflinePlayer convertAuthor(@NotNull CommandSender author) {
