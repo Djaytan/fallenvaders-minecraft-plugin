@@ -28,8 +28,7 @@ import org.jetbrains.annotations.Nullable;
  * @param id The ID of the {@link GuiInventory} item.
  * @param location The location of the {@link GuiInventory} item.
  * @param item The {@link ItemStack} which represent the {@link GuiInventory} item.
- *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 // TODO: rename it GuiItem (shorter)

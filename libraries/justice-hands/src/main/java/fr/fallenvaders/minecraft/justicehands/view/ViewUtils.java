@@ -31,7 +31,6 @@ import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +40,8 @@ import org.jetbrains.annotations.Nullable;
  * Utils class about components creations (inventory buttons, stringify some data like boolean,
  * ...).
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton
@@ -52,8 +52,6 @@ public class ViewUtils {
   public static final String PREFIX_MT = "§7[§cModeratorTools§7] §r";
   public static final String PREFIX_SM = "§7[§9SanctionManager§7] §r";
   public static final String PREFIX_KK = "§7[§4KeysKeeper§7] §r";
-
-  private static final Material CHANGE_PAGE_ITEM = Material.ARROW;
 
   private final ComponentHelper componentHelper;
   private final PaginationItemBuilder paginationItemBuilder;
@@ -73,8 +71,8 @@ public class ViewUtils {
   }
 
   /**
-   * Provides an {@link ItemStack} which indicate that the criminal record is empty (i.e. no
-   * sanctions recorded until the call of this method).
+   * Provides an item stack which indicate that the criminal record is empty (i.e. no sanctions
+   * recorded until the call of this method).
    *
    * <p>If the sanction type is specified, it only indicates that no sanctions of this type have
    * been recorded.
@@ -102,7 +100,7 @@ public class ViewUtils {
   }
 
   /**
-   * Provides an {@link ItemStack} which indicate that the sanction category is empty.
+   * Provides an item stack which indicate that the sanction category is empty.
    *
    * @return The item indicator of an empty sanction category.
    */
@@ -130,21 +128,21 @@ public class ViewUtils {
   }
 
   /**
-   * Normalizes the amount of {@link ItemStack} by ensuring the retuning value is between 1 and 64.
+   * Normalizes the amount of item stack by ensuring the retuning value is between 1 and 64.
    *
    * @param amount The initial amount to normalize.
-   * @return The normalizes amount between 1 and 64 for {@link ItemStack}.
+   * @return The normalizes amount between 1 and 64 for item stack.
    */
   public int normalizeItemAmount(int amount) {
     return Math.min(Math.max(amount, 1), 64);
   }
 
   /**
-   * Sets pagination in the {@link InventoryContents}.
+   * Sets pagination in the menu.
    *
-   * @param opener The {@link Player} opener of the {@link Inventory}.
-   * @param contents The {@link InventoryContents}.
-   * @param clickableItems The {@link ClickableItem}s to paginate in the {@link Inventory}.
+   * @param opener The player opener of the menu.
+   * @param contents The contents of the menu.
+   * @param clickableItems The clickable items to paginate in the menu.
    * @param itemPerPage The number of items per page.
    */
   public void setPagination(

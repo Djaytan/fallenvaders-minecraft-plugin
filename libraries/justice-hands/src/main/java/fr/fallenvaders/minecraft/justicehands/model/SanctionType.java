@@ -20,6 +20,13 @@ package fr.fallenvaders.minecraft.justicehands.model;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
+/**
+ * The enum of type of sanctions.
+ *
+ * @author Glynix
+ * @author Voltariuss
+ * @since 0.1.0
+ */
 public enum SanctionType {
   KICK("kick", "Kick ", ChatColor.GREEN, Material.GREEN_CONCRETE),
   MUTE("mute", "Mute ", ChatColor.BLUE, Material.BLUE_CONCRETE),

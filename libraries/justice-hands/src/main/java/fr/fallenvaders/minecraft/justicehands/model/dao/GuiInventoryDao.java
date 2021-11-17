@@ -36,8 +36,9 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The {@link GuiInventory} DAO class.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
+ * @see ReadOnlyDao
  */
 @Singleton
 public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {

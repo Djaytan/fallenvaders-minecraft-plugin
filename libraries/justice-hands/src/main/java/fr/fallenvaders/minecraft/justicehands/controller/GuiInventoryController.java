@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * {@link GuiInventory} controller class.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

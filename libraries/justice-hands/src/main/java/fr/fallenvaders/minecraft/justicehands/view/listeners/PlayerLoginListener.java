@@ -37,7 +37,8 @@ import org.slf4j.Logger;
  * Listener of {@link PlayerLoginEvent} in order to control player connections and to prevent them
  * when player is banned.
  *
- * @author FallenVaders' dev team
+ * @author Glynix
+ * @author Voltariuss
  * @version 0.1.0
  */
 @Singleton
@@ -51,10 +52,10 @@ public class PlayerLoginListener implements Listener {
   /**
    * Constructor.
    *
-   * @param componentHelper The component helper.
-   * @param sanctionComponentBuilder The Keys Keeper component builder.
-   * @param logger The logger.
-   * @param sanctionController The sanction controller.
+   * @param componentHelper The {@link ComponentHelper}.
+   * @param sanctionComponentBuilder The {@link SanctionComponentBuilder}.
+   * @param logger The {@link Logger}.
+   * @param sanctionController The {@link SanctionController}.
    */
   @Inject
   public PlayerLoginListener(

@@ -28,7 +28,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This class is in charge of initializing all listeners of the module.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton

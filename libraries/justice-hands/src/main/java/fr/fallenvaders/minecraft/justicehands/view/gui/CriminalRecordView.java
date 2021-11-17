@@ -37,7 +37,8 @@ import org.jetbrains.annotations.NotNull;
  * <p>The purpose of this view is to permit the creation of menus about visualization and management
  * of existing {@link Sanction}s of the specified {@link OfflinePlayer}.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton

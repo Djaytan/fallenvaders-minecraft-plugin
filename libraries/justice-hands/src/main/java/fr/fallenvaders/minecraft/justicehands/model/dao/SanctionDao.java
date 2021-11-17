@@ -41,7 +41,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * DAO class about manipulation of {@link Sanction}s in the model.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  * @see Dao
  */

@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 /**
  * This class is an implementation of the {@link SanctionDispatcher} interface.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

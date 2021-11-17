@@ -45,7 +45,8 @@ import org.slf4j.Logger;
 /**
  * The builder class of {@link SanctionCategory} items.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton

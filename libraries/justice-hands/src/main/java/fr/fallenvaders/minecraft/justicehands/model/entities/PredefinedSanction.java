@@ -30,14 +30,13 @@ import org.jetbrains.annotations.NotNull;
  * particularly useful in case predefined sanctions are regularly review to adapt points,
  * type, description, ...
  *
- * @author FallenVaders' dev team
- * @since 0.3.0
- *
  * @param id The id of the predefined sanction.
  * @param name The name of the predefined sanction.
  * @param description The description of the predefined sanction.
  * @param points The number of points associated with the predefined sanction.
  * @param type The type of the predefined sanction.
+ * @author Voltariuss
+ * @since 0.3.0
  */
 public record PredefinedSanction(
     @NotNull String id,

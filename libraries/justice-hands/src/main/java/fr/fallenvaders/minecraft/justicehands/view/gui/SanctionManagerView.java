@@ -42,7 +42,8 @@ import org.jetbrains.annotations.NotNull;
  * as well to dispatch these {@link PredefinedSanction}s to players in order to register a new
  * {@link Sanction} in their criminal record.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton

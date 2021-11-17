@@ -22,14 +22,16 @@ import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import fr.fallenvaders.minecraft.justicehands.model.service.SanctionCategoryService;
 import java.util.Set;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * The {@link SanctionCategory} controller.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
+@Singleton
 public class SanctionCategoryController {
 
   private final SanctionCategoryService sanctionCategoryService;

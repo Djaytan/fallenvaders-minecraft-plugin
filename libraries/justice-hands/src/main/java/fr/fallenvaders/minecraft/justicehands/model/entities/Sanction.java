@@ -35,9 +35,6 @@ import org.jetbrains.annotations.Nullable;
  * sanction, it's possible to directly create one. However, this usage must be limited as
  * much as possible by created new {@link PredefinedSanction} as soon as possible.
  *
- * @author FallenVaders' dev team
- * @since 0.3.0
- *
  * @param id The ID of the sanction.
  * @param inculpatedPlayer The inculpated player of the sanction.
  * @param name The name of the sanction.
@@ -47,6 +44,8 @@ import org.jetbrains.annotations.Nullable;
  * @param endingDate The ending date of the sanction (null in cases of kick or ban def for example).
  * @param authorPlayer The author of the sanction (null means console is the author).
  * @param type The type of sanction.
+ * @author Voltariuss
+ * @since 0.3.0
  */
 public record Sanction (
     int id,

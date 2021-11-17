@@ -19,19 +19,18 @@ package fr.fallenvaders.minecraft.justicehands.view.gui.items;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
-import fr.fallenvaders.minecraft.justicehands.controller.SanctionController;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.builders.PlayerSanctionsStatisticsBuilder;
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.entities.PlayerSanctionTypeStatistics;
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.entities.PlayerSanctionsStatistics;
 import fr.minuskube.inv.ClickableItem;
-import fr.minuskube.inv.content.InventoryContents;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -45,7 +44,8 @@ import org.jetbrains.annotations.Nullable;
 /**
  * The builder class of player {@link Sanction}s statistics.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton
@@ -62,6 +62,7 @@ public class PlayerSanctionsStatisticsItemBuilder {
    * @param componentHelper The {@link ComponentHelper}.
    * @param playerSanctionsStatisticsBuilder The {@link PlayerSanctionsStatisticsBuilder}.
    */
+  @Inject
   public PlayerSanctionsStatisticsItemBuilder(
       @NotNull ComponentHelper componentHelper,
       @NotNull PlayerSanctionsStatisticsBuilder playerSanctionsStatisticsBuilder) {

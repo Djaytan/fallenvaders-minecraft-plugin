@@ -24,8 +24,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  *
  * @param line The line location of the {@link GuiInventoryItem}.
  * @param column The column location of the {@link GuiInventoryItem}.
- *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 // TODO: rename it GuiLocation (shorter)

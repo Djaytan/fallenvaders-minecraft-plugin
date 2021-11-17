@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 /**
  * Service class about {@link SanctionCategory}s manipulations.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

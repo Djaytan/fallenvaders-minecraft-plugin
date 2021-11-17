@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
  * This interface corresponds to a sanction dispatcher. Its role is to translate a specified {@link
  * Sanction} description into a concrete sanction on server (kick, ban, ...).
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 public interface SanctionDispatcher {

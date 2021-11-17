@@ -28,7 +28,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The container of {@link SanctionManagerView}.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton

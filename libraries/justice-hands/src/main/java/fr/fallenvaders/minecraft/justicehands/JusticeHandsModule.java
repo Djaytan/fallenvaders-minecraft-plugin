@@ -9,7 +9,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Entry point class for JusticeHands module.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @version 0.3.0
  */
 @Singleton

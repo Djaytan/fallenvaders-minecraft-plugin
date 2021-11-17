@@ -34,7 +34,8 @@ import org.jetbrains.annotations.Nullable;
 /**
  * This class represents the sanction manager {@link CommandExecutor}.
  *
- * @author FallenVaders' dev team
+ * @author Glynix
+ * @author Voltariuss
  * @since 0.1.0
  */
 @Singleton
@@ -47,7 +48,7 @@ public class SanctionManagerCommand implements CommandExecutor {
    * Constructor.
    *
    * @param sanctionManagerView The {@link SanctionManagerView}.
-   * @param server The Bukkit {@link Server}.
+   * @param server The {@link Server}.
    */
   @Inject
   public SanctionManagerCommand(

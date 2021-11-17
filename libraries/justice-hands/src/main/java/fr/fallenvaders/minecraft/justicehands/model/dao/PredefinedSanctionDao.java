@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * DAO class about manipulation of {@link PredefinedSanction}s in the model.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  * @see ReadOnlyDao
  */

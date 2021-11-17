@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 /**
  * Class which offers services about the manipulation of {@link Sanction}s in the model.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

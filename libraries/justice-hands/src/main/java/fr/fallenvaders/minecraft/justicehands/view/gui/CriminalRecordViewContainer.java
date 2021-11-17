@@ -28,7 +28,8 @@ import org.jetbrains.annotations.Nullable;
  * <p>When the filter is null, this mean that no filter is applied and all {@link Sanction}s are
  * displayed.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton

@@ -30,7 +30,8 @@ import org.slf4j.Logger;
 /**
  * This class is in charge of initializing all commands of the module.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton
@@ -45,10 +46,10 @@ public class CommandsInitializer {
   /**
    * Constructor.
    *
-   * @param plugin The Bukkit Java plugin.
-   * @param logger The logger.
-   * @param criminalRecordCommand The criminal record {@link CommandExecutor}.
-   * @param sanctionManagerCommand The sanction manager {@link CommandExecutor}.
+   * @param plugin The {@link JavaPlugin}.
+   * @param logger The {@link Logger}.
+   * @param criminalRecordCommand The {@link CriminalRecordCommand} executor.
+   * @param sanctionManagerCommand The {@link SanctionManagerCommand} executor.
    */
   @Inject
   public CommandsInitializer(

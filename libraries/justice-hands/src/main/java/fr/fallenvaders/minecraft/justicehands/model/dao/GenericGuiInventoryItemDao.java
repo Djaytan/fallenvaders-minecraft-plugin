@@ -39,7 +39,9 @@ import org.jetbrains.annotations.NotNull;
  * <p>Note: here, only GuiInventoryItem described under the section "clickable-items" are recovered.
  * Embedded items of {@link GuiInventory}s are ignored.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @since 0.3.0
+ * @see ReadOnlyDao
  */
 @Singleton
 public class GenericGuiInventoryItemDao implements ReadOnlyDao<GuiInventoryItem> {

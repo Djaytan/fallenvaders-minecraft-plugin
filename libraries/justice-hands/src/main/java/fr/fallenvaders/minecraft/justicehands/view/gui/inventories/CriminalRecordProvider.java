@@ -53,7 +53,8 @@ import org.slf4j.Logger;
 /**
  * Criminal record inventory provider class.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton

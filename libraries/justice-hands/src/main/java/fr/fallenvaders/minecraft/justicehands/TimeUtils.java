@@ -24,7 +24,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Time utils class.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton
@@ -45,7 +46,7 @@ public class TimeUtils {
    * @param remainingTime The remaining time in milliseconds.
    * @return The remaining time in string format.
    */
-  public String remainingTime(long remainingTime) {
+  public @NotNull String remainingTime(long remainingTime) {
     if (remainingTime < 0) {
       remainingTime = 0;
     }

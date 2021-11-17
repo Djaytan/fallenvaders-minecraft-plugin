@@ -40,7 +40,7 @@ import org.slf4j.Logger;
 /**
  * This class lead sanctions attribution over server.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

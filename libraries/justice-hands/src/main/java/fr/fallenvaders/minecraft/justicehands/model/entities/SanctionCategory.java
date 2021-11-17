@@ -24,13 +24,12 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This entity represent a category of {@link PredefinedSanction}s.
  *
- * @author FallenVaders' dev team
- * @since 0.3.0
- *
  * @param id The ID of the category.
  * @param name The name of the category.
  * @param description The description of the category.
  * @param predefinedSanctions The {@link PredefinedSanction}s nested the category.
+ * @author Voltariuss
+ * @since 0.3.0
  */
 public record SanctionCategory(
     @NotNull String id,

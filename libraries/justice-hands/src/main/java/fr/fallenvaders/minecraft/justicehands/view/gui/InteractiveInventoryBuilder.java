@@ -32,7 +32,8 @@ import org.jetbrains.annotations.NotNull;
  * <p>An interactive inventory is based on a Minecraft inventory in order to display data and allow
  * players to dispatch actions easily.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton

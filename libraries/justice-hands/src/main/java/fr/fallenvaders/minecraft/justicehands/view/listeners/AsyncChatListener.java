@@ -38,7 +38,8 @@ import org.slf4j.Logger;
  * Listener of {@link AsyncChatEvent} in order to control player's sending message in chat and to
  * prevent them when player is muted.
  *
- * @author FallenVaders' dev team
+ * @author Glynix
+ * @author Voltariuss
  * @version 0.1.0
  */
 @Singleton
@@ -52,10 +53,10 @@ public class AsyncChatListener implements Listener {
   /**
    * Constructor.
    *
-   * @param componentHelper The component helper.
-   * @param logger The logger.
-   * @param sanctionComponentBuilder The sanction component builder.
-   * @param sanctionController The sanction controller.
+   * @param componentHelper The {@link ComponentHelper}
+   * @param logger The {@link Logger}.
+   * @param sanctionComponentBuilder The {@link SanctionComponentBuilder}.
+   * @param sanctionController The {@link SanctionController}.
    */
   @Inject
   public AsyncChatListener(

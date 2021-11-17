@@ -34,7 +34,8 @@ import org.jetbrains.annotations.Nullable;
 /**
  * This class represents the criminal record {@link CommandExecutor}.
  *
- * @author FallenVaders' dev team
+ * @author Glynix
+ * @author Voltariuss
  * @since 0.1.0
  */
 @Singleton
@@ -47,7 +48,7 @@ public class CriminalRecordCommand implements CommandExecutor {
    * Constructor.
    *
    * @param criminalRecordView The {@link CriminalRecordView}.
-   * @param server The Bukkit {@link Server}.
+   * @param server The {@link Server}.
    */
   @Inject
   public CriminalRecordCommand(

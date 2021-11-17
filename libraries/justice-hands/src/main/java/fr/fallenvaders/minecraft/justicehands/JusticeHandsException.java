@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * JusticeHands' exception class.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 public class JusticeHandsException extends Exception {

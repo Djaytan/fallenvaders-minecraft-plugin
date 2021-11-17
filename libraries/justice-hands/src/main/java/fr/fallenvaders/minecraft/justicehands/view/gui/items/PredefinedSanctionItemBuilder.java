@@ -37,7 +37,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The builder class of {@link PredefinedSanction} items.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
+ * @author Glynix
  * @since 0.3.0
  */
 @Singleton

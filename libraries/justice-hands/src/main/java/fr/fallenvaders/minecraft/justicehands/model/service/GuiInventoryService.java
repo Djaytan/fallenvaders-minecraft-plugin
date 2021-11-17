@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 /**
  * {@link GuiInventory} service class.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 // TODO: rename it GuiService (more generic and shorter)
