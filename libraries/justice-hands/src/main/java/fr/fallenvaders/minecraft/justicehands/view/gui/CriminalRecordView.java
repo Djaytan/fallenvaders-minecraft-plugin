@@ -20,12 +20,11 @@ package fr.fallenvaders.minecraft.justicehands.view.gui;
 import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.GuiInventoryController;
-import fr.fallenvaders.minecraft.justicehands.controller.SanctionController;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
+import fr.fallenvaders.minecraft.justicehands.view.gui.inventories.CriminalRecordProvider;
 import fr.minuskube.inv.SmartInventory;
-import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
@@ -44,25 +43,25 @@ import org.jetbrains.annotations.NotNull;
 @Singleton
 public class CriminalRecordView {
 
+  private final CriminalRecordProvider criminalRecordProvider;
   private final GuiInventoryController guiInventoryController;
   private final InteractiveInventoryBuilder interactiveInventoryBuilder;
-  private final SanctionController sanctionController;
 
   /**
    * Constructor.
    *
+   * @param criminalRecordProvider The {@link CriminalRecordProvider}.
    * @param guiInventoryController The {@link GuiInventoryController}.
    * @param interactiveInventoryBuilder The {@link InteractiveInventoryBuilder}.
-   * @param sanctionController The {@link SanctionController}.
    */
   @Inject
   public CriminalRecordView(
+      @NotNull CriminalRecordProvider criminalRecordProvider,
       @NotNull GuiInventoryController guiInventoryController,
-      @NotNull InteractiveInventoryBuilder interactiveInventoryBuilder,
-      @NotNull SanctionController sanctionController) {
+      @NotNull InteractiveInventoryBuilder interactiveInventoryBuilder) {
+    this.criminalRecordProvider = criminalRecordProvider;
     this.guiInventoryController = guiInventoryController;
     this.interactiveInventoryBuilder = interactiveInventoryBuilder;
-    this.sanctionController = sanctionController;
   }
 
   /**
@@ -77,15 +76,15 @@ public class CriminalRecordView {
     Preconditions.checkNotNull(opener);
     Preconditions.checkNotNull(target);
 
-    Set<Sanction> sanctions = sanctionController.getPlayerSanctions(target);
-
-    GuiInventory mainGuiInventory = null; // TODO
+    GuiInventory mainGuiInventory =
+        guiInventoryController.getGuiInventory(CriminalRecordProvider.GUI_INVENTORY_ID);
     int nbLines = mainGuiInventory.nbLines();
 
     String id = target.getUniqueId().toString();
     String title = String.format("%s§c%s", ViewUtils.PREFIX_CR, target.getName());
 
-    SmartInventory menu = null; // TODO
+    SmartInventory menu =
+        interactiveInventoryBuilder.build(criminalRecordProvider, id, title, nbLines);
     menu.open(opener);
   }
 }

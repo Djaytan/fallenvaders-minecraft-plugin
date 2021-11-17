@@ -37,7 +37,7 @@ justicehands:
           ==: org.bukkit.inventory.ItemStack
           type: CHEST
     inventories:
-      main:
+      sm-main:
         number-lines: 3
         items:
           player-head:
@@ -45,6 +45,10 @@ justicehands:
               line: 0
               column: 4
           sanction-category: *sanction-category
+      sm-category:
+        number-lines: 6
+      cr-main:
+        number-lines: 6
   sanctions-scale:
     categories:
       general:

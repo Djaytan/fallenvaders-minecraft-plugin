@@ -23,7 +23,6 @@ import fr.fallenvaders.minecraft.justicehands.model.entities.PredefinedSanction;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import fr.fallenvaders.minecraft.justicehands.view.gui.SanctionManagerViewContainer;
-import fr.fallenvaders.minecraft.justicehands.view.gui.items.PaginationItemBuilder;
 import fr.fallenvaders.minecraft.justicehands.view.gui.items.PlayerHeadItemBuilder;
 import fr.fallenvaders.minecraft.justicehands.view.gui.items.PredefinedSanctionItemBuilder;
 import fr.fallenvaders.minecraft.justicehands.view.gui.items.SanctionCategoryItemBuilder;
@@ -54,8 +53,9 @@ import org.slf4j.Logger;
 @Singleton
 public class SanctionManagerCategoryProvider implements InventoryProvider {
 
+  public static final String GUI_INVENTORY_ID = "sm-category";
+
   private final Logger logger;
-  private final PaginationItemBuilder paginationItemBuilder;
   private final PlayerHeadItemBuilder playerHeadItemBuilder;
   private final PredefinedSanctionItemBuilder predefinedSanctionItemBuilder;
   private final SanctionCategoryController sanctionCategoryController;
@@ -68,7 +68,6 @@ public class SanctionManagerCategoryProvider implements InventoryProvider {
    * Constructor.
    *
    * @param logger The {@link Logger}.
-   * @param paginationItemBuilder The {@link PaginationItemBuilder}.
    * @param playerHeadItemBuilder The {@link PlayerHeadItemBuilder}.
    * @param predefinedSanctionItemBuilder The {@link PredefinedSanctionItemBuilder}.
    * @param sanctionCategoryController The {@link SanctionCategoryController}.
@@ -80,7 +79,6 @@ public class SanctionManagerCategoryProvider implements InventoryProvider {
   @Inject
   public SanctionManagerCategoryProvider(
       @NotNull Logger logger,
-      @NotNull PaginationItemBuilder paginationItemBuilder,
       @NotNull PlayerHeadItemBuilder playerHeadItemBuilder,
       @NotNull PredefinedSanctionItemBuilder predefinedSanctionItemBuilder,
       @NotNull SanctionCategoryController sanctionCategoryController,
@@ -89,7 +87,6 @@ public class SanctionManagerCategoryProvider implements InventoryProvider {
       @NotNull Server server,
       @NotNull ViewUtils viewUtils) {
     this.logger = logger;
-    this.paginationItemBuilder = paginationItemBuilder;
     this.playerHeadItemBuilder = playerHeadItemBuilder;
     this.predefinedSanctionItemBuilder = predefinedSanctionItemBuilder;
     this.sanctionCategoryController = sanctionCategoryController;

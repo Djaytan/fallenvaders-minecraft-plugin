@@ -59,6 +59,8 @@ import org.slf4j.Logger;
 @Singleton
 public class CriminalRecordProvider implements InventoryProvider {
 
+  public static final String GUI_INVENTORY_ID = "sm-main";
+
   private final ComponentHelper componentHelper;
   private final CriminalRecordViewContainer criminalRecordViewContainer;
   private final Logger logger;

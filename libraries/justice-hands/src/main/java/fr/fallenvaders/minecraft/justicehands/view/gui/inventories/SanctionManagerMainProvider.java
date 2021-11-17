@@ -48,7 +48,7 @@ import org.slf4j.Logger;
 @Singleton
 public class SanctionManagerMainProvider implements InventoryProvider {
 
-  public static final String GUI_INVENTORY_ID = "main";
+  public static final String GUI_INVENTORY_ID = "sm-main";
 
   private static final String PLAYER_HEAD_ITEM_ID = "player-head";
 
