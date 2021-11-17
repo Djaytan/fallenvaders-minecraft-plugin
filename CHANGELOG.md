@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       are disconnected.
   - MiniEvents: easy launch of events in the server.
   - FightSession: prevents disconnections during fights and limits some usage
-      in this context (e.g. deactive enderpearl usage).
+      in this context (for example: deactivate enderpearl usage).
 - Setup a Minecraft test server with debug mode option.
 - Use [google-java-format](https://google.github.io/styleguide/javaguide.html) for code style guideline.
 - Setup CircleCI CI/CD platform.

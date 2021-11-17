@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
  * Dao} implementation.
  *
  * <p>The use of a custom exception permit to make an abstraction which prevent the service layer to
- * depend on specific dependencies of DAO layer (e.g. DBMS, FileConfiguration, ...).
+ * depend on specific dependencies of DAO layer (for example: DBMS, FileConfiguration, ...).
  *
  * @author Voltariuss
  * @since 0.3.0

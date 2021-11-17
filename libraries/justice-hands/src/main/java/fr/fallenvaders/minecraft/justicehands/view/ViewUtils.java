@@ -71,8 +71,8 @@ public class ViewUtils {
   }
 
   /**
-   * Provides an item stack which indicate that the criminal record is empty (i.e. no sanctions
-   * recorded until the call of this method).
+   * Provides an item stack which indicate that the criminal record is empty (in other words, no
+   * sanctions recorded until the call of this method).
    *
    * <p>If the sanction type is specified, it only indicates that no sanctions of this type have
    * been recorded.
