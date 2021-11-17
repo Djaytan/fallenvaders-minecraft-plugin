@@ -27,11 +27,11 @@ import org.jetbrains.annotations.NotNull;
  *
  * @param id The ID of the GUI inventory.
  * @param nbLines The number of lines of the GUI inventory.
- * @param items The {@link GuiInventoryItem}s embedded in the GUI inventory.
+ * @param items The {@link GuiItem}s embedded in the GUI inventory.
  * @author Voltariuss
  * @since 0.3.0
  */
-public record GuiInventory (@NotNull String id, int nbLines, @NotNull List<GuiInventoryItem> items) {
+public record GuiInventory (@NotNull String id, int nbLines, @NotNull List<GuiItem> items) {
 
   /**
    * Returns the GUI item which match with the specified ID.
@@ -39,7 +39,7 @@ public record GuiInventory (@NotNull String id, int nbLines, @NotNull List<GuiIn
    * @param id The ID of the GUI item.
    * @return The corresponding GUI item if exists.
    */
-  public Optional<GuiInventoryItem> getItem(@NotNull String id) {
+  public Optional<GuiItem> getItem(@NotNull String id) {
     return items.stream()
       .filter(item -> item.id().equals(id))
       .findFirst();

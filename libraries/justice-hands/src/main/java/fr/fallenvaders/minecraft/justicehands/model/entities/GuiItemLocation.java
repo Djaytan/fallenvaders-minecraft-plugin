@@ -20,15 +20,14 @@ package fr.fallenvaders.minecraft.justicehands.model.entities;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * {@link GuiInventoryItem} location.
+ * {@link GuiItem} location.
  *
  * @param line The line location of the GUI item.
  * @param column The column location of the GUI item.
  * @author Voltariuss
  * @since 0.3.0
  */
-// TODO: rename it GuiLocation (shorter)
-public record GuiInventoryItemLocation(int line, int column) {
+public record GuiItemLocation(int line, int column) {
 
   @Override
   public String toString() {

@@ -31,10 +31,9 @@ import org.jetbrains.annotations.Nullable;
  * @author Voltariuss
  * @since 0.3.0
  */
-// TODO: rename it GuiItem (shorter)
-public record GuiInventoryItem (
+public record GuiItem(
     @NotNull String id,
-    @Nullable GuiInventoryItemLocation location,
+    @Nullable GuiItemLocation location,
     @Nullable ItemStack item) {
 
   @Override

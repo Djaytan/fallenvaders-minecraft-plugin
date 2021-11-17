@@ -20,10 +20,10 @@ package fr.fallenvaders.minecraft.justicehands.model.service;
 import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
-import fr.fallenvaders.minecraft.justicehands.model.dao.GenericGuiInventoryItemDao;
+import fr.fallenvaders.minecraft.justicehands.model.dao.GenericGuiItemDao;
 import fr.fallenvaders.minecraft.justicehands.model.dao.GuiInventoryDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
-import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItem;
+import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItem;
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -40,24 +40,24 @@ import org.slf4j.Logger;
 @Singleton
 public class GuiInventoryService {
 
-  private final GenericGuiInventoryItemDao genericGuiInventoryItemDao;
+  private final GenericGuiItemDao genericGuiItemDao;
   private final GuiInventoryDao guiInventoryDao;
   private final Logger logger;
 
   /**
    * Constructor.
    *
-   * @param genericGuiInventoryItemDao The {@link GuiInventoryService}.
+   * @param genericGuiItemDao The {@link GuiInventoryService}.
    * @param guiInventoryDao The {@link GuiInventoryDao}.
    * @param logger The {@link Logger}.
    */
   @Inject
   public GuiInventoryService(
-      @NotNull GenericGuiInventoryItemDao genericGuiInventoryItemDao,
+      @NotNull GenericGuiItemDao genericGuiItemDao,
       @NotNull GuiInventoryDao guiInventoryDao,
       @NotNull Logger logger) {
     this.guiInventoryDao = guiInventoryDao;
-    this.genericGuiInventoryItemDao = genericGuiInventoryItemDao;
+    this.genericGuiItemDao = genericGuiItemDao;
     this.logger = logger;
   }
 
@@ -92,12 +92,12 @@ public class GuiInventoryService {
    * @return The generic GUI item from the model which match with the specified ID.
    * @throws JusticeHandsException if a problem occurs during the search in the model.
    */
-  public Optional<GuiInventoryItem> getGenericGuiItem(@NotNull String id)
+  public Optional<GuiItem> getGenericGuiItem(@NotNull String id)
       throws JusticeHandsException {
     Preconditions.checkNotNull(id);
 
     try {
-      Optional<GuiInventoryItem> genericGuiItem = genericGuiInventoryItemDao.get(id);
+      Optional<GuiItem> genericGuiItem = genericGuiItemDao.get(id);
       logger.info("GUI inventory item with ID '{}' found.", id);
       logger.debug("GUI inventory item found: {}", genericGuiItem);
       return genericGuiItem;

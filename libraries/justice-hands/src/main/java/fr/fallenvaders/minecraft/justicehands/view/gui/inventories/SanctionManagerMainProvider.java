@@ -21,8 +21,8 @@ import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.GuiInventoryController;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionCategoryController;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
-import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItem;
-import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItemLocation;
+import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItem;
+import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItemLocation;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import fr.fallenvaders.minecraft.justicehands.view.gui.items.PlayerHeadItemBuilder;
 import fr.fallenvaders.minecraft.justicehands.view.gui.items.SanctionCategoryItemBuilder;
@@ -109,11 +109,11 @@ public class SanctionManagerMainProvider implements InventoryProvider {
 
   private void setPlayerHead(@NotNull OfflinePlayer target, @NotNull InventoryContents contents)
       throws JusticeHandsException {
-    GuiInventoryItem item =
+    GuiItem item =
         guiInventory
             .getItem(PLAYER_HEAD_ITEM_ID)
             .orElseThrow(() -> new JusticeHandsException("Failed to create the GUI inventory."));
-    GuiInventoryItemLocation location = Objects.requireNonNull(item.location());
+    GuiItemLocation location = Objects.requireNonNull(item.location());
     contents.set(location.line(), location.column(), playerHeadItemBuilder.build(target));
   }
 

@@ -20,7 +20,7 @@ package fr.fallenvaders.minecraft.justicehands.model.dao;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
-import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItem;
+import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItem;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -44,20 +44,20 @@ import org.jetbrains.annotations.NotNull;
 public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
 
   private final FileConfiguration config;
-  private final GenericGuiInventoryItemDao genericGuiInventoryItemDao;
+  private final GenericGuiItemDao genericGuiItemDao;
 
   /**
    * Constructor.
    *
    * @param config The {@link FileConfiguration} of the plugin.
-   * @param genericGuiInventoryItemDao The {@link GenericGuiInventoryItemDao}.
+   * @param genericGuiItemDao The {@link GenericGuiItemDao}.
    */
   @Inject
   public GuiInventoryDao(
       @NotNull FileConfiguration config,
-      @NotNull GenericGuiInventoryItemDao genericGuiInventoryItemDao) {
+      @NotNull GenericGuiItemDao genericGuiItemDao) {
     this.config = config;
-    this.genericGuiInventoryItemDao = genericGuiInventoryItemDao;
+    this.genericGuiItemDao = genericGuiItemDao;
   }
 
   @Override
@@ -97,7 +97,7 @@ public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
     Objects.requireNonNull(inventoryKey);
 
     int nbLines = Integer.parseInt(Objects.requireNonNull(inventory.getString("number-lines")));
-    List<GuiInventoryItem> items = new ArrayList<>();
+    List<GuiItem> items = new ArrayList<>();
 
     ConfigurationSection inventoryItems =
         Objects.requireNonNull(inventory.getConfigurationSection("items"));
@@ -105,9 +105,9 @@ public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
     for (String inventoryItemKey : inventoryItems.getKeys(false)) {
       ConfigurationSection inventoryItem =
           Objects.requireNonNull(inventoryItems.getConfigurationSection(inventoryItemKey));
-      GuiInventoryItem guiInventoryItem =
-          genericGuiInventoryItemDao.getGuiInventoryItem(inventoryItem, inventoryItemKey);
-      items.add(guiInventoryItem);
+      GuiItem guiItem =
+          genericGuiItemDao.getGuiItem(inventoryItem, inventoryItemKey);
+      items.add(guiItem);
     }
 
     return new GuiInventory(inventoryKey, nbLines, items);

@@ -19,7 +19,7 @@ package fr.fallenvaders.minecraft.justicehands.controller;
 
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
-import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItem;
+import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItem;
 import fr.fallenvaders.minecraft.justicehands.model.service.GuiInventoryService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -61,7 +61,7 @@ public class GuiInventoryController {
   }
 
   /**
-   * Recovers the corresponding generic {@link GuiInventoryItem} which match with the given ID.
+   * Recovers the corresponding generic {@link GuiItem} which match with the given ID.
    * Otherwise, raise an exception.
    *
    * <p>A generic GUI item is not linked to a specific inventory (refer you to config file).
@@ -70,7 +70,7 @@ public class GuiInventoryController {
    * @return The sought generic
    * @throws JusticeHandsException if an error occurs or the specified ID is wrong.
    */
-  public @NotNull GuiInventoryItem getGenericGuiItem(@NotNull String id)
+  public @NotNull GuiItem getGenericGuiItem(@NotNull String id)
       throws JusticeHandsException {
     return guiInventoryService
         .getGenericGuiItem(id)

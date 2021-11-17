@@ -21,7 +21,7 @@ import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.GuiInventoryController;
-import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventoryItem;
+import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItem;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import fr.fallenvaders.minecraft.justicehands.view.gui.SanctionManagerView;
 import fr.fallenvaders.minecraft.justicehands.view.gui.SanctionManagerViewContainer;
@@ -99,7 +99,7 @@ public class SanctionCategoryItemBuilder {
     Preconditions.checkNotNull(target);
     Preconditions.checkNotNull(sanctionCategory);
 
-    GuiInventoryItem categoryGuiItem = guiInventoryController.getGenericGuiItem(CATEGORY_ITEM_ID);
+    GuiItem categoryGuiItem = guiInventoryController.getGenericGuiItem(CATEGORY_ITEM_ID);
     ItemStack categoryItem = Objects.requireNonNull(categoryGuiItem.item());
 
     ItemMeta meta = categoryItem.getItemMeta();
