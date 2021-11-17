@@ -24,8 +24,8 @@ import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import fr.fallenvaders.minecraft.justicehands.view.gui.CriminalRecordViewContainer;
-import fr.fallenvaders.minecraft.justicehands.view.gui.items.PaginationItemBuilder;
 import fr.fallenvaders.minecraft.justicehands.view.gui.items.PlayerHeadItemBuilder;
+import fr.fallenvaders.minecraft.justicehands.view.gui.items.PlayerSanctionsStatisticsItemBuilder;
 import fr.fallenvaders.minecraft.justicehands.view.gui.items.SanctionItemBuilder;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
@@ -40,7 +40,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -63,8 +62,8 @@ public class CriminalRecordProvider implements InventoryProvider {
   private final ComponentHelper componentHelper;
   private final CriminalRecordViewContainer criminalRecordViewContainer;
   private final Logger logger;
-  private final PaginationItemBuilder paginationItemBuilder;
   private final PlayerHeadItemBuilder playerHeadItemBuilder;
+  private final PlayerSanctionsStatisticsItemBuilder playerSanctionsStatisticsItemBuilder;
   private final SanctionController sanctionController;
   private final SanctionItemBuilder sanctionItemBuilder;
   private final Server server;
@@ -76,8 +75,8 @@ public class CriminalRecordProvider implements InventoryProvider {
    * @param componentHelper The {@link ComponentHelper}.
    * @param criminalRecordViewContainer The {@link CriminalRecordViewContainer}.
    * @param logger The {@link Logger}.
-   * @param paginationItemBuilder The {@link PaginationItemBuilder}.
    * @param playerHeadItemBuilder The {@link PlayerHeadItemBuilder}.
+   * @param playerSanctionsStatisticsItemBuilder The {@link PlayerSanctionsStatisticsItemBuilder}.
    * @param sanctionController The {@link SanctionController}.
    * @param sanctionItemBuilder The {@link SanctionItemBuilder}.
    * @param server The {@link Server}.
@@ -88,8 +87,8 @@ public class CriminalRecordProvider implements InventoryProvider {
       @NotNull ComponentHelper componentHelper,
       @NotNull CriminalRecordViewContainer criminalRecordViewContainer,
       @NotNull Logger logger,
-      @NotNull PaginationItemBuilder paginationItemBuilder,
       @NotNull PlayerHeadItemBuilder playerHeadItemBuilder,
+      @NotNull PlayerSanctionsStatisticsItemBuilder playerSanctionsStatisticsItemBuilder,
       @NotNull SanctionController sanctionController,
       @NotNull SanctionItemBuilder sanctionItemBuilder,
       @NotNull Server server,
@@ -97,8 +96,8 @@ public class CriminalRecordProvider implements InventoryProvider {
     this.componentHelper = componentHelper;
     this.criminalRecordViewContainer = criminalRecordViewContainer;
     this.logger = logger;
-    this.paginationItemBuilder = paginationItemBuilder;
     this.playerHeadItemBuilder = playerHeadItemBuilder;
+    this.playerSanctionsStatisticsItemBuilder = playerSanctionsStatisticsItemBuilder;
     this.sanctionController = sanctionController;
     this.sanctionItemBuilder = sanctionItemBuilder;
     this.server = server;
@@ -130,7 +129,14 @@ public class CriminalRecordProvider implements InventoryProvider {
       // TODO: feedback to player
       // TODO: better error management
     }
-    setStatistics();
+
+    try {
+      setStatistics(opener, target, contents);
+    } catch (JusticeHandsException e) {
+      logger.error("Failed to load statistics in criminal record GUI inventory.", e);
+      // TODO: feedback to player
+      // TODO: better error management
+    }
   }
 
   @Override
@@ -141,8 +147,6 @@ public class CriminalRecordProvider implements InventoryProvider {
   private void setSanctions(
       @NotNull Player opener, @NotNull OfflinePlayer target, @NotNull InventoryContents contents)
       throws JusticeHandsException {
-    Pagination pagination = contents.pagination();
-
     Set<Sanction> sanctions = sanctionController.getPlayerSanctions(target);
     SanctionType filter = criminalRecordViewContainer.getFilter();
     Set<Sanction> visibleSanctions =
@@ -240,25 +244,11 @@ public class CriminalRecordProvider implements InventoryProvider {
 
   ///// STATISTICS
 
-  public void setStatistics(@NotNull Player opener, @NotNull OfflinePlayer target, @NotNull InventoryContents contents) {
+  public void setStatistics(@NotNull Player opener, @NotNull OfflinePlayer target, @NotNull InventoryContents contents)
+    throws JusticeHandsException {
     contents.set(
       0,
       2,
-      ClickableItem.of(
-        SanctionStatistics.getPlayerStatistics(
-          playerAllSanctionList, Bukkit.getPlayer(UUID.fromString(inventory.getId()))),
-        e -> {
-          if (e.getCurrentItem() == null) {
-            return;
-          }
-          if (e.isRightClick()) {
-            opener.sendMessage("------------------------------------------");
-            opener.sendMessage(e.getCurrentItem().getItemMeta().displayName());
-            List<String> infos = e.getCurrentItem().getItemMeta().lore();
-            for (int i = 1; i < 4; i++) infos.remove(infos.size() - 1);
-            for (String info : infos) opener.sendMessage(" " + info);
-            opener.sendMessage("------------------------------------------");
-          }
-        }));
+      playerSanctionsStatisticsItemBuilder.build(opener, target));
   }
 }
