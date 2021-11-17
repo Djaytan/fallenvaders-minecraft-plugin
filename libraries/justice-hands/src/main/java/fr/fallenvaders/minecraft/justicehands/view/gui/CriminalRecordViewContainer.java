@@ -35,7 +35,12 @@ import org.jetbrains.annotations.Nullable;
 @Singleton
 public class CriminalRecordViewContainer {
 
-  private SanctionType filter = null;
+  private SanctionType filter;
+
+  /** Constructor. */
+  public CriminalRecordViewContainer() {
+    this.filter = null;
+  }
 
   /**
    * Getter.

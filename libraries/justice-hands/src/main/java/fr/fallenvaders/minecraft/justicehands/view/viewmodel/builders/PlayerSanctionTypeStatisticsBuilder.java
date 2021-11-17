@@ -24,6 +24,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,6 +38,10 @@ import org.jetbrains.annotations.Nullable;
  */
 @Singleton
 public class PlayerSanctionTypeStatisticsBuilder {
+
+  /** Constructor. */
+  @Inject
+  public PlayerSanctionTypeStatisticsBuilder() {}
 
   /**
    * Builds the statistics data of a given sanction type of player's sanctions.

@@ -18,12 +18,12 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
 import fr.fallenvaders.minecraft.commons.FvModule;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This singleton class represents the container for the {@link ModuleService}.
@@ -34,8 +34,17 @@ import java.util.List;
 @Singleton
 public final class ModuleContainer {
 
-  private final List<FvModule> modules = new ArrayList<>();
-  private PluginModulesState state = null;
+  private final List<FvModule> modules;
+  private PluginModulesState state;
+
+  /**
+   * Constructor.
+   */
+  @Inject
+  public ModuleContainer() {
+    this.modules = new ArrayList<>();
+    this.state = null;
+  }
 
   /**
    * Adds a module in the module container. If a module with the same name of the new one exists,

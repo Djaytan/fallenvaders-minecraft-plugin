@@ -42,6 +42,7 @@ public class SqlDatabaseInitializer {
    * Constructor.
    *
    * @param fvDataSource The {@link FvDataSource}.
+   * @param dbmsAccessInfo The {@link DbmsAccessInfo}.
    */
   @Inject
   public SqlDatabaseInitializer(
