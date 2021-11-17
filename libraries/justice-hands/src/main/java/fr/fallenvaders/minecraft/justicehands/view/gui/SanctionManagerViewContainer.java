@@ -43,7 +43,7 @@ public class SanctionManagerViewContainer {
    * Constructor.
    *
    * @param sanctionCategoryController The {@link SanctionCategoryController}.
-   * @throws JusticeHandsException if the categories of sanctions can't be recovered.
+   * @throws JusticeHandsException If the categories of sanctions can't be recovered.
    */
   @Inject
   public SanctionManagerViewContainer(

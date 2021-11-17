@@ -58,7 +58,7 @@ public class SanctionService {
    *
    * @param id The ID of the sanction to seek.
    * @return The sanction associated with the specified ID.
-   * @throws JusticeHandsException if the sought sanction fail to be found in the model.
+   * @throws JusticeHandsException If the sought sanction fail to be found in the model.
    */
   public @NotNull Optional<Sanction> getSanction(int id) throws JusticeHandsException {
     logger.info("Seek of the sanction associated with the ID '{}'.", id);
@@ -81,7 +81,7 @@ public class SanctionService {
    * Gets and returns all existing sanctions of the model.
    *
    * @return All the existing sanctions of the model.
-   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
+   * @throws JusticeHandsException If the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getSanctions() throws JusticeHandsException {
     logger.info("Seek of all existing sanctions.");
@@ -109,7 +109,7 @@ public class SanctionService {
    *
    * @param player The player.
    * @return All the sanctions of the specified player.
-   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
+   * @throws JusticeHandsException If the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getPlayerSanctions(@NotNull OfflinePlayer player)
       throws JusticeHandsException {
@@ -140,7 +140,7 @@ public class SanctionService {
    * Registers the specified sanction into the model.
    *
    * @param sanction The sanction to save into the model.
-   * @throws JusticeHandsException if the specified sanction fail to be registered in the model.
+   * @throws JusticeHandsException If the specified sanction fail to be registered in the model.
    */
   public void registerSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info("Try to register the following new sanction: {}", sanction);
@@ -158,7 +158,7 @@ public class SanctionService {
    * Updates the specified sanction in the model.
    *
    * @param sanction The sanction to update in the model.
-   * @throws JusticeHandsException if the specified sanction fail to be updated in the model.
+   * @throws JusticeHandsException If the specified sanction fail to be updated in the model.
    */
   public void updateSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info(
@@ -179,7 +179,7 @@ public class SanctionService {
    * Deletes the specified sanction from the model.
    *
    * @param sanction The sanction to delete from the model.
-   * @throws JusticeHandsException if the specified sanction fail to be deleted in the model.
+   * @throws JusticeHandsException If the specified sanction fail to be deleted in the model.
    */
   public void deleteSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info("Try to delete the following sanction: {}", sanction);

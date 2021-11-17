@@ -70,7 +70,7 @@ public class CriminalRecordView {
    *
    * @param opener The player opener of the menu.
    * @param target The target player needed to open the menu.
-   * @throws JusticeHandsException if the recovering of sanctions fail.
+   * @throws JusticeHandsException If the recovering of sanctions fail.
    */
   public void openMainMenu(@NotNull Player opener, @NotNull OfflinePlayer target)
       throws JusticeHandsException {

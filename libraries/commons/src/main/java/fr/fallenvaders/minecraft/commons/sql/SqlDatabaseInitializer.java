@@ -57,7 +57,7 @@ public class SqlDatabaseInitializer {
    *
    * <p>In all cases, the Charset is defined on 'utf8' and the collate to 'utf8_general_ci'.
    *
-   * @throws SQLException if an SQL error occurs.
+   * @throws SQLException If an SQL error occurs.
    */
   public void initialize() throws SQLException {
     try (Connection connection = fvDataSource.getConnection();

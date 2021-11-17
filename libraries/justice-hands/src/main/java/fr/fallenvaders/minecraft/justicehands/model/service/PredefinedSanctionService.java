@@ -60,7 +60,7 @@ public class PredefinedSanctionService {
    *
    * @param id The ID of the targeted predefined sanction.
    * @return The predefined sanction from the model which match with the specified ID.
-   * @throws JusticeHandsException if a problem occurs during the search in the model.
+   * @throws JusticeHandsException If a problem occurs during the search in the model.
    */
   public @NotNull Optional<PredefinedSanction> getPredefinedSanction(@NotNull String id)
       throws JusticeHandsException {
@@ -83,7 +83,7 @@ public class PredefinedSanctionService {
    * Recovers and returns all the existing predefined sanctions from the model.
    *
    * @return All the existing predefined sanctions from the model.
-   * @throws JusticeHandsException if a problem occurs during the search in the model.
+   * @throws JusticeHandsException If a problem occurs during the search in the model.
    */
   public @NotNull Set<PredefinedSanction> getPredefinedSanctions() throws JusticeHandsException {
     try {

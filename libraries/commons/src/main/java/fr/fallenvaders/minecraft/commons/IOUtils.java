@@ -41,7 +41,7 @@ public class IOUtils {
    *
    * @param is The input stream.
    * @return The content of the stream read in a unique string format.
-   * @throws IOException if something went wrong.
+   * @throws IOException If something went wrong.
    */
   @NotNull
   public String resourceToString(@NotNull InputStream is) throws IOException {

@@ -50,7 +50,7 @@ public final class PluginDeployerService {
    *
    * @param mcServerLocation The location of the Minecraft test-server.
    * @param fvPluginJarCoreName The core name of the plugin to remove.
-   * @throws DeploymentException if an I/O error occurs during the delete file process.
+   * @throws DeploymentException If an I/O error occurs during the delete file process.
    */
   public void deleteOldPlugin(@NotNull Path mcServerLocation, @NotNull String fvPluginJarCoreName)
       throws DeploymentException {

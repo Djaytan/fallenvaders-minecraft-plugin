@@ -88,7 +88,7 @@ public class SanctionCategoryItemBuilder {
    *
    * @param sanctionCategory The category of sanctions used to build the clickable item.
    * @return The clickable item of the specified category of sanctions.
-   * @throws JusticeHandsException if something went wrong when providing item.
+   * @throws JusticeHandsException If something went wrong when providing item.
    */
   public @NotNull ClickableItem build(
       @NotNull Player opener,

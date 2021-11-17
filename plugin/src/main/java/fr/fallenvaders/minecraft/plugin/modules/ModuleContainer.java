@@ -51,7 +51,7 @@ public final class ModuleContainer {
    * then the operation is cancelled and an exception is thrown.
    *
    * @param module The module to add into the container.
-   * @throws ModuleException if a module with the same name of the new on already exists or the
+   * @throws ModuleException If a module with the same name of the new on already exists or the
    *     loading process as already been launched.
    */
   public void addModule(@NotNull FvModule module) throws ModuleException {
@@ -109,7 +109,7 @@ public final class ModuleContainer {
    * Setter.
    *
    * @param state The new plugin's modules state.
-   * @throws ModuleException if the new state can't follow the previous one.
+   * @throws ModuleException If the new state can't follow the previous one.
    */
   public void setState(@NotNull PluginModulesState state) throws ModuleException {
     if (isExpectedNextStep(state)) {

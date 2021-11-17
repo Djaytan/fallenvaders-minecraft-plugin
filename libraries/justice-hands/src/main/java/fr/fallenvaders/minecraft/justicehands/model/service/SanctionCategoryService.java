@@ -60,7 +60,7 @@ public class SanctionCategoryService {
    *
    * @param id The ID of the targeted category of sanctions.
    * @return The category of sanctions from the model which match with the specified ID.
-   * @throws JusticeHandsException if a problem occurs during the search in the model.
+   * @throws JusticeHandsException If a problem occurs during the search in the model.
    */
   public @NotNull Optional<SanctionCategory> getCategory(@NotNull String id)
       throws JusticeHandsException {
@@ -83,7 +83,7 @@ public class SanctionCategoryService {
    * Recovers and returns all the existing categories of sanctions from the model.
    *
    * @return All the existing categories of sanctions from the model.
-   * @throws JusticeHandsException if a problem occurs during the search in the model.
+   * @throws JusticeHandsException If a problem occurs during the search in the model.
    */
   public @NotNull Set<SanctionCategory> getCategories() throws JusticeHandsException {
     try {

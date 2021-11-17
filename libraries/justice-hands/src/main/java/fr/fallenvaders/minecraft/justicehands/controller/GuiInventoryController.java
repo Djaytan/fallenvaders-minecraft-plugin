@@ -68,7 +68,7 @@ public class GuiInventoryController {
    *
    * @param id The ID of the targeted generic GUI item.
    * @return The sought generic
-   * @throws JusticeHandsException if an error occurs or the specified ID is wrong.
+   * @throws JusticeHandsException If an error occurs or the specified ID is wrong.
    */
   public @NotNull GuiItem getGenericGuiItem(@NotNull String id)
       throws JusticeHandsException {

@@ -135,7 +135,7 @@ public class SanctionComponentBuilder {
    *
    * @param mute The mute sanction.
    * @return The mute message component.
-   * @throws JusticeHandsException if the mute sanction isn't properly defined.
+   * @throws JusticeHandsException If the mute sanction isn't properly defined.
    */
   public @NotNull Component muteMessage(@NotNull Sanction mute) throws JusticeHandsException {
     if (mute.endingDate() == null) {

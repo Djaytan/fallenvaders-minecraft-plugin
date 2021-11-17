@@ -39,7 +39,7 @@ public final class PropertiesUtils {
    *
    * @param propertyFile The property file to convert into {@link Properties}.
    * @return The well-formed {@link Properties} according to the specified property file.
-   * @throws IOException if something went wrong during the read of the property file.
+   * @throws IOException If something went wrong during the read of the property file.
    */
   @NotNull
   public static Properties getProperties(@NotNull String propertyFile) throws IOException {

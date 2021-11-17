@@ -77,7 +77,7 @@ public class SanctionManagerView {
    *
    * @param opener The player opener of the menu.
    * @param target The target player needed to open the menu.
-   * @throws JusticeHandsException if the recovering of the corresponding {@link GuiInventory} fail.
+   * @throws JusticeHandsException If the recovering of the corresponding {@link GuiInventory} fail.
    */
   public void openMainMenu(@NotNull Player opener, @NotNull OfflinePlayer target)
       throws JusticeHandsException {
@@ -102,7 +102,7 @@ public class SanctionManagerView {
    * @param opener The player opener of the menu.
    * @param target The target player needed to open the menu.
    * @param sanctionCategory The category of sanctions to use in the menu creation.
-   * @throws JusticeHandsException if the recovering of the corresponding {@link GuiInventory} fail.
+   * @throws JusticeHandsException If the recovering of the corresponding {@link GuiInventory} fail.
    */
   public void openCategoryMenu(
       @NotNull Player opener,

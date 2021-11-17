@@ -67,7 +67,7 @@ public class GuiInventoryService {
    *
    * @param id The ID of the targeted GUI inventory.
    * @return The GUI inventory from the model which match with the specified ID.
-   * @throws JusticeHandsException if a problem occurs during the search in the model.
+   * @throws JusticeHandsException If a problem occurs during the search in the model.
    */
   public Optional<GuiInventory> getGuiInventory(@NotNull String id) throws JusticeHandsException {
     Preconditions.checkNotNull(id);
@@ -90,7 +90,7 @@ public class GuiInventoryService {
    *
    * @param id The ID of the targeted generic GUI item.
    * @return The generic GUI item from the model which match with the specified ID.
-   * @throws JusticeHandsException if a problem occurs during the search in the model.
+   * @throws JusticeHandsException If a problem occurs during the search in the model.
    */
   public Optional<GuiItem> getGenericGuiItem(@NotNull String id)
       throws JusticeHandsException {

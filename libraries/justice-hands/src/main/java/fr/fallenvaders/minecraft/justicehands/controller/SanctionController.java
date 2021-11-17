@@ -73,7 +73,7 @@ public class SanctionController {
    *
    * @param player The player.
    * @return All the sanctions of the specified player.
-   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
+   * @throws JusticeHandsException If the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getPlayerSanctions(@NotNull OfflinePlayer player)
       throws JusticeHandsException {
@@ -87,7 +87,7 @@ public class SanctionController {
    * @param player The player.
    * @param sanctionType The type of sanction.
    * @return All sanctions of the specified player which match with the given type of sanction.
-   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
+   * @throws JusticeHandsException If the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getPlayerSanctions(
       @NotNull OfflinePlayer player, @NotNull SanctionType sanctionType)
@@ -104,7 +104,7 @@ public class SanctionController {
    *
    * @param player The player.
    * @return All active sanctions of the specified player.
-   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
+   * @throws JusticeHandsException If the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getActivePlayerSanctions(@NotNull OfflinePlayer player)
       throws JusticeHandsException {
@@ -120,7 +120,7 @@ public class SanctionController {
    * @param sanctionType The type of sanction.
    * @return All active sanctions of the specified player which match with the given type of
    *    sanction.
-   * @throws JusticeHandsException if the sought sanction fail to be found in the model.
+   * @throws JusticeHandsException If the sought sanction fail to be found in the model.
    */
   public @NotNull Optional<Sanction> getActivePlayerSanction(
       @NotNull OfflinePlayer player, @NotNull SanctionType sanctionType)

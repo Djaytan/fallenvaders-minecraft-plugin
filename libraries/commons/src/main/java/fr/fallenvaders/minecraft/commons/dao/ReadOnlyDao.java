@@ -39,7 +39,7 @@ public interface ReadOnlyDao<T> {
    *
    * @param id The ID of the entity instance in the model.
    * @return The entity instance corresponding to the specified ID if it exists.
-   * @throws DaoException if the read of the entity fail.
+   * @throws DaoException If the read of the entity fail.
    */
   @NotNull
   // TODO: create DaoId class instead with implementations like StringDaoId, IntDaoId, ...
@@ -49,7 +49,7 @@ public interface ReadOnlyDao<T> {
    * Reads all the existing entity instances {@link T} in the model.
    *
    * @return The list of existing entity instances in the model.
-   * @throws DaoException if the read of the entities fail.
+   * @throws DaoException If the read of the entities fail.
    */
   @NotNull
   Set<T> getAll() throws DaoException;

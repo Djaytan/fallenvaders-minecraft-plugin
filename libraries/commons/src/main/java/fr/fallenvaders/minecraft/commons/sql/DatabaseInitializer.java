@@ -63,8 +63,8 @@ public class DatabaseInitializer {
    *     call this method in order to recover the specified SQL script.
    * @param sqlScriptResource The SQL script located in the 'resources/' folder of the module
    *     project.
-   * @throws IOException if something went wrong or the SQL init script can't be found.
-   * @throws SQLException if something went wrong when dispatching the script to the database.
+   * @throws IOException If something went wrong or the SQL init script can't be found.
+   * @throws SQLException If something went wrong when dispatching the script to the database.
    */
   public void initialize(Class<? extends FvModule> classModule, String sqlScriptResource)
       throws IOException, SQLException {

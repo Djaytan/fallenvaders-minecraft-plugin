@@ -34,7 +34,7 @@ public interface SanctionDispatcher {
    * Dispatches the specified sanction on server.
    *
    * @param sanction The sanction to dispatched on server.
-   * @throws JusticeHandsException if something went wrong during the dispatch of the sanction.
+   * @throws JusticeHandsException If something went wrong during the dispatch of the sanction.
    */
   void dispatchSanction(@NotNull Sanction sanction) throws JusticeHandsException;
 }
