@@ -18,12 +18,12 @@
 package fr.fallenvaders.minecraft.justicehands.view.gui.items;
 
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
+import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.minuskube.inv.ClickableItem;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
@@ -65,7 +65,7 @@ public class SanctionItemBuilder {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     ItemStack sanctionItem = new ItemStack(Material.CLAY);
-    sanctionItem.setType(sanction.type().getClayColor());
+    sanctionItem.setType(getClayColor(sanction.type()));
 
     ItemMeta meta = sanctionItem.getItemMeta();
     meta.displayName(
@@ -101,10 +101,17 @@ public class SanctionItemBuilder {
       }
     }
 
-    List<Component> lore =
-        strLore.stream().map(componentHelper::getComponent).collect(Collectors.toList());
+    List<Component> lore = strLore.stream().map(componentHelper::getComponent).toList();
     meta.lore(lore);
     sanctionItem.setItemMeta(meta);
     return ClickableItem.empty(sanctionItem);
+  }
+
+  private Material getClayColor(@NotNull SanctionType sanctionType) {
+    return switch (sanctionType) {
+      case KICK -> Material.GREEN_CONCRETE;
+      case MUTE -> Material.BLUE_CONCRETE;
+      case BAN -> Material.ORANGE_CONCRETE;
+    };
   }
 }
