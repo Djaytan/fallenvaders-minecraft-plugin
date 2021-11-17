@@ -17,7 +17,9 @@
 
 package fr.fallenvaders.minecraft.justicehands.view.commands;
 
+import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
+import fr.fallenvaders.minecraft.justicehands.view.gui.SanctionManagerView;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
@@ -25,7 +27,6 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,18 +40,19 @@ import org.jetbrains.annotations.Nullable;
 @Singleton
 public class SanctionManagerCommand implements CommandExecutor {
 
-  private final FileConfiguration config;
+  private final SanctionManagerView sanctionManagerView;
   private final Server server;
 
   /**
    * Constructor.
    *
-   * @param config The plugin config.
-   * @param server The Bukkit server.
+   * @param sanctionManagerView The {@link SanctionManagerView}.
+   * @param server The Bukkit {@link Server}.
    */
   @Inject
-  public SanctionManagerCommand(@NotNull FileConfiguration config, @NotNull Server server) {
-    this.config = config;
+  public SanctionManagerCommand(
+      @NotNull SanctionManagerView sanctionManagerView, @NotNull Server server) {
+    this.sanctionManagerView = sanctionManagerView;
     this.server = server;
   }
 
@@ -71,7 +73,13 @@ public class SanctionManagerCommand implements CommandExecutor {
           String playerName = args[0];
           OfflinePlayer player = getPlayer(playerName);
           if (player != null) {
-            InventoryBuilderSM.openMainMenu(moderator, player.getUniqueId(), config);
+            try {
+              sanctionManagerView.openMainMenu(moderator, player);
+            } catch (JusticeHandsException e) {
+              moderator.sendMessage(
+                  ViewUtils.PREFIX_SM
+                      + "§cUne erreur est survenue au moment de l'ouverture du menu.");
+            }
           } else {
             moderator.sendMessage(
                 ViewUtils.PREFIX_SM + "§cCe joueur ne s'est jamais connecté sur le serveur.");

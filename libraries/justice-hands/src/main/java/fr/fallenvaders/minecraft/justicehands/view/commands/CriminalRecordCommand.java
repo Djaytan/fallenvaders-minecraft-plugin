@@ -17,7 +17,9 @@
 
 package fr.fallenvaders.minecraft.justicehands.view.commands;
 
+import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
+import fr.fallenvaders.minecraft.justicehands.view.gui.CriminalRecordView;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
@@ -38,15 +40,19 @@ import org.jetbrains.annotations.Nullable;
 @Singleton
 public class CriminalRecordCommand implements CommandExecutor {
 
+  private final CriminalRecordView criminalRecordView;
   private final Server server;
 
   /**
    * Constructor.
    *
-   * @param server The Bukkit server.
+   * @param criminalRecordView The {@link CriminalRecordView}.
+   * @param server The Bukkit {@link Server}.
    */
   @Inject
-  public CriminalRecordCommand(@NotNull Server server) {
+  public CriminalRecordCommand(
+      @NotNull CriminalRecordView criminalRecordView, @NotNull Server server) {
+    this.criminalRecordView = criminalRecordView;
     this.server = server;
   }
 
@@ -77,7 +83,13 @@ public class CriminalRecordCommand implements CommandExecutor {
           String playerName = args[0];
           OfflinePlayer player = getPlayer(playerName);
           if (player != null) {
-            InventoryBuilderCR.openMainMenu(moderator, player.getUniqueId());
+            try {
+              criminalRecordView.openMainMenu(moderator, player);
+            } catch (JusticeHandsException e) {
+              moderator.sendMessage(
+                  ViewUtils.PREFIX_CR
+                      + "§cUne erreur est survenue au moment de l'ouverture du menu.");
+            }
           } else {
             moderator.sendMessage(
                 ViewUtils.PREFIX_CR + "§cCe joueur ne s'est jamais connecté sur le serveur.");
