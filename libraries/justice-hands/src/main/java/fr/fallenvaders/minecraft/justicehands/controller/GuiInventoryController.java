@@ -20,7 +20,7 @@ package fr.fallenvaders.minecraft.justicehands.controller;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItem;
-import fr.fallenvaders.minecraft.justicehands.model.service.GuiInventoryService;
+import fr.fallenvaders.minecraft.justicehands.model.service.GuiService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
@@ -34,16 +34,16 @@ import org.jetbrains.annotations.NotNull;
 @Singleton
 public class GuiInventoryController {
 
-  private final GuiInventoryService guiInventoryService;
+  private final GuiService guiService;
 
   /**
    * Constructor.
    *
-   * @param guiInventoryService The {@link GuiInventoryService}.
+   * @param guiService The {@link GuiService}.
    */
   @Inject
-  public GuiInventoryController(@NotNull GuiInventoryService guiInventoryService) {
-    this.guiInventoryService = guiInventoryService;
+  public GuiInventoryController(@NotNull GuiService guiService) {
+    this.guiService = guiService;
   }
 
   /**
@@ -55,7 +55,7 @@ public class GuiInventoryController {
    * @throws JusticeHandsException If an error occurs or the specified ID is wrong.
    */
   public @NotNull GuiInventory getGuiInventory(@NotNull String id) throws JusticeHandsException {
-    return guiInventoryService
+    return guiService
         .getGuiInventory(id)
         .orElseThrow(() -> new JusticeHandsException("Wrong ID specified."));
   }
@@ -72,7 +72,7 @@ public class GuiInventoryController {
    */
   public @NotNull GuiItem getGenericGuiItem(@NotNull String id)
       throws JusticeHandsException {
-    return guiInventoryService
+    return guiService
         .getGenericGuiItem(id)
         .orElseThrow(() -> new JusticeHandsException("Wrong ID specified."));
   }

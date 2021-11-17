@@ -22,6 +22,7 @@ import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -75,7 +76,6 @@ public class PlayerSanctionsStatistics {
       int nbSanctions,
       int currentPointsAmount,
       int totalPointsAmount) {
-    Preconditions.checkNotNull(sanctionTypeStatistics);
     Preconditions.checkArgument(
         nbSanctions >= 0, "The number of sanctions must be higher or equal to 0.");
     Preconditions.checkArgument(
@@ -94,17 +94,15 @@ public class PlayerSanctionsStatistics {
         "Statistics of all existing SanctionTypes must be defined, and only one time.");
     for (SanctionType sanctionType : SanctionType.values()) {
 
-      Stream<PlayerSanctionTypeStatistics> stream =
+      Set<PlayerSanctionTypeStatistics> typeStatsSet =
           sanctionTypeStatistics.stream()
               .filter(
                   sanctionTypeStatistic ->
-                      Objects.equals(sanctionTypeStatistic.getSanctionType(), sanctionType));
-      long nbStats = stream.count();
+                      Objects.equals(sanctionTypeStatistic.getSanctionType(), sanctionType)).collect(Collectors.toSet());
       Preconditions.checkArgument(
-          nbStats == 1, "The stats of sanction type '%s' must be defined one and only one time.");
-      PlayerSanctionTypeStatistics typeStats =
-          Objects.requireNonNull(stream.findFirst().orElse(null));
+        typeStatsSet.size() == 1, "The stats of sanction type '%s' must be defined one and only one time.");
       if (nbSanctions == 0) {
+        PlayerSanctionTypeStatistics typeStats = typeStatsSet.iterator().next();
         Preconditions.checkArgument(
             typeStats.getNbSanctions() == 0,
             "If the total number of sanctions is equal to 0, the number of sanctions of one type must equal to 0 too.");
@@ -121,7 +119,6 @@ public class PlayerSanctionsStatistics {
    */
   public @NotNull PlayerSanctionTypeStatistics getSanctionTypeStatistics(
       @NotNull SanctionType sanctionType) {
-    Preconditions.checkNotNull(sanctionType);
     return sanctionTypeStatistics.stream()
         .filter(
             playerSanctionTypeStatistics ->

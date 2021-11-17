@@ -95,10 +95,6 @@ public class SanctionCategoryItemBuilder {
       @NotNull OfflinePlayer target,
       @NotNull SanctionCategory sanctionCategory)
       throws JusticeHandsException {
-    Preconditions.checkNotNull(opener);
-    Preconditions.checkNotNull(target);
-    Preconditions.checkNotNull(sanctionCategory);
-
     GuiItem categoryGuiItem = guiInventoryController.getGenericGuiItem(CATEGORY_ITEM_ID);
     ItemStack categoryItem = Objects.requireNonNull(categoryGuiItem.item());
 

@@ -31,14 +31,13 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 /**
- * {@link GuiInventory} service class.
+ * GUI service class.
  *
  * @author Voltariuss
  * @since 0.3.0
  */
-// TODO: rename it GuiService (more generic and shorter)
 @Singleton
-public class GuiInventoryService {
+public class GuiService {
 
   private final GenericGuiItemDao genericGuiItemDao;
   private final GuiInventoryDao guiInventoryDao;
@@ -47,12 +46,12 @@ public class GuiInventoryService {
   /**
    * Constructor.
    *
-   * @param genericGuiItemDao The {@link GuiInventoryService}.
+   * @param genericGuiItemDao The {@link GuiService}.
    * @param guiInventoryDao The {@link GuiInventoryDao}.
    * @param logger The {@link Logger}.
    */
   @Inject
-  public GuiInventoryService(
+  public GuiService(
       @NotNull GenericGuiItemDao genericGuiItemDao,
       @NotNull GuiInventoryDao guiInventoryDao,
       @NotNull Logger logger) {
@@ -70,8 +69,6 @@ public class GuiInventoryService {
    * @throws JusticeHandsException If a problem occurs during the search in the model.
    */
   public Optional<GuiInventory> getGuiInventory(@NotNull String id) throws JusticeHandsException {
-    Preconditions.checkNotNull(id);
-
     try {
       Optional<GuiInventory> guiInventory = guiInventoryDao.get(id);
       logger.info("GUI inventory with ID '{}' found.", id);
@@ -94,8 +91,6 @@ public class GuiInventoryService {
    */
   public Optional<GuiItem> getGenericGuiItem(@NotNull String id)
       throws JusticeHandsException {
-    Preconditions.checkNotNull(id);
-
     try {
       Optional<GuiItem> genericGuiItem = genericGuiItemDao.get(id);
       logger.info("GUI inventory item with ID '{}' found.", id);

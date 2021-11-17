@@ -90,12 +90,8 @@ public class GenericGuiItemDao implements ReadOnlyDao<GuiItem> {
 
   @NotNull
   GuiItem getGuiItem(@NotNull ConfigurationSection parentSection, @NotNull String itemKey) {
-    Objects.requireNonNull(parentSection);
-    Objects.requireNonNull(itemKey);
-
     GuiItemLocation location = parentSection.getObject("location", GuiItemLocation.class);
     ItemStack item = parentSection.getItemStack("item");
-
     return new GuiItem(itemKey, location, item);
   }
 }

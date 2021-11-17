@@ -88,9 +88,6 @@ public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
   private @NotNull SanctionCategory getSanctionCategory(
       @NotNull ConfigurationSection category, @NotNull String categoryKey) {
     // TODO: simplify it with getObject use maybe
-    Objects.requireNonNull(category);
-    Objects.requireNonNull(categoryKey);
-
     Set<PredefinedSanction> predefinedSanctions = new LinkedHashSet<>();
 
     String categoryName = Objects.requireNonNull(category.getString("name"));
@@ -111,9 +108,6 @@ public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
 
   private @NotNull PredefinedSanction getPredefinedSanction(
       @NotNull ConfigurationSection sanction, @NotNull String sanctionKey) {
-    Objects.requireNonNull(sanction);
-    Objects.requireNonNull(sanctionKey);
-
     String sanctionName = Objects.requireNonNull(sanction.getString("name"));
     String sanctionDescription = Objects.requireNonNull(sanction.getString("description"));
     int sanctionPoints = sanction.getInt("points");

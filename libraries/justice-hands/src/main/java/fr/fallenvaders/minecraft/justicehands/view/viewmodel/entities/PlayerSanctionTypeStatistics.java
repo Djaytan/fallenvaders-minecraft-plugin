@@ -81,7 +81,6 @@ public class PlayerSanctionTypeStatistics {
       int nbSanctions,
       @Nullable Sanction firstSanction,
       @Nullable Sanction lastSanction) {
-    Preconditions.checkNotNull(sanctionType);
     Preconditions.checkArgument(
         nbSanctions >= 0, "The number of sanctions can't be a negative number.");
     Preconditions.checkArgument(

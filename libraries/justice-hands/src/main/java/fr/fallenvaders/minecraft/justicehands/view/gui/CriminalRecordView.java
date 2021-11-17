@@ -74,9 +74,6 @@ public class CriminalRecordView {
    */
   public void openMainMenu(@NotNull Player opener, @NotNull OfflinePlayer target)
       throws JusticeHandsException {
-    Preconditions.checkNotNull(opener);
-    Preconditions.checkNotNull(target);
-
     GuiInventory mainGuiInventory =
         guiInventoryController.getGuiInventory(CriminalRecordProvider.GUI_INVENTORY_ID);
     int nbLines = mainGuiInventory.nbLines();

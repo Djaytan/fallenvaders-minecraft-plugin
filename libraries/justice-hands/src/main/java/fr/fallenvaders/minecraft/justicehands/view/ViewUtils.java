@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.justicehands.view;
 
+import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.view.gui.items.PaginationItemBuilder;
@@ -52,6 +53,10 @@ public class ViewUtils {
   public static final String PREFIX_MT = "§7[§cModeratorTools§7] §r";
   public static final String PREFIX_SM = "§7[§9SanctionManager§7] §r";
   public static final String PREFIX_KK = "§7[§4KeysKeeper§7] §r";
+
+  private static final int MAX_LINES_IN_INVENTORY = 6;
+  private static final int MAX_COLUMNS_IN_INVENTORY = 9;
+  private static final int MAX_ITEM_PER_PAGE = MAX_LINES_IN_INVENTORY * MAX_COLUMNS_IN_INVENTORY;
 
   private final ComponentHelper componentHelper;
   private final PaginationItemBuilder paginationItemBuilder;
@@ -150,6 +155,13 @@ public class ViewUtils {
       @NotNull InventoryContents contents,
       @NotNull List<ClickableItem> clickableItems,
       int itemPerPage) {
+    Preconditions.checkArgument(
+        itemPerPage > 0, "The number of items per page must be strictly higher than 0.");
+    Preconditions.checkArgument(
+        itemPerPage <= MAX_ITEM_PER_PAGE,
+        String.format(
+            "The number of items per page must be lower or equal to %s.", MAX_ITEM_PER_PAGE));
+
     Pagination pagination = contents.pagination();
     pagination.setItems(clickableItems.toArray(new ClickableItem[0]));
     pagination.setItemsPerPage(itemPerPage);

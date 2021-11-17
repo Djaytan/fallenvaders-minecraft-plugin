@@ -65,9 +65,9 @@ public class InteractiveInventoryBuilder {
       @NotNull String id,
       @NotNull String title,
       int nbLines) {
-    Preconditions.checkNotNull(inventoryProvider);
-    Preconditions.checkNotNull(id);
-    Preconditions.checkNotNull(title);
+    Preconditions.checkArgument(
+        nbLines >= 1 && nbLines <= 6,
+        "The number of lines of a menu must be between 1 and 6 included.");
 
     SmartInventory.Builder builder = SmartInventory.builder();
     builder.title(title);

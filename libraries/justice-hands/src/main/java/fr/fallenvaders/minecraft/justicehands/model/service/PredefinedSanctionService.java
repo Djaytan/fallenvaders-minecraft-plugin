@@ -64,8 +64,6 @@ public class PredefinedSanctionService {
    */
   public @NotNull Optional<PredefinedSanction> getPredefinedSanction(@NotNull String id)
       throws JusticeHandsException {
-    Objects.requireNonNull(id);
-
     try {
       Optional<PredefinedSanction> predefinedSanction = predefinedSanctionDao.get(id);
       logger.info("Predefined sanction with ID '{}' found.", id);

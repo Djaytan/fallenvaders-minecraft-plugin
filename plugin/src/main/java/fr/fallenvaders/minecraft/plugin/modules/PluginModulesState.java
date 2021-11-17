@@ -22,7 +22,11 @@ import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
 /**
  * This enum represents the state of modules of the {@link FallenVadersPlugin}.
  *
+ * <p>The state order number permit to determine the next expected state (exploited in {@link
+ * ModuleContainer}.
+ *
  * @author Voltariuss
+ * @see ModuleContainer
  * @since 0.3.0
  */
 public enum PluginModulesState {

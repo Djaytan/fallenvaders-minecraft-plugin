@@ -17,13 +17,14 @@
 
 package fr.fallenvaders.minecraft.justicehands.view.gui;
 
-import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionCategoryController;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * The container of {@link SanctionManagerView}.
@@ -74,15 +75,15 @@ public class SanctionManagerViewContainer {
    */
   public void setCurrentSanctionCategory(@NotNull SanctionCategory currentSanctionCategory)
       throws JusticeHandsException {
-    Preconditions.checkNotNull(currentSanctionCategory);
+    Optional<SanctionCategory> found =
+        sanctionCategoryController.getCategories().stream()
+            .filter(sc -> sc.equals(currentSanctionCategory))
+            .findFirst();
 
-    sanctionCategoryController.getCategories().stream()
-        .filter(sc -> sc.equals(currentSanctionCategory))
-        .findFirst()
-        .orElseThrow(
-            () ->
-                new JusticeHandsException(
-                    "The specified sanction category is not part of the ones registered in the model."));
+    if (found.isEmpty()) {
+      throw new JusticeHandsException(
+          "The specified sanction category is not part of the ones registered in the model.");
+    }
 
     this.currentSanctionCategory = currentSanctionCategory;
   }

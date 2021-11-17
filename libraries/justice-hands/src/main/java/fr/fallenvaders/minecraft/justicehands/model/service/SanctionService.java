@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.service;
 
+import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.dao.SanctionDao;
@@ -61,6 +62,9 @@ public class SanctionService {
    * @throws JusticeHandsException If the sought sanction fail to be found in the model.
    */
   public @NotNull Optional<Sanction> getSanction(int id) throws JusticeHandsException {
+    Preconditions.checkArgument(
+        id >= 1, "The ID of the sought sanction must be strictly higher than 0.");
+
     logger.info("Seek of the sanction associated with the ID '{}'.", id);
     try {
       Optional<Sanction> sanction = sanctionDao.get(Integer.toString(id));

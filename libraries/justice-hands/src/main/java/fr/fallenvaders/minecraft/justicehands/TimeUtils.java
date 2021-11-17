@@ -19,6 +19,8 @@ package fr.fallenvaders.minecraft.justicehands;
 
 import java.util.StringJoiner;
 import javax.inject.Singleton;
+
+import com.google.common.base.Preconditions;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -47,9 +49,8 @@ public class TimeUtils {
    * @return The remaining time in string format.
    */
   public @NotNull String remainingTime(long remainingTime) {
-    if (remainingTime < 0) {
-      remainingTime = 0;
-    }
+    Preconditions.checkArgument(
+        remainingTime >= 0, "The remaining time must be higher or equal to 0.");
 
     int nbRemainingMonths = (int) (remainingTime / NB_MS_IN_MONTH);
     int nbRemainingDays = (int) ((remainingTime % NB_MS_IN_MONTH) / NB_MS_IN_DAY);

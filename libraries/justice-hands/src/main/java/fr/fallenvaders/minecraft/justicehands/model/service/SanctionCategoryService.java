@@ -64,8 +64,6 @@ public class SanctionCategoryService {
    */
   public @NotNull Optional<SanctionCategory> getCategory(@NotNull String id)
       throws JusticeHandsException {
-    Objects.requireNonNull(id);
-
     try {
       Optional<SanctionCategory> sanctionCategory = sanctionCategoryDao.get(id);
       logger.info("Sanction category with ID '{}' found.", id);

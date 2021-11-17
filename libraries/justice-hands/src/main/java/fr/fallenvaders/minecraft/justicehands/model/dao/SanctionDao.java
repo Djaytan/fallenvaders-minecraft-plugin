@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.dao;
 
+import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.commons.CriticalErrorRaiser;
 import fr.fallenvaders.minecraft.commons.dao.Dao;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
@@ -83,9 +84,7 @@ public class SanctionDao implements Dao<Sanction> {
     }
   }
 
-  /**
-   * Gets and returns all existing sanctions from the model.
-   */
+  /** Gets and returns all existing sanctions from the model. */
   @Override
   public @NotNull Set<Sanction> getAll() throws DaoException {
     try (Connection connection = fvDataSource.getConnection();
@@ -117,6 +116,9 @@ public class SanctionDao implements Dao<Sanction> {
 
   @Override
   public void save(@NotNull Sanction sanction) throws DaoException {
+    Preconditions.checkArgument(
+        sanction.id() == -1, "The ID of a new sanction mustn't be defined.");
+
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement(
@@ -139,6 +141,9 @@ public class SanctionDao implements Dao<Sanction> {
 
   @Override
   public void update(@NotNull Sanction sanction) throws DaoException {
+    Preconditions.checkArgument(
+        sanction.id() != -1, "The ID of a sanction to update must be defined.");
+
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement(
@@ -161,6 +166,9 @@ public class SanctionDao implements Dao<Sanction> {
 
   @Override
   public void delete(@NotNull Sanction sanction) throws DaoException {
+    Preconditions.checkArgument(
+        sanction.id() != -1, "The ID of a sanction to delete must be defined.");
+
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement("DELETE FROM fv_jh_sanction WHERE sctn_id = ?")) {

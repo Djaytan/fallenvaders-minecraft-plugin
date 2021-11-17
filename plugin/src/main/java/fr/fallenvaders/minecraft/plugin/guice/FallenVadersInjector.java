@@ -41,8 +41,6 @@ public final class FallenVadersInjector {
    * @param plugin The {@link JavaPlugin}.
    */
   public static void inject(@NotNull JavaPlugin plugin) {
-    Objects.requireNonNull(plugin);
-
     Module module = new FallenVadersModule(plugin);
     Injector injector = Guice.createInjector(module);
     injector.injectMembers(plugin);

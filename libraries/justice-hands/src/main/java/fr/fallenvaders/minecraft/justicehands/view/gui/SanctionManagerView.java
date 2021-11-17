@@ -81,9 +81,6 @@ public class SanctionManagerView {
    */
   public void openMainMenu(@NotNull Player opener, @NotNull OfflinePlayer target)
       throws JusticeHandsException {
-    Preconditions.checkNotNull(opener);
-    Preconditions.checkNotNull(target);
-
     GuiInventory mainGuiInventory =
         guiInventoryController.getGuiInventory(SanctionManagerMainProvider.GUI_INVENTORY_ID);
     int nbLines = mainGuiInventory.nbLines();
@@ -109,10 +106,6 @@ public class SanctionManagerView {
       @NotNull OfflinePlayer target,
       @NotNull SanctionCategory sanctionCategory)
       throws JusticeHandsException {
-    Preconditions.checkNotNull(opener);
-    Preconditions.checkNotNull(target);
-    Preconditions.checkNotNull(sanctionCategory);
-
     GuiInventory mainGuiInventory =
         guiInventoryController.getGuiInventory(SanctionManagerCategoryProvider.GUI_INVENTORY_ID);
     int nbLines = mainGuiInventory.nbLines();

@@ -93,9 +93,6 @@ public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
 
   private @NotNull GuiInventory getGuiInventory(
       @NotNull ConfigurationSection inventory, @NotNull String inventoryKey) {
-    Objects.requireNonNull(inventory);
-    Objects.requireNonNull(inventoryKey);
-
     int nbLines = Integer.parseInt(Objects.requireNonNull(inventory.getString("number-lines")));
     List<GuiItem> items = new ArrayList<>();
 
