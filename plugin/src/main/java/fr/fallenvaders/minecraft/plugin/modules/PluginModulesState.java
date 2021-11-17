@@ -23,7 +23,7 @@ import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
 /**
  * This enum represents the state of {@link FvModule} of the {@link FallenVadersPlugin}.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 public enum PluginModulesState {

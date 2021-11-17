@@ -36,8 +36,8 @@ import org.jetbrains.annotations.NotNull;
  * DAO class about manipulation of {@link SanctionCategory}s in the model.
  *
  * @author Voltariuss
- * @since 0.3.0
  * @see ReadOnlyDao
+ * @since 0.3.0
  */
 @Singleton
 public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {

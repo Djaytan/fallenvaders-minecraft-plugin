@@ -40,8 +40,8 @@ import org.jetbrains.annotations.NotNull;
  * Embedded items of {@link GuiInventory}s are ignored.
  *
  * @author Voltariuss
- * @since 0.3.0
  * @see ReadOnlyDao
+ * @since 0.3.0
  */
 @Singleton
 public class GenericGuiInventoryItemDao implements ReadOnlyDao<GuiInventoryItem> {

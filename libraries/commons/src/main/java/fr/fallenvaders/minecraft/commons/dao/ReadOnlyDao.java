@@ -27,10 +27,10 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>For more information, see {@link Dao}.
  *
- * @author Voltariuss
- * @since 0.3.0
  * @param <T> The type of the entity involved in the DAO-implementation.
+ * @author Voltariuss
  * @see Dao
+ * @since 0.3.0
  */
 public interface ReadOnlyDao<T> {
 

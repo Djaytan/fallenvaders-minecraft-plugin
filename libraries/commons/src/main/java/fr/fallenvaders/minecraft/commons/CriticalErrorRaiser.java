@@ -35,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
  * case of a false error? Maybe bad behaviors may occur... But is it not the same in case where we
  * only log the error?
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 public interface CriticalErrorRaiser {

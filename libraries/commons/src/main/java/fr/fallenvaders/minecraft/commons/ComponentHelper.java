@@ -26,7 +26,7 @@ import javax.inject.Singleton;
 /**
  * Helper for {@link Component} class.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

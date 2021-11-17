@@ -29,7 +29,7 @@ public enum DbmsDriver {
   MYSQL("mysql"),
   MARIADB("mariadb");
 
-  private String driver;
+  private final String driver;
 
   DbmsDriver(@NotNull String driver) {
     this.driver = driver;

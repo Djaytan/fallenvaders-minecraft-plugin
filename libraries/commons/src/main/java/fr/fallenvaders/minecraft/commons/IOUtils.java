@@ -29,7 +29,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * I/O utils class.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

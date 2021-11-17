@@ -26,7 +26,7 @@ import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
  *
  * <p>This interface allows to initialize a full version of the plugin or alternative ones.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.1.0
  */
 public interface PluginInitializer {

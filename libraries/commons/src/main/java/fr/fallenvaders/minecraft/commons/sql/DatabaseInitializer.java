@@ -32,7 +32,7 @@ import java.sql.Statement;
 /**
  * This class permits to initialize the database according to each FallenVaders' modules' needs.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

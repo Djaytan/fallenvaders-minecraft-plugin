@@ -29,9 +29,9 @@ import org.jetbrains.annotations.NotNull;
  * <p>The DAO pattern, which means Data Access Object, allows stating the use of cache system in
  * order to increase performances by omitting requested the database when it's not relevant.
  *
+ * @param <T> The type of the entity involved in the DAO-implementation.
  * @author Voltariuss
  * @since 0.3.0
- * @param <T> The type of the entity involved in the DAO-implementation.
  */
 public interface Dao<T> extends ReadOnlyDao<T> {
 

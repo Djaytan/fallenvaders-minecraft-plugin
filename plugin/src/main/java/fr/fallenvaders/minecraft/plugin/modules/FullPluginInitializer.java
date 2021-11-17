@@ -32,7 +32,7 @@ import java.util.List;
  * <p>The purpose of this initializer is to assemble a full version of the plugin by injecting all
  * the existing {@link FvModule}s.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.1.0
  */
 @Singleton

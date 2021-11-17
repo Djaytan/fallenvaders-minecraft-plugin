@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 /**
  * This is an implementation class {@link CriticalErrorRaiser} in case of FallenVaders' plugin.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

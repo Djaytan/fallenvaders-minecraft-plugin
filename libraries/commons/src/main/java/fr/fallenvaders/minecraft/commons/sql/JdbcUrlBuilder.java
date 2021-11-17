@@ -26,7 +26,7 @@ import java.net.URL;
 /**
  * This class permits the build of a JDBC URL.
  *
- * @author FallenVaders' dev team.
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

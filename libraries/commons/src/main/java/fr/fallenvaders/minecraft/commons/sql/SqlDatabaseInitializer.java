@@ -29,7 +29,7 @@ import java.sql.SQLException;
  * This class is in charge of initialization of the database in the DBMS server. This is useful for
  * charset and collate definition when it's not well-stated in database server side.
  *
- * @author FallenVaders' dev team.
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

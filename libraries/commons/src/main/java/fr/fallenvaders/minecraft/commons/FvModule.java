@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
  * each module of the project in order to make possible the registration of the module in the plugin
  * properly.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.3.0
  */
 public abstract class FvModule {

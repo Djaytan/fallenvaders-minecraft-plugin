@@ -52,7 +52,7 @@ import java.sql.SQLException;
  * <p>For more details about the HikariCP library, refer you to this link: <a
  * href="https://github.com/brettwooldridge/HikariCP">https://github.com/brettwooldridge/HikariCP</a>.
  *
- * @author FallenVaders' dev team.
+ * @author Voltariuss
  * @since 0.3.0
  */
 @Singleton

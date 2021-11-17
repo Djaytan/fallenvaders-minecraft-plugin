@@ -39,7 +39,7 @@ import org.slf4j.Logger;
  *
  * @author Glynix
  * @author Voltariuss
- * @version 0.1.0
+ * @since 0.1.0
  */
 @Singleton
 public class PlayerLoginListener implements Listener {

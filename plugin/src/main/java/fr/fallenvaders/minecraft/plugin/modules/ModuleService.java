@@ -27,7 +27,7 @@ import javax.inject.Singleton;
 /**
  * This is a singleton class which manage FallenVaders' modules.
  *
- * @author FallenVaders' dev team
+ * @author Voltariuss
  * @since 0.2.0
  */
 @Singleton

@@ -22,15 +22,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This record represents information about DBMS access.
  *
- * @author Voltariuss
- * @since 0.3.0
- *
  * @param dbmsDriver The DBMS driver to use during the connection establishment.
  * @param host The host of the DBMS server.
  * @param port The port of the DBMS server.
  * @param database The targeted database for the connection.
  * @param username The name of the user with which to connect.
  * @param password The password of the user with which to connect.
+ * @author Voltariuss
+ * @since 0.3.0
  */
 public record DbmsAccessInfo (
   @NotNull DbmsDriver dbmsDriver,
