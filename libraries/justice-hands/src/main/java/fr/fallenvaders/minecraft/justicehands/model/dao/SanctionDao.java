@@ -57,9 +57,9 @@ public class SanctionDao implements Dao<Sanction> {
   /**
    * Constructor.
    *
-   * @param criticalErrorRaiser The critical error raiser.
-   * @param fvDataSource The FallenVaders' data source.
-   * @param server The Bukkit server.
+   * @param criticalErrorRaiser The {@link CriticalErrorRaiser}
+   * @param fvDataSource The {@link FvDataSource}.
+   * @param server The {@link Server}.
    */
   @Inject
   public SanctionDao(
@@ -84,10 +84,7 @@ public class SanctionDao implements Dao<Sanction> {
   }
 
   /**
-   * Gets and returns all existing {@link Sanction}s from the model.
-   *
-   * <p>The set is ordered from the older sanction in first position to the youngest in the last
-   * position.
+   * Gets and returns all existing sanctions from the model.
    */
   @Override
   public @NotNull Set<Sanction> getAll() throws DaoException {
@@ -100,14 +97,11 @@ public class SanctionDao implements Dao<Sanction> {
   }
 
   /**
-   * Gets and returns all existing {@link Sanction}s where the specified {@link OfflinePlayer} is
-   * associated with them as an inculpated player.
+   * Gets and returns all existing sanctions where the specified player is associated with them as
+   * an inculpated player.
    *
-   * <p>The set is ordered from the older sanction in first position to the youngest in the last
-   * position.
-   *
-   * @param player The Bukkit offline player.
-   * @return The list of all existing sanctions for the specified {@link OfflinePlayer}.
+   * @param player The player.
+   * @return The list of all existing sanctions for the specified player.
    */
   public @NotNull Set<Sanction> getFromPlayer(@NotNull OfflinePlayer player) throws DaoException {
     try (Connection connection = fvDataSource.getConnection();

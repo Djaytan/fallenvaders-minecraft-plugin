@@ -50,7 +50,7 @@ public final class FallenVadersModule extends AbstractModule {
   /**
    * Constructor.
    *
-   * @param plugin The Bukkit plugin.
+   * @param plugin The {@link JavaPlugin}.
    */
   public FallenVadersModule(@NotNull JavaPlugin plugin) {
     this.plugin = plugin;

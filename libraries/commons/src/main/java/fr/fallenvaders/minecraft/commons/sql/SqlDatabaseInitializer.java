@@ -41,7 +41,7 @@ public class SqlDatabaseInitializer {
   /**
    * Constructor.
    *
-   * @param fvDataSource The DBMS connection deliver.
+   * @param fvDataSource The {@link FvDataSource}.
    */
   @Inject
   public SqlDatabaseInitializer(

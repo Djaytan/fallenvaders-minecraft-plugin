@@ -35,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
  * The criminal record view.
  *
  * <p>The purpose of this view is to permit the creation of menus about visualization and management
- * of existing {@link Sanction}s of the specified {@link OfflinePlayer}.
+ * of existing {@link Sanction}s of the specified player.
  *
  * @author Voltariuss
  * @author Glynix
@@ -68,9 +68,9 @@ public class CriminalRecordView {
   /**
    * Opens the main menu of the corresponding criminal record.
    *
-   * @param opener The {@link Player} opener of the menu.
-   * @param target The target {@link OfflinePlayer} needed to open the menu.
-   * @throws JusticeHandsException if the recovering of {@link Sanction}s fail.
+   * @param opener The player opener of the menu.
+   * @param target The target player needed to open the menu.
+   * @throws JusticeHandsException if the recovering of sanctions fail.
    */
   public void openMainMenu(@NotNull Player opener, @NotNull OfflinePlayer target)
       throws JusticeHandsException {

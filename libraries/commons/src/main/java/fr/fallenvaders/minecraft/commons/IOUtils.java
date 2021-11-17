@@ -36,8 +36,8 @@ import java.nio.charset.StandardCharsets;
 public class IOUtils {
 
   /**
-   * Reads the resource associated with the specified {@link InputStream} passed in arguments
-   * of the method.
+   * Reads the resource associated with the specified input stream passed in arguments of the
+   * method.
    *
    * @param is The input stream.
    * @return The content of the stream read in a unique string format.

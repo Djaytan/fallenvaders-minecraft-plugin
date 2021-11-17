@@ -17,11 +17,10 @@
 
 package fr.fallenvaders.minecraft.commons;
 
+import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
-
-import javax.inject.Singleton;
 
 /**
  * Helper for {@link Component} class.
@@ -36,9 +35,9 @@ public class ComponentHelper {
       "Something went wrong during the connection. Please contact an administrator to report this error.";
 
   /**
-   * Returns the corresponding {@link Component} which embed the specified message.
+   * Returns the corresponding component which embed the specified message.
    *
-   * @param message The message to be embedded into the {@link Component}.
+   * @param message The message to be embedded into the component.
    * @return The component which embed the specified message.
    */
   public @NotNull Component getComponent(@NotNull String message) {
@@ -46,7 +45,7 @@ public class ComponentHelper {
   }
 
   /**
-   * Returns an error {@link Component} which can be useful in case were something went wrong.
+   * Returns an error component which can be useful in case were something went wrong.
    *
    * @return An error component.
    */

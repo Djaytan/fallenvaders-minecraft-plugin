@@ -49,7 +49,7 @@ public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
   /**
    * Constructor.
    *
-   * @param config The config file.
+   * @param config The {@link FileConfiguration} of the plugin.
    * @param genericGuiInventoryItemDao The {@link GenericGuiInventoryItemDao}.
    */
   @Inject

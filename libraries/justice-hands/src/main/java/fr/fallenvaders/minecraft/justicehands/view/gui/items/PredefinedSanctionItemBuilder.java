@@ -57,12 +57,12 @@ public class PredefinedSanctionItemBuilder {
   }
 
   /**
-   * Builds the {@link ClickableItem} of the specified {@link PredefinedSanction}.
+   * Builds the {@link ClickableItem} of the specified predefined sanction.
    *
-   * @param opener The opener {@link Player} of the menu.
-   * @param target The target {@link OfflinePlayer} of the {@link PredefinedSanction}.
-   * @param predefinedSanction The {@link PredefinedSanction} of the target {@link OfflinePlayer}.
-   * @return The {@link ClickableItem} of the specified {@link PredefinedSanction}.
+   * @param opener The opener player of the menu.
+   * @param target The target player of the predefined sanction.
+   * @param predefinedSanction The predefined sanction of the target player.
+   * @return The clickable item of the specified predefined sanction.
    */
   public @NotNull ClickableItem build(
       @NotNull Player opener,

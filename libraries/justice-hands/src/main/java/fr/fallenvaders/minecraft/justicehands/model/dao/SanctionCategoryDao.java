@@ -47,7 +47,7 @@ public class SanctionCategoryDao implements ReadOnlyDao<SanctionCategory> {
   /**
    * Constructor.
    *
-   * @param config The Bukkit config file.
+   * @param config The {@link FileConfiguration} of the plugin.
    */
   @Inject
   public SanctionCategoryDao(@NotNull FileConfiguration config) {

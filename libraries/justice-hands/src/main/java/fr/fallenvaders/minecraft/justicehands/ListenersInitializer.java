@@ -44,10 +44,10 @@ public class ListenersInitializer {
   /**
    * Constructor.
    *
-   * @param plugin The Bukkit Java plugin.
-   * @param pluginManager The plugin manager.
-   * @param asyncChatListener The async chat listener.
-   * @param playerLoginListener The player login listener.
+   * @param plugin The {@link JavaPlugin}.
+   * @param pluginManager The {@link PluginManager}.
+   * @param asyncChatListener The {@link AsyncChatListener}.
+   * @param playerLoginListener The {@link PlayerLoginListener}.
    */
   @Inject
   public ListenersInitializer(

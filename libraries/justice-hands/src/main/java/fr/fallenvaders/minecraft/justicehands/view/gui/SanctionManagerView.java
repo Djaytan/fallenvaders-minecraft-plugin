@@ -39,7 +39,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>The purpose of this view is to permit the creation of menus about navigation and visualization
  * of {@link PredefinedSanction}s which are embedded in {@link SanctionCategory}s. This one permit
- * as well to dispatch these {@link PredefinedSanction}s to players in order to register a new
+ * as well to dispatch these predefined sanctions to players in order to register a new
  * {@link Sanction} in their criminal record.
  *
  * @author Voltariuss
@@ -75,8 +75,8 @@ public class SanctionManagerView {
   /**
    * Opens the main menu of the sanction manager system.
    *
-   * @param opener The {@link Player} opener of the menu.
-   * @param target The target {@link OfflinePlayer} needed to open the menu.
+   * @param opener The player opener of the menu.
+   * @param target The target player needed to open the menu.
    * @throws JusticeHandsException if the recovering of the corresponding {@link GuiInventory} fail.
    */
   public void openMainMenu(@NotNull Player opener, @NotNull OfflinePlayer target)
@@ -97,11 +97,11 @@ public class SanctionManagerView {
   }
 
   /**
-   * Opens the specific view of the corresponding {@link SanctionCategory}.
+   * Opens the specific view of the corresponding category of sanctions.
    *
-   * @param opener The {@link Player} opener of the menu.
-   * @param target The target {@link OfflinePlayer} needed to open the menu.
-   * @param sanctionCategory The {@link SanctionCategory} to use in the menu creation.
+   * @param opener The player opener of the menu.
+   * @param target The target player needed to open the menu.
+   * @param sanctionCategory The category of sanctions to use in the menu creation.
    * @throws JusticeHandsException if the recovering of the corresponding {@link GuiInventory} fail.
    */
   public void openCategoryMenu(

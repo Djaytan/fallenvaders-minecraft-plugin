@@ -38,7 +38,7 @@ public final class FallenVadersInjector {
   /**
    * Injects dependencies through Guice.
    *
-   * @param plugin The Bukkit plugin.
+   * @param plugin The {@link JavaPlugin}.
    */
   public static void inject(@NotNull JavaPlugin plugin) {
     Objects.requireNonNull(plugin);

@@ -56,10 +56,10 @@ public class SanctionItemBuilder {
   }
 
   /**
-   * Builds the {@link ClickableItem} of the specified {@link Sanction}.
+   * Builds the {@link ClickableItem} of the specified sanction.
    *
-   * @param sanction The {@link Sanction} used to build the {@link ClickableItem}.
-   * @return The {@link ClickableItem} of the specified {@link Sanction}.
+   * @param sanction The sanction used to build the clickable item.
+   * @return The clickable item of the specified sanction.
    */
   public @NotNull ClickableItem build(@NotNull Sanction sanction) {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

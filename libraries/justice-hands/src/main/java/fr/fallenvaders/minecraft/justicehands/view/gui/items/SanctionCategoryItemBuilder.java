@@ -84,10 +84,10 @@ public class SanctionCategoryItemBuilder {
   }
 
   /**
-   * Builds the {@link ClickableItem} of the specified {@link SanctionCategory}.
+   * Builds the {@link ClickableItem} of the specified category of sanctions.
    *
-   * @param sanctionCategory The {@link SanctionCategory} used to build the {@link ClickableItem}.
-   * @return The {@link ClickableItem} of the specified {@link SanctionCategory}.
+   * @param sanctionCategory The category of sanctions used to build the clickable item.
+   * @return The clickable item of the specified category of sanctions.
    * @throws JusticeHandsException if something went wrong when providing item.
    */
   public @NotNull ClickableItem build(

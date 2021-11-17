@@ -104,14 +104,14 @@ public class FvDataSource {
   }
 
   /**
-   * Gets through HikariCP a DBMS {@link Connection} and then return it.
+   * Gets through HikariCP a DBMS connection and then return it.
    *
    * <p>When you want to release the connection, simply close her directly through the method {@link
    * Connection#close()}.
    *
    * <p>For more details about connection pool, refer you to this class' Javadoc.
    *
-   * @return The obtained DBMS {@link Connection} though the connection pool system.
+   * @return The obtained DBMS connection though the connection pool system.
    * @throws SQLException If a database access error occurs
    */
   @NotNull

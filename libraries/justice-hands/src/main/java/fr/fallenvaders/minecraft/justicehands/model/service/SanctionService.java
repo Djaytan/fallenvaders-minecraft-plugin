@@ -44,8 +44,8 @@ public class SanctionService {
   /**
    * Constructor.
    *
-   * @param logger The logger of FallenVaders' plugin.
-   * @param sanctionDao The {@link Sanction} DAO.
+   * @param logger The {@link Logger}.
+   * @param sanctionDao The {@link SanctionDao}.
    */
   @Inject
   public SanctionService(@NotNull Logger logger, @NotNull SanctionDao sanctionDao) {
@@ -54,11 +54,11 @@ public class SanctionService {
   }
 
   /**
-   * Gets and returns the {@link Sanction} associated with the specified ID.
+   * Gets and returns the sanction associated with the specified ID.
    *
-   * @param id The ID of the {@link Sanction} to seek.
-   * @return The {@link Sanction} associated with the specified ID.
-   * @throws JusticeHandsException if the sought {@link Sanction} fail to be found in the model.
+   * @param id The ID of the sanction to seek.
+   * @return The sanction associated with the specified ID.
+   * @throws JusticeHandsException if the sought sanction fail to be found in the model.
    */
   public @NotNull Optional<Sanction> getSanction(int id) throws JusticeHandsException {
     logger.info("Seek of the sanction associated with the ID '{}'.", id);
@@ -78,13 +78,10 @@ public class SanctionService {
   }
 
   /**
-   * Gets and returns all existing {@link Sanction}s of the model.
+   * Gets and returns all existing sanctions of the model.
    *
-   * <p>The set is ordered from the older {@link Sanction} in first position to the youngest in the
-   * last position.
-   *
-   * @return All the existing {@link Sanction}s of the model.
-   * @throws JusticeHandsException if the sought {@link Sanction}s fail to be found in the model.
+   * @return All the existing sanctions of the model.
+   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getSanctions() throws JusticeHandsException {
     logger.info("Seek of all existing sanctions.");
@@ -107,15 +104,12 @@ public class SanctionService {
   }
 
   /**
-   * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where he
-   * is assigned as an inculpated one.
-   *
-   * <p>The set is ordered from the older {@link Sanction} in first position to the youngest in the
-   * last position.
+   * Gets and returns all existing sanctions of the specified player where he is assigned as an
+   * inculpated one.
    *
    * @param player The player.
-   * @return All the {@link Sanction} of the specified {@link OfflinePlayer}.
-   * @throws JusticeHandsException if the sought {@link Sanction}s fail to be found in the model.
+   * @return All the sanctions of the specified player.
+   * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getPlayerSanctions(@NotNull OfflinePlayer player)
       throws JusticeHandsException {
@@ -143,11 +137,10 @@ public class SanctionService {
   }
 
   /**
-   * Registers the specified {@link Sanction} into the model.
+   * Registers the specified sanction into the model.
    *
-   * @param sanction The {@link Sanction} to save into the model.
-   * @throws JusticeHandsException if the specified {@link Sanction} fail to be registered in the
-   *     model.
+   * @param sanction The sanction to save into the model.
+   * @throws JusticeHandsException if the specified sanction fail to be registered in the model.
    */
   public void registerSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info("Try to register the following new sanction: {}", sanction);
@@ -162,11 +155,10 @@ public class SanctionService {
   }
 
   /**
-   * Updates the specified {@link Sanction} in the model.
+   * Updates the specified sanction in the model.
    *
-   * @param sanction The {@link Sanction} to update in the model.
-   * @throws JusticeHandsException if the specified {@link Sanction} fail to be updated in the
-   *     model.
+   * @param sanction The sanction to update in the model.
+   * @throws JusticeHandsException if the specified sanction fail to be updated in the model.
    */
   public void updateSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info(
@@ -184,11 +176,10 @@ public class SanctionService {
   }
 
   /**
-   * Deletes the specified {@link Sanction} from the model.
+   * Deletes the specified sanction from the model.
    *
-   * @param sanction The {@link Sanction} to delete from the model.
-   * @throws JusticeHandsException if the specified {@link Sanction} fail to be deleted in the
-   *     model.
+   * @param sanction The sanction to delete from the model.
+   * @throws JusticeHandsException if the specified sanction fail to be deleted in the model.
    */
   public void deleteSanction(@NotNull Sanction sanction) throws JusticeHandsException {
     logger.info("Try to delete the following sanction: {}", sanction);

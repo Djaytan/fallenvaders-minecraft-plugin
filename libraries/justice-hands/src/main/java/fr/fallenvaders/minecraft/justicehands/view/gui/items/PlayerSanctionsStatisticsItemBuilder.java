@@ -42,7 +42,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * The builder class of player {@link Sanction}s statistics.
+ * The builder class of player sanctions statistics.
  *
  * @author Voltariuss
  * @author Glynix

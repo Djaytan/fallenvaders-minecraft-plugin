@@ -41,9 +41,9 @@ public class CriticalPluginErrorRaiser implements CriticalErrorRaiser {
   /**
    * Constructor.
    *
-   * @param plugin The Bukkit Java plugin.
-   * @param logger The logger.
-   * @param pluginManager The Bukkit plugin manager.
+   * @param plugin The {@link JavaPlugin}.
+   * @param logger The {@link Logger}.
+   * @param pluginManager The {@link PluginManager}.
    */
   @Inject
   public CriticalPluginErrorRaiser(

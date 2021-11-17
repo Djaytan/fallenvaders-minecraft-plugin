@@ -57,16 +57,6 @@ public class CriminalRecordCommand implements CommandExecutor {
     this.server = server;
   }
 
-  /**
-   * This is the execution definition of the criminal record {@link Command}.
-   *
-   * @param sender The sender of the command.
-   * @param cmd The command sent.
-   * @param label The label of the command.
-   * @param args The command arguments.
-   * @return "true" if the command is a valid command, "false" otherwise which will send the "usage"
-   *     message specified in the plugin.yml file.
-   */
   @Override
   public boolean onCommand(
       @NotNull CommandSender sender,

@@ -50,9 +50,9 @@ public class GuiInventoryController {
    * Recovers the corresponding {@link GuiInventory} which match with the given ID. Otherwise, raise
    * an exception.
    *
-   * @param id The ID of the targeted {@link GuiInventory}.
-   * @return The expected {@link GuiInventory}.
-   * @throws JusticeHandsException if an error occurs or the specified ID is wrong.
+   * @param id The ID of the targeted GUI inventory.
+   * @return The sought GUI inventory.
+   * @throws JusticeHandsException If an error occurs or the specified ID is wrong.
    */
   public @NotNull GuiInventory getGuiInventory(@NotNull String id) throws JusticeHandsException {
     return guiInventoryService
@@ -64,8 +64,10 @@ public class GuiInventoryController {
    * Recovers the corresponding generic {@link GuiInventoryItem} which match with the given ID.
    * Otherwise, raise an exception.
    *
-   * @param id The ID of the targeted generic {@link GuiInventoryItem}.
-   * @return The expected generic {@link GuiInventoryItem}.
+   * <p>A generic GUI item is not linked to a specific inventory (refer you to config file).
+   *
+   * @param id The ID of the targeted generic GUI item.
+   * @return The sought generic
    * @throws JusticeHandsException if an error occurs or the specified ID is wrong.
    */
   public @NotNull GuiInventoryItem getGenericGuiItem(@NotNull String id)

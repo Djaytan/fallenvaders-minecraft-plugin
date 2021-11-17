@@ -44,8 +44,8 @@ public class PredefinedSanctionService {
   /**
    * Constructor.
    *
-   * @param logger The logger.
-   * @param predefinedSanctionDao The {@link PredefinedSanction} DAO.
+   * @param logger The {@link Logger}.
+   * @param predefinedSanctionDao The {@link PredefinedSanctionDao}.
    */
   @Inject
   public PredefinedSanctionService(
@@ -55,11 +55,11 @@ public class PredefinedSanctionService {
   }
 
   /**
-   * Recovers and returns the corresponding {@link PredefinedSanction} from the model which match
-   * with the specified ID.
+   * Recovers and returns the corresponding predefined sanction from the model which match with the
+   * specified ID.
    *
-   * @param id The ID of the targeted {@link PredefinedSanction}.
-   * @return The {@link PredefinedSanction} from the model which match with the specified ID.
+   * @param id The ID of the targeted predefined sanction.
+   * @return The predefined sanction from the model which match with the specified ID.
    * @throws JusticeHandsException if a problem occurs during the search in the model.
    */
   public @NotNull Optional<PredefinedSanction> getPredefinedSanction(@NotNull String id)
@@ -80,9 +80,9 @@ public class PredefinedSanctionService {
   }
 
   /**
-   * Recovers and returns all the existing {@link PredefinedSanction}s from the model.
+   * Recovers and returns all the existing predefined sanctions from the model.
    *
-   * @return All the existing {@link PredefinedSanction}s from the model.
+   * @return All the existing predefined sanctions from the model.
    * @throws JusticeHandsException if a problem occurs during the search in the model.
    */
   public @NotNull Set<PredefinedSanction> getPredefinedSanctions() throws JusticeHandsException {

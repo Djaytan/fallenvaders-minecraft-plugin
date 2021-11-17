@@ -31,9 +31,9 @@ import org.jetbrains.annotations.Nullable;
  * {@link PredefinedSanction}. This ensures a good follow of sanctions scales defined by
  * FallenVaders' staff team.
  *
- * <p>When no {@link PredefinedSanction} fit the current case from which the moderator must give a
+ * <p>When no predefined sanction fit the current case from which the moderator must give a
  * sanction, it's possible to directly create one. However, this usage must be limited as
- * much as possible by created new {@link PredefinedSanction} as soon as possible.
+ * much as possible by created new predefined as soon as possible.
  *
  * @param id The ID of the sanction.
  * @param inculpatedPlayer The inculpated player of the sanction.
@@ -66,7 +66,8 @@ public record Sanction (
    * @param reason The reason of the sanction.
    * @param points The number of points of the sanction.
    * @param beginningDate The beginning date of the sanction.
-   * @param endingDate The ending date of the sanction (null in cases of kick or ban def for example).
+   * @param endingDate The ending date of the sanction (null in cases of kick or ban def for
+   *    example).
    * @param authorPlayer The author of the sanction (null means console is the author).
    * @param type The type of sanction.
    */

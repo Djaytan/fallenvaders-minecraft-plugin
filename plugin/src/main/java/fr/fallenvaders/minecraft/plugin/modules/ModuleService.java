@@ -39,8 +39,8 @@ public final class ModuleService {
   /**
    * Constructor.
    *
-   * @param logger The SLF4J logger instance.
-   * @param moduleContainer The container associated to this service.
+   * @param logger The {@link Logger}.
+   * @param moduleContainer The {@link ModuleContainer}.
    */
   @Inject
   public ModuleService(@NotNull Logger logger, @NotNull ModuleContainer moduleContainer) {
@@ -49,7 +49,7 @@ public final class ModuleService {
   }
 
   /**
-   * Registers a {@link FvModule}. If modules registration has already been launched, then an
+   * Registers a module. If modules registration has already been launched, then an
    * exception is thrown.
    *
    * @param fvModule The FallenVaders' module to register.
@@ -68,7 +68,7 @@ public final class ModuleService {
   }
 
   /**
-   * Loads all registered {@link FvModule} by calling the {@link FvModule#onLoad()} ()} method for
+   * Loads all registered modules by calling the {@link FvModule#onLoad()} method for
    * each of them. After that, modules registration is considered has "loaded" and none new
    * registrations are allowed anymore.
    */
@@ -77,7 +77,7 @@ public final class ModuleService {
   }
 
   /**
-   * Enables all registered {@link FvModule} by calling the {@link FvModule#onEnable()} method for
+   * Enables all registered modules by calling the {@link FvModule#onEnable()} method for
    * each of them.
    */
   public void enableModules() {
@@ -85,7 +85,7 @@ public final class ModuleService {
   }
 
   /**
-   * Disables all registered {@link FvModule} by calling the {@link FvModule#onDisable()} method for
+   * Disables all registered modules by calling the {@link FvModule#onDisable()} method for
    * each of them.
    */
   public void disableModules() {

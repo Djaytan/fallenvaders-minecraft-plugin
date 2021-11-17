@@ -33,6 +33,7 @@ import java.util.List;
  * the existing {@link FvModule}s.
  *
  * @author Voltariuss
+ * @see PluginInitializer
  * @since 0.1.0
  */
 @Singleton
@@ -46,8 +47,8 @@ public final class FullPluginInitializer implements PluginInitializer {
   /**
    * Constructor.
    *
-   * @param logger The SLF4J project's logger.
-   * @param moduleService The module register service.
+   * @param logger The {@link Logger}.
+   * @param moduleService The {@link ModuleService}.
    */
   @Inject
   public FullPluginInitializer(

@@ -61,10 +61,10 @@ public class PlayerHeadItemBuilder {
   }
 
   /**
-   * Builds the {@link OfflinePlayer}'s head.
+   * Builds the player's head.
    *
-   * @param player The {@link OfflinePlayer} used to create the head.
-   * @return The {@link ClickableItem} head of the specified {@link OfflinePlayer}.
+   * @param player The player used to create the head.
+   * @return The item head of the specified player.
    */
   public @NotNull ClickableItem build(@NotNull OfflinePlayer player) {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

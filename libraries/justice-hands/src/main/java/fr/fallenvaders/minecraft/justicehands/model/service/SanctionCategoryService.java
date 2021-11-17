@@ -44,8 +44,8 @@ public class SanctionCategoryService {
   /**
    * Constructor.
    *
-   * @param logger The logger.
-   * @param sanctionCategoryDao The {@link SanctionCategory} DAO.
+   * @param logger The {@link Logger}.
+   * @param sanctionCategoryDao The {@link SanctionCategoryDao}.
    */
   @Inject
   public SanctionCategoryService(
@@ -55,11 +55,11 @@ public class SanctionCategoryService {
   }
 
   /**
-   * Recovers and returns the corresponding {@link SanctionCategory} from the model which match with
+   * Recovers and returns the corresponding category of sanctions from the model which match with
    * the specified ID.
    *
-   * @param id The ID of the targeted {@link SanctionCategory}.
-   * @return The {@link SanctionCategory} from the model which match with the specified ID.
+   * @param id The ID of the targeted category of sanctions.
+   * @return The category of sanctions from the model which match with the specified ID.
    * @throws JusticeHandsException if a problem occurs during the search in the model.
    */
   public @NotNull Optional<SanctionCategory> getCategory(@NotNull String id)
@@ -80,9 +80,9 @@ public class SanctionCategoryService {
   }
 
   /**
-   * Recovers and returns all the existing {@link SanctionCategory}s from the model.
+   * Recovers and returns all the existing categories of sanctions from the model.
    *
-   * @return All the existing {@link SanctionCategory}s from the model.
+   * @return All the existing categories of sanctions from the model.
    * @throws JusticeHandsException if a problem occurs during the search in the model.
    */
   public @NotNull Set<SanctionCategory> getCategories() throws JusticeHandsException {

@@ -22,8 +22,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * {@link GuiInventoryItem} location.
  *
- * @param line The line location of the {@link GuiInventoryItem}.
- * @param column The column location of the {@link GuiInventoryItem}.
+ * @param line The line location of the GUI item.
+ * @param column The column location of the GUI item.
  * @author Voltariuss
  * @since 0.3.0
  */

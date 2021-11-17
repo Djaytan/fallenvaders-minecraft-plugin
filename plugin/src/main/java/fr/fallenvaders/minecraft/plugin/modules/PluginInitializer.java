@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
-import fr.fallenvaders.minecraft.commons.FvModule;
 import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
 
 /**
@@ -31,6 +30,6 @@ import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
  */
 public interface PluginInitializer {
 
-  /** Initializes {@link ModuleService} singleton instance with {@link FvModule} instances. */
+  /** Initializes the plugin. */
   void initialize();
 }

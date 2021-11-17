@@ -43,8 +43,8 @@ public class SanctionDispatcherImpl implements SanctionDispatcher {
   /**
    * Constructor.
    *
-   * @param sanctionComponentBuilder The Keys Keeper component builder.
-   * @param logger The logger.
+   * @param sanctionComponentBuilder The {@link SanctionComponentBuilder}.
+   * @param logger The {@link Logger}.
    */
   @Inject
   public SanctionDispatcherImpl(

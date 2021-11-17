@@ -62,11 +62,11 @@ public class GuiInventoryService {
   }
 
   /**
-   * Recovers and returns the corresponding {@link GuiInventory} from the model which match with the
+   * Recovers and returns the corresponding GUI inventory from the model which match with the
    * specified ID.
    *
-   * @param id The ID of the targeted {@link GuiInventory}.
-   * @return The {@link GuiInventory} from the model which match with the specified ID.
+   * @param id The ID of the targeted GUI inventory.
+   * @return The GUI inventory from the model which match with the specified ID.
    * @throws JusticeHandsException if a problem occurs during the search in the model.
    */
   public Optional<GuiInventory> getGuiInventory(@NotNull String id) throws JusticeHandsException {
@@ -85,11 +85,11 @@ public class GuiInventoryService {
   }
 
   /**
-   * Recovers and returns the corresponding generic {@link GuiInventoryItem} from the model which
-   * match with the specified ID.
+   * Recovers and returns the corresponding generic GUI item from the model which match with the
+   * specified ID.
    *
-   * @param id The ID of the targeted generic {@link GuiInventoryItem}.
-   * @return The generic {@link GuiInventoryItem} from the model which match with the specified ID.
+   * @param id The ID of the targeted generic GUI item.
+   * @return The generic GUI item from the model which match with the specified ID.
    * @throws JusticeHandsException if a problem occurs during the search in the model.
    */
   public Optional<GuiInventoryItem> getGenericGuiItem(@NotNull String id)

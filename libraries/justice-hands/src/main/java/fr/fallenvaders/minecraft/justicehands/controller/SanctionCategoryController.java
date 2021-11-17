@@ -47,9 +47,9 @@ public class SanctionCategoryController {
   }
 
   /**
-   * Returns all existing {@link SanctionCategory}s.
+   * Returns all existing categories of sanctions.
    *
-   * @return All existing {@link SanctionCategory}s.
+   * @return All existing categories of sanctions.
    * @throws JusticeHandsException if something went wrong during the recovering.
    */
   public @NotNull Set<SanctionCategory> getCategories() throws JusticeHandsException {

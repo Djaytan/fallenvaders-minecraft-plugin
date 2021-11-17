@@ -20,8 +20,8 @@ package fr.fallenvaders.minecraft.plugin.modules;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This exception is thrown when a problem occurs during the registration process of a module (e.g.
- * register a module with the {@link ModuleService} was launched).
+ * This exception is thrown when a problem occurs during the registration process of a module (for
+ * example: register a module with the {@link ModuleService} was launched).
  *
  * @author Voltariuss
  * @since 0.1.0

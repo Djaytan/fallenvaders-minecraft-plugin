@@ -55,7 +55,7 @@ public class InteractiveInventoryBuilder {
    * Builds and returns the {@link SmartInventory} based on the specified {@link InventoryProvider}
    * and additional information.
    *
-   * @param inventoryProvider The {@link InventoryProvider}.
+   * @param inventoryProvider The inventory provider.
    * @param id The ID of the menu to open.
    * @param title The title of the menu to open.
    * @param nbLines The number of lines of the menu to open.

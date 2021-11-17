@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 public interface SanctionDispatcher {
 
   /**
-   * Dispatches the specified {@link Sanction} on server.
+   * Dispatches the specified sanction on server.
    *
    * @param sanction The sanction to dispatched on server.
    * @throws JusticeHandsException if something went wrong during the dispatch of the sanction.

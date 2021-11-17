@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>Predefined sanctions have only the purpose to create {@link Sanction} by replicating
  * information. After the creation of this one, no binding are kept between them. This approach
- * permit letting predefined sanctions evolved independently of {@link Sanction}s. This is
+ * permit letting predefined sanctions evolved independently of sanctions. This is
  * particularly useful in case predefined sanctions are regularly review to adapt points,
  * type, description, ...
  *

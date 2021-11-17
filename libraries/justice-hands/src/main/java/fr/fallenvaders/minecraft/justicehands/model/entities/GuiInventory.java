@@ -34,10 +34,10 @@ import org.jetbrains.annotations.NotNull;
 public record GuiInventory (@NotNull String id, int nbLines, @NotNull List<GuiInventoryItem> items) {
 
   /**
-   * Returns the {@link GuiInventoryItem} which match with the specified ID.
+   * Returns the GUI item which match with the specified ID.
    *
-   * @param id The ID of the {@link GuiInventoryItem}.
-   * @return The corresponding {@link GuiInventoryItem} if exists.
+   * @param id The ID of the GUI item.
+   * @return The corresponding GUI item if exists.
    */
   public Optional<GuiInventoryItem> getItem(@NotNull String id) {
     return items.stream()

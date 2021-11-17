@@ -46,8 +46,8 @@ public class DatabaseInitializer {
   /**
    * Constructor.
    *
-   * @param fvDataSource The FallenVaders' data source to connect to the database.
-   * @param ioUtils The I/O utils tools.
+   * @param fvDataSource The {@link FvDataSource}.
+   * @param ioUtils The {@link IOUtils}.
    */
   @Inject
   public DatabaseInitializer(@NotNull FvDataSource fvDataSource, @NotNull IOUtils ioUtils) {

@@ -43,7 +43,7 @@ public class SanctionManagerViewContainer {
    * Constructor.
    *
    * @param sanctionCategoryController The {@link SanctionCategoryController}.
-   * @throws JusticeHandsException if the {@link SanctionCategory}s can't be recovered.
+   * @throws JusticeHandsException if the categories of sanctions can't be recovered.
    */
   @Inject
   public SanctionManagerViewContainer(
@@ -61,7 +61,7 @@ public class SanctionManagerViewContainer {
   /**
    * Getter.
    *
-   * @return The current {@link SanctionCategory} consulted in the view.
+   * @return The current category of sanctions consulted in the view.
    */
   public @NotNull SanctionCategory getCurrentSanctionCategory() {
     return currentSanctionCategory;
@@ -70,7 +70,7 @@ public class SanctionManagerViewContainer {
   /**
    * Setter.
    *
-   * @param currentSanctionCategory The current {@link SanctionCategory} consulted in the view.
+   * @param currentSanctionCategory The current category of sanctions consulted in the view.
    */
   public void setCurrentSanctionCategory(@NotNull SanctionCategory currentSanctionCategory)
       throws JusticeHandsException {

@@ -20,7 +20,6 @@ package fr.fallenvaders.minecraft.justicehands.model.dao;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.PredefinedSanction;
-import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -43,7 +42,7 @@ public class PredefinedSanctionDao implements ReadOnlyDao<PredefinedSanction> {
   /**
    * Constructor.
    *
-   * @param sanctionCategoryDao The {@link SanctionCategory} DAO.
+   * @param sanctionCategoryDao The {@link SanctionCategoryDao}
    */
   @Inject
   public PredefinedSanctionDao(@NotNull SanctionCategoryDao sanctionCategoryDao) {

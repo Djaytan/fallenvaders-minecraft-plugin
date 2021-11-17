@@ -40,7 +40,7 @@ public class CriminalRecordViewContainer {
   /**
    * Getter.
    *
-   * @return The {@link SanctionType} to only keep on display.
+   * @return The type of sanction to only keep on display.
    */
   public @Nullable SanctionType getFilter() {
     return filter;
@@ -49,7 +49,7 @@ public class CriminalRecordViewContainer {
   /**
    * Setter.
    *
-   * @param filter The {@link SanctionType} to only keep on display.
+   * @param filter The type of sanction to only keep on display.
    */
   public void setFilter(@Nullable SanctionType filter) {
     this.filter = filter;

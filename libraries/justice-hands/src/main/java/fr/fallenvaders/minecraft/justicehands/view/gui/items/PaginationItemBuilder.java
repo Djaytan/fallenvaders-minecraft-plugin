@@ -60,9 +60,9 @@ public class PaginationItemBuilder {
   /**
    * Builds the previous page {@link ClickableItem}.
    *
-   * @param opener The opener {@link Player} of the menu.
-   * @param contents The {@link InventoryContents} of the menu.
-   * @return The previous page {@link ClickableItem}.
+   * @param opener The opener player of the menu.
+   * @param contents The contents of the menu.
+   * @return The previous page clickable item.
    */
   public @NotNull ClickableItem buildPreviousPage(
       @NotNull Player opener, @NotNull InventoryContents contents) {
@@ -85,9 +85,9 @@ public class PaginationItemBuilder {
   /**
    * Builds the next page {@link ClickableItem}.
    *
-   * @param opener The opener {@link Player} of the menu.
-   * @param contents The {@link InventoryContents} of the menu.
-   * @return The next page {@link ClickableItem}.
+   * @param opener The opener player of the menu.
+   * @param contents The contents of the menu.
+   * @return The next page clickable item.
    */
   public @NotNull ClickableItem buildNextPage(
       @NotNull Player opener, @NotNull InventoryContents contents) {

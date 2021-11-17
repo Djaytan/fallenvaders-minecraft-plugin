@@ -25,9 +25,9 @@ import org.jetbrains.annotations.Nullable;
 /**
  * The {@link GuiInventory} item entity.
  *
- * @param id The ID of the {@link GuiInventory} item.
- * @param location The location of the {@link GuiInventory} item.
- * @param item The {@link ItemStack} which represent the {@link GuiInventory} item.
+ * @param id The ID of the GUI item.
+ * @param location The location of the GUI item.
+ * @param item The item stack which represent the GUI item.
  * @author Voltariuss
  * @since 0.3.0
  */

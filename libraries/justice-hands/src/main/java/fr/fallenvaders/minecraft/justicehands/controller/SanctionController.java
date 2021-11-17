@@ -53,9 +53,9 @@ public class SanctionController {
   /**
    * Constructor.
    *
-   * @param logger The logger.
-   * @param sanctionDispatcher The sanction dispatcher.
-   * @param sanctionService The sanction service.
+   * @param logger The {@link Logger}.
+   * @param sanctionDispatcher The {@link SanctionDispatcher}.
+   * @param sanctionService The {@link SanctionService}.
    */
   @Inject
   public SanctionController(
@@ -68,11 +68,11 @@ public class SanctionController {
   }
 
   /**
-   * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where he
-   * is assigned as an inculpated one.
+   * Gets and returns all existing sanctions of the specified player where he is assigned as an
+   * inculpated one.
    *
    * @param player The player.
-   * @return All the {@link Sanction} of the specified {@link OfflinePlayer}.
+   * @return All the sanctions of the specified player.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getPlayerSanctions(@NotNull OfflinePlayer player)
@@ -81,13 +81,12 @@ public class SanctionController {
   }
 
   /**
-   * Gets and returns all existing {@link Sanction} of the specified {@link OfflinePlayer} where he
-   * is assigned as an inculpated one and where the {@link SanctionType} match with the given one.
+   * Gets and returns all existing sanctions of the specified player where he is assigned as an
+   * inculpated one and where the type of sanction match with them.
    *
    * @param player The player.
    * @param sanctionType The type of sanction.
-   * @return All the {@link Sanction} of the specified {@link OfflinePlayer} and {@link
-   *     SanctionType}.
+   * @return All sanctions of the specified player which match with the given type of sanction.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getPlayerSanctions(
@@ -100,11 +99,11 @@ public class SanctionController {
   }
 
   /**
-   * Gets and returns all active existing {@link Sanction} of the specified {@link OfflinePlayer}
-   * where he is assigned as an inculpated one.
+   * Gets and returns all active sanctions of the specified player where he is assigned as an
+   * inculpated one.
    *
    * @param player The player.
-   * @return All the {@link Sanction} of the specified {@link OfflinePlayer}.
+   * @return All active sanctions of the specified player.
    * @throws JusticeHandsException if the sought sanctions fail to be found in the model.
    */
   public @NotNull Set<Sanction> getActivePlayerSanctions(@NotNull OfflinePlayer player)
@@ -114,13 +113,13 @@ public class SanctionController {
   }
 
   /**
-   * Gets and returns the active existing {@link Sanction} of the specified {@link OfflinePlayer}
-   * where he is assigned as an inculpated one and where the {@link SanctionType} match with the
-   * given one.
+   * Gets and returns active existing sanctions of the specified player where he is assigned as
+   * an inculpated one and where the type of sanction match with them.
    *
    * @param player The player.
    * @param sanctionType The type of sanction.
-   * @return The {@link Sanction} of the specified {@link OfflinePlayer} and {@link SanctionType}.
+   * @return All active sanctions of the specified player which match with the given type of
+   *    sanction.
    * @throws JusticeHandsException if the sought sanction fail to be found in the model.
    */
   public @NotNull Optional<Sanction> getActivePlayerSanction(
@@ -132,7 +131,7 @@ public class SanctionController {
   }
 
   /**
-   * Kicks the specified {@link Player} from server by creating a {@link Sanction}.
+   * Kicks the specified player from server by creating a sanction.
    *
    * @param inculpated The inculpated player to kick from the server.
    */

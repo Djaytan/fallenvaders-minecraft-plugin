@@ -17,11 +17,10 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
-import fr.fallenvaders.minecraft.commons.FvModule;
 import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
 
 /**
- * This enum represents the state of {@link FvModule} of the {@link FallenVadersPlugin}.
+ * This enum represents the state of modules of the {@link FallenVadersPlugin}.
  *
  * @author Voltariuss
  * @since 0.3.0

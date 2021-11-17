@@ -64,7 +64,7 @@ public final class ModuleContainer {
   }
 
   /**
-   * Tries to find the registered {@link FvModule} which match with the given module's name.
+   * Tries to find the registered module which match with the given module's name.
    *
    * @param moduleName The name of the sought module.
    * @return The registered module which match with the given module's name if it exists.
@@ -78,9 +78,9 @@ public final class ModuleContainer {
   }
 
   /**
-   * Returns the list of {@link FvModule} registered.
+   * Returns the list of modules registered.
    *
-   * @return The list of {@link FvModule} registered.
+   * @return The list of modules registered.
    */
   @NotNull
   public List<FvModule> getModules() {
