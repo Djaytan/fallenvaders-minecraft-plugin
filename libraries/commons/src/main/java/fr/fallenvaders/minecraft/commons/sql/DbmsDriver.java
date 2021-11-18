@@ -35,7 +35,7 @@ public enum DbmsDriver {
     this.driver = driver;
   }
 
-  public String getDriver() {
+  public @NotNull String getDriver() {
     return driver;
   }
 }

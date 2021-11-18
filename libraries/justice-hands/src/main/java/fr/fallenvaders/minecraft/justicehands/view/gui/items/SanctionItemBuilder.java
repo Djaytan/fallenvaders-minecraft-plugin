@@ -107,7 +107,7 @@ public class SanctionItemBuilder {
     return ClickableItem.empty(sanctionItem);
   }
 
-  private Material getClayColor(@NotNull SanctionType sanctionType) {
+  private @NotNull Material getClayColor(@NotNull SanctionType sanctionType) {
     return switch (sanctionType) {
       case KICK -> Material.GREEN_CONCRETE;
       case MUTE -> Material.BLUE_CONCRETE;

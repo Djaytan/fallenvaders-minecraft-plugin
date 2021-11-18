@@ -39,7 +39,7 @@ public record GuiInventory (@NotNull String id, int nbLines, @NotNull List<GuiIt
    * @param id The ID of the GUI item.
    * @return The corresponding GUI item if exists.
    */
-  public Optional<GuiItem> getItem(@NotNull String id) {
+  public @NotNull Optional<GuiItem> getItem(@NotNull String id) {
     return items.stream()
       .filter(item -> item.id().equals(id))
       .findFirst();

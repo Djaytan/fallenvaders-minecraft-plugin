@@ -21,10 +21,11 @@ import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.view.gui.items.PlayerSanctionsStatisticsItemBuilder;
-import java.util.Objects;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 /**
  * The sanctions' statistics for a given type of sanction for a specific player.

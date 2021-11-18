@@ -23,16 +23,17 @@ import fr.fallenvaders.minecraft.plugin.FallenVadersPlugin;
  * This enum represents the state of modules of the {@link FallenVadersPlugin}.
  *
  * <p>The state order number permit to determine the next expected state (exploited in {@link
- * ModuleContainer}.
+ * ModuleContainer}).
  *
  * @author Voltariuss
  * @see ModuleContainer
  * @since 0.3.0
  */
 public enum PluginModulesState {
-  LOADED(1),
-  ENABLED(2),
-  DISABLED(3);
+  UNLOADED(1),
+  LOADED(2),
+  ENABLED(3),
+  DISABLED(4);
 
   private final int stateOrder;
 

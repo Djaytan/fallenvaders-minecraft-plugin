@@ -65,7 +65,7 @@ class ModuleServiceTest {
     void register_one_module_when_no_other_one_is_registered_shall_work() {
       FvModule fvModule = moduleUtils.createWithoutBehaviorModule("test-module");
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
-      FvModule actualFvModule = moduleContainer.getModule("test-module");
+      FvModule actualFvModule = moduleContainer.getModule("test-module").orElse(null);
       Assertions.assertEquals(1, moduleContainer.getModules().size());
       Assertions.assertSame(fvModule, actualFvModule);
     }

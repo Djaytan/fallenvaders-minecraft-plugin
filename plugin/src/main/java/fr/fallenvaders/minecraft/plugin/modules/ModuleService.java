@@ -56,12 +56,8 @@ public final class ModuleService {
    */
   public void registerModule(@NotNull FvModule fvModule) {
     try {
-      if (moduleContainer.getState() == null) {
-        moduleContainer.addModule(fvModule);
-        logger.info("Module '{}' registered.", fvModule.getModuleName());
-      } else {
-        throw new ModuleException("The modules manipulation process has already been launched.");
-      }
+      moduleContainer.addModule(fvModule);
+      logger.info("Module '{}' registered.", fvModule.getModuleName());
     } catch (ModuleException e) {
       logger.error(String.format("Module registration of '%s' rejected.", fvModule.getModuleName()), e);
     }
@@ -94,6 +90,7 @@ public final class ModuleService {
 
   private void manipulateModules(@NotNull PluginModulesState state) {
     try {
+      String stateName = state.name().toLowerCase();
       moduleContainer.setState(state);
       for (FvModule module : moduleContainer.getModules()) {
         switch (state) {
@@ -101,9 +98,9 @@ public final class ModuleService {
           case ENABLED -> module.onEnable();
           case DISABLED -> module.onDisable();
         }
-        logger.info("Module '{}' {}.", module.getModuleName(), state.name().toLowerCase());
+        logger.info("Module '{}' {}.", module.getModuleName(), stateName);
       }
-      logger.info("FallenVaders modules successfully {}.", state.name().toLowerCase());
+      logger.info("FallenVaders modules successfully {}.", stateName);
     } catch (ModuleException e) {
       logger.error("Fail during modules manipulation ({} phase).", state.name(), e);
     }

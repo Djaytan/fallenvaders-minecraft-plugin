@@ -21,18 +21,17 @@ import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.model.entities.PredefinedSanction;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import fr.minuskube.inv.ClickableItem;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The builder class of {@link PredefinedSanction} items.
@@ -60,14 +59,11 @@ public class PredefinedSanctionItemBuilder {
    * Builds the {@link ClickableItem} of the specified predefined sanction.
    *
    * @param opener The opener player of the menu.
-   * @param target The target player of the predefined sanction.
    * @param predefinedSanction The predefined sanction of the target player.
    * @return The clickable item of the specified predefined sanction.
    */
   public @NotNull ClickableItem build(
-      @NotNull Player opener,
-      @NotNull OfflinePlayer target,
-      @NotNull PredefinedSanction predefinedSanction) {
+      @NotNull Player opener, @NotNull PredefinedSanction predefinedSanction) {
     ItemStack predefinedSanctionItem = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 
     ItemMeta meta = predefinedSanctionItem.getItemMeta();
@@ -78,8 +74,7 @@ public class PredefinedSanctionItemBuilder {
     strLore.add("§7Description: §8" + predefinedSanction.description());
     strLore.add("§7Points de sanction: §7" + predefinedSanction.points());
     strLore.add("");
-    List<Component> lore =
-        strLore.stream().map(componentHelper::getComponent).collect(Collectors.toList());
+    List<Component> lore = strLore.stream().map(componentHelper::getComponent).toList();
     predefinedSanctionItem.lore(lore);
 
     predefinedSanctionItem.setItemMeta(meta);

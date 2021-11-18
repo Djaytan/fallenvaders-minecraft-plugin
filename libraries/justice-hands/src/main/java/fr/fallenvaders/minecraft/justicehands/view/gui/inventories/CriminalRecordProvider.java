@@ -108,7 +108,7 @@ public class CriminalRecordProvider implements InventoryProvider {
   }
 
   @Override
-  public void init(@NotNull Player opener, InventoryContents contents) {
+  public void init(@NotNull Player opener, @NotNull InventoryContents contents) {
     SmartInventory inventory = contents.inventory();
     UUID uuidTarget = UUID.fromString(inventory.getId());
     OfflinePlayer target = server.getOfflinePlayer(uuidTarget);

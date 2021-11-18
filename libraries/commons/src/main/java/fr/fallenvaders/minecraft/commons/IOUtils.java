@@ -43,8 +43,7 @@ public class IOUtils {
    * @return The content of the stream read in a unique string format.
    * @throws IOException If something went wrong.
    */
-  @NotNull
-  public String resourceToString(@NotNull InputStream is) throws IOException {
+  public @NotNull String resourceToString(@NotNull InputStream is) throws IOException {
     InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
     StringBuilder sb = new StringBuilder();
     try (BufferedReader br = new BufferedReader(isr)) {

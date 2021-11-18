@@ -114,8 +114,7 @@ public class FvDataSource {
    * @return The obtained DBMS connection though the connection pool system.
    * @throws SQLException If a database access error occurs
    */
-  @NotNull
-  public Connection getConnection() throws SQLException {
+  public @NotNull Connection getConnection() throws SQLException {
     return dataSource.getConnection();
   }
 }

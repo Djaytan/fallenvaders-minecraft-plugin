@@ -20,12 +20,12 @@ package fr.fallenvaders.minecraft.justicehands.view.viewmodel.entities;
 import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A sanctions' statistics class for a given player.
@@ -98,9 +98,11 @@ public class PlayerSanctionsStatistics {
           sanctionTypeStatistics.stream()
               .filter(
                   sanctionTypeStatistic ->
-                      Objects.equals(sanctionTypeStatistic.getSanctionType(), sanctionType)).collect(Collectors.toSet());
+                      Objects.equals(sanctionTypeStatistic.getSanctionType(), sanctionType))
+              .collect(Collectors.toSet());
       Preconditions.checkArgument(
-        typeStatsSet.size() == 1, "The stats of sanction type '%s' must be defined one and only one time.");
+          typeStatsSet.size() == 1,
+          "The stats of sanction type '%s' must be defined one and only one time.");
       if (nbSanctions == 0) {
         PlayerSanctionTypeStatistics typeStats = typeStatsSet.iterator().next();
         Preconditions.checkArgument(
@@ -144,7 +146,7 @@ public class PlayerSanctionsStatistics {
    *
    * @return The last sanction recorded for the player.
    */
-  public @NotNull Sanction getLastSanction() {
+  public @Nullable Sanction getLastSanction() {
     return lastSanction;
   }
 

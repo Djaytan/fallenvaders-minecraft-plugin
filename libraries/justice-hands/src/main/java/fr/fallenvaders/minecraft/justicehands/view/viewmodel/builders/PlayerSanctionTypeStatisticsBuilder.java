@@ -20,14 +20,15 @@ package fr.fallenvaders.minecraft.justicehands.view.viewmodel.builders;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.entities.PlayerSanctionTypeStatistics;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * The {@link PlayerSanctionTypeStatistics}'s builder class.
@@ -41,7 +42,9 @@ public class PlayerSanctionTypeStatisticsBuilder {
 
   /** Constructor. */
   @Inject
-  public PlayerSanctionTypeStatisticsBuilder() {}
+  public PlayerSanctionTypeStatisticsBuilder() {
+    /* Nothing to do */
+  }
 
   /**
    * Builds the statistics data of a given sanction type of player's sanctions.
@@ -51,7 +54,7 @@ public class PlayerSanctionTypeStatisticsBuilder {
    * @return The statistics data of a given sanction type of player's sanctions.
    */
   public @NotNull PlayerSanctionTypeStatistics build(
-      Set<Sanction> allSanctions, SanctionType sanctionType) {
+      @NotNull Set<Sanction> allSanctions, @NotNull SanctionType sanctionType) {
     Set<Sanction> filteredSanctions =
         allSanctions.stream()
             .filter(sanction -> Objects.equals(sanction.type(), sanctionType))

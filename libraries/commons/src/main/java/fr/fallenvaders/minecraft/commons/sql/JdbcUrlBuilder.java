@@ -44,8 +44,8 @@ public class JdbcUrlBuilder {
    * @return The well-formed JDBC URL.
    * @throws MalformedURLException If the protocol or the port is invalid.
    */
-  public URL buildUrl(
-      @NotNull String dbmsDriver, @NotNull String host, @NotNull int port, @NotNull String database)
+  public @NotNull URL buildUrl(
+      @NotNull String dbmsDriver, @NotNull String host, int port, @NotNull String database)
       throws MalformedURLException {
     String protocol = String.join(":", JDBC_PROTOCOL, dbmsDriver);
     return new URL(protocol, host, port, database);

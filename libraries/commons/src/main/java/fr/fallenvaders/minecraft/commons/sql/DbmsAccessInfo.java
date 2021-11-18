@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
 public record DbmsAccessInfo (
   @NotNull DbmsDriver dbmsDriver,
   @NotNull String host,
-  @NotNull int port,
+  int port,
   @NotNull String database,
   @NotNull String username,
   @NotNull String password) {}

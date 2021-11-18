@@ -68,7 +68,7 @@ public class GuiService {
    * @return The GUI inventory from the model which match with the specified ID.
    * @throws JusticeHandsException If a problem occurs during the search in the model.
    */
-  public Optional<GuiInventory> getGuiInventory(@NotNull String id) throws JusticeHandsException {
+  public @NotNull Optional<GuiInventory> getGuiInventory(@NotNull String id) throws JusticeHandsException {
     try {
       Optional<GuiInventory> guiInventory = guiInventoryDao.get(id);
       logger.info("GUI inventory with ID '{}' found.", id);
@@ -89,7 +89,7 @@ public class GuiService {
    * @return The generic GUI item from the model which match with the specified ID.
    * @throws JusticeHandsException If a problem occurs during the search in the model.
    */
-  public Optional<GuiItem> getGenericGuiItem(@NotNull String id)
+  public @NotNull Optional<GuiItem> getGenericGuiItem(@NotNull String id)
       throws JusticeHandsException {
     try {
       Optional<GuiItem> genericGuiItem = genericGuiItemDao.get(id);

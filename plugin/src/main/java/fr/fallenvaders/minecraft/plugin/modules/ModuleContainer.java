@@ -18,12 +18,13 @@
 package fr.fallenvaders.minecraft.plugin.modules;
 
 import fr.fallenvaders.minecraft.commons.FvModule;
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * This singleton class represents the container for the {@link ModuleService}.
@@ -37,13 +38,11 @@ public final class ModuleContainer {
   private final List<FvModule> modules;
   private PluginModulesState state;
 
-  /**
-   * Constructor.
-   */
+  /** Constructor. */
   @Inject
   public ModuleContainer() {
     this.modules = new ArrayList<>();
-    this.state = null;
+    this.state = PluginModulesState.UNLOADED;
   }
 
   /**
@@ -55,7 +54,7 @@ public final class ModuleContainer {
    *     loading process as already been launched.
    */
   public void addModule(@NotNull FvModule module) throws ModuleException {
-    if (state == null) {
+    if (state == PluginModulesState.UNLOADED) {
       if (!isExist(module.getModuleName())) {
         modules.add(module);
       } else {
@@ -78,12 +77,8 @@ public final class ModuleContainer {
    * @param moduleName The name of the sought module.
    * @return The registered module which match with the given module's name if it exists.
    */
-  @Nullable
-  public FvModule getModule(@NotNull String moduleName) {
-    return modules.stream()
-        .filter(module -> module.getModuleName().equals(moduleName))
-        .findFirst()
-        .orElse(null);
+  public @NotNull Optional<FvModule> getModule(@NotNull String moduleName) {
+    return modules.stream().filter(module -> module.getModuleName().equals(moduleName)).findFirst();
   }
 
   /**
@@ -91,8 +86,7 @@ public final class ModuleContainer {
    *
    * @return The list of modules registered.
    */
-  @NotNull
-  public List<FvModule> getModules() {
+  public @NotNull List<FvModule> getModules() {
     return modules;
   }
 
@@ -101,7 +95,7 @@ public final class ModuleContainer {
    *
    * @return The plugin's modules state.
    */
-  public @Nullable PluginModulesState getState() {
+  public @NotNull PluginModulesState getState() {
     return state;
   }
 
@@ -123,11 +117,11 @@ public final class ModuleContainer {
   }
 
   private boolean isExist(@NotNull String moduleName) {
-    return getModule(moduleName) != null;
+    return getModule(moduleName).isPresent();
   }
 
   private boolean isExpectedNextStep(@NotNull PluginModulesState state) {
-    int expectedNewStateOrder = (this.state == null) ? 1 : this.state.getStateOrder() + 1;
+    int expectedNewStateOrder = this.state.getStateOrder() + 1;
     return expectedNewStateOrder == state.getStateOrder();
   }
 }

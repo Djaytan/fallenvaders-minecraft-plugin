@@ -30,12 +30,6 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -43,6 +37,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Sanction manager's category inventory provider class.
@@ -107,7 +108,7 @@ public class SanctionManagerCategoryProvider implements InventoryProvider {
       contents.set(0, 0, playerHeadItemBuilder.build(target));
       setSanctionCategories(opener, target, contents);
       contents.fillRow(1, ClickableItem.empty(new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1)));
-      setPredefinedSanctions(opener, target, contents);
+      setPredefinedSanctions(opener, contents);
     } catch (JusticeHandsException e) {
       logger.error("Failed to load the sanction manager category GUI inventory.", e);
       // TODO: feedback user
@@ -115,7 +116,7 @@ public class SanctionManagerCategoryProvider implements InventoryProvider {
   }
 
   @Override
-  public void update(Player player, InventoryContents inventoryContents) {
+  public void update(@NotNull Player player, @NotNull InventoryContents inventoryContents) {
     // Nothing to do
   }
 
@@ -136,8 +137,7 @@ public class SanctionManagerCategoryProvider implements InventoryProvider {
   }
 
   private void setPredefinedSanctions(
-      @NotNull Player opener, @NotNull OfflinePlayer target, @NotNull InventoryContents contents)
-      throws JusticeHandsException {
+      @NotNull Player opener, @NotNull InventoryContents contents) {
     SanctionCategory currentSanctionCategory =
         sanctionManagerViewContainer.getCurrentSanctionCategory();
     int nbPredefinedSanctions = currentSanctionCategory.predefinedSanctions().size();
@@ -145,7 +145,7 @@ public class SanctionManagerCategoryProvider implements InventoryProvider {
       List<ClickableItem> clickableItems = new ArrayList<>(nbPredefinedSanctions);
 
       for (PredefinedSanction predefinedSanction : currentSanctionCategory.predefinedSanctions()) {
-        clickableItems.add(predefinedSanctionItemBuilder.build(opener, target, predefinedSanction));
+        clickableItems.add(predefinedSanctionItemBuilder.build(opener, predefinedSanction));
       }
 
       viewUtils.setPagination(opener, contents, clickableItems, 27);
