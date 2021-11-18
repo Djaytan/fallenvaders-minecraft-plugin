@@ -17,8 +17,6 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.entities;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 /**
  * {@link GuiItem} location.
  *
@@ -27,10 +25,4 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author Voltariuss
  * @since 0.3.0
  */
-public record GuiItemLocation(int line, int column) {
-
-  @Override
-  public String toString() {
-    return ToStringBuilder.reflectionToString(this);
-  }
-}
+public record GuiItemLocation(int line, int column) {}

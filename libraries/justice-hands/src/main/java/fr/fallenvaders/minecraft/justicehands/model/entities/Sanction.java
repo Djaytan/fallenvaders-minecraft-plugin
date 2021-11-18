@@ -18,11 +18,11 @@
 package fr.fallenvaders.minecraft.justicehands.model.entities;
 
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
-import java.sql.Timestamp;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.sql.Timestamp;
 
 /**
  * This entity represents a sanction.
@@ -81,10 +81,5 @@ public record Sanction (
     @Nullable OfflinePlayer authorPlayer,
     @NotNull SanctionType type) {
     this(-1, inculpatedPlayer, name, reason, points, beginningDate, endingDate, authorPlayer, type);
-  }
-
-  @Override
-  public String toString() {
-    return ToStringBuilder.reflectionToString(this);
   }
 }

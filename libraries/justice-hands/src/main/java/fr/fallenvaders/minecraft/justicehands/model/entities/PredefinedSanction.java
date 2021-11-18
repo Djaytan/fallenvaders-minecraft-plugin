@@ -43,10 +43,4 @@ public record PredefinedSanction(
     @NotNull String name,
     @NotNull String description,
     int points,
-    @NotNull SanctionType type) {
-
-  @Override
-  public String toString() {
-    return ToStringBuilder.reflectionToString(this);
-  }
-}
+    @NotNull SanctionType type) {}

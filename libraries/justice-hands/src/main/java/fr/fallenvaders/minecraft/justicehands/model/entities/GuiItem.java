@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.entities;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,10 +33,4 @@ import org.jetbrains.annotations.Nullable;
 public record GuiItem(
     @NotNull String id,
     @Nullable GuiItemLocation location,
-    @Nullable ItemStack item) {
-
-  @Override
-  public String toString() {
-    return ToStringBuilder.reflectionToString(this);
-  }
-}
+    @Nullable ItemStack item) {}

@@ -17,9 +17,9 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.entities;
 
-import java.util.Set;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Set;
 
 /**
  * This entity represent a category of {@link PredefinedSanction}s.
@@ -35,10 +35,4 @@ public record SanctionCategory(
     @NotNull String id,
     @NotNull String name,
     @NotNull String description,
-    @NotNull Set<PredefinedSanction> predefinedSanctions) {
-
-  @Override
-  public String toString() {
-    return ToStringBuilder.reflectionToString(this);
-  }
-}
+    @NotNull Set<PredefinedSanction> predefinedSanctions) {}
