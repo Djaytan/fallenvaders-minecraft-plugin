@@ -52,9 +52,9 @@ public abstract class FvModule {
   /**
    * Defines the logic needed to initialize and make operational the FallenVaders' module.
    *
-   * <p>It is mandatory to implement this method.
+   * <p>The implementation of this method is optional.
    */
-  public abstract void onEnable();
+  public void onEnable() {}
 
   /**
    * Defines the logic needed to properly disable the FallenVaders' module.
