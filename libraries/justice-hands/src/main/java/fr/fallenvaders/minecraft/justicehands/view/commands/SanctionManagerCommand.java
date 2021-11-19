@@ -20,8 +20,6 @@ package fr.fallenvaders.minecraft.justicehands.view.commands;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import fr.fallenvaders.minecraft.justicehands.view.gui.SanctionManagerView;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -30,6 +28,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * This class represents the sanction manager {@link CommandExecutor}.

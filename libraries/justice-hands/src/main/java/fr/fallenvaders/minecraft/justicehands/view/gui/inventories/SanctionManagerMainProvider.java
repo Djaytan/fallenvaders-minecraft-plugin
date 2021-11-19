@@ -29,15 +29,16 @@ import fr.fallenvaders.minecraft.justicehands.view.gui.items.SanctionCategoryIte
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
-import java.util.Objects;
-import java.util.UUID;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Sanction manager's main inventory provider class.

@@ -20,12 +20,13 @@ package fr.fallenvaders.minecraft.justicehands.model.dao;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.PredefinedSanction;
+import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * DAO class about manipulation of {@link PredefinedSanction}s in the model.

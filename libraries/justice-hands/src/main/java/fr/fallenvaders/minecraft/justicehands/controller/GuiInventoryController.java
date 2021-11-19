@@ -21,9 +21,10 @@ import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItem;
 import fr.fallenvaders.minecraft.justicehands.model.service.GuiService;
+import org.jetbrains.annotations.NotNull;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * {@link GuiInventory} controller class.
@@ -61,8 +62,8 @@ public class GuiInventoryController {
   }
 
   /**
-   * Recovers the corresponding generic {@link GuiItem} which match with the given ID.
-   * Otherwise, raise an exception.
+   * Recovers the corresponding generic {@link GuiItem} which match with the given ID. Otherwise,
+   * raise an exception.
    *
    * <p>A generic GUI item is not linked to a specific inventory (refer you to config file).
    *
@@ -70,8 +71,7 @@ public class GuiInventoryController {
    * @return The sought generic
    * @throws JusticeHandsException If an error occurs or the specified ID is wrong.
    */
-  public @NotNull GuiItem getGenericGuiItem(@NotNull String id)
-      throws JusticeHandsException {
+  public @NotNull GuiItem getGenericGuiItem(@NotNull String id) throws JusticeHandsException {
     return guiService
         .getGenericGuiItem(id)
         .orElseThrow(() -> new JusticeHandsException("Wrong ID specified."));

@@ -20,10 +20,11 @@ package fr.fallenvaders.minecraft.justicehands.controller;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import fr.fallenvaders.minecraft.justicehands.model.service.SanctionCategoryService;
-import java.util.Set;
+import org.jetbrains.annotations.NotNull;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.jetbrains.annotations.NotNull;
+import java.util.Set;
 
 /**
  * The {@link SanctionCategory} controller.

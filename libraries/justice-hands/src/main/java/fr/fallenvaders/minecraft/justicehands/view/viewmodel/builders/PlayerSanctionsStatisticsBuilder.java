@@ -23,13 +23,14 @@ import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.entities.PlayerSanctionTypeStatistics;
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.entities.PlayerSanctionsStatistics;
+import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import org.bukkit.OfflinePlayer;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * The {@link PlayerSanctionsStatistics}'s builder class.

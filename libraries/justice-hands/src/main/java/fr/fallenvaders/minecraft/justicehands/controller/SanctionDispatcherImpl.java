@@ -20,13 +20,14 @@ package fr.fallenvaders.minecraft.justicehands.controller;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.view.SanctionComponentBuilder;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * This class is an implementation of the {@link SanctionDispatcher} interface.

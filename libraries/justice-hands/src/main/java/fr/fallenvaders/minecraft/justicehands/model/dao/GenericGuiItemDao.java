@@ -22,16 +22,17 @@ import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItem;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItemLocation;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Generic {@link GuiItem} DAO class.

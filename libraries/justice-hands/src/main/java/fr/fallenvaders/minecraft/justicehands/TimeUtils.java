@@ -17,11 +17,11 @@
 
 package fr.fallenvaders.minecraft.justicehands;
 
-import java.util.StringJoiner;
-import javax.inject.Singleton;
-
 import com.google.common.base.Preconditions;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Singleton;
+import java.util.StringJoiner;
 
 /**
  * Time utils class.

@@ -17,10 +17,11 @@
 
 package fr.fallenvaders.minecraft.commons;
 
-import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Singleton;
 
 /**
  * Helper for {@link Component} class.

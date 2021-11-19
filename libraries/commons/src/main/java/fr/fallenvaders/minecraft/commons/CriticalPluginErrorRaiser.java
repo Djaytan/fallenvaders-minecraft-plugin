@@ -17,13 +17,14 @@
 
 package fr.fallenvaders.minecraft.commons;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * This is an implementation class {@link CriticalErrorRaiser} in case of FallenVaders' plugin.

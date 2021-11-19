@@ -22,13 +22,14 @@ import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.dao.SanctionDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
-import java.util.Optional;
-import java.util.Set;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Class which offers services about the manipulation of {@link Sanction}s in the model.

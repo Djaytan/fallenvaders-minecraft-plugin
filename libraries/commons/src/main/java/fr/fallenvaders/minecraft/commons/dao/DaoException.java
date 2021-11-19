@@ -20,8 +20,8 @@ package fr.fallenvaders.minecraft.commons.dao;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This class represents the DAO exception which may be thrown during an operation of a {@link
- * Dao} implementation.
+ * This class represents the DAO exception which may be thrown during an operation of a {@link Dao}
+ * implementation.
  *
  * <p>The use of a custom exception permit to make an abstraction which prevent the service layer to
  * depend on specific dependencies of DAO layer (for example: DBMS, FileConfiguration, ...).
@@ -31,9 +31,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class DaoException extends Exception {
 
-  /**
-   * Constructor.
-   */
+  /** Constructor. */
   public DaoException() {
     super();
   }

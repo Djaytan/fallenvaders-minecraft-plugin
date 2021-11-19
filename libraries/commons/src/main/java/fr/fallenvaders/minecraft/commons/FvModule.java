@@ -20,9 +20,8 @@ package fr.fallenvaders.minecraft.commons;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This is the abstraction of a FallenVaders' module. It is mandatory to implement it in
- * each module of the project in order to make possible the registration of the module in the plugin
- * properly.
+ * This is the abstraction of a FallenVaders' module. It is mandatory to implement it in each module
+ * of the project in order to make possible the registration of the module in the plugin properly.
  *
  * @author Voltariuss
  * @since 0.3.0

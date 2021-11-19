@@ -136,8 +136,7 @@ public class SanctionManagerCategoryProvider implements InventoryProvider {
     }
   }
 
-  private void setPredefinedSanctions(
-      @NotNull Player opener, @NotNull InventoryContents contents) {
+  private void setPredefinedSanctions(@NotNull Player opener, @NotNull InventoryContents contents) {
     SanctionCategory currentSanctionCategory =
         sanctionManagerViewContainer.getCurrentSanctionCategory();
     int nbPredefinedSanctions = currentSanctionCategory.predefinedSanctions().size();

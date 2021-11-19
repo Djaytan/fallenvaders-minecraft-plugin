@@ -66,7 +66,8 @@ public class ModuleDatabaseInitializer {
    * @throws IOException If something went wrong or the SQL init script can't be found.
    * @throws SQLException If something went wrong when dispatching the script to the database.
    */
-  public void initialize(@NotNull Class<? extends FvModule> classModule, @NotNull String sqlScriptResource)
+  public void initialize(
+      @NotNull Class<? extends FvModule> classModule, @NotNull String sqlScriptResource)
       throws IOException, SQLException {
     try (InputStream is = classModule.getResourceAsStream(sqlScriptResource)) {
       if (is != null) {

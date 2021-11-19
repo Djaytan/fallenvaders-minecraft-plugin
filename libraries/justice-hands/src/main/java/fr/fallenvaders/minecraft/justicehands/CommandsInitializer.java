@@ -19,13 +19,14 @@ package fr.fallenvaders.minecraft.justicehands;
 
 import fr.fallenvaders.minecraft.justicehands.view.commands.CriminalRecordCommand;
 import fr.fallenvaders.minecraft.justicehands.view.commands.SanctionManagerCommand;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * This class is in charge of initializing all commands of the module.

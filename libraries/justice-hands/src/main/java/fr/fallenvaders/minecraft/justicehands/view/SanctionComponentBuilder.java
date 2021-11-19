@@ -21,14 +21,15 @@ import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.TimeUtils;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
+import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * The builder of sanction's components.

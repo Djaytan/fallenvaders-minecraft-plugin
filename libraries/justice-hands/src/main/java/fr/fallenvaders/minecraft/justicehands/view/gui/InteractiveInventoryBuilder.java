@@ -21,10 +21,11 @@ import com.google.common.base.Preconditions;
 import fr.minuskube.inv.InventoryManager;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryProvider;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.event.inventory.InventoryType;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * The interactive inventory builder.

@@ -21,17 +21,13 @@ import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.dao.ReadOnlyDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItem;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.*;
 
 /**
  * The {@link GuiInventory} DAO class.
@@ -54,8 +50,7 @@ public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
    */
   @Inject
   public GuiInventoryDao(
-      @NotNull FileConfiguration config,
-      @NotNull GenericGuiItemDao genericGuiItemDao) {
+      @NotNull FileConfiguration config, @NotNull GenericGuiItemDao genericGuiItemDao) {
     this.config = config;
     this.genericGuiItemDao = genericGuiItemDao;
   }
@@ -102,8 +97,7 @@ public class GuiInventoryDao implements ReadOnlyDao<GuiInventory> {
     for (String inventoryItemKey : inventoryItems.getKeys(false)) {
       ConfigurationSection inventoryItem =
           Objects.requireNonNull(inventoryItems.getConfigurationSection(inventoryItemKey));
-      GuiItem guiItem =
-          genericGuiItemDao.getGuiItem(inventoryItem, inventoryItemKey);
+      GuiItem guiItem = genericGuiItemDao.getGuiItem(inventoryItem, inventoryItemKey);
       items.add(guiItem);
     }
 

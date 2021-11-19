@@ -19,8 +19,9 @@ package fr.fallenvaders.minecraft.justicehands.view.gui;
 
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
-import javax.inject.Singleton;
 import org.jetbrains.annotations.Nullable;
+
+import javax.inject.Singleton;
 
 /**
  * The container of {@link SanctionManagerView}.

@@ -24,20 +24,17 @@ import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.commons.sql.FvDataSource;
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
 import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Server;
+import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.sql.*;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * DAO class about manipulation of {@link Sanction}s in the model.

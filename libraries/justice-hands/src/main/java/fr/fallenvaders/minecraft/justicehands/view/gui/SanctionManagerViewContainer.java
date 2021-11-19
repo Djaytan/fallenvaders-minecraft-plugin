@@ -20,10 +20,10 @@ package fr.fallenvaders.minecraft.justicehands.view.gui;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionCategoryController;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.Optional;
 
 /**

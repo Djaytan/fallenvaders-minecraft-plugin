@@ -17,9 +17,10 @@
 
 package fr.fallenvaders.minecraft.commons.dao;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Optional;
 import java.util.Set;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * This is a DAO interface which ask setting up at least read operations for a given entity type in

@@ -19,11 +19,12 @@ package fr.fallenvaders.minecraft.justicehands;
 
 import fr.fallenvaders.minecraft.justicehands.view.listeners.AsyncChatListener;
 import fr.fallenvaders.minecraft.justicehands.view.listeners.PlayerLoginListener;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * This class is in charge of initializing all listeners of the module.
