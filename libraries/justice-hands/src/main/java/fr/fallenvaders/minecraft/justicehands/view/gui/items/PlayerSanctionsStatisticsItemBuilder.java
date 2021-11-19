@@ -25,13 +25,6 @@ import fr.fallenvaders.minecraft.justicehands.view.viewmodel.builders.PlayerSanc
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.entities.PlayerSanctionTypeStatistics;
 import fr.fallenvaders.minecraft.justicehands.view.viewmodel.entities.PlayerSanctionsStatistics;
 import fr.minuskube.inv.ClickableItem;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -40,6 +33,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The builder class of player sanctions statistics.
@@ -173,7 +173,7 @@ public class PlayerSanctionsStatisticsItemBuilder {
     strLore.add("§4CLIC DROIT §cpour imprimer dans le tchat.");
     strLore.add("§7(!) §oRécupération possible via les logs.");
 
-    return strLore.stream().map(componentHelper::getComponent).collect(Collectors.toList());
+    return strLore.stream().map(componentHelper::getComponent).toList();
   }
 
   private @NotNull String getPercentage(int nbSanctions, long nbSanctionsType) {

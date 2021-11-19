@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.justicehands.view.gui;
 
-import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.GuiInventoryController;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
@@ -25,11 +24,12 @@ import fr.fallenvaders.minecraft.justicehands.model.entities.Sanction;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import fr.fallenvaders.minecraft.justicehands.view.gui.inventories.CriminalRecordProvider;
 import fr.minuskube.inv.SmartInventory;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * The criminal record view.

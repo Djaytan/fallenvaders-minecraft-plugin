@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.justicehands.view.gui.items;
 
-import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.GuiInventoryController;
@@ -26,12 +25,6 @@ import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
 import fr.fallenvaders.minecraft.justicehands.view.gui.SanctionManagerView;
 import fr.fallenvaders.minecraft.justicehands.view.gui.SanctionManagerViewContainer;
 import fr.minuskube.inv.ClickableItem;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
@@ -41,6 +34,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * The builder class of {@link SanctionCategory} items.
@@ -104,8 +103,7 @@ public class SanctionCategoryItemBuilder {
     List<String> strLore = new ArrayList<>(2);
     strLore.add("");
     strLore.add(sanctionCategory.description());
-    List<Component> lore =
-        strLore.stream().map(componentHelper::getComponent).collect(Collectors.toList());
+    List<Component> lore = strLore.stream().map(componentHelper::getComponent).toList();
     meta.lore(lore);
 
     if (sanctionManagerViewContainer

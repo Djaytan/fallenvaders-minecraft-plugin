@@ -20,19 +20,19 @@ package fr.fallenvaders.minecraft.justicehands.view.gui.items;
 import fr.fallenvaders.minecraft.commons.ComponentHelper;
 import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import fr.minuskube.inv.ClickableItem;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * The builder class of player head items.
@@ -87,8 +87,7 @@ public class PlayerHeadItemBuilder {
     loreStr.add("§7Première connexion: §f" + firstPlayed);
     loreStr.add("§7Dernière déconnexion : §f" + lastPlayed);
 
-    List<Component> lore =
-        loreStr.stream().map(componentHelper::getComponent).collect(Collectors.toList());
+    List<Component> lore = loreStr.stream().map(componentHelper::getComponent).toList();
     headMeta.lore(lore);
     playerHead.setItemMeta(headMeta);
 

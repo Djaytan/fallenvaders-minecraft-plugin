@@ -94,6 +94,7 @@ public final class ModuleService {
       moduleContainer.setState(state);
       for (FvModule module : moduleContainer.getModules()) {
         switch (state) {
+          case UNLOADED -> {/* Nothing to do */}
           case LOADED -> module.onLoad();
           case ENABLED -> module.onEnable();
           case DISABLED -> module.onDisable();

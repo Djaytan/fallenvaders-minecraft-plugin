@@ -96,7 +96,7 @@ public class SanctionItemBuilder {
       } else {
         strLore.add(
             ChatColor.RED
-                + "(En cours) Date d'expiriation: §7"
+                + "(En cours) Date d'expiration: §7"
                 + sdf.format(sanction.endingDate()));
       }
     }

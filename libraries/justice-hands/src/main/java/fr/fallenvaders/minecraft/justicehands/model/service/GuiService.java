@@ -17,18 +17,18 @@
 
 package fr.fallenvaders.minecraft.justicehands.model.service;
 
-import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.dao.GenericGuiItemDao;
 import fr.fallenvaders.minecraft.justicehands.model.dao.GuiInventoryDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiItem;
-import java.util.Optional;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Optional;
 
 /**
  * GUI service class.

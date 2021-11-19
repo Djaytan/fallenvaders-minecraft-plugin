@@ -18,7 +18,6 @@
 package fr.fallenvaders.minecraft.justicehands.model.entities;
 
 import fr.fallenvaders.minecraft.justicehands.model.SanctionType;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.jetbrains.annotations.NotNull;
 
 /**

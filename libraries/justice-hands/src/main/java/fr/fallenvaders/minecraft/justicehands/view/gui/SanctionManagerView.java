@@ -17,7 +17,6 @@
 
 package fr.fallenvaders.minecraft.justicehands.view.gui;
 
-import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.controller.GuiInventoryController;
 import fr.fallenvaders.minecraft.justicehands.model.entities.GuiInventory;
@@ -28,19 +27,20 @@ import fr.fallenvaders.minecraft.justicehands.view.ViewUtils;
 import fr.fallenvaders.minecraft.justicehands.view.gui.inventories.SanctionManagerCategoryProvider;
 import fr.fallenvaders.minecraft.justicehands.view.gui.inventories.SanctionManagerMainProvider;
 import fr.minuskube.inv.SmartInventory;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * The sanction manager view.
  *
  * <p>The purpose of this view is to permit the creation of menus about navigation and visualization
  * of {@link PredefinedSanction}s which are embedded in {@link SanctionCategory}s. This one permit
- * as well to dispatch these predefined sanctions to players in order to register a new
- * {@link Sanction} in their criminal record.
+ * as well to dispatch these predefined sanctions to players in order to register a new {@link
+ * Sanction} in their criminal record.
  *
  * @author Voltariuss
  * @author Glynix

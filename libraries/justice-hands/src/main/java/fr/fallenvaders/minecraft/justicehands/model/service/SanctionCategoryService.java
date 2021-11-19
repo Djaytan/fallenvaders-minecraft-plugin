@@ -21,13 +21,13 @@ import fr.fallenvaders.minecraft.commons.dao.DaoException;
 import fr.fallenvaders.minecraft.justicehands.JusticeHandsException;
 import fr.fallenvaders.minecraft.justicehands.model.dao.SanctionCategoryDao;
 import fr.fallenvaders.minecraft.justicehands.model.entities.SanctionCategory;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Service class about {@link SanctionCategory}s manipulations.
