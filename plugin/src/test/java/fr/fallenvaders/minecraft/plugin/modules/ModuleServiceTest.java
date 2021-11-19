@@ -138,7 +138,7 @@ class ModuleServiceTest {
       Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
       moduleService.enableModules();
       Assertions.assertEquals(0, stack);
-      Assertions.assertNull(moduleContainer.getState());
+      Assertions.assertSame(PluginModulesState.UNLOADED, moduleContainer.getState());
     }
 
     @Test

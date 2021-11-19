@@ -53,7 +53,7 @@ class ModuleContainerTest {
   /** Global test cases * */
   @Test
   void initialization() {
-    Assertions.assertNull(moduleContainer.getState());
+    Assertions.assertSame(PluginModulesState.UNLOADED, moduleContainer.getState());
     Assertions.assertTrue(moduleContainer.getModules().isEmpty());
   }
 
@@ -101,7 +101,7 @@ class ModuleContainerTest {
 
     @Test
     void get_module_when_no_ones_are_registered_shall_be_null() {
-      Assertions.assertNull(moduleContainer.getModule("test-module"));
+      Assertions.assertNull(moduleContainer.getModule("test-module").orElse(null));
     }
 
     @Test
@@ -109,7 +109,7 @@ class ModuleContainerTest {
       String moduleName = "test-module";
       FvModule module = moduleUtils.createWithoutBehaviorModule(moduleName);
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(module));
-      Assertions.assertSame(module, moduleContainer.getModule(moduleName));
+      Assertions.assertSame(module, moduleContainer.getModule(moduleName).orElse(null));
     }
 
     @Test
@@ -121,7 +121,8 @@ class ModuleContainerTest {
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule1));
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(targetedModule));
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule2));
-      Assertions.assertSame(targetedModule, moduleContainer.getModule(targetedModuleName));
+      Assertions.assertSame(
+          targetedModule, moduleContainer.getModule(targetedModuleName).orElse(null));
     }
 
     @Test
@@ -133,7 +134,8 @@ class ModuleContainerTest {
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(targetedModule));
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule1));
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule2));
-      Assertions.assertSame(targetedModule, moduleContainer.getModule(targetedModuleName));
+      Assertions.assertSame(
+          targetedModule, moduleContainer.getModule(targetedModuleName).orElse(null));
     }
 
     @Test
@@ -145,7 +147,8 @@ class ModuleContainerTest {
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule1));
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(otherModule2));
       Assertions.assertDoesNotThrow(() -> moduleContainer.addModule(targetedModule));
-      Assertions.assertSame(targetedModule, moduleContainer.getModule(targetedModuleName));
+      Assertions.assertSame(
+          targetedModule, moduleContainer.getModule(targetedModuleName).orElse(null));
     }
   }
 
