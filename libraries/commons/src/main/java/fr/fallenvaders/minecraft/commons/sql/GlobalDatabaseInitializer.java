@@ -33,7 +33,7 @@ import java.sql.SQLException;
  * @since 0.3.0
  */
 @Singleton
-public class SqlDatabaseInitializer {
+public class GlobalDatabaseInitializer {
 
   private final FvDataSource fvDataSource;
   private final DbmsAccessInfo dbmsAccessInfo;
@@ -45,7 +45,7 @@ public class SqlDatabaseInitializer {
    * @param dbmsAccessInfo The {@link DbmsAccessInfo}.
    */
   @Inject
-  public SqlDatabaseInitializer(
+  public GlobalDatabaseInitializer(
       @NotNull FvDataSource fvDataSource, @NotNull DbmsAccessInfo dbmsAccessInfo) {
     this.fvDataSource = fvDataSource;
     this.dbmsAccessInfo = dbmsAccessInfo;
@@ -55,7 +55,7 @@ public class SqlDatabaseInitializer {
    * Ensures that the FallenVaders' actually used database through established connections is well
    * configured.
    *
-   * <p>In all cases, the Charset is defined on 'utf8' and the collate to 'utf8_general_ci'.
+   * <p>In all cases, Charset is defined on 'utf8' and Collate to 'utf8_general_ci'.
    *
    * @throws SQLException If an SQL error occurs.
    */
@@ -63,7 +63,7 @@ public class SqlDatabaseInitializer {
     try (Connection connection = fvDataSource.getConnection();
         PreparedStatement stmt =
             connection.prepareStatement(
-                "ALTER DATABASE `?` CHARACTER SET = 'utf8' COLLATE = 'utf8_general_ci';")) {
+                "ALTER DATABASE ? CHARACTER SET = 'utf8' COLLATE = 'utf8_general_ci';")) {
       stmt.setString(1, dbmsAccessInfo.database());
       stmt.executeUpdate();
     }

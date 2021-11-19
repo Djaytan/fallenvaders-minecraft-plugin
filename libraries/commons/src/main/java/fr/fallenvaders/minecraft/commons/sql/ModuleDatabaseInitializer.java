@@ -36,7 +36,7 @@ import java.sql.Statement;
  * @since 0.3.0
  */
 @Singleton
-public class DatabaseInitializer {
+public class ModuleDatabaseInitializer {
 
   private static final String SQL_INIT_SCRIPT_NAME = "initialize.sql";
 
@@ -50,7 +50,7 @@ public class DatabaseInitializer {
    * @param ioUtils The {@link IOUtils}.
    */
   @Inject
-  public DatabaseInitializer(@NotNull FvDataSource fvDataSource, @NotNull IOUtils ioUtils) {
+  public ModuleDatabaseInitializer(@NotNull FvDataSource fvDataSource, @NotNull IOUtils ioUtils) {
     this.fvDataSource = fvDataSource;
     this.ioUtils = ioUtils;
   }

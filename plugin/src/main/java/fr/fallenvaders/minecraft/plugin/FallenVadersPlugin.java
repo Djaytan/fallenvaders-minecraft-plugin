@@ -17,6 +17,8 @@
 
 package fr.fallenvaders.minecraft.plugin;
 
+import fr.fallenvaders.minecraft.commons.CriticalErrorRaiser;
+import fr.fallenvaders.minecraft.commons.sql.GlobalDatabaseInitializer;
 import fr.fallenvaders.minecraft.plugin.guice.FallenVadersInjector;
 import fr.fallenvaders.minecraft.plugin.modules.ModuleService;
 import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
@@ -25,6 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.sql.SQLException;
 
 /**
  * This class represents the Bukkit plugin.
@@ -35,6 +38,8 @@ import javax.inject.Singleton;
 @Singleton
 public final class FallenVadersPlugin extends JavaPlugin {
 
+  @Inject private CriticalErrorRaiser criticalErrorRaiser;
+  @Inject private GlobalDatabaseInitializer globalDatabaseInitializer;
   @Inject private InventoryManager inventoryManager;
   @Inject private ModuleService moduleService;
   @Inject private PluginInitializer moduleRegInit;
@@ -43,6 +48,14 @@ public final class FallenVadersPlugin extends JavaPlugin {
   public void onLoad() {
     // Guice setup
     FallenVadersInjector.inject(this);
+
+    // Database initialization
+    try {
+      globalDatabaseInitializer.initialize();
+    } catch (SQLException e) {
+      criticalErrorRaiser.raise(
+          "Fail to execute SQL initialize script. Raise a critical error to prevent bad effects.");
+    }
 
     // SmartInv initialization
     inventoryManager.init();

@@ -42,7 +42,7 @@ public interface ReadOnlyDao<T> {
    * @throws DaoException If the read of the entity fail.
    */
   @NotNull
-  // TODO: create DaoId class instead with implementations like StringDaoId, IntDaoId, ...
+  // TODO: FV-142 - create DaoId class instead with implementations like StringDaoId, IntDaoId, ...
   Optional<T> get(@NotNull String id) throws DaoException;
 
   /**

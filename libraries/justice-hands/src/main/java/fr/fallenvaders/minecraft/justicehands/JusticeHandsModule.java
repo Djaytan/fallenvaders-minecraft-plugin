@@ -2,7 +2,7 @@ package fr.fallenvaders.minecraft.justicehands;
 
 import fr.fallenvaders.minecraft.commons.CriticalErrorRaiser;
 import fr.fallenvaders.minecraft.commons.FvModule;
-import fr.fallenvaders.minecraft.commons.sql.DatabaseInitializer;
+import fr.fallenvaders.minecraft.commons.sql.ModuleDatabaseInitializer;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
@@ -27,34 +27,34 @@ public final class JusticeHandsModule extends FvModule {
 
   private final CommandsInitializer commandsInitializer;
   private final CriticalErrorRaiser criticalErrorRaiser;
-  private final DatabaseInitializer databaseInitializer;
   private final ListenersInitializer listenersInitializer;
+  private final ModuleDatabaseInitializer moduleDatabaseInitializer;
 
   /**
    * Constructor.
    *
    * @param commandsInitializer The {@link CommandsInitializer}.
    * @param criticalErrorRaiser The {@link CriticalErrorRaiser}.
-   * @param databaseInitializer The {@link DatabaseInitializer}.
    * @param listenersInitializer The {@link ListenersInitializer}.
+   * @param moduleDatabaseInitializer The {@link ModuleDatabaseInitializer}.
    */
   @Inject
   public JusticeHandsModule(
       @NotNull CommandsInitializer commandsInitializer,
       @NotNull CriticalErrorRaiser criticalErrorRaiser,
-      @NotNull DatabaseInitializer databaseInitializer,
-      @NotNull ListenersInitializer listenersInitializer) {
+      @NotNull ListenersInitializer listenersInitializer,
+      @NotNull ModuleDatabaseInitializer moduleDatabaseInitializer) {
     super(MODULE_NAME);
     this.commandsInitializer = commandsInitializer;
     this.criticalErrorRaiser = criticalErrorRaiser;
-    this.databaseInitializer = databaseInitializer;
     this.listenersInitializer = listenersInitializer;
+    this.moduleDatabaseInitializer = moduleDatabaseInitializer;
   }
 
   @Override
   public void onEnable() {
     try {
-      databaseInitializer.initialize(this.getClass(), SQL_INITIALIZE_SCRIPT);
+      moduleDatabaseInitializer.initialize(this.getClass(), SQL_INITIALIZE_SCRIPT);
     } catch (IOException | SQLException e) {
       criticalErrorRaiser.raise(
           "Fail to execute SQL initialize script. Raise a critical error to prevent bad effects.");
