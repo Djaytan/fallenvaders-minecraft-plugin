@@ -23,6 +23,8 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import fr.fallenvaders.minecraft.commons.CriticalErrorRaiser;
 import fr.fallenvaders.minecraft.commons.CriticalPluginErrorRaiser;
+import fr.fallenvaders.minecraft.commons.sql.DbmsAccessInfo;
+import fr.fallenvaders.minecraft.commons.sql.DbmsDriver;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionDispatcher;
 import fr.fallenvaders.minecraft.justicehands.controller.SanctionDispatcherImpl;
 import fr.fallenvaders.minecraft.plugin.modules.FullPluginInitializer;
@@ -30,12 +32,15 @@ import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
 import fr.minuskube.inv.InventoryManager;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+
+import java.util.Objects;
 
 /**
  * Guice module of the project.
@@ -119,5 +124,21 @@ public final class FallenVadersModule extends AbstractModule {
   @Singleton
   public @NotNull InventoryManager providesInventoryManager() {
     return new InventoryManager(plugin);
+  }
+
+  @Provides
+  @Singleton
+  public @NotNull DbmsAccessInfo providesDbmsAccessInfo() {
+    FileConfiguration config = plugin.getConfig();
+    ConfigurationSection dbSection =
+        Objects.requireNonNull(config.getConfigurationSection("database"));
+    String dbmsDriver = Objects.requireNonNull(dbSection.getString("driver"));
+    String database = Objects.requireNonNull(dbSection.getString("database"));
+    String host = Objects.requireNonNull(dbSection.getString("host"));
+    int port = dbSection.getInt("port");
+    String username = Objects.requireNonNull(dbSection.getString("username"));
+    String password = Objects.requireNonNull(dbSection.getString("password"));
+    return new DbmsAccessInfo(
+        DbmsDriver.valueOf(dbmsDriver), host, port, database, username, password);
   }
 }

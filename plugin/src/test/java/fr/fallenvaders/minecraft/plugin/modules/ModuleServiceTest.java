@@ -51,7 +51,7 @@ class ModuleServiceTest {
   @BeforeEach
   void setUp() {
     TestInjector.inject(javaPlugin, this);
-    logger.setLevel(Level.WARN);
+    logger.setLevel(Level.OFF);
     moduleContainer = new ModuleContainer();
     moduleService = new ModuleService(logger, moduleContainer);
     stack = 0;
@@ -64,7 +64,7 @@ class ModuleServiceTest {
     @Test
     void register_one_module_when_no_other_one_is_registered_shall_work() {
       FvModule fvModule = moduleUtils.createWithoutBehaviorModule("test-module");
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.registerModule(fvModule);
       FvModule actualFvModule = moduleContainer.getModule("test-module").orElse(null);
       Assertions.assertEquals(1, moduleContainer.getModules().size());
       Assertions.assertSame(fvModule, actualFvModule);
@@ -73,20 +73,30 @@ class ModuleServiceTest {
     @Test
     void register_module_after_loading_shall_not_work() {
       FvModule fvModule1 = moduleUtils.createWithoutBehaviorModule("test-module-1");
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule1));
+      moduleService.registerModule(fvModule1);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
+      Assertions.assertSame(fvModule1, moduleContainer.getModule("test-module-1").orElse(null));
       moduleService.loadModules();
       Assertions.assertSame(PluginModulesState.LOADED, moduleContainer.getState());
       FvModule fvModule2 = moduleUtils.createWithoutBehaviorModule("test-module-2");
-      Assertions.assertThrows(ModuleException.class, () -> moduleService.registerModule(fvModule2));
+      moduleService.registerModule(fvModule2);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
+      Assertions.assertSame(true, moduleContainer.getModule("test-module-2").isEmpty());
     }
 
     @Test
     void register_two_identical_modules_shall_not_work() {
       FvModule fvModule1 = moduleUtils.createWithoutBehaviorModule("test-module");
       FvModule fvModule2 = moduleUtils.createWithoutBehaviorModule("test-module");
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule1));
-      Assertions.assertThrows(ModuleException.class, () -> moduleService.registerModule(fvModule1));
-      Assertions.assertThrows(ModuleException.class, () -> moduleService.registerModule(fvModule2));
+      moduleService.registerModule(fvModule1);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
+      Assertions.assertSame(fvModule1, moduleContainer.getModule("test-module").orElse(null));
+      moduleService.registerModule(fvModule1);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
+      Assertions.assertSame(fvModule1, moduleContainer.getModule("test-module").orElse(null));
+      moduleService.registerModule(fvModule2);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
+      Assertions.assertNotSame(fvModule2, moduleContainer.getModule("test-module").orElse(null));
     }
   }
 
@@ -98,7 +108,8 @@ class ModuleServiceTest {
     void load_modules_before_loading_shall_work() {
       Runnable onLoad = () -> stack++;
       FvModule fvModule = moduleUtils.createModule("test-module", onLoad, null, null);
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.registerModule(fvModule);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
       moduleService.loadModules();
       Assertions.assertEquals(1, stack);
       Assertions.assertSame(PluginModulesState.LOADED, moduleContainer.getState());
@@ -108,7 +119,8 @@ class ModuleServiceTest {
     void load_modules_after_loading_shall_not_work() {
       Runnable onLoad = () -> stack++;
       FvModule fvModule = moduleUtils.createModule("test-module", onLoad, null, null);
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.registerModule(fvModule);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
       moduleService.loadModules();
       moduleService.loadModules();
       Assertions.assertEquals(1, stack);
@@ -124,7 +136,8 @@ class ModuleServiceTest {
     void enable_modules_after_loading_shall_work() {
       Runnable onEnable = () -> stack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, onEnable, null);
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.registerModule(fvModule);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
       moduleService.loadModules();
       moduleService.enableModules();
       Assertions.assertEquals(1, stack);
@@ -135,7 +148,8 @@ class ModuleServiceTest {
     void enable_modules_before_loading_shall_not_work() {
       Runnable onEnable = () -> stack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, onEnable, null);
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.registerModule(fvModule);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
       moduleService.enableModules();
       Assertions.assertEquals(0, stack);
       Assertions.assertSame(PluginModulesState.UNLOADED, moduleContainer.getState());
@@ -145,7 +159,9 @@ class ModuleServiceTest {
     void enable_modules_after_enabling_shall_not_work() {
       Runnable onEnable = () -> stack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, onEnable, null);
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.registerModule(fvModule);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
+      moduleService.loadModules();
       moduleService.enableModules();
       moduleService.enableModules();
       Assertions.assertEquals(1, stack);
@@ -161,7 +177,8 @@ class ModuleServiceTest {
     void disable_modules_after_enabling_shall_work() {
       Runnable onDisable = () -> stack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, null, onDisable);
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.registerModule(fvModule);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
       moduleService.loadModules();
       moduleService.enableModules();
       moduleService.disableModules();
@@ -173,7 +190,8 @@ class ModuleServiceTest {
     void disable_modules_before_enabling_shall_not_work() {
       Runnable onDisable = () -> stack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, null, onDisable);
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.registerModule(fvModule);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
       moduleService.loadModules();
       moduleService.disableModules();
       Assertions.assertEquals(0, stack);
@@ -184,7 +202,8 @@ class ModuleServiceTest {
     void disable_modules_after_disabling_shall_not_work() {
       Runnable onDisable = () -> stack++;
       FvModule fvModule = moduleUtils.createModule("test-module", null, null, onDisable);
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.registerModule(fvModule);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
       moduleService.loadModules();
       moduleService.enableModules();
       moduleService.disableModules();
@@ -203,7 +222,8 @@ class ModuleServiceTest {
       Runnable stackIncrement = () -> stack++;
       FvModule fvModule =
           moduleUtils.createModule("test-module", stackIncrement, stackIncrement, stackIncrement);
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule));
+      moduleService.registerModule(fvModule);
+      Assertions.assertEquals(1, moduleContainer.getModules().size());
       moduleService.loadModules();
       moduleService.enableModules();
       moduleService.disableModules();
@@ -220,9 +240,10 @@ class ModuleServiceTest {
           moduleUtils.createModule("test-module-2", stackIncrement, stackIncrement, stackIncrement);
       FvModule fvModule3 =
           moduleUtils.createModule("test-module-3", stackIncrement, stackIncrement, stackIncrement);
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule1));
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule2));
-      Assertions.assertDoesNotThrow(() -> moduleService.registerModule(fvModule3));
+      moduleService.registerModule(fvModule1);
+      moduleService.registerModule(fvModule2);
+      moduleService.registerModule(fvModule3);
+      Assertions.assertEquals(3, moduleContainer.getModules().size());
       moduleService.loadModules();
       moduleService.enableModules();
       moduleService.disableModules();

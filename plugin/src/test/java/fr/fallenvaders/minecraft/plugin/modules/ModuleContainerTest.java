@@ -17,6 +17,7 @@
 
 package fr.fallenvaders.minecraft.plugin.modules;
 
+import ch.qos.logback.classic.Level;
 import fr.fallenvaders.minecraft.commons.FvModule;
 import fr.fallenvaders.minecraft.plugin.guice.TestInjector;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -163,6 +164,7 @@ class ModuleContainerTest {
 
     @Test
     void set_loaded_state_after_higher_state_shall_not_work() {
+      Assertions.assertDoesNotThrow(() -> moduleContainer.setState(PluginModulesState.LOADED));
       Assertions.assertDoesNotThrow(() -> moduleContainer.setState(PluginModulesState.ENABLED));
       Assertions.assertThrows(
           ModuleException.class, () -> moduleContainer.setState(PluginModulesState.LOADED));
