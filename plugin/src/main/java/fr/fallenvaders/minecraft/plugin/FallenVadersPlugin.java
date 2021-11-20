@@ -27,6 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -46,6 +47,13 @@ public final class FallenVadersPlugin extends JavaPlugin {
 
   @Override
   public void onLoad() {
+    try {
+      PropertyFactory.initialize();
+    } catch (IOException e) {
+      criticalErrorRaiser.raise(
+          "Fail to read properties. Raise a critical error to prevent bad effects.");
+    }
+
     // Guice setup
     FallenVadersInjector.inject(this);
 

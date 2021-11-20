@@ -23,8 +23,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -73,20 +71,18 @@ public class FvDataSource {
    *
    * @param jdbcUrlBuilder The JDBC URL builder.
    * @param dbmsAccessInfo The information about DBMS access.
-   * @throws MalformedURLException If the protocol or the port is invalid.
    */
   @Inject
   public FvDataSource(
-      @NotNull JdbcUrlBuilder jdbcUrlBuilder, @NotNull DbmsAccessInfo dbmsAccessInfo)
-      throws MalformedURLException {
+      @NotNull JdbcUrlBuilder jdbcUrlBuilder, @NotNull DbmsAccessInfo dbmsAccessInfo) {
     HikariConfig config = new HikariConfig();
-    URL jdbcUrl =
+    String jdbcUrl =
         jdbcUrlBuilder.buildUrl(
             dbmsAccessInfo.dbmsDriver().getDriver(),
             dbmsAccessInfo.host(),
             dbmsAccessInfo.port(),
             dbmsAccessInfo.database());
-    config.setJdbcUrl(jdbcUrl.toString());
+    config.setJdbcUrl(jdbcUrl);
     config.setUsername(dbmsAccessInfo.username());
     config.setPassword(dbmsAccessInfo.password());
     config.addDataSourceProperty("autoCommit", "true");

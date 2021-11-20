@@ -20,8 +20,6 @@ package fr.fallenvaders.minecraft.commons.sql;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Singleton;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * This class permits the build of a JDBC URL.
@@ -33,6 +31,7 @@ import java.net.URL;
 public class JdbcUrlBuilder {
 
   public static final String JDBC_PROTOCOL = "jdbc";
+  public static final String PROTOCOL_SEPARATOR = "://";
 
   /**
    * Builds the JDBC URL properly according to the specified arguments.
@@ -42,12 +41,10 @@ public class JdbcUrlBuilder {
    * @param port The DBMS server port.
    * @param database The database in which to connect.
    * @return The well-formed JDBC URL.
-   * @throws MalformedURLException If the protocol or the port is invalid.
    */
-  public @NotNull URL buildUrl(
-      @NotNull String dbmsDriver, @NotNull String host, int port, @NotNull String database)
-      throws MalformedURLException {
+  public @NotNull String buildUrl(
+      @NotNull String dbmsDriver, @NotNull String host, int port, @NotNull String database) {
     String protocol = String.join(":", JDBC_PROTOCOL, dbmsDriver);
-    return new URL(protocol, host, port, database);
+    return protocol + PROTOCOL_SEPARATOR + host + ":" + port + "/" + database;
   }
 }

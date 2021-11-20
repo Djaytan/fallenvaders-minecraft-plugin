@@ -1,14 +1,6 @@
 plugin_prefix: "§7[§cFallenVaders§7]§r "
 lang_file: "FR_fr"
 
-database:
-  driver: 'mariadb'
-  database: 'database'
-  host: 'localhost'
-  port: 3306
-  user: 'user'
-  password: 'password'
-
 timer_options:
   display_mode: "bossbar" # Or: none
   refresh_mode: "ticks" # Or: seconds
