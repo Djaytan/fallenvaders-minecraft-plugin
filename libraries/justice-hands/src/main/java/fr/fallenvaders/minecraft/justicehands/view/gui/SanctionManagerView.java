@@ -32,6 +32,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 /**
@@ -53,7 +54,7 @@ public class SanctionManagerView {
   private final InteractiveInventoryBuilder interactiveInventoryBuilder;
 
   /* Inventory Providers */
-  private final SanctionManagerMainProvider sanctionManagerMainProvider;
+  private final Provider<SanctionManagerMainProvider> sanctionManagerMainProvider;
 
   /**
    * Constructor.
@@ -66,7 +67,7 @@ public class SanctionManagerView {
   public SanctionManagerView(
       @NotNull GuiInventoryController guiInventoryController,
       @NotNull InteractiveInventoryBuilder interactiveInventoryBuilder,
-      @NotNull SanctionManagerMainProvider sanctionManagerMainProvider) {
+      @NotNull Provider<SanctionManagerMainProvider> sanctionManagerMainProvider) {
     this.guiInventoryController = guiInventoryController;
     this.interactiveInventoryBuilder = interactiveInventoryBuilder;
     this.sanctionManagerMainProvider = sanctionManagerMainProvider;
@@ -89,7 +90,7 @@ public class SanctionManagerView {
     String title = String.format("§7[§9%s§7]" + "§7> §cMenu principal", target.getName());
 
     SmartInventory menu =
-        interactiveInventoryBuilder.build(sanctionManagerMainProvider, id, title, nbLines);
+        interactiveInventoryBuilder.build(sanctionManagerMainProvider.get(), id, title, nbLines);
     menu.open(opener);
   }
 
@@ -114,7 +115,7 @@ public class SanctionManagerView {
     String title = String.format("%s§7> §c%s", ViewUtils.PREFIX_SM, sanctionCategory.name());
 
     SmartInventory menu =
-        interactiveInventoryBuilder.build(sanctionManagerMainProvider, id, title, nbLines);
+        interactiveInventoryBuilder.build(sanctionManagerMainProvider.get(), id, title, nbLines);
     menu.open(opener);
   }
 }

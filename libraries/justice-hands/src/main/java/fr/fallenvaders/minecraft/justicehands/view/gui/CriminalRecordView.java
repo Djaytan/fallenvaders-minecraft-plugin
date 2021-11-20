@@ -29,6 +29,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 /**
@@ -44,7 +45,7 @@ import javax.inject.Singleton;
 @Singleton
 public class CriminalRecordView {
 
-  private final CriminalRecordProvider criminalRecordProvider;
+  private final Provider<CriminalRecordProvider> criminalRecordProvider;
   private final GuiInventoryController guiInventoryController;
   private final InteractiveInventoryBuilder interactiveInventoryBuilder;
 
@@ -57,7 +58,7 @@ public class CriminalRecordView {
    */
   @Inject
   public CriminalRecordView(
-      @NotNull CriminalRecordProvider criminalRecordProvider,
+      @NotNull Provider<CriminalRecordProvider> criminalRecordProvider,
       @NotNull GuiInventoryController guiInventoryController,
       @NotNull InteractiveInventoryBuilder interactiveInventoryBuilder) {
     this.criminalRecordProvider = criminalRecordProvider;
@@ -82,7 +83,7 @@ public class CriminalRecordView {
     String title = String.format("%s§c%s", ViewUtils.PREFIX_CR, target.getName());
 
     SmartInventory menu =
-        interactiveInventoryBuilder.build(criminalRecordProvider, id, title, nbLines);
+        interactiveInventoryBuilder.build(criminalRecordProvider.get(), id, title, nbLines);
     menu.open(opener);
   }
 }
