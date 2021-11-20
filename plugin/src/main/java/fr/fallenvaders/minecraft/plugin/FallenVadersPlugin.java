@@ -47,36 +47,38 @@ public final class FallenVadersPlugin extends JavaPlugin {
 
   @Override
   public void onLoad() {
+
+  }
+
+  @Override
+  public void onEnable() {
     try {
       PropertyFactory.initialize();
     } catch (IOException e) {
       criticalErrorRaiser.raise(
-          "Fail to read properties. Raise a critical error to prevent bad effects.");
+        "Fail to read properties. Raise a critical error to prevent bad effects.", e);
     }
 
     // Guice setup
     FallenVadersInjector.inject(this);
 
-    // Database initialization
-    try {
-      globalDatabaseInitializer.initialize();
-    } catch (SQLException e) {
-      criticalErrorRaiser.raise(
-          "Fail to execute SQL initialize script. Raise a critical error to prevent bad effects.");
-    }
-
-    // SmartInv initialization
-    inventoryManager.init();
+//    // Database initialization
+//    try {
+//      globalDatabaseInitializer.initialize();
+//    } catch (SQLException e) {
+//      criticalErrorRaiser.raise(
+//        "Fail to execute SQL initialize script. Raise a critical error to prevent bad effects.", e);
+//    }
 
     // Modules initialization
     moduleRegInit.initialize();
     moduleService.loadModules();
-  }
 
-  @Override
-  public void onEnable() {
     // Config preparation
     this.saveDefaultConfig();
+
+    // SmartInv initialization
+    inventoryManager.init();
 
     // Enable modules
     moduleService.enableModules();

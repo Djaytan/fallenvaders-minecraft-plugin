@@ -57,7 +57,7 @@ public final class JusticeHandsModule extends FvModule {
       moduleDatabaseInitializer.initialize(this.getClass(), SQL_INITIALIZE_SCRIPT);
     } catch (IOException | SQLException e) {
       criticalErrorRaiser.raise(
-          "Fail to execute SQL initialize script. Raise a critical error to prevent bad effects.");
+          "Fail to execute SQL initialize script. Raise a critical error to prevent bad effects.", e);
     }
     commandsInitializer.initialize();
     listenersInitializer.initialize();
