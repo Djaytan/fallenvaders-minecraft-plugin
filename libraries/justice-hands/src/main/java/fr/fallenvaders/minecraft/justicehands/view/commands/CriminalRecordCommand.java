@@ -28,6 +28,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -43,18 +44,21 @@ import javax.inject.Singleton;
 public class CriminalRecordCommand implements CommandExecutor {
 
   private final CriminalRecordView criminalRecordView;
+  private final Logger logger;
   private final Server server;
 
   /**
    * Constructor.
    *
    * @param criminalRecordView The {@link CriminalRecordView}.
+   * @param logger The {@link Logger}.
    * @param server The {@link Server}.
    */
   @Inject
   public CriminalRecordCommand(
-      @NotNull CriminalRecordView criminalRecordView, @NotNull Server server) {
+      @NotNull CriminalRecordView criminalRecordView, @NotNull Logger logger, @NotNull Server server) {
     this.criminalRecordView = criminalRecordView;
+    this.logger = logger;
     this.server = server;
   }
 
@@ -78,6 +82,7 @@ public class CriminalRecordCommand implements CommandExecutor {
             try {
               criminalRecordView.openMainMenu(moderator, player);
             } catch (JusticeHandsException e) {
+              logger.error("Fail to open the criminal record menu.", e);
               moderator.sendMessage(
                   ViewUtils.PREFIX_CR
                       + "§cUne erreur est survenue au moment de l'ouverture du menu.");

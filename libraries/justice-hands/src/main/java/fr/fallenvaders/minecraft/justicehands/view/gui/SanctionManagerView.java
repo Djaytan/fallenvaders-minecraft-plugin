@@ -82,9 +82,7 @@ public class SanctionManagerView {
    */
   public void openMainMenu(@NotNull Player opener, @NotNull OfflinePlayer target)
       throws JusticeHandsException {
-    GuiInventory mainGuiInventory =
-        guiInventoryController.getGuiInventory(SanctionManagerMainProvider.GUI_INVENTORY_ID);
-    int nbLines = mainGuiInventory.nbLines();
+    int nbLines = 3;
 
     String id = target.getUniqueId().toString();
     String title = String.format("§7[§9%s§7]" + "§7> §cMenu principal", target.getName());
@@ -107,9 +105,7 @@ public class SanctionManagerView {
       @NotNull OfflinePlayer target,
       @NotNull SanctionCategory sanctionCategory)
       throws JusticeHandsException {
-    GuiInventory mainGuiInventory =
-        guiInventoryController.getGuiInventory(SanctionManagerCategoryProvider.GUI_INVENTORY_ID);
-    int nbLines = mainGuiInventory.nbLines();
+    int nbLines = 6;
 
     String id = target.getUniqueId().toString();
     String title = String.format("%s§7> §c%s", ViewUtils.PREFIX_SM, sanctionCategory.name());

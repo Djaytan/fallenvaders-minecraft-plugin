@@ -26,6 +26,7 @@ import fr.fallenvaders.minecraft.justicehands.view.gui.SanctionManagerView;
 import fr.fallenvaders.minecraft.justicehands.view.gui.SanctionManagerViewContainer;
 import fr.minuskube.inv.ClickableItem;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -94,8 +95,7 @@ public class SanctionCategoryItemBuilder {
       @NotNull OfflinePlayer target,
       @NotNull SanctionCategory sanctionCategory)
       throws JusticeHandsException {
-    GuiItem categoryGuiItem = guiInventoryController.getGenericGuiItem(CATEGORY_ITEM_ID);
-    ItemStack categoryItem = Objects.requireNonNull(categoryGuiItem.item());
+    ItemStack categoryItem = new ItemStack(Material.CHEST, 1);
 
     ItemMeta meta = categoryItem.getItemMeta();
     meta.displayName(componentHelper.getComponent("§4Catégorie: §c" + sanctionCategory.name()));

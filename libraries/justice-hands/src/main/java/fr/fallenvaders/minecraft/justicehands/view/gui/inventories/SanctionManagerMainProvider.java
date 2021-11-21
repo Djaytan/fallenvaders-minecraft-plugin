@@ -110,12 +110,7 @@ public class SanctionManagerMainProvider implements InventoryProvider {
 
   private void setPlayerHead(@NotNull OfflinePlayer target, @NotNull InventoryContents contents)
       throws JusticeHandsException {
-    GuiItem item =
-        guiInventory
-            .getItem(PLAYER_HEAD_ITEM_ID)
-            .orElseThrow(() -> new JusticeHandsException("Failed to create the GUI inventory."));
-    GuiItemLocation location = Objects.requireNonNull(item.location());
-    contents.set(location.line(), location.column(), playerHeadItemBuilder.build(target));
+    contents.set(0, 4, playerHeadItemBuilder.build(target));
   }
 
   private void setCategories(

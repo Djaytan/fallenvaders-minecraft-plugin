@@ -27,6 +27,7 @@ import fr.minuskube.inv.SmartInventory;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -48,6 +49,7 @@ public class CriminalRecordView {
   private final Provider<CriminalRecordProvider> criminalRecordProvider;
   private final GuiInventoryController guiInventoryController;
   private final InteractiveInventoryBuilder interactiveInventoryBuilder;
+  private final Logger logger;
 
   /**
    * Constructor.
@@ -55,15 +57,18 @@ public class CriminalRecordView {
    * @param criminalRecordProvider The {@link CriminalRecordProvider}.
    * @param guiInventoryController The {@link GuiInventoryController}.
    * @param interactiveInventoryBuilder The {@link InteractiveInventoryBuilder}.
+   * @param logger The {@link Logger}.
    */
   @Inject
   public CriminalRecordView(
       @NotNull Provider<CriminalRecordProvider> criminalRecordProvider,
       @NotNull GuiInventoryController guiInventoryController,
-      @NotNull InteractiveInventoryBuilder interactiveInventoryBuilder) {
+      @NotNull InteractiveInventoryBuilder interactiveInventoryBuilder,
+      @NotNull Logger logger) {
     this.criminalRecordProvider = criminalRecordProvider;
     this.guiInventoryController = guiInventoryController;
     this.interactiveInventoryBuilder = interactiveInventoryBuilder;
+    this.logger = logger;
   }
 
   /**
@@ -75,15 +80,16 @@ public class CriminalRecordView {
    */
   public void openMainMenu(@NotNull Player opener, @NotNull OfflinePlayer target)
       throws JusticeHandsException {
-    GuiInventory mainGuiInventory =
-        guiInventoryController.getGuiInventory(CriminalRecordProvider.GUI_INVENTORY_ID);
-    int nbLines = mainGuiInventory.nbLines();
+    logger.info("Prepare main menu of {}'s criminal record", target.getName());
+    int nbLines = 6;
 
     String id = target.getUniqueId().toString();
     String title = String.format("%s§c%s", ViewUtils.PREFIX_CR, target.getName());
 
+    logger.info("Build menu...");
     SmartInventory menu =
         interactiveInventoryBuilder.build(criminalRecordProvider.get(), id, title, nbLines);
+    logger.info("Open menu...");
     menu.open(opener);
   }
 }

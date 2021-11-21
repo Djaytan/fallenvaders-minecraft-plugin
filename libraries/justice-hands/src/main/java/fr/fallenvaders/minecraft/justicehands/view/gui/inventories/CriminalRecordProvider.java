@@ -57,7 +57,7 @@ import java.util.stream.Collectors;
 @Singleton
 public class CriminalRecordProvider implements InventoryProvider {
 
-  public static final String GUI_INVENTORY_ID = "sm-main";
+  public static final String GUI_INVENTORY_ID = "cr-main";
 
   private final ComponentHelper componentHelper;
   private final CriminalRecordViewContainer criminalRecordViewContainer;
