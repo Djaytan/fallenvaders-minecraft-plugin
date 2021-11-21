@@ -31,9 +31,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
     <description>Criminal records and moderation plugin</description>
 
     <dependencies>
+        <!-- FallenVaders modules -->
+        <dependency>
+            <groupId>fr.fallenvaders.minecraft</groupId>
+            <artifactId>commons</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Minecraft dependencies -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-paper</artifactId>
         </dependency>
         <dependency>
             <groupId>fr.minuskube.inv</groupId>

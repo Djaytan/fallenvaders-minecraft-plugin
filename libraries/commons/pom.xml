@@ -32,6 +32,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
     <dependencies>
         <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
         </dependency>

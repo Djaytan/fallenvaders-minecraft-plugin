@@ -23,8 +23,6 @@ import com.google.inject.Module;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 /**
  * Applies Dependency Injection pattern through Guice library.
  *
@@ -39,11 +37,9 @@ public final class FallenVadersInjector {
   /**
    * Injects dependencies through Guice.
    *
-   * @param plugin The Bukkit plugin.
+   * @param plugin The {@link JavaPlugin}.
    */
   public static void inject(@NotNull JavaPlugin plugin) {
-    Objects.requireNonNull(plugin);
-
     Module module = new FallenVadersModule(plugin);
     Injector injector = Guice.createInjector(module);
     injector.injectMembers(plugin);

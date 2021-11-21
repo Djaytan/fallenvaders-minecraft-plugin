@@ -17,15 +17,18 @@
 
 package fr.fallenvaders.minecraft.plugin;
 
+import fr.fallenvaders.minecraft.commons.CriticalErrorRaiser;
+import fr.fallenvaders.minecraft.commons.sql.GlobalDatabaseInitializer;
 import fr.fallenvaders.minecraft.plugin.guice.FallenVadersInjector;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterException;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterInitializer;
-import fr.fallenvaders.minecraft.plugin.modules.ModuleRegisterService;
+import fr.fallenvaders.minecraft.plugin.modules.ModuleService;
+import fr.fallenvaders.minecraft.plugin.modules.PluginInitializer;
+import fr.minuskube.inv.InventoryManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.slf4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * This class represents the Bukkit plugin.
@@ -36,33 +39,53 @@ import javax.inject.Singleton;
 @Singleton
 public final class FallenVadersPlugin extends JavaPlugin {
 
-  @Inject private ModuleRegisterInitializer moduleRegInit;
-  @Inject private ModuleRegisterService moduleRegisterService;
-  @Inject private Logger slf4jLogger;
+  @Inject private CriticalErrorRaiser criticalErrorRaiser;
+  @Inject private GlobalDatabaseInitializer globalDatabaseInitializer;
+  @Inject private InventoryManager inventoryManager;
+  @Inject private ModuleService moduleService;
+  @Inject private PluginInitializer moduleRegInit;
+
+  @Override
+  public void onLoad() {
+
+  }
 
   @Override
   public void onEnable() {
+    try {
+      PropertyFactory.initialize();
+    } catch (IOException e) {
+      criticalErrorRaiser.raise(
+        "Fail to read properties. Raise a critical error to prevent bad effects.", e);
+    }
+
     // Guice setup
     FallenVadersInjector.inject(this);
+
+//    // Database initialization
+//    try {
+//      globalDatabaseInitializer.initialize();
+//    } catch (SQLException e) {
+//      criticalErrorRaiser.raise(
+//        "Fail to execute SQL initialize script. Raise a critical error to prevent bad effects.", e);
+//    }
+
+    // Modules initialization
+    moduleRegInit.initialize();
+    moduleService.loadModules();
 
     // Config preparation
     this.saveDefaultConfig();
 
-    // Modules initialization
-    try {
-      moduleRegInit.initialize();
-      moduleRegisterService.enableModules();
-      slf4jLogger.info("FallenVaders plugin successfully enabled.");
-    } catch (ModuleRegisterException e) {
-      slf4jLogger.error("An error has occurred during modules registration.", e);
-    }
-    // TODO: FV-94 - better error management (catch all exceptions and allow the launch of some
-    // modules even if some other ones fail)
+    // SmartInv initialization
+    inventoryManager.init();
+
+    // Enable modules
+    moduleService.enableModules();
   }
 
   @Override
   public void onDisable() {
-    moduleRegisterService.disableModules();
-    slf4jLogger.info("FallenVaders plugin disabled.");
+    moduleService.disableModules();
   }
 }

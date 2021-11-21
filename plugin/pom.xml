@@ -76,6 +76,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
             <artifactId>paper-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-paper</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
         </dependency>
