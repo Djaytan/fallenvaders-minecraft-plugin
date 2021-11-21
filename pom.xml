@@ -33,11 +33,20 @@
 		<java.version>17</java.version>
 		<kotlin.version>1.6.0</kotlin.version>
         <jacoco.version>0.8.7</jacoco.version>
+        <sponge.version>7.2.0</sponge.version>
 
         <!-- Sonar Properties -->
         <sonar.organization>fallenvaders</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
+
+    <repositories>
+        <repository>
+            <id>sponge-repo</id>
+            <name>Sponge Maven Repository</name>
+            <url>https://repo.spongepowered.org/maven</url>
+        </repository>
+    </repositories>
 
 	<dependencies>
 		<dependency>
@@ -80,6 +89,15 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>${jacoco.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Minecraft API -->
+        <dependency>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>spongeapi</artifactId>
+            <version>${sponge.version}</version>
+            <type>jar</type>
+            <scope>provided</scope>
         </dependency>
 	</dependencies>
 
