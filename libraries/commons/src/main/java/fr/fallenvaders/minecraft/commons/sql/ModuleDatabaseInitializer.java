@@ -69,7 +69,7 @@ public class ModuleDatabaseInitializer {
   public void initialize(
       @NotNull Class<? extends FvModule> classModule, @NotNull String sqlScriptResource)
       throws IOException, SQLException {
-    try (InputStream is = classModule.getResourceAsStream(sqlScriptResource)) {
+    try (InputStream is = classModule.getClassLoader().getResourceAsStream(sqlScriptResource)) {
       if (is != null) {
         String sqlInitScript = ioUtils.resourceToString(is);
         try (Connection connection = fvDataSource.getConnection();
