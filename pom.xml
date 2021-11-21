@@ -28,8 +28,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+
+        <!-- Version Properties -->
 		<java.version>17</java.version>
 		<kotlin.version>1.6.0</kotlin.version>
+        <jacoco.version>0.8.7</jacoco.version>
 
         <!-- Sonar Properties -->
         <sonar.organization>fallenvaders</sonar.organization>
