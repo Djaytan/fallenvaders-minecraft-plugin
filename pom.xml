@@ -2,16 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.0</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
 	<groupId>fr.fallenvaders.minecraft</groupId>
 	<artifactId>fallenvaders-plugin</artifactId>
 	<version>0.4.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
 	<name>FallenVadersPlugin</name>
 	<description>Minecraft plugin for FallenVaders</description>
@@ -28,12 +29,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+        <program.main.class>fr.fallenvaders.minecraft.plugin.FallenVadersPlugin</program.main.class>
+
+        <!-- Kotlin -->
 
         <!-- Version Properties -->
-		<java.version>17</java.version>
+        <java.version>17</java.version>
+        <minecraft.api.version>1.17</minecraft.api.version>
 		<kotlin.version>1.6.0</kotlin.version>
         <jacoco.version>0.8.7</jacoco.version>
         <sponge.version>7.2.0</sponge.version>
+        <lombok.version>1.18.22</lombok.version>
+        <mariadb.version>2.7.3</mariadb.version>
 
         <!-- Sonar Properties -->
         <sonar.organization>fallenvaders</sonar.organization>
@@ -42,45 +49,60 @@
 
     <repositories>
         <repository>
-            <id>sponge-repo</id>
-            <name>Sponge Maven Repository</name>
-            <url>https://repo.spongepowered.org/maven</url>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>aikar</id>
+            <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
     </repositories>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Kotlin -->
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-stdlib-jdk8</artifactId>
+			<artifactId>kotlin-stdlib</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>compile</scope>
 		</dependency>
 
+        <!-- MariaDB Driver -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
+            <version>${mariadb.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
+
+        <!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 
         <!-- Code Coverage -->
@@ -93,11 +115,16 @@
 
         <!-- Minecraft API -->
         <dependency>
-            <groupId>org.spongepowered</groupId>
-            <artifactId>spongeapi</artifactId>
-            <version>${sponge.version}</version>
-            <type>jar</type>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-paper</artifactId>
+            <version>0.5.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 	</dependencies>
 
@@ -108,32 +135,43 @@
             <resource>
                 <directory>${project.basedir}/src/main/resources/</directory>
                 <filtering>true</filtering>
+                <includes>
+                    <include>**/*.yml</include>
+                </includes>
             </resource>
         </resources>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>test-compile</id>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
 				<configuration>
 					<args>
 						<arg>-Xjsr305=strict</arg>
 					</args>
 					<compilerPlugins>
-						<plugin>spring</plugin>
 						<plugin>jpa</plugin>
+                        <plugin>lombok</plugin>
+                        <plugin>spring</plugin>
 					</compilerPlugins>
+                    <pluginOptions>
+                        <option>lombok:config=${project.basedir}/lombok.config</option>
+                    </pluginOptions>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -146,6 +184,12 @@
 						<artifactId>kotlin-maven-noarg</artifactId>
 						<version>${kotlin.version}</version>
 					</dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-lombok</artifactId>
+                        <version>${kotlin.version}</version>
+                        <scope>compile</scope>
+                    </dependency>
 				</dependencies>
 			</plugin>
             <plugin>
@@ -169,6 +213,21 @@
                         <phase>package</phase>
                         <goals>
                             <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <mainClass>${program.main.class}</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>

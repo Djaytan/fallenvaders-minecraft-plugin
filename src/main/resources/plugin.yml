@@ -1,0 +1,6 @@
+name: @name@
+version: @version@
+api-version: @minecraft.api.version@
+description: @description@
+main: @program.main.class@
+website: @url@
