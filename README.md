@@ -30,3 +30,10 @@ The mod will be created under the repository `build/libs`.
 # Fabric
 
 The project use Fabric as mod loader and API. For more information, go here: https://fabricmc.net/
+
+# MultiMC
+
+MultiMC is a great Minecraft launcher which is used for developments.
+
+To install it, follow these steps here (Windows):
+https://fabricmc.net/wiki/player:tutorials:install_multimc:windows
