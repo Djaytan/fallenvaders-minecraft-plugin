@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "fallenvaders_core:block/example_block"
+  }
+}

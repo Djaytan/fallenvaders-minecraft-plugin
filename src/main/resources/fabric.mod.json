@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "fallenvaders_core",
+  "version": "${version}",
+  "name": "FallenVaders Core",
+  "description": "FallenVaders core mod",
+  "authors": [
+    "Voltariuss"
+  ],
+  "contact": {
+    "homepage": "https://fallenvaders.fr/",
+    "issues": "https://jira.fallenvaders.fr/",
+    "sources": "https://sources.fallenvaders.fr/"
+  },
+  "license": "GNU Lesser General Public License version 3 (LGPLv3)",
+  "icon": "assets/fallenvaders_core/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "fr.fallenvaders.minecraft.mods.fallenvaders_core.FallenVadersMod"
+      }
+    ]
+  },
+  "mixins": [
+    "fallenvaders_core.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.5",
+    "fabric": "*",
+    "fabric-language-kotlin": ">=1.7.0+kotlin.1.6.0",
+    "minecraft": "1.17.x",
+    "java": ">=17"
+  }
+}
