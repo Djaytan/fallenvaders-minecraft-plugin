@@ -45,17 +45,17 @@ jobs:
           name: Install MkDocs
           command: sudo pip install mkdocs-material
       - run:
-          name: Deploy doc
-          command: mkdocs gh-deploy --force
+          name: MkDocs - Build
+          command: mkdocs build --clean --verbose
+      - run:
+          name: MkDocs - Deploy
+          command: ghp-import -m "[ci skip] Deploy (${GITHUB_SHA:0:7})" -p gh-pages
 
 workflows:
   main:
     jobs:
       - build-and-test:
           context: SonarCloud
-          filters:
-            branches:
-              ignore: gh-pages
       - deploy-doc:
           filters:
             branches:
