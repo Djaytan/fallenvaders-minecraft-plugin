@@ -49,7 +49,7 @@ jobs:
           command: mkdocs build --clean --verbose
       - run:
           name: MkDocs - Deploy
-          command: ghp-import -m "[ci skip] Deploy (${GITHUB_SHA:0:7})" -p gh-pages
+          command: ghp-import -m "[ci skip] Deploy (${GITHUB_SHA:0:7})" -p
 
 workflows:
   main:
