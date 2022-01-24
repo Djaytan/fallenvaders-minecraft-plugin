@@ -52,11 +52,11 @@ workflows:
   main:
     jobs:
       - build-and-test:
-        filters:
-          branches:
-            ignore: gh-pages
           context: SonarCloud
+          filters:
+            branches:
+              ignore: gh-pages
       - deploy-doc:
-        filters:
-          branches:
-            only: main
+          filters:
+            branches:
+              only: main
