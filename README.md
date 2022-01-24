@@ -37,3 +37,12 @@ MultiMC is a great Minecraft launcher which is used for developments.
 
 To install it, follow these steps here (Windows):
 https://fabricmc.net/wiki/player:tutorials:install_multimc:windows
+
+## Cautions
+
+This mod must contains only common features for client and server sides.
+
+For specific client side features, they must be implemented [here](https://github.com/FallenVaders/fallenvaders-minecraft-client-mod).
+For specific server side features, go [here](https://github.com/FallenVaders/fallenvaders-minecraft-server-mod).
+
+Implementing server side features in this mod can expose server to security issues.
