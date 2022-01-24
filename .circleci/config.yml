@@ -27,10 +27,10 @@ jobs:
       - checkout
       - run:
           name: Build
-          command: ./gradlew build
+          command: gradle build
       - run:
           name: Test
-          command: ./gradlew test
+          command: gradle test
   deploy-doc:
     docker:
       - image: circleci/python:3.9.7
