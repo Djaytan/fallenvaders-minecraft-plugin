@@ -46,7 +46,7 @@ jobs:
           command: sudo pip install mkdocs-material
       - run:
           name: Deploy doc
-          command: mkdocs gh-deploy -m "[ci skip] Deploy doc" --force
+          command: mkdocs gh-deploy --force
 
 workflows:
   main:
