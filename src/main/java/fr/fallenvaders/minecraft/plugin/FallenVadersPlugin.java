@@ -1,5 +1,6 @@
 package fr.fallenvaders.minecraft.plugin;
 
+import fr.fallenvaders.minecraft.plugin.guice.GuiceInjector;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -16,6 +17,7 @@ public class FallenVadersPlugin extends JavaPlugin {
      *       |  _|| (_| || || ||  __/| | | |\ V /| (_| || (_| ||  __/| |   \__ \
      *       |_|   \__,_||_||_| \___||_| |_| \_/  \__,_| \__,_| \___||_|   |___/
      */
+    // TODO: move these component definitions out of this class
     Component startupBanner =
         Component.join(
             JoinConfiguration.newlines(),
@@ -36,14 +38,24 @@ public class FallenVadersPlugin extends JavaPlugin {
                     "      |_|   \\__,_||_||_| \\___||_| |_| \\_/  \\__,_| \\__,_| \\___||_|  "
                         + " |___/")
                 .color(NamedTextColor.GOLD),
-            Component.newline(),
+            Component.newline());
+
+    getServer().getConsoleSender().sendMessage(startupBanner);
+    getServer()
+        .getConsoleSender()
+        .sendMessage(
             Component.text("      Current version:")
                 .color(NamedTextColor.AQUA)
                 .append(Component.space())
-                .append(Component.text(getDescription().getVersion()).color(NamedTextColor.WHITE)),
-            Component.text("      Plugin successfully activated!").color(NamedTextColor.GREEN),
-            Component.text(""));
-
-    getServer().getConsoleSender().sendMessage(startupBanner);
+                .append(Component.text(getDescription().getVersion()).color(NamedTextColor.WHITE)));
+    GuiceInjector.inject(this);
+    getServer()
+        .getConsoleSender()
+        .sendMessage(Component.text("      Guice injection done.").color(NamedTextColor.YELLOW));
+    getServer()
+        .getConsoleSender()
+        .sendMessage(
+            Component.text("      Plugin successfully activated!").color(NamedTextColor.GREEN));
+    getServer().getConsoleSender().sendMessage(Component.empty());
   }
 }
