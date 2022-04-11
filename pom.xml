@@ -10,7 +10,7 @@
 
     <name>FallenVaders</name>
     <description>Minecraft plugin for FallenVaders server</description>
-    <url>https://www.fallenvaders.fr</url>
+    <url>https://www.fallenvaders.fr/</url>
 
     <licenses>
         <license>
@@ -34,7 +34,7 @@
 
         <!-- Specific properties -->
         <minecraft.api.version>1.18</minecraft.api.version>
-        <spongeapi.version>9.0.0-SNAPSHOT</spongeapi.version>
+        <papermc.version>1.18.2-R0.1-SNAPSHOT</papermc.version>
         <acf.version>0.5.1-SNAPSHOT</acf.version>
         <if.version>0.10.5</if.version>
         <guava.version>30.1.1-jre</guava.version>
@@ -51,9 +51,8 @@
 
     <repositories>
         <repository>
-            <id>sponge-repo</id>
-            <name>Sponge Maven Repository</name>
-            <url>https://repo.spongepowered.org/repository/maven-public/</url>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
         <repository>
             <id>aikar</id>
@@ -64,15 +63,14 @@
     <dependencies>
         <!-- Minecraft libraries -->
         <dependency>
-            <groupId>org.spongepowered</groupId>
-            <artifactId>spongeapi</artifactId>
-            <version>${spongeapi.version}</version>
-            <type>jar</type>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>${papermc.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>co.aikar</groupId>
-            <artifactId>acf-sponge</artifactId>
+            <artifactId>acf-paper</artifactId>
             <version>${acf.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -180,6 +178,12 @@
     <build>
         <defaultGoal>clean package</defaultGoal>
         <finalName>${project.name}-${project.version}</finalName>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources/</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <!-- Surefire Maven plugin necessary to activate properly JUnit Jupiter -->
             <plugin>
