@@ -1,12 +1,15 @@
 package fr.fallenvaders.minecraft.plugin;
 
 import fr.fallenvaders.minecraft.plugin.guice.GuiceInjector;
+import javax.inject.Inject;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FallenVadersPlugin extends JavaPlugin {
+
+  @Inject private CommandRegister commandRegister;
 
   @Override
   public void onEnable() {
@@ -52,6 +55,12 @@ public class FallenVadersPlugin extends JavaPlugin {
     getServer()
         .getConsoleSender()
         .sendMessage(Component.text("      Guice injection done.").color(NamedTextColor.YELLOW));
+    commandRegister.registerCommands();
+    commandRegister.registerCommandCompletions();
+    getServer()
+        .getConsoleSender()
+        .sendMessage(
+            Component.text("      Commands registration done.").color(NamedTextColor.YELLOW));
     getServer()
         .getConsoleSender()
         .sendMessage(
