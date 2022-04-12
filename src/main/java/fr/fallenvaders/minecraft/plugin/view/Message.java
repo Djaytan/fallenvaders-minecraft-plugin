@@ -76,7 +76,7 @@ public final class Message {
 
   public @NotNull Component startupBannerEnablingFailureLine() {
     return STARTUP_BANNER_INDENT.append(
-        Component.text("Plugin failed to be activated! See exception below...")
+        Component.text("Plugin failed to be activated! See details below...")
             .color(NamedTextColor.RED));
   }
 }
