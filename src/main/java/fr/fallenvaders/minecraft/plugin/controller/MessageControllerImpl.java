@@ -92,13 +92,13 @@ public class MessageControllerImpl implements MessageController {
       @NotNull MessageType messageType, @NotNull Component message) {
     String messageFormatKey =
         switch (messageType) {
-          case INFO -> "diagonia.common.message.format.info";
-          case SUCCESS -> "diagonia.common.message.format.success";
-          case FAILURE -> "diagonia.common.message.format.failure";
-          case WARNING -> "diagonia.common.message.format.warning";
-          case ERROR -> "diagonia.common.message.format.error";
-          case BROADCAST -> "diagonia.common.message.format.broadcast";
-          case DEBUG -> "diagonia.common.message.format.debug";
+          case INFO -> "fallenvaders.common.message.format.info";
+          case SUCCESS -> "fallenvaders.common.message.format.success";
+          case FAILURE -> "fallenvaders.common.message.format.failure";
+          case WARNING -> "fallenvaders.common.message.format.warning";
+          case ERROR -> "fallenvaders.common.message.format.error";
+          case BROADCAST -> "fallenvaders.common.message.format.broadcast";
+          case DEBUG -> "fallenvaders.common.message.format.debug";
         };
 
     return miniMessage
