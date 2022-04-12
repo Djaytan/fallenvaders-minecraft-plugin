@@ -21,6 +21,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import fr.fallenvaders.minecraft.plugin.controller.MessageController;
 import fr.fallenvaders.minecraft.plugin.controller.MessageControllerImpl;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +36,6 @@ public class GuiceGeneralModule extends AbstractModule {
   @Provides
   @Singleton
   public @NotNull ResourceBundle provideResourceBundle() {
-    return ResourceBundle.getBundle("language");
+    return ResourceBundle.getBundle("fallenvaders", Locale.FRANCE);
   }
 }
