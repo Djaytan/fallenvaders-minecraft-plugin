@@ -36,10 +36,11 @@ public class FallenVadersPlugin extends JavaPlugin {
       // Plugin enabled successfully
       messageController.sendRawMessage(
           getServer().getConsoleSender(), message.startupBannerEnablingSuccessLine());
-      getServer().getConsoleSender().sendMessage(Component.empty());
+      messageController.sendRawMessage(getServer().getConsoleSender(), Component.empty());
     } catch (RuntimeException e) {
       messageController.sendRawMessage(
           getServer().getConsoleSender(), message.startupBannerEnablingFailureLine());
+      messageController.sendRawMessage(getServer().getConsoleSender(), Component.empty());
       getSLF4JLogger().error("Something went wrong and prevent plugin activation.", e);
     }
   }
