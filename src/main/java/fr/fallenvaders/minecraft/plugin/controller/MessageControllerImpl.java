@@ -72,6 +72,11 @@ public class MessageControllerImpl implements MessageController {
   }
 
   @Override
+  public void sendRawMessage(@NotNull CommandSender commandSender, @NotNull Component message) {
+    commandSender.sendMessage(message, net.kyori.adventure.audience.MessageType.SYSTEM);
+  }
+
+  @Override
   public void broadcastMessage(@NotNull Component component) {
     sendMessage(Audience.audience(server.getOnlinePlayers()), MessageType.BROADCAST, component);
   }

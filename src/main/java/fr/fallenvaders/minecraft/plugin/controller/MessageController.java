@@ -32,5 +32,7 @@ public interface MessageController {
 
   void sendErrorMessage(@NotNull CommandSender commandSender, @NotNull Component message);
 
+  void sendRawMessage(@NotNull CommandSender commandSender, @NotNull Component message);
+
   void broadcastMessage(@NotNull Component component);
 }
