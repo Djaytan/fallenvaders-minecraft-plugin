@@ -74,4 +74,12 @@ public final class Message {
         .append(Component.text("Plugin successfully activated!").color(NamedTextColor.GREEN))
         .append(Component.newline());
   }
+
+  public @NotNull Component startupBannerEnablingFailureLine() {
+    return STARTUP_BANNER_INDENT
+        .append(
+            Component.text("Plugin failed to be activated! See exception below...")
+                .color(NamedTextColor.RED))
+        .append(Component.newline());
+  }
 }

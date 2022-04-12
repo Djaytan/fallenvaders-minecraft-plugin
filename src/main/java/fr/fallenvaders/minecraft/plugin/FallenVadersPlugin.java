@@ -15,27 +15,32 @@ public class FallenVadersPlugin extends JavaPlugin {
 
   @Override
   public void onEnable() {
-    // TODO: exception handling
     GuiceInjector.inject(this);
 
-    messageController.sendRawMessage(getServer().getConsoleSender(), message.startupBanner());
-    messageController.sendRawMessage(
-        getServer().getConsoleSender(), message.startupBannerVersionLine(getDescription()));
-    messageController.sendRawMessage(
-        getServer().getConsoleSender(),
-        message.startupBannerProgressionLine("Guice injection done."));
+    try {
+      messageController.sendRawMessage(getServer().getConsoleSender(), message.startupBanner());
+      messageController.sendRawMessage(
+          getServer().getConsoleSender(), message.startupBannerVersionLine(getDescription()));
+      messageController.sendRawMessage(
+          getServer().getConsoleSender(),
+          message.startupBannerProgressionLine("Guice injection done."));
 
-    // Commands registration
-    commandRegister.registerCommands();
-    commandRegister.registerCommandCompletions();
+      // Commands registration
+      commandRegister.registerCommands();
+      commandRegister.registerCommandCompletions();
 
-    messageController.sendRawMessage(
-        getServer().getConsoleSender(),
-        message.startupBannerProgressionLine("Commands registration done."));
+      messageController.sendRawMessage(
+          getServer().getConsoleSender(),
+          message.startupBannerProgressionLine("Commands registration done."));
 
-    // Plugin enabled successfully
-    messageController.sendRawMessage(
-        getServer().getConsoleSender(), message.startupBannerEnablingSuccessLine());
-    getServer().getConsoleSender().sendMessage(Component.empty());
+      // Plugin enabled successfully
+      messageController.sendRawMessage(
+          getServer().getConsoleSender(), message.startupBannerEnablingSuccessLine());
+      getServer().getConsoleSender().sendMessage(Component.empty());
+    } catch (RuntimeException e) {
+      messageController.sendRawMessage(
+          getServer().getConsoleSender(), message.startupBannerEnablingFailureLine());
+      getSLF4JLogger().error("Something went wrong and prevent plugin activation.", e);
+    }
   }
 }
