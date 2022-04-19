@@ -7,7 +7,6 @@ import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Name;
 import co.aikar.commands.annotation.Subcommand;
 import fr.fallenvaders.minecraft.plugin.controller.MessageController;
@@ -53,7 +52,7 @@ public class HealCommand extends BaseCommand {
   }
 
   @Subcommand("help")
-  @Description("Affichage l'aide pour la commande.")
+  @Description("Affichage de l'aide pour la commande.")
   public void onHelp(CommandSender sender, CommandHelp help) {
     help.showHelp();
   }
