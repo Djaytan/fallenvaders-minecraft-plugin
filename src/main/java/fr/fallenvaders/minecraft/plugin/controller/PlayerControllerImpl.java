@@ -79,4 +79,19 @@ public class PlayerControllerImpl implements PlayerController {
           sender, essentialsMessages.playerHasBeenTeleportedToSpawn(targetedPlayer.getName()));
     }
   }
+
+  @Override
+  public void ping(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
+    Preconditions.checkNotNull(sender);
+    Preconditions.checkNotNull(targetedPlayer);
+
+    int pingValue = targetedPlayer.getPing();
+
+    if (sender.equals(targetedPlayer)) {
+      messageController.sendInfoMessage(sender, essentialsMessages.pingPong(pingValue));
+    } else {
+      messageController.sendInfoMessage(
+          sender, essentialsMessages.pingPongOther(targetedPlayer.getName(), pingValue));
+    }
+  }
 }

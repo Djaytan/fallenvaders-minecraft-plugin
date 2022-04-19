@@ -12,6 +12,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
 
+// TODO: rename it CommonMessage
 @Singleton
 public final class Message {
 
@@ -83,5 +84,10 @@ public final class Message {
     return STARTUP_BANNER_INDENT.append(
         miniMessage.deserialize(
             resourceBundle.getString("fallenvaders.common.message.startup.enabling_failed")));
+  }
+
+  public @NotNull Component impossibleToTargetConsole() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.common.command.impossible_to_target_console"));
   }
 }

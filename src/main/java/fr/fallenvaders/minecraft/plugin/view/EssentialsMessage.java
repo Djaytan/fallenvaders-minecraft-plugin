@@ -56,4 +56,18 @@ public class EssentialsMessage {
             "fallenvaders.essentials.command.spawn.player_teleported_to_spawn"),
         TagResolver.resolver(Placeholder.unparsed("fv_player", teleportedPlayerName)));
   }
+
+  public @NotNull Component pingPong(int pingValue) {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.ping.pong"),
+        TagResolver.resolver(Placeholder.unparsed("fv_ping_value", Integer.toString(pingValue))));
+  }
+
+  public @NotNull Component pingPongOther(@NotNull String targetedPlayerName, int pingValue) {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.ping.pong.other"),
+        TagResolver.resolver(
+            Placeholder.unparsed("fv_player", targetedPlayerName),
+            Placeholder.unparsed("fv_ping_value", Integer.toString(pingValue))));
+  }
 }
