@@ -7,13 +7,15 @@ import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Name;
 import co.aikar.commands.annotation.Subcommand;
-import fr.fallenvaders.minecraft.plugin.controller.MessageController;
+import co.aikar.commands.annotation.Values;
 import fr.fallenvaders.minecraft.plugin.controller.PlayerController;
-import fr.fallenvaders.minecraft.plugin.view.EssentialsMessage;
+import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -23,18 +25,13 @@ import org.jetbrains.annotations.NotNull;
 @CommandPermission("fallenvaders.essentials.heal")
 public class HealCommand extends BaseCommand {
 
-  private final EssentialsMessage essentialsMessage;
-  private final MessageController messageController;
   private final PlayerController playerController;
+  private final Server server;
 
   @Inject
-  public HealCommand(
-      @NotNull EssentialsMessage essentialsMessage,
-      @NotNull MessageController messageController,
-      @NotNull PlayerController playerController) {
-    this.essentialsMessage = essentialsMessage;
-    this.messageController = messageController;
+  public HealCommand(@NotNull PlayerController playerController, @NotNull Server server) {
     this.playerController = playerController;
+    this.server = server;
   }
 
   @Default
@@ -44,14 +41,16 @@ public class HealCommand extends BaseCommand {
   }
 
   @Subcommand("player")
-  @CommandCompletion("@players")
+  @CommandCompletion("@playernames")
   @Description("Régénère instantanément la santé du joueur ciblé au maximum.")
   public void onHealOther(
-      @NotNull CommandSender commandSender, @NotNull @Name("joueur") Player targetedPlayer) {
+      @NotNull CommandSender commandSender,
+      @NotNull @Name("joueur") @Values("@playernames") String targetedPlayerName) {
+    Player targetedPlayer = Objects.requireNonNull(server.getPlayer(targetedPlayerName));
     playerController.healPlayer(commandSender, targetedPlayer);
   }
 
-  @Subcommand("help")
+  @HelpCommand
   @Description("Affichage de l'aide pour la commande.")
   public void onHelp(CommandSender sender, CommandHelp help) {
     help.showHelp();

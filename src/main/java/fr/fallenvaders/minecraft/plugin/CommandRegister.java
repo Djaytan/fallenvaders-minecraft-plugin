@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
@@ -58,6 +59,15 @@ public class CommandRegister {
                   .limit(size)
                   .map(OfflinePlayer::getName)
                   .toList();
+            });
+
+    paperCommandManager
+        .getCommandCompletions()
+        .registerAsyncCompletion(
+            "playernames",
+            context -> {
+              long size = Long.parseLong(context.getConfig("size", "100"));
+              return server.getOnlinePlayers().stream().limit(size).map(Player::getName).toList();
             });
   }
 }
