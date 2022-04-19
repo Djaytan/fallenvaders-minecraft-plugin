@@ -9,4 +9,6 @@ public interface PlayerController {
   void healPlayer(@NotNull CommandSender sender, @NotNull Player targetedPlayer);
 
   void feedPlayer(@NotNull CommandSender sender, @NotNull Player targetedPlayer);
+
+  void teleportToSpawn(@NotNull CommandSender sender, @NotNull Player targetedPlayer);
 }

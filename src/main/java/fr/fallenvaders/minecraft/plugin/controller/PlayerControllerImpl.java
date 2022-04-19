@@ -1,6 +1,7 @@
 package fr.fallenvaders.minecraft.plugin.controller;
 
 import com.google.common.base.Preconditions;
+import fr.fallenvaders.minecraft.plugin.FallenVadersConfig;
 import fr.fallenvaders.minecraft.plugin.utils.GameAttribute;
 import fr.fallenvaders.minecraft.plugin.view.EssentialsMessage;
 import java.util.Objects;
@@ -12,16 +13,21 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+// TODO: centralized error management
 @Singleton
 public class PlayerControllerImpl implements PlayerController {
 
   private final EssentialsMessage essentialsMessages;
+  private final FallenVadersConfig fallenVadersConfig;
   private final MessageController messageController;
 
   @Inject
   public PlayerControllerImpl(
-      @NotNull EssentialsMessage essentialsMessage, @NotNull MessageController messageController) {
+      @NotNull EssentialsMessage essentialsMessage,
+      @NotNull FallenVadersConfig fallenVadersConfig,
+      @NotNull MessageController messageController) {
     this.essentialsMessages = essentialsMessage;
+    this.fallenVadersConfig = fallenVadersConfig;
     this.messageController = messageController;
   }
 
@@ -55,6 +61,22 @@ public class PlayerControllerImpl implements PlayerController {
     if (!sender.equals(targetedPlayer)) {
       messageController.sendInfoMessage(
           sender, essentialsMessages.playerHasBeenFed(targetedPlayer.getName()));
+    }
+  }
+
+  @Override
+  public void teleportToSpawn(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
+    Preconditions.checkNotNull(sender);
+    Preconditions.checkNotNull(targetedPlayer);
+
+    targetedPlayer.teleport(fallenVadersConfig.getSpawnLocation());
+
+    messageController.sendInfoMessage(
+        targetedPlayer, essentialsMessages.youHaveBeenTeleportedToSpawn());
+
+    if (!sender.equals(targetedPlayer)) {
+      messageController.sendInfoMessage(
+          sender, essentialsMessages.playerHasBeenTeleportedToSpawn(targetedPlayer.getName()));
     }
   }
 }

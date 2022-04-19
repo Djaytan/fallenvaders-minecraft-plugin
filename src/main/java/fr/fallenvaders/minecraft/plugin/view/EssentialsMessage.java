@@ -32,6 +32,12 @@ public class EssentialsMessage {
         resourceBundle.getString("fallenvaders.essentials.message.you_have_been_fed"));
   }
 
+  public @NotNull Component youHaveBeenTeleportedToSpawn() {
+    return miniMessage.deserialize(
+        resourceBundle.getString(
+            "fallenvaders.essentials.message.you_have_been_teleported_to_spawn"));
+  }
+
   public @NotNull Component playerHasBeenHealed(@NotNull String healedPlayerName) {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.message.player_healed"),
@@ -42,5 +48,11 @@ public class EssentialsMessage {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.message.player_fed"),
         TagResolver.resolver(Placeholder.unparsed("fv_player", fedPlayerName)));
+  }
+
+  public @NotNull Component playerHasBeenTeleportedToSpawn(@NotNull String teleportedPlayerName) {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.message.player_teleported_to_spawn"),
+        TagResolver.resolver(Placeholder.unparsed("fv_player", teleportedPlayerName)));
   }
 }

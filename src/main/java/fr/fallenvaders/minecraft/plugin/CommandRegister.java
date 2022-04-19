@@ -19,6 +19,7 @@ package fr.fallenvaders.minecraft.plugin;
 import co.aikar.commands.PaperCommandManager;
 import fr.fallenvaders.minecraft.plugin.command.FeedCommand;
 import fr.fallenvaders.minecraft.plugin.command.HealCommand;
+import fr.fallenvaders.minecraft.plugin.command.SpawnCommand;
 import java.util.Arrays;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -35,22 +36,26 @@ public class CommandRegister {
 
   private final FeedCommand feedCommand;
   private final HealCommand healCommand;
+  private final SpawnCommand spawnCommand;
 
   @Inject
   public CommandRegister(
       @NotNull PaperCommandManager paperCommandManager,
       @NotNull Server server,
       @NotNull FeedCommand feedCommand,
-      @NotNull HealCommand healCommand) {
+      @NotNull HealCommand healCommand,
+      @NotNull SpawnCommand spawnCommand) {
     this.paperCommandManager = paperCommandManager;
     this.server = server;
     this.feedCommand = feedCommand;
     this.healCommand = healCommand;
+    this.spawnCommand = spawnCommand;
   }
 
   public void registerCommands() {
     paperCommandManager.registerCommand(feedCommand);
     paperCommandManager.registerCommand(healCommand);
+    paperCommandManager.registerCommand(spawnCommand);
   }
 
   public void registerCommandCompletions() {
