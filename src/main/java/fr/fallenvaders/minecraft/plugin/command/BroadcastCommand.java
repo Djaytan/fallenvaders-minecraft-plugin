@@ -5,6 +5,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.Name;
 import fr.fallenvaders.minecraft.plugin.controller.MessageController;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,7 +27,7 @@ public class BroadcastCommand extends BaseCommand {
 
   @Default
   @Description("Envoie une annonce sur le serveur.")
-  public void onBroadcast(@NotNull CommandSender commandSender, @NotNull String message) {
+  public void onBroadcast(@NotNull CommandSender commandSender, @NotNull @Name("message") String message) {
     messageController.broadcastMessage(Component.text(message));
   }
 }

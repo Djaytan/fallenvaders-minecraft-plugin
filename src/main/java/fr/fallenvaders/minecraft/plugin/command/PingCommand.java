@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.Name;
 import co.aikar.commands.annotation.Values;
 import fr.fallenvaders.minecraft.plugin.controller.PlayerController;
 import java.util.Objects;
@@ -42,7 +43,7 @@ public class PingCommand extends BaseCommand {
   @Description("Test du ping d'un joueur.")
   public void onPingOther(
       @NotNull CommandSender commandSender,
-      @NotNull @Values("@playernames") String targetedPlayerName) {
+      @NotNull @Name("joueur") @Values("@playernames") String targetedPlayerName) {
     Player targetedPlayer = Objects.requireNonNull(server.getPlayer(targetedPlayerName));
     playerController.ping(commandSender, targetedPlayer);
   }
