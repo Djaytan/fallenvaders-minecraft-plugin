@@ -24,35 +24,36 @@ public class EssentialsMessage {
 
   public @NotNull Component youHaveBeenHealed() {
     return miniMessage.deserialize(
-        resourceBundle.getString("fallenvaders.essentials.message.you_have_been_healed"));
+        resourceBundle.getString("fallenvaders.essentials.command.heal.you_have_been_healed"));
+  }
+
+  public @NotNull Component playerHasBeenHealed(@NotNull String healedPlayerName) {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.heal.player_healed"),
+        TagResolver.resolver(Placeholder.unparsed("fv_player", healedPlayerName)));
   }
 
   public @NotNull Component youHaveBeenFed() {
     return miniMessage.deserialize(
-        resourceBundle.getString("fallenvaders.essentials.message.you_have_been_fed"));
+        resourceBundle.getString("fallenvaders.essentials.command.feed.you_have_been_fed"));
+  }
+
+  public @NotNull Component playerHasBeenFed(@NotNull String fedPlayerName) {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.feed.player_fed"),
+        TagResolver.resolver(Placeholder.unparsed("fv_player", fedPlayerName)));
   }
 
   public @NotNull Component youHaveBeenTeleportedToSpawn() {
     return miniMessage.deserialize(
         resourceBundle.getString(
-            "fallenvaders.essentials.message.you_have_been_teleported_to_spawn"));
-  }
-
-  public @NotNull Component playerHasBeenHealed(@NotNull String healedPlayerName) {
-    return miniMessage.deserialize(
-        resourceBundle.getString("fallenvaders.essentials.message.player_healed"),
-        TagResolver.resolver(Placeholder.unparsed("fv_player", healedPlayerName)));
-  }
-
-  public @NotNull Component playerHasBeenFed(@NotNull String fedPlayerName) {
-    return miniMessage.deserialize(
-        resourceBundle.getString("fallenvaders.essentials.message.player_fed"),
-        TagResolver.resolver(Placeholder.unparsed("fv_player", fedPlayerName)));
+            "fallenvaders.essentials.command.spawn.you_have_been_teleported_to_spawn"));
   }
 
   public @NotNull Component playerHasBeenTeleportedToSpawn(@NotNull String teleportedPlayerName) {
     return miniMessage.deserialize(
-        resourceBundle.getString("fallenvaders.essentials.message.player_teleported_to_spawn"),
+        resourceBundle.getString(
+            "fallenvaders.essentials.command.spawn.player_teleported_to_spawn"),
         TagResolver.resolver(Placeholder.unparsed("fv_player", teleportedPlayerName)));
   }
 }
