@@ -27,20 +27,24 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
 public class MessageControllerImpl implements MessageController {
 
+  private final ConsoleCommandSender consoleCommandSender;
   private final MiniMessage miniMessage;
   private final ResourceBundle resourceBundle;
   private final Server server;
 
   @Inject
   public MessageControllerImpl(
+      @NotNull ConsoleCommandSender consoleCommandSender,
       @NotNull MiniMessage miniMessage,
       @NotNull ResourceBundle resourceBundle,
       @NotNull Server server) {
+    this.consoleCommandSender = consoleCommandSender;
     this.miniMessage = miniMessage;
     this.resourceBundle = resourceBundle;
     this.server = server;
@@ -74,6 +78,10 @@ public class MessageControllerImpl implements MessageController {
   @Override
   public void sendRawMessage(@NotNull CommandSender receiver, @NotNull Component message) {
     receiver.sendMessage(message, net.kyori.adventure.audience.MessageType.SYSTEM);
+  }
+
+  public void sendConsoleMessage(@NotNull Component message) {
+    consoleCommandSender.sendMessage(message, net.kyori.adventure.audience.MessageType.SYSTEM);
   }
 
   @Override

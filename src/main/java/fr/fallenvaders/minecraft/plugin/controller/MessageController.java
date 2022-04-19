@@ -34,5 +34,7 @@ public interface MessageController {
 
   void sendRawMessage(@NotNull CommandSender receiver, @NotNull Component message);
 
+  void sendConsoleMessage(@NotNull Component message);
+
   void broadcastMessage(@NotNull Component message);
 }
