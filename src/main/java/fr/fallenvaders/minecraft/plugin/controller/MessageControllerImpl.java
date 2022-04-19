@@ -112,8 +112,7 @@ public class MessageControllerImpl implements MessageController {
     return miniMessage
         .deserialize(
             resourceBundle.getString(messageFormatKey),
-            TagResolver.resolver(Placeholder.component("diag_message_content", message)))
+            TagResolver.resolver(Placeholder.component("fv_message_content", message)))
         .decoration(TextDecoration.ITALIC, false);
-    // TODO: rename tag name to FallenVaders instead of Diagonia
   }
 }
