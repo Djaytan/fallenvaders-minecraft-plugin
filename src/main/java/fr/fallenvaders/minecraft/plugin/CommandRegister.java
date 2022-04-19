@@ -19,6 +19,7 @@ package fr.fallenvaders.minecraft.plugin;
 import co.aikar.commands.PaperCommandManager;
 import fr.fallenvaders.minecraft.plugin.command.BroadcastCommand;
 import fr.fallenvaders.minecraft.plugin.command.FeedCommand;
+import fr.fallenvaders.minecraft.plugin.command.FlyCommand;
 import fr.fallenvaders.minecraft.plugin.command.HealCommand;
 import fr.fallenvaders.minecraft.plugin.command.PingCommand;
 import fr.fallenvaders.minecraft.plugin.command.SpawnCommand;
@@ -38,6 +39,7 @@ public class CommandRegister {
   private final Server server;
 
   private final FeedCommand feedCommand;
+  private final FlyCommand flyCommand;
   private final HealCommand healCommand;
   private final PingCommand pingCommand;
   private final SpawnCommand spawnCommand;
@@ -48,6 +50,7 @@ public class CommandRegister {
       @NotNull PaperCommandManager paperCommandManager,
       @NotNull Server server,
       @NotNull FeedCommand feedCommand,
+      @NotNull FlyCommand flyCommand,
       @NotNull HealCommand healCommand,
       @NotNull PingCommand pingCommand,
       @NotNull SpawnCommand spawnCommand) {
@@ -56,6 +59,7 @@ public class CommandRegister {
 
     this.broadcastCommand = broadcastCommand;
     this.feedCommand = feedCommand;
+    this.flyCommand = flyCommand;
     this.healCommand = healCommand;
     this.pingCommand = pingCommand;
     this.spawnCommand = spawnCommand;
@@ -64,6 +68,7 @@ public class CommandRegister {
   public void registerCommands() {
     paperCommandManager.registerCommand(broadcastCommand);
     paperCommandManager.registerCommand(feedCommand);
+    paperCommandManager.registerCommand(flyCommand);
     paperCommandManager.registerCommand(healCommand);
     paperCommandManager.registerCommand(pingCommand);
     paperCommandManager.registerCommand(spawnCommand);

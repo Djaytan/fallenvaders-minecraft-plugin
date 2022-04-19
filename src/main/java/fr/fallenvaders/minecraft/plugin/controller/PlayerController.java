@@ -13,4 +13,9 @@ public interface PlayerController {
   void teleportToSpawn(@NotNull CommandSender sender, @NotNull Player targetedPlayer);
 
   void ping(@NotNull CommandSender sender, @NotNull Player targetedPlayer);
+
+  void toggleFlyMode(@NotNull CommandSender sender, @NotNull Player targetedPlayer);
+
+  void toggleFlyMode(
+      @NotNull CommandSender sender, @NotNull Player targetedPlayer, boolean isFlyActivated);
 }

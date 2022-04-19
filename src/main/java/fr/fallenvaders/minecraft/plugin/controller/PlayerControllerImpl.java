@@ -94,4 +94,26 @@ public class PlayerControllerImpl implements PlayerController {
           sender, essentialsMessages.pingPongOther(targetedPlayer.getName(), pingValue));
     }
   }
+
+  @Override
+  public void toggleFlyMode(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
+    toggleFlyMode(sender, targetedPlayer, !targetedPlayer.getAllowFlight());
+  }
+
+  @Override
+  public void toggleFlyMode(
+      @NotNull CommandSender sender, @NotNull Player targetedPlayer, boolean isFlyActivated) {
+    Preconditions.checkNotNull(sender);
+    Preconditions.checkNotNull(targetedPlayer);
+
+    targetedPlayer.setAllowFlight(isFlyActivated);
+
+    messageController.sendInfoMessage(
+        targetedPlayer, essentialsMessages.flyToggled(isFlyActivated));
+
+    if (!sender.equals(targetedPlayer)) {
+      messageController.sendInfoMessage(
+          sender, essentialsMessages.flyToggledOther(isFlyActivated, targetedPlayer.getName()));
+    }
+  }
 }
