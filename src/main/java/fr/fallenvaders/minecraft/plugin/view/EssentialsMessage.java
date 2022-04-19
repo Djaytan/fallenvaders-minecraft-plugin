@@ -27,9 +27,20 @@ public class EssentialsMessage {
         resourceBundle.getString("fallenvaders.essentials.message.you_have_been_healed"));
   }
 
-  public @NotNull Component playerHaveBeenHealed(@NotNull String healedPlayerName) {
+  public @NotNull Component youHaveBeenFed() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.message.you_have_been_fed"));
+  }
+
+  public @NotNull Component playerHasBeenHealed(@NotNull String healedPlayerName) {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.message.player_healed"),
         TagResolver.resolver(Placeholder.unparsed("fv_player", healedPlayerName)));
+  }
+
+  public @NotNull Component playerHasBeenFed(@NotNull String fedPlayerName) {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.message.player_fed"),
+        TagResolver.resolver(Placeholder.unparsed("fv_player", fedPlayerName)));
   }
 }

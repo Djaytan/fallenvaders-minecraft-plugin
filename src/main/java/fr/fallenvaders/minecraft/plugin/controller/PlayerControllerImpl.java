@@ -1,6 +1,7 @@
 package fr.fallenvaders.minecraft.plugin.controller;
 
 import com.google.common.base.Preconditions;
+import fr.fallenvaders.minecraft.plugin.utils.GameAttribute;
 import fr.fallenvaders.minecraft.plugin.view.EssentialsMessage;
 import java.util.Objects;
 import javax.inject.Inject;
@@ -37,7 +38,23 @@ public class PlayerControllerImpl implements PlayerController {
 
     if (!sender.equals(targetedPlayer)) {
       messageController.sendInfoMessage(
-          sender, essentialsMessages.playerHaveBeenHealed(targetedPlayer.getName()));
+          sender, essentialsMessages.playerHasBeenHealed(targetedPlayer.getName()));
+    }
+  }
+
+  @Override
+  public void feedPlayer(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
+    Preconditions.checkNotNull(sender);
+    Preconditions.checkNotNull(targetedPlayer);
+
+    targetedPlayer.setFoodLevel(GameAttribute.MAX_FOOD_LEVEL);
+    targetedPlayer.setSaturation(GameAttribute.MAX_SATURATION_LEVEL);
+
+    messageController.sendInfoMessage(targetedPlayer, essentialsMessages.youHaveBeenFed());
+
+    if (!sender.equals(targetedPlayer)) {
+      messageController.sendInfoMessage(
+          sender, essentialsMessages.playerHasBeenFed(targetedPlayer.getName()));
     }
   }
 }

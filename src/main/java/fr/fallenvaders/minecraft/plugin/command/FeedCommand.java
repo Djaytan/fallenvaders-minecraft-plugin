@@ -21,34 +21,34 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
-@CommandAlias("heal")
-@CommandPermission("fallenvaders.essentials.heal")
-public class HealCommand extends BaseCommand {
+@CommandAlias("feed")
+@CommandPermission("fallenvaders.essentials.feed")
+public class FeedCommand extends BaseCommand {
 
   private final PlayerController playerController;
   private final Server server;
 
   @Inject
-  public HealCommand(@NotNull PlayerController playerController, @NotNull Server server) {
+  public FeedCommand(@NotNull PlayerController playerController, @NotNull Server server) {
     this.playerController = playerController;
     this.server = server;
   }
 
   @Default
-  @Description("Régénère instantanément votre santé au maximum.")
-  public void onHeal(@NotNull Player player) {
-    playerController.healPlayer(player, player);
+  @Description("Vous rassasie intégralement (saturation incluse).")
+  public void onFeed(@NotNull Player player) {
+    playerController.feedPlayer(player, player);
   }
 
   @Subcommand("player")
   @CommandCompletion("@playernames")
-  @Description("Régénère instantanément la santé du joueur ciblé au maximum.")
+  @Description("Rassasie intégralement le joueur ciblé (saturation incluse).")
   @CommandPermission("fallenvaders.essentials.heal.other")
-  public void onHealOther(
+  public void onFeedOther(
       @NotNull CommandSender commandSender,
       @NotNull @Name("joueur") @Values("@playernames") String targetedPlayerName) {
     Player targetedPlayer = Objects.requireNonNull(server.getPlayer(targetedPlayerName));
-    playerController.healPlayer(commandSender, targetedPlayer);
+    playerController.feedPlayer(commandSender, targetedPlayer);
   }
 
   @HelpCommand
