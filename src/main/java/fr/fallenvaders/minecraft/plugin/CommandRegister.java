@@ -17,6 +17,7 @@
 package fr.fallenvaders.minecraft.plugin;
 
 import co.aikar.commands.PaperCommandManager;
+import fr.fallenvaders.minecraft.plugin.command.AnvilCommand;
 import fr.fallenvaders.minecraft.plugin.command.BroadcastCommand;
 import fr.fallenvaders.minecraft.plugin.command.FeedCommand;
 import fr.fallenvaders.minecraft.plugin.command.FlyCommand;
@@ -39,6 +40,7 @@ public class CommandRegister {
   private final PaperCommandManager paperCommandManager;
   private final Server server;
 
+  private final AnvilCommand anvilCommand;
   private final FeedCommand feedCommand;
   private final FlyCommand flyCommand;
   private final GodCommand godCommand;
@@ -51,6 +53,7 @@ public class CommandRegister {
       @NotNull BroadcastCommand broadcastCommand,
       @NotNull PaperCommandManager paperCommandManager,
       @NotNull Server server,
+      @NotNull AnvilCommand anvilCommand,
       @NotNull FeedCommand feedCommand,
       @NotNull FlyCommand flyCommand,
       @NotNull GodCommand godCommand,
@@ -60,6 +63,7 @@ public class CommandRegister {
     this.paperCommandManager = paperCommandManager;
     this.server = server;
 
+    this.anvilCommand = anvilCommand;
     this.broadcastCommand = broadcastCommand;
     this.feedCommand = feedCommand;
     this.flyCommand = flyCommand;
@@ -70,6 +74,7 @@ public class CommandRegister {
   }
 
   public void registerCommands() {
+    paperCommandManager.registerCommand(anvilCommand);
     paperCommandManager.registerCommand(broadcastCommand);
     paperCommandManager.registerCommand(feedCommand);
     paperCommandManager.registerCommand(flyCommand);

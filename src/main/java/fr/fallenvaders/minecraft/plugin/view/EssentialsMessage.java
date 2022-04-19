@@ -22,6 +22,11 @@ public class EssentialsMessage {
     this.resourceBundle = resourceBundle;
   }
 
+  public @NotNull Component openAnvilInventory() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.anvil"));
+  }
+
   public @NotNull Component youHaveBeenFed() {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.feed.you_have_been_fed"));

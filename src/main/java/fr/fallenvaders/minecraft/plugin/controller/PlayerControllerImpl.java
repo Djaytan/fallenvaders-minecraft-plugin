@@ -138,4 +138,10 @@ public class PlayerControllerImpl implements PlayerController {
           sender, essentialsMessages.godToggledOther(isGodActivated, targetedPlayer.getName()));
     }
   }
+
+  @Override
+  public void openAnvil(@NotNull Player playerSender) {
+    playerSender.openAnvil(playerSender.getLocation(), true);
+    messageController.sendInfoMessage(playerSender, essentialsMessages.openAnvilInventory());
+  }
 }

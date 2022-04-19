@@ -23,4 +23,6 @@ public interface PlayerController {
 
   void toggleGodMode(
       @NotNull CommandSender sender, @NotNull Player targetedPlayer, boolean isGodActivated);
+
+  void openAnvil(@NotNull Player playerSender);
 }
