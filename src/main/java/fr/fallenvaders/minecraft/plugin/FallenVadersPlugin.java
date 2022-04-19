@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class FallenVadersPlugin extends JavaPlugin {
 
   @Inject private CommandRegister commandRegister;
+  @Inject private ListenerRegister listenerRegister;
   @Inject private Message message;
   @Inject private MessageController messageController;
 
@@ -24,6 +25,15 @@ public class FallenVadersPlugin extends JavaPlugin {
       messageController.sendRawMessage(
           getServer().getConsoleSender(),
           message.startupBannerProgressionLine("Guice injection done."));
+      // TODO: replace "done"s by a green mark
+      // TODO: take ConsoleSender from Guice directly
+
+      // Events listeners registration
+      listenerRegister.registerListeners();
+
+      messageController.sendRawMessage(
+          getServer().getConsoleSender(),
+          message.startupBannerProgressionLine("Events listeners registration done."));
 
       // Commands registration
       commandRegister.registerCommands();
