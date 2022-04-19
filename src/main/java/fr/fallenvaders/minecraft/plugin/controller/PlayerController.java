@@ -18,4 +18,9 @@ public interface PlayerController {
 
   void toggleFlyMode(
       @NotNull CommandSender sender, @NotNull Player targetedPlayer, boolean isFlyActivated);
+
+  void toggleGodMode(@NotNull CommandSender sender, @NotNull Player targetedPlayer);
+
+  void toggleGodMode(
+      @NotNull CommandSender sender, @NotNull Player targetedPlayer, boolean isGodActivated);
 }

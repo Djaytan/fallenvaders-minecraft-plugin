@@ -116,4 +116,26 @@ public class PlayerControllerImpl implements PlayerController {
           sender, essentialsMessages.flyToggledOther(isFlyActivated, targetedPlayer.getName()));
     }
   }
+
+  @Override
+  public void toggleGodMode(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
+    toggleGodMode(sender, targetedPlayer, !targetedPlayer.isInvulnerable());
+  }
+
+  @Override
+  public void toggleGodMode(
+      @NotNull CommandSender sender, @NotNull Player targetedPlayer, boolean isGodActivated) {
+    Preconditions.checkNotNull(sender);
+    Preconditions.checkNotNull(targetedPlayer);
+
+    targetedPlayer.setInvulnerable(isGodActivated);
+
+    messageController.sendInfoMessage(
+        targetedPlayer, essentialsMessages.godToggled(isGodActivated));
+
+    if (!sender.equals(targetedPlayer)) {
+      messageController.sendInfoMessage(
+          sender, essentialsMessages.godToggledOther(isGodActivated, targetedPlayer.getName()));
+    }
+  }
 }

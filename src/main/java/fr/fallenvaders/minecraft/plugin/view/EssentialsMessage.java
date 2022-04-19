@@ -63,6 +63,36 @@ public class EssentialsMessage {
             Placeholder.unparsed("fv_player", targetedPlayerName)));
   }
 
+  public @NotNull Component godToggled(boolean isGodActivated) {
+    String stateKey = "fallenvaders.common.state.activated";
+
+    if (!isGodActivated) {
+      stateKey = "fallenvaders.common.state.deactivated";
+    }
+
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.god.toggled"),
+        TagResolver.resolver(
+            Placeholder.component(
+                "fv_state", miniMessage.deserialize(resourceBundle.getString(stateKey)))));
+  }
+
+  public @NotNull Component godToggledOther(
+      boolean isGodActivated, @NotNull String targetedPlayerName) {
+    String stateKey = "fallenvaders.common.state.activated";
+
+    if (!isGodActivated) {
+      stateKey = "fallenvaders.common.state.deactivated";
+    }
+
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.god.toggled.other"),
+        TagResolver.resolver(
+            Placeholder.component(
+                "fv_state", miniMessage.deserialize(resourceBundle.getString(stateKey))),
+            Placeholder.unparsed("fv_player", targetedPlayerName)));
+  }
+
   public @NotNull Component youHaveBeenHealed() {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.heal.you_have_been_healed"));
