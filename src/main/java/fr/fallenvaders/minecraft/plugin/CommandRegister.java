@@ -17,6 +17,7 @@
 package fr.fallenvaders.minecraft.plugin;
 
 import co.aikar.commands.PaperCommandManager;
+import fr.fallenvaders.minecraft.plugin.command.BroadcastCommand;
 import fr.fallenvaders.minecraft.plugin.command.FeedCommand;
 import fr.fallenvaders.minecraft.plugin.command.HealCommand;
 import fr.fallenvaders.minecraft.plugin.command.SpawnCommand;
@@ -31,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 @Singleton
 public class CommandRegister {
 
+  private final BroadcastCommand broadcastCommand;
   private final PaperCommandManager paperCommandManager;
   private final Server server;
 
@@ -40,11 +42,14 @@ public class CommandRegister {
 
   @Inject
   public CommandRegister(
+      @NotNull BroadcastCommand broadcastCommand,
       @NotNull PaperCommandManager paperCommandManager,
       @NotNull Server server,
       @NotNull FeedCommand feedCommand,
       @NotNull HealCommand healCommand,
       @NotNull SpawnCommand spawnCommand) {
+    this.broadcastCommand = broadcastCommand;
+
     this.paperCommandManager = paperCommandManager;
     this.server = server;
     this.feedCommand = feedCommand;
@@ -53,6 +58,7 @@ public class CommandRegister {
   }
 
   public void registerCommands() {
+    paperCommandManager.registerCommand(broadcastCommand);
     paperCommandManager.registerCommand(feedCommand);
     paperCommandManager.registerCommand(healCommand);
     paperCommandManager.registerCommand(spawnCommand);
