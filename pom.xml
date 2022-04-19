@@ -31,6 +31,7 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <sonar.organization>fallenvaders</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <package.root>fr.fallenvaders.minecraft.plugin</package.root>
 
         <!-- Specific properties -->
         <minecraft.api.version>1.18</minecraft.api.version>
@@ -78,6 +79,7 @@
             <groupId>com.github.stefvanschie.inventoryframework</groupId>
             <artifactId>IF</artifactId>
             <version>${if.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Java libraries -->
@@ -210,19 +212,30 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.3.0-SNAPSHOT</version>
                 <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
+                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                    <relocations>
+                        <relocation>
+                            <pattern>co.aikar.commands</pattern>
+                            <shadedPattern>${package.root}.libs.acf.core</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>co.aikar.locales</pattern>
+                            <shadedPattern>${package.root}.libs.acf.locales</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.github.stefvanschie.inventoryframework</pattern>
+                            <shadedPattern>${package.root}.libs.inventoryframework</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>shade</goal>
                         </goals>
                     </execution>
                 </executions>
