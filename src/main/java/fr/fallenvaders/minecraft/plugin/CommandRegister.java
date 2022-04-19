@@ -17,6 +17,7 @@
 package fr.fallenvaders.minecraft.plugin;
 
 import co.aikar.commands.PaperCommandManager;
+import fr.fallenvaders.minecraft.plugin.command.HealCommand;
 import java.util.Arrays;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,14 +31,20 @@ public class CommandRegister {
   private final PaperCommandManager paperCommandManager;
   private final Server server;
 
+  private final HealCommand healCommand;
+
   @Inject
-  public CommandRegister(@NotNull PaperCommandManager paperCommandManager, @NotNull Server server) {
+  public CommandRegister(
+      @NotNull PaperCommandManager paperCommandManager,
+      @NotNull Server server,
+      @NotNull HealCommand healCommand) {
     this.paperCommandManager = paperCommandManager;
     this.server = server;
+    this.healCommand = healCommand;
   }
 
   public void registerCommands() {
-    /* To be completed when needed */
+    paperCommandManager.registerCommand(healCommand);
   }
 
   public void registerCommandCompletions() {

@@ -21,6 +21,8 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import fr.fallenvaders.minecraft.plugin.controller.MessageController;
 import fr.fallenvaders.minecraft.plugin.controller.MessageControllerImpl;
+import fr.fallenvaders.minecraft.plugin.controller.PlayerController;
+import fr.fallenvaders.minecraft.plugin.controller.PlayerControllerImpl;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +33,7 @@ public class GuiceGeneralModule extends AbstractModule {
   @Override
   public void configure() {
     bind(MessageController.class).to(MessageControllerImpl.class);
+    bind(PlayerController.class).to(PlayerControllerImpl.class);
   }
 
   @Provides
