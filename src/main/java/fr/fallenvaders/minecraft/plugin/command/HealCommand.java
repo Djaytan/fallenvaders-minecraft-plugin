@@ -43,6 +43,7 @@ public class HealCommand extends BaseCommand {
   @Subcommand("player")
   @CommandCompletion("@playernames")
   @Description("Régénère instantanément la santé du joueur ciblé au maximum.")
+  @CommandPermission("fallenvaders.essentials.heal.other")
   public void onHealOther(
       @NotNull CommandSender commandSender,
       @NotNull @Name("joueur") @Values("@playernames") String targetedPlayerName) {
