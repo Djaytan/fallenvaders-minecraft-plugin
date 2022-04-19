@@ -60,11 +60,10 @@ public final class Message {
   public @NotNull Component startupBannerVersionLine(
       @NotNull PluginDescriptionFile pluginDescriptionFile) {
     return STARTUP_BANNER_INDENT.append(
-        Component.text("Current version:")
-            .color(NamedTextColor.AQUA)
-            .append(Component.space())
-            .append(
-                Component.text(pluginDescriptionFile.getVersion()).color(NamedTextColor.WHITE)));
+        miniMessage.deserialize(
+            resourceBundle.getString("fallenvaders.common.message.startup.current_version"),
+            TagResolver.resolver(
+                Placeholder.unparsed("fv_plugin_version", pluginDescriptionFile.getVersion()))));
   }
 
   public @NotNull Component startupBannerProgressionLine(@NotNull String text) {
@@ -76,12 +75,13 @@ public final class Message {
 
   public @NotNull Component startupBannerEnablingSuccessLine() {
     return STARTUP_BANNER_INDENT.append(
-        Component.text("Plugin successfully activated!").color(NamedTextColor.GREEN));
+        miniMessage.deserialize(
+            resourceBundle.getString("fallenvaders.common.message.startup.enabling_successfully")));
   }
 
   public @NotNull Component startupBannerEnablingFailureLine() {
     return STARTUP_BANNER_INDENT.append(
-        Component.text("Plugin failed to be activated! See details below...")
-            .color(NamedTextColor.RED));
+        miniMessage.deserialize(
+            resourceBundle.getString("fallenvaders.common.message.startup.enabling_failed")));
   }
 }
