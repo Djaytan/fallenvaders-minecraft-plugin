@@ -1,15 +1,12 @@
 package fr.fallenvaders.minecraft.plugin.command;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Name;
-import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Values;
 import fr.fallenvaders.minecraft.plugin.controller.PlayerController;
 import java.util.Objects;
@@ -36,11 +33,11 @@ public class SpawnCommand extends BaseCommand {
 
   @Default
   @Description("Téléporte au spawn.")
-  public void onSpawn(@NotNull Player player) {
-    playerController.teleportToSpawn(player, player);
+  public void onSpawn(@NotNull Player playerSender) {
+    playerController.teleportToSpawn(playerSender, playerSender);
   }
 
-  @Subcommand("player")
+  @Default
   @CommandCompletion("@playernames")
   @Description("Téléporte le joueur ciblé au spawn.")
   @CommandPermission("fallenvaders.essentials.spawn.other")
@@ -49,11 +46,5 @@ public class SpawnCommand extends BaseCommand {
       @NotNull @Name("joueur") @Values("@playernames") String targetedPlayerName) {
     Player targetedPlayer = Objects.requireNonNull(server.getPlayer(targetedPlayerName));
     playerController.teleportToSpawn(commandSender, targetedPlayer);
-  }
-
-  @HelpCommand
-  @Description("Affichage de l'aide pour la commande.")
-  public void onHelp(CommandSender commandSender, CommandHelp commandHelp) {
-    commandHelp.showHelp();
   }
 }

@@ -1,15 +1,12 @@
 package fr.fallenvaders.minecraft.plugin.command;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Name;
-import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Values;
 import fr.fallenvaders.minecraft.plugin.controller.PlayerController;
 import java.util.Objects;
@@ -36,11 +33,11 @@ public class HealCommand extends BaseCommand {
 
   @Default
   @Description("Régénère instantanément votre santé au maximum.")
-  public void onHeal(@NotNull Player player) {
-    playerController.healPlayer(player, player);
+  public void onHeal(@NotNull Player playerSender) {
+    playerController.healPlayer(playerSender, playerSender);
   }
 
-  @Subcommand("player")
+  @Default
   @CommandCompletion("@playernames")
   @Description("Régénère instantanément la santé du joueur ciblé au maximum.")
   @CommandPermission("fallenvaders.essentials.heal.other")
@@ -49,11 +46,5 @@ public class HealCommand extends BaseCommand {
       @NotNull @Name("joueur") @Values("@playernames") String targetedPlayerName) {
     Player targetedPlayer = Objects.requireNonNull(server.getPlayer(targetedPlayerName));
     playerController.healPlayer(commandSender, targetedPlayer);
-  }
-
-  @HelpCommand
-  @Description("Affichage de l'aide pour la commande.")
-  public void onHelp(CommandSender commandSender, CommandHelp commandHelp) {
-    commandHelp.showHelp();
   }
 }

@@ -1,15 +1,12 @@
 package fr.fallenvaders.minecraft.plugin.command;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Name;
-import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Values;
 import fr.fallenvaders.minecraft.plugin.controller.PlayerController;
 import java.util.Objects;
@@ -36,24 +33,18 @@ public class FeedCommand extends BaseCommand {
 
   @Default
   @Description("Vous rassasie intégralement (saturation incluse).")
-  public void onFeed(@NotNull Player player) {
-    playerController.feedPlayer(player, player);
+  public void onFeed(@NotNull Player playerSender) {
+    playerController.feedPlayer(playerSender, playerSender);
   }
 
-  @Subcommand("player")
+  @Default
   @CommandCompletion("@playernames")
   @Description("Rassasie intégralement le joueur ciblé (saturation incluse).")
-  @CommandPermission("fallenvaders.essentials.heal.other")
+  @CommandPermission("fallenvaders.essentials.feed.other")
   public void onFeedOther(
       @NotNull CommandSender commandSender,
       @NotNull @Name("joueur") @Values("@playernames") String targetedPlayerName) {
     Player targetedPlayer = Objects.requireNonNull(server.getPlayer(targetedPlayerName));
     playerController.feedPlayer(commandSender, targetedPlayer);
-  }
-
-  @HelpCommand
-  @Description("Affichage de l'aide pour la commande.")
-  public void onHelp(CommandSender commandSender, CommandHelp commandHelp) {
-    commandHelp.showHelp();
   }
 }

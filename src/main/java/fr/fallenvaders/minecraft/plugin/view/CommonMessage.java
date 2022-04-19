@@ -12,7 +12,6 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
 
-// TODO: rename it CommonMessage
 @Singleton
 public final class CommonMessage {
 
