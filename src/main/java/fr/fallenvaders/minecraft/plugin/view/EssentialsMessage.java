@@ -32,9 +32,4 @@ public class EssentialsMessage {
         resourceBundle.getString("fallenvaders.essentials.message.player_healed"),
         TagResolver.resolver(Placeholder.unparsed("fv_player", healedPlayerName)));
   }
-
-  public @NotNull Component playerMandatoryForConsole() {
-    return miniMessage.deserialize(
-        resourceBundle.getString("fallenvaders.essentials.message.player_mandatory_for_console"));
-  }
 }
