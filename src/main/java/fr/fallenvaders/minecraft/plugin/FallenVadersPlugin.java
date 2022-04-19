@@ -21,22 +21,20 @@ public class FallenVadersPlugin extends JavaPlugin {
     try {
       messageController.sendConsoleMessage(message.startupBanner());
       messageController.sendConsoleMessage(message.startupBannerVersionLine(getDescription()));
-      messageController.sendConsoleMessage(
-          message.startupBannerProgressionLine("Guice injection done."));
-      // TODO: replace "done"s by a green mark
+      messageController.sendConsoleMessage(message.startupBannerProgressionLine("Guice injection"));
 
       // Events listeners registration
       listenerRegister.registerListeners();
 
       messageController.sendConsoleMessage(
-          message.startupBannerProgressionLine("Events listeners registration done."));
+          message.startupBannerProgressionLine("Events listeners registration"));
 
       // Commands registration
       commandRegister.registerCommands();
       commandRegister.registerCommandCompletions();
 
       messageController.sendConsoleMessage(
-          message.startupBannerProgressionLine("Commands registration done."));
+          message.startupBannerProgressionLine("Commands registration"));
 
       // Plugin enabled successfully
       messageController.sendConsoleMessage(message.startupBannerEnablingSuccessLine());

@@ -114,5 +114,6 @@ public class MessageControllerImpl implements MessageController {
             resourceBundle.getString(messageFormatKey),
             TagResolver.resolver(Placeholder.component("diag_message_content", message)))
         .decoration(TextDecoration.ITALIC, false);
+    // TODO: rename tag name to FallenVaders instead of Diagonia
   }
 }

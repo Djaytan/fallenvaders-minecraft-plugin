@@ -7,6 +7,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
 
@@ -66,7 +68,10 @@ public final class Message {
   }
 
   public @NotNull Component startupBannerProgressionLine(@NotNull String text) {
-    return STARTUP_BANNER_INDENT.append(Component.text(text).color(NamedTextColor.YELLOW));
+    return STARTUP_BANNER_INDENT.append(
+        miniMessage.deserialize(
+            resourceBundle.getString("fallenvaders.common.message.startup.progression_line.format"),
+            TagResolver.resolver(Placeholder.unparsed("fv_progression_message", text))));
   }
 
   public @NotNull Component startupBannerEnablingSuccessLine() {
