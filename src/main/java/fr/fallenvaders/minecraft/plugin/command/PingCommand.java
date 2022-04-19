@@ -10,7 +10,7 @@ import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Values;
 import fr.fallenvaders.minecraft.plugin.controller.MessageController;
 import fr.fallenvaders.minecraft.plugin.controller.PlayerController;
-import fr.fallenvaders.minecraft.plugin.view.Message;
+import fr.fallenvaders.minecraft.plugin.view.CommonMessage;
 import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -25,18 +25,18 @@ import org.jetbrains.annotations.Nullable;
 @CommandPermission("fallenvaders.essentials.ping")
 public class PingCommand extends BaseCommand {
 
-  private final Message message;
+  private final CommonMessage commonMessage;
   private final MessageController messageController;
   private final PlayerController playerController;
   private final Server server;
 
   @Inject
   public PingCommand(
-      @NotNull Message message,
+      @NotNull CommonMessage commonMessage,
       @NotNull MessageController messageController,
       @NotNull PlayerController playerController,
       @NotNull Server server) {
-    this.message = message;
+    this.commonMessage = commonMessage;
     this.messageController = messageController;
     this.playerController = playerController;
     this.server = server;
@@ -52,7 +52,8 @@ public class PingCommand extends BaseCommand {
       if (commandSender instanceof Player playerSender) {
         playerController.ping(playerSender, playerSender);
       } else {
-        messageController.sendErrorMessage(commandSender, message.impossibleToTargetConsole());
+        messageController.sendErrorMessage(
+            commandSender, commonMessage.impossibleToTargetConsole());
       }
     } else {
       Player targetedPlayer = Objects.requireNonNull(server.getPlayer(playerName));

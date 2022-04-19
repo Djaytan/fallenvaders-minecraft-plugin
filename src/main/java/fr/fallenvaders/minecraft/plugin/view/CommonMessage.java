@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 // TODO: rename it CommonMessage
 @Singleton
-public final class Message {
+public final class CommonMessage {
 
   private static final Component STARTUP_BANNER_INDENT = Component.text("      ");
 
@@ -22,7 +22,7 @@ public final class Message {
   private final ResourceBundle resourceBundle;
 
   @Inject
-  private Message(@NotNull MiniMessage miniMessage, @NotNull ResourceBundle resourceBundle) {
+  private CommonMessage(@NotNull MiniMessage miniMessage, @NotNull ResourceBundle resourceBundle) {
     this.miniMessage = miniMessage;
     this.resourceBundle = resourceBundle;
   }
