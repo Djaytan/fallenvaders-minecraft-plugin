@@ -20,6 +20,7 @@ import co.aikar.commands.PaperCommandManager;
 import fr.fallenvaders.minecraft.plugin.command.AnvilCommand;
 import fr.fallenvaders.minecraft.plugin.command.BroadcastCommand;
 import fr.fallenvaders.minecraft.plugin.command.CartographyTableCommand;
+import fr.fallenvaders.minecraft.plugin.command.CraftingTableCommand;
 import fr.fallenvaders.minecraft.plugin.command.FeedCommand;
 import fr.fallenvaders.minecraft.plugin.command.FlyCommand;
 import fr.fallenvaders.minecraft.plugin.command.GodCommand;
@@ -47,6 +48,7 @@ public class CommandRegister {
   private final AnvilCommand anvilCommand;
   private final BroadcastCommand broadcastCommand;
   private final CartographyTableCommand cartographyTableCommand;
+  private final CraftingTableCommand craftingTableCommand;
   private final FeedCommand feedCommand;
   private final FlyCommand flyCommand;
   private final GodCommand godCommand;
@@ -65,6 +67,7 @@ public class CommandRegister {
       @NotNull AnvilCommand anvilCommand,
       @NotNull BroadcastCommand broadcastCommand,
       @NotNull CartographyTableCommand cartographyTableCommand,
+      @NotNull CraftingTableCommand craftingTableCommand,
       @NotNull FeedCommand feedCommand,
       @NotNull FlyCommand flyCommand,
       @NotNull GodCommand godCommand,
@@ -81,6 +84,7 @@ public class CommandRegister {
     this.anvilCommand = anvilCommand;
     this.broadcastCommand = broadcastCommand;
     this.cartographyTableCommand = cartographyTableCommand;
+    this.craftingTableCommand = craftingTableCommand;
     this.feedCommand = feedCommand;
     this.flyCommand = flyCommand;
     this.godCommand = godCommand;
@@ -97,6 +101,7 @@ public class CommandRegister {
     paperCommandManager.registerCommand(anvilCommand);
     paperCommandManager.registerCommand(broadcastCommand);
     paperCommandManager.registerCommand(cartographyTableCommand);
+    paperCommandManager.registerCommand(craftingTableCommand);
     paperCommandManager.registerCommand(feedCommand);
     paperCommandManager.registerCommand(flyCommand);
     paperCommandManager.registerCommand(godCommand);

@@ -184,4 +184,11 @@ public class PlayerControllerImpl implements PlayerController {
     messageController.sendInfoMessage(
         playerSender, essentialsMessages.openSmithingTableInventory());
   }
+
+  @Override
+  public void openCraftingTable(@NotNull Player playerSender) {
+    playerSender.openWorkbench(playerSender.getLocation(), true);
+    messageController.sendInfoMessage(
+        playerSender, essentialsMessages.openCraftingTableInventory());
+  }
 }

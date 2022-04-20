@@ -35,4 +35,6 @@ public interface PlayerController {
   void openStonecutter(@NotNull Player playerSender);
 
   void openSmithingTable(@NotNull Player playerSender);
+
+  void openCraftingTable(@NotNull Player playerSender);
 }

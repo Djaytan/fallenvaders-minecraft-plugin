@@ -32,6 +32,11 @@ public class EssentialsMessage {
         resourceBundle.getString("fallenvaders.essentials.command.cartography_table"));
   }
 
+  public @NotNull Component openCraftingTableInventory() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.crafting_table"));
+  }
+
   public @NotNull Component youHaveBeenFed() {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.feed.you_have_been_fed"));
@@ -140,7 +145,7 @@ public class EssentialsMessage {
 
   public @NotNull Component openSmithingTableInventory() {
     return miniMessage.deserialize(
-      resourceBundle.getString("fallenvaders.essentials.command.smithing_table"));
+        resourceBundle.getString("fallenvaders.essentials.command.smithing_table"));
   }
 
   public @NotNull Component youHaveBeenTeleportedToSpawn() {
