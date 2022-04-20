@@ -163,4 +163,10 @@ public class PlayerControllerImpl implements PlayerController {
     playerSender.openLoom(playerSender.getLocation(), true);
     messageController.sendInfoMessage(playerSender, essentialsMessages.openLoomInventory());
   }
+
+  @Override
+  public void openStonecutter(@NotNull Player playerSender) {
+    playerSender.openStonecutter(playerSender.getLocation(), true);
+    messageController.sendInfoMessage(playerSender, essentialsMessages.openStonecutterInventory());
+  }
 }

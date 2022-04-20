@@ -121,7 +121,7 @@ public class EssentialsMessage {
 
   public @NotNull Component openLoomInventory() {
     return miniMessage.deserialize(
-      resourceBundle.getString("fallenvaders.essentials.command.loom"));
+        resourceBundle.getString("fallenvaders.essentials.command.loom"));
   }
 
   public @NotNull Component pingPong(int pingValue) {
@@ -149,5 +149,10 @@ public class EssentialsMessage {
         resourceBundle.getString(
             "fallenvaders.essentials.command.spawn.player_teleported_to_spawn"),
         TagResolver.resolver(Placeholder.unparsed("fv_player", teleportedPlayerName)));
+  }
+
+  public @NotNull Component openStonecutterInventory() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.stonecutter"));
   }
 }

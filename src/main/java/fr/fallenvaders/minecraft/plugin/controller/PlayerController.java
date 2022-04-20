@@ -31,4 +31,6 @@ public interface PlayerController {
   void openGrindstone(@NotNull Player playerSender);
 
   void openLoom(@NotNull Player playerSender);
+
+  void openStonecutter(@NotNull Player playerSender);
 }
