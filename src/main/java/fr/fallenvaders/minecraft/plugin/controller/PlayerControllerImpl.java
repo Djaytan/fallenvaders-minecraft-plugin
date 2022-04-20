@@ -32,8 +32,8 @@ public class PlayerControllerImpl implements PlayerController {
   }
 
   @Override
-  public void healPlayer(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
-    Preconditions.checkNotNull(sender);
+  public void healPlayer(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer) {
+    Preconditions.checkNotNull(commandSender);
     Preconditions.checkNotNull(targetedPlayer);
 
     AttributeInstance maxHealthAttribute =
@@ -42,15 +42,15 @@ public class PlayerControllerImpl implements PlayerController {
 
     messageController.sendInfoMessage(targetedPlayer, essentialsMessages.youHaveBeenHealed());
 
-    if (!sender.equals(targetedPlayer)) {
+    if (!commandSender.equals(targetedPlayer)) {
       messageController.sendInfoMessage(
-          sender, essentialsMessages.playerHasBeenHealed(targetedPlayer.getName()));
+          commandSender, essentialsMessages.playerHasBeenHealed(targetedPlayer.getName()));
     }
   }
 
   @Override
-  public void feedPlayer(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
-    Preconditions.checkNotNull(sender);
+  public void feedPlayer(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer) {
+    Preconditions.checkNotNull(commandSender);
     Preconditions.checkNotNull(targetedPlayer);
 
     targetedPlayer.setFoodLevel(GameAttribute.MAX_FOOD_LEVEL);
@@ -58,15 +58,16 @@ public class PlayerControllerImpl implements PlayerController {
 
     messageController.sendInfoMessage(targetedPlayer, essentialsMessages.youHaveBeenFed());
 
-    if (!sender.equals(targetedPlayer)) {
+    if (!commandSender.equals(targetedPlayer)) {
       messageController.sendInfoMessage(
-          sender, essentialsMessages.playerHasBeenFed(targetedPlayer.getName()));
+          commandSender, essentialsMessages.playerHasBeenFed(targetedPlayer.getName()));
     }
   }
 
   @Override
-  public void teleportToSpawn(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
-    Preconditions.checkNotNull(sender);
+  public void teleportToSpawn(
+      @NotNull CommandSender commandSender, @NotNull Player targetedPlayer) {
+    Preconditions.checkNotNull(commandSender);
     Preconditions.checkNotNull(targetedPlayer);
 
     targetedPlayer.teleport(fallenVadersConfig.getSpawnLocation());
@@ -74,36 +75,39 @@ public class PlayerControllerImpl implements PlayerController {
     messageController.sendInfoMessage(
         targetedPlayer, essentialsMessages.youHaveBeenTeleportedToSpawn());
 
-    if (!sender.equals(targetedPlayer)) {
+    if (!commandSender.equals(targetedPlayer)) {
       messageController.sendInfoMessage(
-          sender, essentialsMessages.playerHasBeenTeleportedToSpawn(targetedPlayer.getName()));
+          commandSender,
+          essentialsMessages.playerHasBeenTeleportedToSpawn(targetedPlayer.getName()));
     }
   }
 
   @Override
-  public void ping(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
-    Preconditions.checkNotNull(sender);
+  public void ping(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer) {
+    Preconditions.checkNotNull(commandSender);
     Preconditions.checkNotNull(targetedPlayer);
 
     int pingValue = targetedPlayer.getPing();
 
-    if (sender.equals(targetedPlayer)) {
-      messageController.sendInfoMessage(sender, essentialsMessages.pingPong(pingValue));
+    if (commandSender.equals(targetedPlayer)) {
+      messageController.sendInfoMessage(commandSender, essentialsMessages.pingPong(pingValue));
     } else {
       messageController.sendInfoMessage(
-          sender, essentialsMessages.pingPongOther(targetedPlayer.getName(), pingValue));
+          commandSender, essentialsMessages.pingPongOther(targetedPlayer.getName(), pingValue));
     }
   }
 
   @Override
-  public void toggleFlyMode(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
-    toggleFlyMode(sender, targetedPlayer, !targetedPlayer.getAllowFlight());
+  public void toggleFlyMode(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer) {
+    toggleFlyMode(commandSender, targetedPlayer, !targetedPlayer.getAllowFlight());
   }
 
   @Override
   public void toggleFlyMode(
-      @NotNull CommandSender sender, @NotNull Player targetedPlayer, boolean isFlyActivated) {
-    Preconditions.checkNotNull(sender);
+      @NotNull CommandSender commandSender,
+      @NotNull Player targetedPlayer,
+      boolean isFlyActivated) {
+    Preconditions.checkNotNull(commandSender);
     Preconditions.checkNotNull(targetedPlayer);
 
     targetedPlayer.setAllowFlight(isFlyActivated);
@@ -111,21 +115,24 @@ public class PlayerControllerImpl implements PlayerController {
     messageController.sendInfoMessage(
         targetedPlayer, essentialsMessages.flyToggled(isFlyActivated));
 
-    if (!sender.equals(targetedPlayer)) {
+    if (!commandSender.equals(targetedPlayer)) {
       messageController.sendInfoMessage(
-          sender, essentialsMessages.flyToggledOther(isFlyActivated, targetedPlayer.getName()));
+          commandSender,
+          essentialsMessages.flyToggledOther(isFlyActivated, targetedPlayer.getName()));
     }
   }
 
   @Override
-  public void toggleGodMode(@NotNull CommandSender sender, @NotNull Player targetedPlayer) {
-    toggleGodMode(sender, targetedPlayer, !targetedPlayer.isInvulnerable());
+  public void toggleGodMode(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer) {
+    toggleGodMode(commandSender, targetedPlayer, !targetedPlayer.isInvulnerable());
   }
 
   @Override
   public void toggleGodMode(
-      @NotNull CommandSender sender, @NotNull Player targetedPlayer, boolean isGodActivated) {
-    Preconditions.checkNotNull(sender);
+      @NotNull CommandSender commandSender,
+      @NotNull Player targetedPlayer,
+      boolean isGodActivated) {
+    Preconditions.checkNotNull(commandSender);
     Preconditions.checkNotNull(targetedPlayer);
 
     targetedPlayer.setInvulnerable(isGodActivated);
@@ -133,9 +140,10 @@ public class PlayerControllerImpl implements PlayerController {
     messageController.sendInfoMessage(
         targetedPlayer, essentialsMessages.godToggled(isGodActivated));
 
-    if (!sender.equals(targetedPlayer)) {
+    if (!commandSender.equals(targetedPlayer)) {
       messageController.sendInfoMessage(
-          sender, essentialsMessages.godToggledOther(isGodActivated, targetedPlayer.getName()));
+          commandSender,
+          essentialsMessages.godToggledOther(isGodActivated, targetedPlayer.getName()));
     }
   }
 
