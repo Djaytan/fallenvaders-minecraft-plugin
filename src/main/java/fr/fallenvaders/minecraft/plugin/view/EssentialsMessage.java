@@ -119,6 +119,11 @@ public class EssentialsMessage {
         TagResolver.resolver(Placeholder.unparsed("fv_player", healedPlayerName)));
   }
 
+  public @NotNull Component openLoomInventory() {
+    return miniMessage.deserialize(
+      resourceBundle.getString("fallenvaders.essentials.command.loom"));
+  }
+
   public @NotNull Component pingPong(int pingValue) {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.ping.pong"),

@@ -157,4 +157,10 @@ public class PlayerControllerImpl implements PlayerController {
     playerSender.openGrindstone(playerSender.getLocation(), true);
     messageController.sendInfoMessage(playerSender, essentialsMessages.openGrindstoneInventory());
   }
+
+  @Override
+  public void openLoom(@NotNull Player playerSender) {
+    playerSender.openLoom(playerSender.getLocation(), true);
+    messageController.sendInfoMessage(playerSender, essentialsMessages.openLoomInventory());
+  }
 }

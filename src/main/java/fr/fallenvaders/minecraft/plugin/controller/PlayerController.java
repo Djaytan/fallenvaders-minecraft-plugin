@@ -29,4 +29,6 @@ public interface PlayerController {
   void openCartographyTable(@NotNull Player playerSender);
 
   void openGrindstone(@NotNull Player playerSender);
+
+  void openLoom(@NotNull Player playerSender);
 }
