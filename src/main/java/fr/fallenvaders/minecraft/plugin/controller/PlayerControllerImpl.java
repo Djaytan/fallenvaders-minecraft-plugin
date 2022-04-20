@@ -151,4 +151,10 @@ public class PlayerControllerImpl implements PlayerController {
     messageController.sendInfoMessage(
         playerSender, essentialsMessages.openCartographyTableInventory());
   }
+
+  @Override
+  public void openGrindstone(@NotNull Player playerSender) {
+    playerSender.openGrindstone(playerSender.getLocation(), true);
+    messageController.sendInfoMessage(playerSender, essentialsMessages.openGrindstoneInventory());
+  }
 }

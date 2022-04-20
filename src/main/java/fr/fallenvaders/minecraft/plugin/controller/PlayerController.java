@@ -27,4 +27,6 @@ public interface PlayerController {
   void openAnvil(@NotNull Player playerSender);
 
   void openCartographyTable(@NotNull Player playerSender);
+
+  void openGrindstone(@NotNull Player playerSender);
 }

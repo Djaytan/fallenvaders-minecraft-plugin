@@ -23,6 +23,7 @@ import fr.fallenvaders.minecraft.plugin.command.CartographyTableCommand;
 import fr.fallenvaders.minecraft.plugin.command.FeedCommand;
 import fr.fallenvaders.minecraft.plugin.command.FlyCommand;
 import fr.fallenvaders.minecraft.plugin.command.GodCommand;
+import fr.fallenvaders.minecraft.plugin.command.GrindstoneCommand;
 import fr.fallenvaders.minecraft.plugin.command.HealCommand;
 import fr.fallenvaders.minecraft.plugin.command.PingCommand;
 import fr.fallenvaders.minecraft.plugin.command.SpawnCommand;
@@ -46,6 +47,7 @@ public class CommandRegister {
   private final FeedCommand feedCommand;
   private final FlyCommand flyCommand;
   private final GodCommand godCommand;
+  private final GrindstoneCommand grindstoneCommand;
   private final HealCommand healCommand;
   private final PingCommand pingCommand;
   private final SpawnCommand spawnCommand;
@@ -60,6 +62,7 @@ public class CommandRegister {
       @NotNull FeedCommand feedCommand,
       @NotNull FlyCommand flyCommand,
       @NotNull GodCommand godCommand,
+      @NotNull GrindstoneCommand grindstoneCommand,
       @NotNull HealCommand healCommand,
       @NotNull PingCommand pingCommand,
       @NotNull SpawnCommand spawnCommand) {
@@ -72,6 +75,7 @@ public class CommandRegister {
     this.feedCommand = feedCommand;
     this.flyCommand = flyCommand;
     this.godCommand = godCommand;
+    this.grindstoneCommand = grindstoneCommand;
     this.healCommand = healCommand;
     this.pingCommand = pingCommand;
     this.spawnCommand = spawnCommand;
@@ -84,6 +88,7 @@ public class CommandRegister {
     paperCommandManager.registerCommand(feedCommand);
     paperCommandManager.registerCommand(flyCommand);
     paperCommandManager.registerCommand(godCommand);
+    paperCommandManager.registerCommand(grindstoneCommand);
     paperCommandManager.registerCommand(healCommand);
     paperCommandManager.registerCommand(pingCommand);
     paperCommandManager.registerCommand(spawnCommand);

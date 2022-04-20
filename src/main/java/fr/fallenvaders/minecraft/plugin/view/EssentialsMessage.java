@@ -103,6 +103,11 @@ public class EssentialsMessage {
             Placeholder.unparsed("fv_player", targetedPlayerName)));
   }
 
+  public @NotNull Component openGrindstoneInventory() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.grindstone"));
+  }
+
   public @NotNull Component youHaveBeenHealed() {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.heal.you_have_been_healed"));
