@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import fr.fallenvaders.minecraft.plugin.controller.PlayerController;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,7 @@ public class StonecutterCommand extends BaseCommand {
 
   private final PlayerController playerController;
 
+  @Inject
   public StonecutterCommand(@NotNull PlayerController playerController) {
     this.playerController = playerController;
   }
