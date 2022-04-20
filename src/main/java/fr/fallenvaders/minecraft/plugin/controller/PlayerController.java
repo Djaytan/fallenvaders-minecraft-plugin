@@ -40,5 +40,7 @@ public interface PlayerController {
 
   void openEnderChest(@NotNull Player playerSender);
 
+  void openDisposal(@NotNull Player playerSender);
+
   void suicide(@NotNull Player playerSender);
 }

@@ -5,8 +5,11 @@ import fr.fallenvaders.minecraft.plugin.FallenVadersConfig;
 import fr.fallenvaders.minecraft.plugin.utils.GameAttribute;
 import fr.fallenvaders.minecraft.plugin.view.EssentialsMessage;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Server;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.CommandSender;
@@ -20,15 +23,24 @@ public class PlayerControllerImpl implements PlayerController {
   private final EssentialsMessage essentialsMessages;
   private final FallenVadersConfig fallenVadersConfig;
   private final MessageController messageController;
+  private final MiniMessage miniMessage;
+  private final ResourceBundle resourceBundle;
+  private final Server server;
 
   @Inject
   public PlayerControllerImpl(
       @NotNull EssentialsMessage essentialsMessage,
       @NotNull FallenVadersConfig fallenVadersConfig,
-      @NotNull MessageController messageController) {
+      @NotNull MessageController messageController,
+      @NotNull MiniMessage miniMessage,
+      @NotNull ResourceBundle resourceBundle,
+      @NotNull Server server) {
     this.essentialsMessages = essentialsMessage;
     this.fallenVadersConfig = fallenVadersConfig;
     this.messageController = messageController;
+    this.miniMessage = miniMessage;
+    this.resourceBundle = resourceBundle;
+    this.server = server;
   }
 
   @Override
@@ -196,6 +208,17 @@ public class PlayerControllerImpl implements PlayerController {
   public void openEnderChest(@NotNull Player playerSender) {
     playerSender.openInventory(playerSender.getEnderChest());
     messageController.sendInfoMessage(playerSender, essentialsMessages.openEnderChestInventory());
+  }
+
+  @Override
+  public void openDisposal(@NotNull Player playerSender) {
+    playerSender.openInventory(
+        server.createInventory(
+            playerSender,
+            27,
+            miniMessage.deserialize(
+                resourceBundle.getString("fallenvaders.essentials.disposal.inventory.title"))));
+    messageController.sendInfoMessage(playerSender, essentialsMessages.openDisposalInventory());
   }
 
   @Override

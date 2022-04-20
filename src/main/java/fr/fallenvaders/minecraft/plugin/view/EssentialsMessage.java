@@ -37,6 +37,11 @@ public class EssentialsMessage {
         resourceBundle.getString("fallenvaders.essentials.command.crafting_table"));
   }
 
+  public @NotNull Component openDisposalInventory() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.disposal"));
+  }
+
   public @NotNull Component openEnderChestInventory() {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.ender_chest"));
