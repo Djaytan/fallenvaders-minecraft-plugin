@@ -27,6 +27,7 @@ import fr.fallenvaders.minecraft.plugin.command.GrindstoneCommand;
 import fr.fallenvaders.minecraft.plugin.command.HealCommand;
 import fr.fallenvaders.minecraft.plugin.command.LoomCommand;
 import fr.fallenvaders.minecraft.plugin.command.PingCommand;
+import fr.fallenvaders.minecraft.plugin.command.SmithingTableCommand;
 import fr.fallenvaders.minecraft.plugin.command.SpawnCommand;
 import fr.fallenvaders.minecraft.plugin.command.StonecutterCommand;
 import java.util.Arrays;
@@ -53,6 +54,7 @@ public class CommandRegister {
   private final HealCommand healCommand;
   private final LoomCommand loomCommand;
   private final PingCommand pingCommand;
+  private final SmithingTableCommand smithingTableCommand;
   private final SpawnCommand spawnCommand;
   private final StonecutterCommand stonecutterCommand;
 
@@ -70,6 +72,7 @@ public class CommandRegister {
       @NotNull HealCommand healCommand,
       @NotNull LoomCommand loomCommand,
       @NotNull PingCommand pingCommand,
+      @NotNull SmithingTableCommand smithingTableCommand,
       @NotNull SpawnCommand spawnCommand,
       @NotNull StonecutterCommand stonecutterCommand) {
     this.paperCommandManager = paperCommandManager;
@@ -85,6 +88,7 @@ public class CommandRegister {
     this.healCommand = healCommand;
     this.loomCommand = loomCommand;
     this.pingCommand = pingCommand;
+    this.smithingTableCommand = smithingTableCommand;
     this.spawnCommand = spawnCommand;
     this.stonecutterCommand = stonecutterCommand;
   }
@@ -100,6 +104,7 @@ public class CommandRegister {
     paperCommandManager.registerCommand(healCommand);
     paperCommandManager.registerCommand(loomCommand);
     paperCommandManager.registerCommand(pingCommand);
+    paperCommandManager.registerCommand(smithingTableCommand);
     paperCommandManager.registerCommand(spawnCommand);
     paperCommandManager.registerCommand(stonecutterCommand);
   }

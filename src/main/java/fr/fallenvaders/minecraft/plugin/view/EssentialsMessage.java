@@ -29,7 +29,7 @@ public class EssentialsMessage {
 
   public @NotNull Component openCartographyTableInventory() {
     return miniMessage.deserialize(
-        resourceBundle.getString("fallenvaders.essentials.command.cartographytable"));
+        resourceBundle.getString("fallenvaders.essentials.command.cartography_table"));
   }
 
   public @NotNull Component youHaveBeenFed() {
@@ -136,6 +136,11 @@ public class EssentialsMessage {
         TagResolver.resolver(
             Placeholder.unparsed("fv_player", targetedPlayerName),
             Placeholder.unparsed("fv_ping_value", Integer.toString(pingValue))));
+  }
+
+  public @NotNull Component openSmithingTableInventory() {
+    return miniMessage.deserialize(
+      resourceBundle.getString("fallenvaders.essentials.command.smithing_table"));
   }
 
   public @NotNull Component youHaveBeenTeleportedToSpawn() {

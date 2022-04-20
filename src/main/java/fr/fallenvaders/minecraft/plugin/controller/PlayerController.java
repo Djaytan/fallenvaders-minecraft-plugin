@@ -33,4 +33,6 @@ public interface PlayerController {
   void openLoom(@NotNull Player playerSender);
 
   void openStonecutter(@NotNull Player playerSender);
+
+  void openSmithingTable(@NotNull Player playerSender);
 }

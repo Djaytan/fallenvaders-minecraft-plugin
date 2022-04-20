@@ -177,4 +177,11 @@ public class PlayerControllerImpl implements PlayerController {
     playerSender.openStonecutter(playerSender.getLocation(), true);
     messageController.sendInfoMessage(playerSender, essentialsMessages.openStonecutterInventory());
   }
+
+  @Override
+  public void openSmithingTable(@NotNull Player playerSender) {
+    playerSender.openSmithingTable(playerSender.getLocation(), true);
+    messageController.sendInfoMessage(
+        playerSender, essentialsMessages.openSmithingTableInventory());
+  }
 }
