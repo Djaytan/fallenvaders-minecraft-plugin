@@ -32,6 +32,7 @@ import fr.fallenvaders.minecraft.plugin.command.PingCommand;
 import fr.fallenvaders.minecraft.plugin.command.SmithingTableCommand;
 import fr.fallenvaders.minecraft.plugin.command.SpawnCommand;
 import fr.fallenvaders.minecraft.plugin.command.StonecutterCommand;
+import fr.fallenvaders.minecraft.plugin.command.SuicideCommand;
 import java.util.Arrays;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -61,6 +62,7 @@ public class CommandRegister {
   private final SmithingTableCommand smithingTableCommand;
   private final SpawnCommand spawnCommand;
   private final StonecutterCommand stonecutterCommand;
+  private final SuicideCommand suicideCommand;
 
   @Inject
   public CommandRegister(
@@ -80,7 +82,8 @@ public class CommandRegister {
       @NotNull PingCommand pingCommand,
       @NotNull SmithingTableCommand smithingTableCommand,
       @NotNull SpawnCommand spawnCommand,
-      @NotNull StonecutterCommand stonecutterCommand) {
+      @NotNull StonecutterCommand stonecutterCommand,
+      @NotNull SuicideCommand suicideCommand) {
     this.paperCommandManager = paperCommandManager;
     this.server = server;
 
@@ -99,6 +102,7 @@ public class CommandRegister {
     this.smithingTableCommand = smithingTableCommand;
     this.spawnCommand = spawnCommand;
     this.stonecutterCommand = stonecutterCommand;
+    this.suicideCommand = suicideCommand;
   }
 
   public void registerCommands() {
@@ -117,6 +121,7 @@ public class CommandRegister {
     paperCommandManager.registerCommand(smithingTableCommand);
     paperCommandManager.registerCommand(spawnCommand);
     paperCommandManager.registerCommand(stonecutterCommand);
+    paperCommandManager.registerCommand(suicideCommand);
   }
 
   public void registerCommandCompletions() {

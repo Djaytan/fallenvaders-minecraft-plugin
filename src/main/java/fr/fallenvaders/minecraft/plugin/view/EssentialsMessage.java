@@ -170,4 +170,9 @@ public class EssentialsMessage {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.stonecutter"));
   }
+
+  public @NotNull Component suicide() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.suicide"));
+  }
 }

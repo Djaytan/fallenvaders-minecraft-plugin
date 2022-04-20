@@ -197,4 +197,10 @@ public class PlayerControllerImpl implements PlayerController {
     playerSender.openInventory(playerSender.getEnderChest());
     messageController.sendInfoMessage(playerSender, essentialsMessages.openEnderChestInventory());
   }
+
+  @Override
+  public void suicide(@NotNull Player playerSender) {
+    playerSender.setHealth(0);
+    messageController.sendInfoMessage(playerSender, essentialsMessages.suicide());
+  }
 }

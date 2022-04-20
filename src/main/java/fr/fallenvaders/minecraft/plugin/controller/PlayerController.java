@@ -39,4 +39,6 @@ public interface PlayerController {
   void openCraftingTable(@NotNull Player playerSender);
 
   void openEnderChest(@NotNull Player playerSender);
+
+  void suicide(@NotNull Player playerSender);
 }
