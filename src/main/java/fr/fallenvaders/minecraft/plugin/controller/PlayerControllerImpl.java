@@ -191,4 +191,10 @@ public class PlayerControllerImpl implements PlayerController {
     messageController.sendInfoMessage(
         playerSender, essentialsMessages.openCraftingTableInventory());
   }
+
+  @Override
+  public void openEnderChest(@NotNull Player playerSender) {
+    playerSender.openInventory(playerSender.getEnderChest());
+    messageController.sendInfoMessage(playerSender, essentialsMessages.openEnderChestInventory());
+  }
 }

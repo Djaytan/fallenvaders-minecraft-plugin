@@ -37,4 +37,6 @@ public interface PlayerController {
   void openSmithingTable(@NotNull Player playerSender);
 
   void openCraftingTable(@NotNull Player playerSender);
+
+  void openEnderChest(@NotNull Player playerSender);
 }
