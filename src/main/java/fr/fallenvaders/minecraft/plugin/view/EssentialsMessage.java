@@ -27,6 +27,11 @@ public class EssentialsMessage {
         resourceBundle.getString("fallenvaders.essentials.command.anvil"));
   }
 
+  public @NotNull Component openCartographyTableInventory() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.cartographytable"));
+  }
+
   public @NotNull Component youHaveBeenFed() {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.feed.you_have_been_fed"));

@@ -25,4 +25,6 @@ public interface PlayerController {
       @NotNull CommandSender sender, @NotNull Player targetedPlayer, boolean isGodActivated);
 
   void openAnvil(@NotNull Player playerSender);
+
+  void openCartographyTable(@NotNull Player playerSender);
 }

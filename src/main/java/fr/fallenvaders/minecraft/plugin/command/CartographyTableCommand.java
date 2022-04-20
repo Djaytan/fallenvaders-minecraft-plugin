@@ -12,20 +12,20 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
-@CommandAlias("anvil")
-@CommandPermission("fallenvaders.essentials.anvil")
-public class AnvilCommand extends BaseCommand {
+@CommandAlias("cartographytable")
+@CommandPermission("fallenvaders.essentials.cartographytable")
+public class CartographyTableCommand extends BaseCommand {
 
   private final PlayerController playerController;
 
   @Inject
-  public AnvilCommand(@NotNull PlayerController playerController) {
+  public CartographyTableCommand(@NotNull PlayerController playerController) {
     this.playerController = playerController;
   }
 
   @Default
-  @Description("Accès à une enclume portable.")
-  public void onOpenAnvil(@NotNull Player playerSender) {
-    playerController.openAnvil(playerSender);
+  @Description("Accès à une table cartographique portable.")
+  public void onOpenCartographyTable(@NotNull Player playerSender) {
+    playerController.openCartographyTable(playerSender);
   }
 }

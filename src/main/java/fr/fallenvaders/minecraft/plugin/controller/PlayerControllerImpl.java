@@ -144,4 +144,11 @@ public class PlayerControllerImpl implements PlayerController {
     playerSender.openAnvil(playerSender.getLocation(), true);
     messageController.sendInfoMessage(playerSender, essentialsMessages.openAnvilInventory());
   }
+
+  @Override
+  public void openCartographyTable(@NotNull Player playerSender) {
+    playerSender.openCartographyTable(playerSender.getLocation(), true);
+    messageController.sendInfoMessage(
+        playerSender, essentialsMessages.openCartographyTableInventory());
+  }
 }
