@@ -29,6 +29,7 @@ import fr.fallenvaders.minecraft.plugin.command.GodCommand;
 import fr.fallenvaders.minecraft.plugin.command.GrindstoneCommand;
 import fr.fallenvaders.minecraft.plugin.command.HealCommand;
 import fr.fallenvaders.minecraft.plugin.command.LoomCommand;
+import fr.fallenvaders.minecraft.plugin.command.MoreCommand;
 import fr.fallenvaders.minecraft.plugin.command.PingCommand;
 import fr.fallenvaders.minecraft.plugin.command.SmithingTableCommand;
 import fr.fallenvaders.minecraft.plugin.command.SpawnCommand;
@@ -60,6 +61,7 @@ public class CommandRegister {
   private final GrindstoneCommand grindstoneCommand;
   private final HealCommand healCommand;
   private final LoomCommand loomCommand;
+  private final MoreCommand moreCommand;
   private final PingCommand pingCommand;
   private final SmithingTableCommand smithingTableCommand;
   private final SpawnCommand spawnCommand;
@@ -82,6 +84,7 @@ public class CommandRegister {
       @NotNull GrindstoneCommand grindstoneCommand,
       @NotNull HealCommand healCommand,
       @NotNull LoomCommand loomCommand,
+      @NotNull MoreCommand moreCommand,
       @NotNull PingCommand pingCommand,
       @NotNull SmithingTableCommand smithingTableCommand,
       @NotNull SpawnCommand spawnCommand,
@@ -102,6 +105,7 @@ public class CommandRegister {
     this.grindstoneCommand = grindstoneCommand;
     this.healCommand = healCommand;
     this.loomCommand = loomCommand;
+    this.moreCommand = moreCommand;
     this.pingCommand = pingCommand;
     this.smithingTableCommand = smithingTableCommand;
     this.spawnCommand = spawnCommand;
@@ -122,6 +126,7 @@ public class CommandRegister {
     paperCommandManager.registerCommand(grindstoneCommand);
     paperCommandManager.registerCommand(healCommand);
     paperCommandManager.registerCommand(loomCommand);
+    paperCommandManager.registerCommand(moreCommand);
     paperCommandManager.registerCommand(pingCommand);
     paperCommandManager.registerCommand(smithingTableCommand);
     paperCommandManager.registerCommand(spawnCommand);
