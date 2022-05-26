@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
-@CommandAlias("craftingtable|workbench|craft")
+@CommandAlias("craftingtable|craft")
 @CommandPermission("fallenvaders.essentials.craftingtable")
 public class CraftingTableCommand extends BaseCommand {
 
