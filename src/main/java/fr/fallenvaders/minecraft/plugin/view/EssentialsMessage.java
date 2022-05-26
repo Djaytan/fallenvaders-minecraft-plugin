@@ -52,12 +52,6 @@ public class EssentialsMessage {
         resourceBundle.getString("fallenvaders.essentials.command.feed.you_have_been_fed"));
   }
 
-  public @NotNull Component playerHasBeenFed(@NotNull String fedPlayerName) {
-    return miniMessage.deserialize(
-        resourceBundle.getString("fallenvaders.essentials.command.feed.player_fed"),
-        TagResolver.resolver(Placeholder.unparsed("fv_player", fedPlayerName)));
-  }
-
   public @NotNull Component flyToggled(boolean isFlyActivated) {
     String stateKey = "fallenvaders.common.state.activated";
 
@@ -126,12 +120,6 @@ public class EssentialsMessage {
   public @NotNull Component youHaveBeenHealed() {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.heal.you_have_been_healed"));
-  }
-
-  public @NotNull Component playerHasBeenHealed(@NotNull String healedPlayerName) {
-    return miniMessage.deserialize(
-        resourceBundle.getString("fallenvaders.essentials.command.heal.player_healed"),
-        TagResolver.resolver(Placeholder.unparsed("fv_player", healedPlayerName)));
   }
 
   public @NotNull Component openLoomInventory() {

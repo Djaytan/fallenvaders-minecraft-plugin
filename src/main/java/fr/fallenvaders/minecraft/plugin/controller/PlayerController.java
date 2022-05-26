@@ -6,9 +6,9 @@ import org.jetbrains.annotations.NotNull;
 
 public interface PlayerController {
 
-  void healPlayer(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer);
+  void healPlayer(@NotNull Player targetedPlayer);
 
-  void feedPlayer(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer);
+  void feedPlayer(@NotNull Player targetedPlayer);
 
   void teleportToSpawn(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer);
 

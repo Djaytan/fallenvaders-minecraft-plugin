@@ -44,8 +44,7 @@ public class PlayerControllerImpl implements PlayerController {
   }
 
   @Override
-  public void healPlayer(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer) {
-    Preconditions.checkNotNull(commandSender);
+  public void healPlayer(@NotNull Player targetedPlayer) {
     Preconditions.checkNotNull(targetedPlayer);
 
     AttributeInstance maxHealthAttribute =
@@ -53,27 +52,16 @@ public class PlayerControllerImpl implements PlayerController {
     targetedPlayer.setHealth(maxHealthAttribute.getValue());
 
     messageController.sendInfoMessage(targetedPlayer, essentialsMessages.youHaveBeenHealed());
-
-    if (!commandSender.equals(targetedPlayer)) {
-      messageController.sendInfoMessage(
-          commandSender, essentialsMessages.playerHasBeenHealed(targetedPlayer.getName()));
-    }
   }
 
   @Override
-  public void feedPlayer(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer) {
-    Preconditions.checkNotNull(commandSender);
+  public void feedPlayer(@NotNull Player targetedPlayer) {
     Preconditions.checkNotNull(targetedPlayer);
 
     targetedPlayer.setFoodLevel(GameAttribute.MAX_FOOD_LEVEL);
     targetedPlayer.setSaturation(GameAttribute.MAX_SATURATION_LEVEL);
 
     messageController.sendInfoMessage(targetedPlayer, essentialsMessages.youHaveBeenFed());
-
-    if (!commandSender.equals(targetedPlayer)) {
-      messageController.sendInfoMessage(
-          commandSender, essentialsMessages.playerHasBeenFed(targetedPlayer.getName()));
-    }
   }
 
   @Override
