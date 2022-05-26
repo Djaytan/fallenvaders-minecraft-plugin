@@ -53,7 +53,7 @@ public class PlayerControllerImpl implements PlayerController {
         Objects.requireNonNull(targetedPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH));
     targetedPlayer.setHealth(maxHealthAttribute.getValue());
 
-    messageController.sendInfoMessage(targetedPlayer, essentialsMessages.youHaveBeenHealed());
+    messageController.sendSuccessMessage(targetedPlayer, essentialsMessages.youHaveBeenHealed());
   }
 
   @Override
@@ -63,7 +63,7 @@ public class PlayerControllerImpl implements PlayerController {
     targetedPlayer.setFoodLevel(GameAttribute.MAX_FOOD_LEVEL);
     targetedPlayer.setSaturation(GameAttribute.MAX_SATURATION_LEVEL);
 
-    messageController.sendInfoMessage(targetedPlayer, essentialsMessages.youHaveBeenFed());
+    messageController.sendSuccessMessage(targetedPlayer, essentialsMessages.youHaveBeenFed());
   }
 
   @Override
@@ -238,7 +238,7 @@ public class PlayerControllerImpl implements PlayerController {
     int nbMoreItems = newAmount - initialAmount;
 
     if (nbMoreItems > 0) {
-      messageController.sendInfoMessage(
+      messageController.sendSuccessMessage(
           playerSender, essentialsMessages.more(itemInMainHand.getType(), nbMoreItems));
     } else {
       messageController.sendFailureMessage(
