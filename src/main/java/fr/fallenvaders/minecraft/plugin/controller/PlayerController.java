@@ -43,4 +43,8 @@ public interface PlayerController {
   void openDisposal(@NotNull Player playerSender);
 
   void suicide(@NotNull Player playerSender);
+
+  void more(@NotNull Player playerSender);
+
+  void more(@NotNull Player playerSender, int amount);
 }

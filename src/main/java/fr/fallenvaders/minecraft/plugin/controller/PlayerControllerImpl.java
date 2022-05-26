@@ -9,11 +9,13 @@ import java.util.ResourceBundle;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 // TODO: centralized error management
@@ -213,5 +215,34 @@ public class PlayerControllerImpl implements PlayerController {
   public void suicide(@NotNull Player playerSender) {
     playerSender.setHealth(0);
     messageController.sendInfoMessage(playerSender, essentialsMessages.suicide());
+  }
+
+  @Override
+  public void more(@NotNull Player playerSender) {
+    more(playerSender, GameAttribute.MAX_ITEM_STACK_SIZE);
+  }
+
+  @Override
+  public void more(@NotNull Player playerSender, int amount) {
+    ItemStack itemInMainHand = playerSender.getEquipment().getItemInMainHand();
+
+    if (itemInMainHand.getType() == Material.AIR) {
+      messageController.sendFailureMessage(playerSender, essentialsMessages.mainHandSlotEmpty());
+      return;
+    }
+
+    int initialAmount = itemInMainHand.getAmount();
+    int newAmount = Math.min(initialAmount + amount, GameAttribute.MAX_ITEM_STACK_SIZE);
+    itemInMainHand.setAmount(newAmount);
+
+    int nbMoreItems = newAmount - initialAmount;
+
+    if (nbMoreItems > 0) {
+      messageController.sendInfoMessage(
+          playerSender, essentialsMessages.more(itemInMainHand.getType(), nbMoreItems));
+    } else {
+      messageController.sendFailureMessage(
+          playerSender, essentialsMessages.mainHandSlotAlreadyFull());
+    }
   }
 }
