@@ -225,13 +225,13 @@ public class PlayerControllerImpl implements PlayerController {
   @Override
   public void more(@NotNull Player playerSender, int amount) {
     ItemStack itemInMainHand = playerSender.getEquipment().getItemInMainHand();
-    int initialAmount = itemInMainHand.getAmount();
 
     if (itemInMainHand.getType() == Material.AIR) {
       messageController.sendFailureMessage(playerSender, essentialsMessages.mainHandSlotEmpty());
       return;
     }
 
+    int initialAmount = itemInMainHand.getAmount();
     int newAmount = Math.min(initialAmount + amount, GameAttribute.MAX_ITEM_STACK_SIZE);
     itemInMainHand.setAmount(newAmount);
 
