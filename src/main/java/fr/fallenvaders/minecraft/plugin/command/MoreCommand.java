@@ -25,9 +25,16 @@ public class MoreCommand extends BaseCommand {
   }
 
   @Default
+  @Description("Rempli le slot d'inventaire de la main jusqu'à la taille maximale (64).")
+  public void onMore(@NotNull Player playerSender) {
+    playerController.more(playerSender);
+  }
+
+  @Default
   @Description(
-      "Rempli l'item stack en main par le nombre spécifié ou jusqu'à la taille maximale (64).")
-  public void onMore(@NotNull Player playerSender, @Name("quantité") @Default("64") int amount) {
+      "Rempli le slot d'inventaire de la main par le nombre spécifié ou jusqu'à la taille maximale"
+          + " (64).")
+  public void onMore(@NotNull Player playerSender, @Name("quantité") int amount) {
     playerController.more(playerSender, amount);
   }
 }

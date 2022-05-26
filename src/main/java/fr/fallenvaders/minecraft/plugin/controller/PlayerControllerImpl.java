@@ -22,8 +22,6 @@ import org.jetbrains.annotations.NotNull;
 @Singleton
 public class PlayerControllerImpl implements PlayerController {
 
-  private static final int MAX_ITEM_STACK_SIZE = 64;
-
   private final EssentialsMessage essentialsMessages;
   private final FallenVadersConfig fallenVadersConfig;
   private final MessageController messageController;
@@ -220,6 +218,11 @@ public class PlayerControllerImpl implements PlayerController {
   }
 
   @Override
+  public void more(@NotNull Player playerSender) {
+    more(playerSender, GameAttribute.MAX_ITEM_STACK_SIZE);
+  }
+
+  @Override
   public void more(@NotNull Player playerSender, int amount) {
     ItemStack itemInMainHand = playerSender.getEquipment().getItemInMainHand();
     int initialAmount = itemInMainHand.getAmount();
@@ -229,7 +232,7 @@ public class PlayerControllerImpl implements PlayerController {
       return;
     }
 
-    int newAmount = Math.min(initialAmount + amount, MAX_ITEM_STACK_SIZE);
+    int newAmount = Math.min(initialAmount + amount, GameAttribute.MAX_ITEM_STACK_SIZE);
     itemInMainHand.setAmount(newAmount);
 
     int nbMoreItems = newAmount - initialAmount;
