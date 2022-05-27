@@ -216,7 +216,7 @@ public class PlayerControllerImpl implements PlayerController {
     ItemStack itemInHand = playerSender.getEquipment().getItemInMainHand();
 
     if (itemInHand.getType().isAir()) {
-      messageController.sendErrorMessage(playerSender, essentialsMessages.noItemInHandHat());
+      messageController.sendFailureMessage(playerSender, essentialsMessages.noItemInHandHat());
       return;
     }
 
