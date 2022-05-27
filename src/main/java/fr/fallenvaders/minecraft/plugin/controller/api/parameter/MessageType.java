@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package fr.fallenvaders.minecraft.plugin.controller;
+package fr.fallenvaders.minecraft.plugin.controller.api.parameter;
 
 public enum MessageType {
   INFO,

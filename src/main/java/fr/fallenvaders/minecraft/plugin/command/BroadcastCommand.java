@@ -6,7 +6,7 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Name;
-import fr.fallenvaders.minecraft.plugin.controller.MessageController;
+import fr.fallenvaders.minecraft.plugin.controller.api.MessageController;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.kyori.adventure.text.Component;

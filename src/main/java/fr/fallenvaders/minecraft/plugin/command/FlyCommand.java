@@ -9,7 +9,7 @@ import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Name;
 import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.Values;
-import fr.fallenvaders.minecraft.plugin.controller.PlayerController;
+import fr.fallenvaders.minecraft.plugin.controller.api.PlayerController;
 import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Singleton;
