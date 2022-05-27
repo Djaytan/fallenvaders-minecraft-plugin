@@ -2,6 +2,7 @@ package fr.fallenvaders.minecraft.plugin.controller;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public interface PlayerController {
@@ -17,12 +18,12 @@ public interface PlayerController {
   void toggleFlyMode(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer);
 
   void toggleFlyMode(
-      @NotNull CommandSender commandSender, @NotNull Player targetedPlayer, boolean isFlyActivated);
+    @NotNull CommandSender commandSender, @NotNull Player targetedPlayer, boolean isFlyActivated);
 
   void toggleGodMode(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer);
 
   void toggleGodMode(
-      @NotNull CommandSender commandSender, @NotNull Player targetedPlayer, boolean isGodActivated);
+    @NotNull CommandSender commandSender, @NotNull Player targetedPlayer, boolean isGodActivated);
 
   void openAnvil(@NotNull Player playerSender);
 
@@ -41,6 +42,8 @@ public interface PlayerController {
   void openEnderChest(@NotNull Player playerSender);
 
   void openDisposal(@NotNull Player playerSender);
+
+  void setHat(@NotNull Player playerSender);
 
   void suicide(@NotNull Player playerSender);
 
