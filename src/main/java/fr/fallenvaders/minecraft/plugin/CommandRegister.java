@@ -18,7 +18,6 @@ package fr.fallenvaders.minecraft.plugin;
 
 import co.aikar.commands.PaperCommandManager;
 import fr.fallenvaders.minecraft.plugin.command.*;
-
 import java.util.Arrays;
 import javax.inject.Inject;
 import javax.inject.Singleton;

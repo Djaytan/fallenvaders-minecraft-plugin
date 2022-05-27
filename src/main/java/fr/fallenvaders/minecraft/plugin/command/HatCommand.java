@@ -6,11 +6,10 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import fr.fallenvaders.minecraft.plugin.controller.PlayerController;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 @Singleton
 @CommandAlias("hat")
@@ -25,7 +24,7 @@ public class HatCommand extends BaseCommand {
   }
 
   @Default
-  @Description("Change l'objet sur sa tête.")
+  @Description("Place l'objet de sa main sur sa tête.")
   public void onHat(@NotNull Player playerSender) {
     this.playerController.setHat(playerSender);
   }
