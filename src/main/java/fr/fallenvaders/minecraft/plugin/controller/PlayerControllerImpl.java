@@ -4,16 +4,20 @@ import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.plugin.FallenVadersConfig;
 import fr.fallenvaders.minecraft.plugin.utils.GameAttribute;
 import fr.fallenvaders.minecraft.plugin.view.EssentialsMessage;
+
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 // TODO: centralized error management
@@ -29,12 +33,12 @@ public class PlayerControllerImpl implements PlayerController {
 
   @Inject
   public PlayerControllerImpl(
-      @NotNull EssentialsMessage essentialsMessage,
-      @NotNull FallenVadersConfig fallenVadersConfig,
-      @NotNull MessageController messageController,
-      @NotNull MiniMessage miniMessage,
-      @NotNull ResourceBundle resourceBundle,
-      @NotNull Server server) {
+    @NotNull EssentialsMessage essentialsMessage,
+    @NotNull FallenVadersConfig fallenVadersConfig,
+    @NotNull MessageController messageController,
+    @NotNull MiniMessage miniMessage,
+    @NotNull ResourceBundle resourceBundle,
+    @NotNull Server server) {
     this.essentialsMessages = essentialsMessage;
     this.fallenVadersConfig = fallenVadersConfig;
     this.messageController = messageController;
@@ -48,7 +52,7 @@ public class PlayerControllerImpl implements PlayerController {
     Preconditions.checkNotNull(targetedPlayer);
 
     AttributeInstance maxHealthAttribute =
-        Objects.requireNonNull(targetedPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH));
+      Objects.requireNonNull(targetedPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH));
     targetedPlayer.setHealth(maxHealthAttribute.getValue());
 
     messageController.sendInfoMessage(targetedPlayer, essentialsMessages.youHaveBeenHealed());
@@ -66,19 +70,19 @@ public class PlayerControllerImpl implements PlayerController {
 
   @Override
   public void teleportToSpawn(
-      @NotNull CommandSender commandSender, @NotNull Player targetedPlayer) {
+    @NotNull CommandSender commandSender, @NotNull Player targetedPlayer) {
     Preconditions.checkNotNull(commandSender);
     Preconditions.checkNotNull(targetedPlayer);
 
     targetedPlayer.teleport(fallenVadersConfig.getSpawnLocation());
 
     messageController.sendInfoMessage(
-        targetedPlayer, essentialsMessages.youHaveBeenTeleportedToSpawn());
+      targetedPlayer, essentialsMessages.youHaveBeenTeleportedToSpawn());
 
     if (!commandSender.equals(targetedPlayer)) {
       messageController.sendInfoMessage(
-          commandSender,
-          essentialsMessages.playerHasBeenTeleportedToSpawn(targetedPlayer.getName()));
+        commandSender,
+        essentialsMessages.playerHasBeenTeleportedToSpawn(targetedPlayer.getName()));
     }
   }
 
@@ -93,7 +97,7 @@ public class PlayerControllerImpl implements PlayerController {
       messageController.sendInfoMessage(commandSender, essentialsMessages.pingPong(pingValue));
     } else {
       messageController.sendInfoMessage(
-          commandSender, essentialsMessages.pingPongOther(targetedPlayer.getName(), pingValue));
+        commandSender, essentialsMessages.pingPongOther(targetedPlayer.getName(), pingValue));
     }
   }
 
@@ -104,21 +108,21 @@ public class PlayerControllerImpl implements PlayerController {
 
   @Override
   public void toggleFlyMode(
-      @NotNull CommandSender commandSender,
-      @NotNull Player targetedPlayer,
-      boolean isFlyActivated) {
+    @NotNull CommandSender commandSender,
+    @NotNull Player targetedPlayer,
+    boolean isFlyActivated) {
     Preconditions.checkNotNull(commandSender);
     Preconditions.checkNotNull(targetedPlayer);
 
     targetedPlayer.setAllowFlight(isFlyActivated);
 
     messageController.sendInfoMessage(
-        targetedPlayer, essentialsMessages.flyToggled(isFlyActivated));
+      targetedPlayer, essentialsMessages.flyToggled(isFlyActivated));
 
     if (!commandSender.equals(targetedPlayer)) {
       messageController.sendInfoMessage(
-          commandSender,
-          essentialsMessages.flyToggledOther(isFlyActivated, targetedPlayer.getName()));
+        commandSender,
+        essentialsMessages.flyToggledOther(isFlyActivated, targetedPlayer.getName()));
     }
   }
 
@@ -129,21 +133,21 @@ public class PlayerControllerImpl implements PlayerController {
 
   @Override
   public void toggleGodMode(
-      @NotNull CommandSender commandSender,
-      @NotNull Player targetedPlayer,
-      boolean isGodActivated) {
+    @NotNull CommandSender commandSender,
+    @NotNull Player targetedPlayer,
+    boolean isGodActivated) {
     Preconditions.checkNotNull(commandSender);
     Preconditions.checkNotNull(targetedPlayer);
 
     targetedPlayer.setInvulnerable(isGodActivated);
 
     messageController.sendInfoMessage(
-        targetedPlayer, essentialsMessages.godToggled(isGodActivated));
+      targetedPlayer, essentialsMessages.godToggled(isGodActivated));
 
     if (!commandSender.equals(targetedPlayer)) {
       messageController.sendInfoMessage(
-          commandSender,
-          essentialsMessages.godToggledOther(isGodActivated, targetedPlayer.getName()));
+        commandSender,
+        essentialsMessages.godToggledOther(isGodActivated, targetedPlayer.getName()));
     }
   }
 
@@ -157,7 +161,7 @@ public class PlayerControllerImpl implements PlayerController {
   public void openCartographyTable(@NotNull Player playerSender) {
     playerSender.openCartographyTable(playerSender.getLocation(), true);
     messageController.sendInfoMessage(
-        playerSender, essentialsMessages.openCartographyTableInventory());
+      playerSender, essentialsMessages.openCartographyTableInventory());
   }
 
   @Override
@@ -182,14 +186,14 @@ public class PlayerControllerImpl implements PlayerController {
   public void openSmithingTable(@NotNull Player playerSender) {
     playerSender.openSmithingTable(playerSender.getLocation(), true);
     messageController.sendInfoMessage(
-        playerSender, essentialsMessages.openSmithingTableInventory());
+      playerSender, essentialsMessages.openSmithingTableInventory());
   }
 
   @Override
   public void openCraftingTable(@NotNull Player playerSender) {
     playerSender.openWorkbench(playerSender.getLocation(), true);
     messageController.sendInfoMessage(
-        playerSender, essentialsMessages.openCraftingTableInventory());
+      playerSender, essentialsMessages.openCraftingTableInventory());
   }
 
   @Override
@@ -201,12 +205,26 @@ public class PlayerControllerImpl implements PlayerController {
   @Override
   public void openDisposal(@NotNull Player playerSender) {
     playerSender.openInventory(
-        server.createInventory(
-            playerSender,
-            27,
-            miniMessage.deserialize(
-                resourceBundle.getString("fallenvaders.essentials.disposal.inventory.title"))));
+      server.createInventory(
+        playerSender,
+        27,
+        miniMessage.deserialize(
+          resourceBundle.getString("fallenvaders.essentials.disposal.inventory.title"))));
     messageController.sendInfoMessage(playerSender, essentialsMessages.openDisposalInventory());
+  }
+
+  @Override
+  public void setHat(@NotNull Player playerSender) {
+    ItemStack itemInHand = playerSender.getEquipment().getItemInMainHand();
+
+    if (itemInHand.getType().isAir()) {
+      messageController.sendErrorMessage(playerSender, essentialsMessages.noItemInHandHat());
+      return;
+    }
+
+    playerSender.getEquipment().setHelmet(itemInHand);
+    playerSender.getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
+    messageController.sendInfoMessage(playerSender, essentialsMessages.changeHat());
   }
 
   @Override
