@@ -18,11 +18,9 @@ package fr.fallenvaders.minecraft.plugin;
 
 import co.aikar.commands.PaperCommandManager;
 import fr.fallenvaders.minecraft.plugin.command.*;
-
 import java.util.Arrays;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -44,37 +42,39 @@ public class CommandRegister {
   private final FlyCommand flyCommand;
   private final GodCommand godCommand;
   private final GrindstoneCommand grindstoneCommand;
+  private final HatCommand hatCommand;
   private final HealCommand healCommand;
   private final LoomCommand loomCommand;
+  private final MoreCommand moreCommand;
   private final PingCommand pingCommand;
   private final SmithingTableCommand smithingTableCommand;
   private final SpawnCommand spawnCommand;
   private final StonecutterCommand stonecutterCommand;
   private final SuicideCommand suicideCommand;
-  private final HatCommand hatCommand;
 
   @Inject
   public CommandRegister(
-    @NotNull PaperCommandManager paperCommandManager,
-    @NotNull Server server,
-    @NotNull AnvilCommand anvilCommand,
-    @NotNull BroadcastCommand broadcastCommand,
-    @NotNull CartographyTableCommand cartographyTableCommand,
-    @NotNull CraftingTableCommand craftingTableCommand,
-    @NotNull DisposalCommand disposalCommand,
-    @NotNull EnderChestCommand enderChestCommand,
-    @NotNull FeedCommand feedCommand,
-    @NotNull FlyCommand flyCommand,
-    @NotNull GodCommand godCommand,
-    @NotNull GrindstoneCommand grindstoneCommand,
-    @NotNull HealCommand healCommand,
-    @NotNull HatCommand hatCommand,
-    @NotNull LoomCommand loomCommand,
-    @NotNull PingCommand pingCommand,
-    @NotNull SmithingTableCommand smithingTableCommand,
-    @NotNull SpawnCommand spawnCommand,
-    @NotNull StonecutterCommand stonecutterCommand,
-    @NotNull SuicideCommand suicideCommand) {
+      @NotNull PaperCommandManager paperCommandManager,
+      @NotNull Server server,
+      @NotNull AnvilCommand anvilCommand,
+      @NotNull BroadcastCommand broadcastCommand,
+      @NotNull CartographyTableCommand cartographyTableCommand,
+      @NotNull CraftingTableCommand craftingTableCommand,
+      @NotNull DisposalCommand disposalCommand,
+      @NotNull EnderChestCommand enderChestCommand,
+      @NotNull FeedCommand feedCommand,
+      @NotNull FlyCommand flyCommand,
+      @NotNull GodCommand godCommand,
+      @NotNull GrindstoneCommand grindstoneCommand,
+      @NotNull HatCommand hatCommand,
+      @NotNull HealCommand healCommand,
+      @NotNull LoomCommand loomCommand,
+      @NotNull MoreCommand moreCommand,
+      @NotNull PingCommand pingCommand,
+      @NotNull SmithingTableCommand smithingTableCommand,
+      @NotNull SpawnCommand spawnCommand,
+      @NotNull StonecutterCommand stonecutterCommand,
+      @NotNull SuicideCommand suicideCommand) {
     this.paperCommandManager = paperCommandManager;
     this.server = server;
 
@@ -91,6 +91,7 @@ public class CommandRegister {
     this.hatCommand = hatCommand;
     this.healCommand = healCommand;
     this.loomCommand = loomCommand;
+    this.moreCommand = moreCommand;
     this.pingCommand = pingCommand;
     this.smithingTableCommand = smithingTableCommand;
     this.spawnCommand = spawnCommand;
@@ -112,6 +113,7 @@ public class CommandRegister {
     paperCommandManager.registerCommand(hatCommand);
     paperCommandManager.registerCommand(healCommand);
     paperCommandManager.registerCommand(loomCommand);
+    paperCommandManager.registerCommand(moreCommand);
     paperCommandManager.registerCommand(pingCommand);
     paperCommandManager.registerCommand(smithingTableCommand);
     paperCommandManager.registerCommand(spawnCommand);
@@ -121,24 +123,24 @@ public class CommandRegister {
 
   public void registerCommandCompletions() {
     paperCommandManager
-      .getCommandCompletions()
-      .registerAsyncCompletion(
-        "allplayers",
-        context -> {
-          long size = Long.parseLong(context.getConfig("size", "100"));
-          return Arrays.stream(server.getOfflinePlayers())
-            .limit(size)
-            .map(OfflinePlayer::getName)
-            .toList();
-        });
+        .getCommandCompletions()
+        .registerAsyncCompletion(
+            "allplayers",
+            context -> {
+              long size = Long.parseLong(context.getConfig("size", "100"));
+              return Arrays.stream(server.getOfflinePlayers())
+                  .limit(size)
+                  .map(OfflinePlayer::getName)
+                  .toList();
+            });
 
     paperCommandManager
-      .getCommandCompletions()
-      .registerAsyncCompletion(
-        "playernames",
-        context -> {
-          long size = Long.parseLong(context.getConfig("size", "100"));
-          return server.getOnlinePlayers().stream().limit(size).map(Player::getName).toList();
-        });
+        .getCommandCompletions()
+        .registerAsyncCompletion(
+            "playernames",
+            context -> {
+              long size = Long.parseLong(context.getConfig("size", "100"));
+              return server.getOnlinePlayers().stream().limit(size).map(Player::getName).toList();
+            });
   }
 }

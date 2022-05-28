@@ -8,6 +8,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
 @Singleton
@@ -178,5 +179,24 @@ public class EssentialsMessage {
   public @NotNull Component suicide() {
     return miniMessage.deserialize(
       resourceBundle.getString("fallenvaders.essentials.command.suicide"));
+  }
+
+  public @NotNull Component more(@NotNull Material material, int amount) {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.more"),
+        TagResolver.resolver(
+            Placeholder.unparsed("fv_amount", Integer.toString(amount)),
+            Placeholder.component("fv_item_name", Component.translatable(material))));
+  }
+
+  public @NotNull Component mainHandSlotAlreadyFull() {
+    return miniMessage.deserialize(
+        resourceBundle.getString(
+            "fallenvaders.essentials.command.more.main_hand_slot_already_full"));
+  }
+
+  public @NotNull Component mainHandSlotEmpty() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.more.main_hand_slot_empty"));
   }
 }
