@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-package fr.fallenvaders.minecraft.plugin.controller;
+package fr.fallenvaders.minecraft.plugin.controller.implementation;
 
+import fr.fallenvaders.minecraft.plugin.controller.api.parameter.MessageType;
+import fr.fallenvaders.minecraft.plugin.controller.api.MessageController;
 import java.util.ResourceBundle;
 import javax.inject.Inject;
 import javax.inject.Singleton;

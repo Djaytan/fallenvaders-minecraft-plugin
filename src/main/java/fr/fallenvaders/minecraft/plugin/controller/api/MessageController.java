@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package fr.fallenvaders.minecraft.plugin.controller;
+package fr.fallenvaders.minecraft.plugin.controller.api;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;

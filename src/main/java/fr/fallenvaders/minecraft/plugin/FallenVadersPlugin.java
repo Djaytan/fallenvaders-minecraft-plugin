@@ -1,6 +1,6 @@
 package fr.fallenvaders.minecraft.plugin;
 
-import fr.fallenvaders.minecraft.plugin.controller.MessageController;
+import fr.fallenvaders.minecraft.plugin.controller.api.MessageController;
 import fr.fallenvaders.minecraft.plugin.guice.GuiceInjector;
 import fr.fallenvaders.minecraft.plugin.view.CommonMessage;
 import javax.inject.Inject;

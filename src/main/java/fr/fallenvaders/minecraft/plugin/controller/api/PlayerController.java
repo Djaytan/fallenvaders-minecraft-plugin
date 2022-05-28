@@ -1,4 +1,4 @@
-package fr.fallenvaders.minecraft.plugin.controller;
+package fr.fallenvaders.minecraft.plugin.controller.api;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
