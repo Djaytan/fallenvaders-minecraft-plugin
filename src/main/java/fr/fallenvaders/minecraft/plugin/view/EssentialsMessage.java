@@ -128,6 +128,16 @@ public class EssentialsMessage {
         resourceBundle.getString("fallenvaders.essentials.command.loom"));
   }
 
+  public @NotNull Component changeHat() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.hat.success"));
+  }
+
+  public @NotNull Component noItemInHandHat() {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.hat.no_item_in_hand"));
+  }
+
   public @NotNull Component pingPong(int pingValue) {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.ping.pong"),

@@ -214,6 +214,20 @@ public class PlayerControllerImpl implements PlayerController {
   }
 
   @Override
+  public void setHat(@NotNull Player playerSender) {
+    ItemStack itemInHand = playerSender.getEquipment().getItemInMainHand();
+
+    if (itemInHand.getType().isAir()) {
+      messageController.sendFailureMessage(playerSender, essentialsMessages.noItemInHandHat());
+      return;
+    }
+
+    playerSender.getEquipment().setHelmet(itemInHand);
+    playerSender.getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
+    messageController.sendInfoMessage(playerSender, essentialsMessages.changeHat());
+  }
+
+  @Override
   public void suicide(@NotNull Player playerSender) {
     playerSender.setHealth(0);
     messageController.sendInfoMessage(playerSender, essentialsMessages.suicide());

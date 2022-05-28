@@ -17,24 +17,7 @@
 package fr.fallenvaders.minecraft.plugin;
 
 import co.aikar.commands.PaperCommandManager;
-import fr.fallenvaders.minecraft.plugin.command.AnvilCommand;
-import fr.fallenvaders.minecraft.plugin.command.BroadcastCommand;
-import fr.fallenvaders.minecraft.plugin.command.CartographyTableCommand;
-import fr.fallenvaders.minecraft.plugin.command.CraftingTableCommand;
-import fr.fallenvaders.minecraft.plugin.command.DisposalCommand;
-import fr.fallenvaders.minecraft.plugin.command.EnderChestCommand;
-import fr.fallenvaders.minecraft.plugin.command.FeedCommand;
-import fr.fallenvaders.minecraft.plugin.command.FlyCommand;
-import fr.fallenvaders.minecraft.plugin.command.GodCommand;
-import fr.fallenvaders.minecraft.plugin.command.GrindstoneCommand;
-import fr.fallenvaders.minecraft.plugin.command.HealCommand;
-import fr.fallenvaders.minecraft.plugin.command.LoomCommand;
-import fr.fallenvaders.minecraft.plugin.command.MoreCommand;
-import fr.fallenvaders.minecraft.plugin.command.PingCommand;
-import fr.fallenvaders.minecraft.plugin.command.SmithingTableCommand;
-import fr.fallenvaders.minecraft.plugin.command.SpawnCommand;
-import fr.fallenvaders.minecraft.plugin.command.StonecutterCommand;
-import fr.fallenvaders.minecraft.plugin.command.SuicideCommand;
+import fr.fallenvaders.minecraft.plugin.command.*;
 import java.util.Arrays;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -59,6 +42,7 @@ public class CommandRegister {
   private final FlyCommand flyCommand;
   private final GodCommand godCommand;
   private final GrindstoneCommand grindstoneCommand;
+  private final HatCommand hatCommand;
   private final HealCommand healCommand;
   private final LoomCommand loomCommand;
   private final MoreCommand moreCommand;
@@ -82,6 +66,7 @@ public class CommandRegister {
       @NotNull FlyCommand flyCommand,
       @NotNull GodCommand godCommand,
       @NotNull GrindstoneCommand grindstoneCommand,
+      @NotNull HatCommand hatCommand,
       @NotNull HealCommand healCommand,
       @NotNull LoomCommand loomCommand,
       @NotNull MoreCommand moreCommand,
@@ -103,6 +88,7 @@ public class CommandRegister {
     this.flyCommand = flyCommand;
     this.godCommand = godCommand;
     this.grindstoneCommand = grindstoneCommand;
+    this.hatCommand = hatCommand;
     this.healCommand = healCommand;
     this.loomCommand = loomCommand;
     this.moreCommand = moreCommand;
@@ -124,6 +110,7 @@ public class CommandRegister {
     paperCommandManager.registerCommand(flyCommand);
     paperCommandManager.registerCommand(godCommand);
     paperCommandManager.registerCommand(grindstoneCommand);
+    paperCommandManager.registerCommand(hatCommand);
     paperCommandManager.registerCommand(healCommand);
     paperCommandManager.registerCommand(loomCommand);
     paperCommandManager.registerCommand(moreCommand);
