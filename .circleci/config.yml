@@ -22,9 +22,9 @@ environment:
 jobs:
   build-and-test:
     docker:
-      - image: 3.8.5-eclipse-temurin-17
+      - image: maven:3.8.5-eclipse-temurin-17
         auth:
-          username: fallenvaders
+          username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
