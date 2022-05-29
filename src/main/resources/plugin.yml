@@ -2,5 +2,5 @@ name: ${project.name}
 version: ${project.version}
 api-version: ${minecraft.api.version}
 description: ${project.description}
-main: ${package.root}.FallenVadersPlugin
+main: ${package.root}.plugin.FallenVadersPlugin
 website: ${project.url}
