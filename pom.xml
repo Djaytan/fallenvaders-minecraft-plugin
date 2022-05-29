@@ -33,11 +33,6 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <package.root>fr.fallenvaders.minecraft.core</package.root>
 
-        <!-- SonarCloud Code Analyser -->
-        <sonar.organization>fallenvaders</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.projectBaseDir>${project.basedir}</sonar.projectBaseDir>
-
         <!-- Minecraft -->
         <minecraft.api.version>1.18</minecraft.api.version>
 

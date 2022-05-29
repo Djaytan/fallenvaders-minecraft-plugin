@@ -31,9 +31,6 @@ jobs:
       - run:
           name: Build & Test
           command: mvn install
-      - run:
-          name: Analyze on SonarCloud
-          command: mvn verify sonar:sonar -Dsonar.projectKey=fallenvaders-minecraft-plugin
 #  deploy-doc:
 #    docker:
 #      - image: circleci/python:3.9.7
@@ -54,8 +51,7 @@ jobs:
 workflows:
   main:
     jobs:
-      - build-and-test:
-          context: SonarCloud
+      - build-and-test
 #      - deploy-doc:
 #          filters:
 #            branches:
