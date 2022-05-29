@@ -1,0 +1,6 @@
+name: ${project.name}
+version: ${project.version}
+api-version: ${minecraft.api.version}
+description: ${project.description}
+main: ${package.root}.FallenVadersPlugin
+website: ${project.url}
