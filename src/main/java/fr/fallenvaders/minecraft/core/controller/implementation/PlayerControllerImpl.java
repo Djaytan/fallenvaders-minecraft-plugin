@@ -222,8 +222,9 @@ public class PlayerControllerImpl implements PlayerController {
       return;
     }
 
+    ItemStack previousHelmet = playerSender.getEquipment().getHelmet();
     playerSender.getEquipment().setHelmet(itemInHand);
-    playerSender.getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
+    playerSender.getEquipment().setItemInMainHand(previousHelmet);
     messageController.sendInfoMessage(playerSender, essentialsMessages.changeHat());
   }
 
