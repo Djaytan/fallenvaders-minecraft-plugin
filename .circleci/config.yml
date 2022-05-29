@@ -16,8 +16,8 @@
 ########################################################################################
 version: 2.1
 
-environment:
-  PIPENV_VENV_IN_PROJECT: true
+#environment:
+#  PIPENV_VENV_IN_PROJECT: true
 
 jobs:
   build-and-test:
@@ -29,8 +29,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build
+          name: Build & Test
           command: mvn install
+      - run:
+          name: Analyze on SonarCloud
+          command: mvn verify sonar:sonar -Dsonar.projectKey=fallenvaders-minecraft-plugin
 #  deploy-doc:
 #    docker:
 #      - image: circleci/python:3.9.7
