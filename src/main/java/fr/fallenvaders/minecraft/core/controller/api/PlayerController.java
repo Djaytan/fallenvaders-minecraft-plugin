@@ -42,7 +42,7 @@ public interface PlayerController {
 
   void openDisposal(@NotNull Player playerSender);
 
-  void setHat(@NotNull Player playerSender);
+  void hat(@NotNull Player playerSender);
 
   void suicide(@NotNull Player playerSender);
 

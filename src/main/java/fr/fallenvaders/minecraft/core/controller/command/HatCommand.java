@@ -26,6 +26,6 @@ public class HatCommand extends BaseCommand {
   @Default
   @Description("Place l'objet de sa main sur sa tête.")
   public void onHat(@NotNull Player playerSender) {
-    this.playerController.setHat(playerSender);
+    this.playerController.hat(playerSender);
   }
 }

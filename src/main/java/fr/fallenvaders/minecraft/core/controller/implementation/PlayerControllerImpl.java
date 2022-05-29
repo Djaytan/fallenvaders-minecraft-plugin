@@ -214,7 +214,7 @@ public class PlayerControllerImpl implements PlayerController {
   }
 
   @Override
-  public void setHat(@NotNull Player playerSender) {
+  public void hat(@NotNull Player playerSender) {
     ItemStack itemInHand = playerSender.getEquipment().getItemInMainHand();
 
     if (itemInHand.getType().isAir()) {
