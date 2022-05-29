@@ -23,6 +23,9 @@ jobs:
   build-and-test:
     docker:
       - image: 3.8.5-eclipse-temurin-17
+        auth:
+          username: fallenvaders
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run:
