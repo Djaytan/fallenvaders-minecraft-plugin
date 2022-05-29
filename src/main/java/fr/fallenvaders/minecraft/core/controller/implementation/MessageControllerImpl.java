@@ -96,13 +96,13 @@ public class MessageControllerImpl implements MessageController {
     // We don't simplify it to let IDE recognizes automatically used keys
     String messageFormatKey =
         switch (messageType) {
-          case INFO -> "fallenvaders.common.message.format.info";
-          case SUCCESS -> "fallenvaders.common.message.format.success";
-          case FAILURE -> "fallenvaders.common.message.format.failure";
-          case WARNING -> "fallenvaders.common.message.format.warning";
-          case ERROR -> "fallenvaders.common.message.format.error";
-          case BROADCAST -> "fallenvaders.common.message.format.broadcast";
-          case DEBUG -> "fallenvaders.common.message.format.debug";
+          case INFO -> "fallenvaders.common.format.message.info";
+          case SUCCESS -> "fallenvaders.common.format.message.success";
+          case FAILURE -> "fallenvaders.common.format.message.failure";
+          case WARNING -> "fallenvaders.common.format.message.warning";
+          case ERROR -> "fallenvaders.common.format.message.error";
+          case BROADCAST -> "fallenvaders.common.format.message.broadcast";
+          case DEBUG -> "fallenvaders.common.format.message.debug";
         };
 
     return miniMessage
