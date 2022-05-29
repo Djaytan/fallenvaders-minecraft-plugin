@@ -22,31 +22,28 @@ environment:
 jobs:
   build-and-test:
     docker:
-      - image: cimg/openjdk:17.0
+      - image: 3.8.5-eclipse-temurin-17
     steps:
       - checkout
       - run:
           name: Build
-          command: gradle build
-      - run:
-          name: Test
-          command: gradle test
-  deploy-doc:
-    docker:
-      - image: circleci/python:3.9.7
-    steps:
-      - checkout
-      - run:
-          name: Install Python and Pip
-          command: |
-            sudo apt update
-            sudo apt install python3 python3-pip
-      - run:
-          name: Install MkDocs
-          command: sudo pip install mkdocs-material
-      - run:
-          name: Deploy doc
-          command: mkdocs gh-deploy --force
+          command: mvn install
+#  deploy-doc:
+#    docker:
+#      - image: circleci/python:3.9.7
+#    steps:
+#      - checkout
+#      - run:
+#          name: Install Python and Pip
+#          command: |
+#            sudo apt update
+#            sudo apt install python3 python3-pip
+#      - run:
+#          name: Install MkDocs
+#          command: sudo pip install mkdocs-material
+#      - run:
+#          name: Deploy doc
+#          command: mkdocs gh-deploy --force
 
 workflows:
   main:
