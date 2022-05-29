@@ -1,9 +1,9 @@
 package fr.fallenvaders.minecraft.core.controller.implementation;
 
 import com.google.common.base.Preconditions;
-import fr.fallenvaders.minecraft.core.model.config.FallenVadersConfig;
 import fr.fallenvaders.minecraft.core.controller.api.MessageController;
 import fr.fallenvaders.minecraft.core.controller.api.PlayerController;
+import fr.fallenvaders.minecraft.core.model.config.FallenVadersConfig;
 import fr.fallenvaders.minecraft.core.utils.GameAttribute;
 import fr.fallenvaders.minecraft.core.view.EssentialsMessage;
 import java.util.Objects;

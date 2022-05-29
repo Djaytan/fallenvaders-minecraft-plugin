@@ -27,7 +27,8 @@ public class BroadcastCommand extends BaseCommand {
 
   @Default
   @Description("Envoie une annonce sur le serveur.")
-  public void onBroadcast(@NotNull CommandSender commandSender, @NotNull @Name("message") String message) {
+  public void onBroadcast(
+      @NotNull CommandSender commandSender, @NotNull @Name("message") String message) {
     messageController.broadcastMessage(Component.text(message));
   }
 }

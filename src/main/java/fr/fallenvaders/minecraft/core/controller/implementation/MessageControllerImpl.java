@@ -16,8 +16,8 @@
 
 package fr.fallenvaders.minecraft.core.controller.implementation;
 
-import fr.fallenvaders.minecraft.core.controller.api.parameter.MessageType;
 import fr.fallenvaders.minecraft.core.controller.api.MessageController;
+import fr.fallenvaders.minecraft.core.controller.api.parameter.MessageType;
 import java.util.ResourceBundle;
 import javax.inject.Inject;
 import javax.inject.Singleton;

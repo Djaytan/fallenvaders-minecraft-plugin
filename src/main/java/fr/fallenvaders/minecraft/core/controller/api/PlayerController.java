@@ -17,12 +17,12 @@ public interface PlayerController {
   void toggleFlyMode(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer);
 
   void toggleFlyMode(
-    @NotNull CommandSender commandSender, @NotNull Player targetedPlayer, boolean isFlyActivated);
+      @NotNull CommandSender commandSender, @NotNull Player targetedPlayer, boolean isFlyActivated);
 
   void toggleGodMode(@NotNull CommandSender commandSender, @NotNull Player targetedPlayer);
 
   void toggleGodMode(
-    @NotNull CommandSender commandSender, @NotNull Player targetedPlayer, boolean isGodActivated);
+      @NotNull CommandSender commandSender, @NotNull Player targetedPlayer, boolean isGodActivated);
 
   void openAnvil(@NotNull Player playerSender);
 
