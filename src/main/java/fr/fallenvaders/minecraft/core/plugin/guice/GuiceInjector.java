@@ -35,7 +35,7 @@ public final class GuiceInjector {
   public static void inject(@NotNull JavaPlugin plugin) {
     Injector injector =
         Guice.createInjector(
-            new GuiceGeneralModule(),
+            new GuiceCoreModule(),
             new GuiceBukkitModule(plugin),
             new GuiceBukkitLibsModule(plugin));
     injector.injectMembers(plugin);

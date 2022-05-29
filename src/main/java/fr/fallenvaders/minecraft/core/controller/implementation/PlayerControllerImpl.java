@@ -4,8 +4,10 @@ import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.core.controller.api.MessageController;
 import fr.fallenvaders.minecraft.core.controller.api.PlayerController;
 import fr.fallenvaders.minecraft.core.model.config.FallenVadersConfig;
+import fr.fallenvaders.minecraft.core.model.service.api.PlayerService;
 import fr.fallenvaders.minecraft.core.utils.GameAttribute;
 import fr.fallenvaders.minecraft.core.view.EssentialsMessage;
+import java.time.Duration;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.inject.Inject;
@@ -28,6 +30,7 @@ public class PlayerControllerImpl implements PlayerController {
   private final FallenVadersConfig fallenVadersConfig;
   private final MessageController messageController;
   private final MiniMessage miniMessage;
+  private final PlayerService playerService;
   private final ResourceBundle resourceBundle;
   private final Server server;
 
@@ -37,12 +40,14 @@ public class PlayerControllerImpl implements PlayerController {
       @NotNull FallenVadersConfig fallenVadersConfig,
       @NotNull MessageController messageController,
       @NotNull MiniMessage miniMessage,
+      @NotNull PlayerService playerService,
       @NotNull ResourceBundle resourceBundle,
       @NotNull Server server) {
     this.essentialsMessages = essentialsMessage;
     this.fallenVadersConfig = fallenVadersConfig;
     this.messageController = messageController;
     this.miniMessage = miniMessage;
+    this.playerService = playerService;
     this.resourceBundle = resourceBundle;
     this.server = server;
   }
@@ -51,9 +56,24 @@ public class PlayerControllerImpl implements PlayerController {
   public void healPlayer(@NotNull Player targetedPlayer) {
     Preconditions.checkNotNull(targetedPlayer);
 
+    Duration remainingHealCooldown =
+        playerService.getRemainingHealCooldown(targetedPlayer.getUniqueId());
+
+    boolean isHealCooldownElapsed =
+        remainingHealCooldown.isZero() || remainingHealCooldown.isNegative();
+
+    if (!isHealCooldownElapsed) {
+      messageController.sendFailureMessage(
+          targetedPlayer,
+          essentialsMessages.remainingHealCooldown(remainingHealCooldown.toSeconds()));
+      return;
+    }
+
     AttributeInstance maxHealthAttribute =
         Objects.requireNonNull(targetedPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH));
     targetedPlayer.setHealth(maxHealthAttribute.getValue());
+
+    playerService.startHealCooldown(targetedPlayer.getUniqueId());
 
     messageController.sendSuccessMessage(targetedPlayer, essentialsMessages.youHaveBeenHealed());
   }

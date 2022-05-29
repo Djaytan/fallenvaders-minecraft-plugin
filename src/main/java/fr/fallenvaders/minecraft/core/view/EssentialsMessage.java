@@ -10,6 +10,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
+// TODO: make an utility method to merge ResourceBundle and MiniMessage
 @Singleton
 public class EssentialsMessage {
 
@@ -121,6 +122,13 @@ public class EssentialsMessage {
   public @NotNull Component youHaveBeenHealed() {
     return miniMessage.deserialize(
         resourceBundle.getString("fallenvaders.essentials.command.heal.you_have_been_healed"));
+  }
+
+  public @NotNull Component remainingHealCooldown(long nbRemainingSeconds) {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.heal.remaining_cooldown"),
+        TagResolver.resolver(
+            Placeholder.unparsed("fv_nb_remaining_seconds", Long.toString(nbRemainingSeconds))));
   }
 
   public @NotNull Component openLoomInventory() {
