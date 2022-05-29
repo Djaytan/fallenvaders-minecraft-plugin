@@ -50,7 +50,7 @@ workflows:
     jobs:
       - build-and-test:
           context: SonarCloud
-      - deploy-doc:
-          filters:
-            branches:
-              only: main
+#      - deploy-doc:
+#          filters:
+#            branches:
+#              only: main
