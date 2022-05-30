@@ -16,5 +16,10 @@ public interface PlayerDao {
   @NotNull
   Optional<Duration> getDurationSinceLastHeal(@NotNull UUID playerUuid);
 
+  @NotNull
+  Optional<Duration> getDurationSinceLastFeed(@NotNull UUID playerUuid);
+
   void startHealCooldown(@NotNull UUID playerUuid);
+
+  void startFeedCooldown(@NotNull UUID playerUuid);
 }

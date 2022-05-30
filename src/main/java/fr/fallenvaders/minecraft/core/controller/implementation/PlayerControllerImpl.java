@@ -82,8 +82,23 @@ public class PlayerControllerImpl implements PlayerController {
   public void feedPlayer(@NotNull Player targetedPlayer) {
     Preconditions.checkNotNull(targetedPlayer);
 
+    Duration remainingFeedCooldown =
+        playerService.getRemainingFeedCooldown(targetedPlayer.getUniqueId());
+
+    boolean isFeedCooldownElapsed =
+        remainingFeedCooldown.isZero() || remainingFeedCooldown.isNegative();
+
+    if (!isFeedCooldownElapsed) {
+      messageController.sendFailureMessage(
+          targetedPlayer,
+          essentialsMessages.remainingFeedCooldown(remainingFeedCooldown.toSeconds()));
+      return;
+    }
+
     targetedPlayer.setFoodLevel(GameAttribute.MAX_FOOD_LEVEL);
     targetedPlayer.setSaturation(GameAttribute.MAX_SATURATION_LEVEL);
+
+    playerService.startFeedCooldown(targetedPlayer.getUniqueId());
 
     messageController.sendSuccessMessage(targetedPlayer, essentialsMessages.youHaveBeenFed());
   }

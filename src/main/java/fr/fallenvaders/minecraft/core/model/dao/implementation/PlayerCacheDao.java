@@ -25,6 +25,7 @@ public class PlayerCacheDao implements PlayerDao {
   private final Clock clock;
 
   private final Map<UUID, LocalDateTime> healCooldown = new HashMap<>();
+  private final Map<UUID, LocalDateTime> feedCooldown = new HashMap<>();
 
   @Inject
   public PlayerCacheDao(@NotNull Clock clock) {
@@ -47,10 +48,33 @@ public class PlayerCacheDao implements PlayerDao {
   }
 
   @Override
+  public @NotNull Optional<Duration> getDurationSinceLastFeed(@NotNull UUID playerUuid) {
+    Preconditions.checkNotNull(playerUuid);
+
+    LocalDateTime initialDateTime = feedCooldown.get(playerUuid);
+
+    if (initialDateTime == null) {
+      return Optional.empty();
+    }
+
+    LocalDateTime finalDateTime = LocalDateTime.now(clock);
+
+    return Optional.of(Duration.between(initialDateTime, finalDateTime));
+  }
+
+  @Override
   public void startHealCooldown(@NotNull UUID playerUuid) {
     Preconditions.checkNotNull(playerUuid);
 
     LocalDateTime currentDateTime = LocalDateTime.now(clock);
     healCooldown.put(playerUuid, currentDateTime);
+  }
+
+  @Override
+  public void startFeedCooldown(@NotNull UUID playerUuid) {
+    Preconditions.checkNotNull(playerUuid);
+
+    LocalDateTime currentDateTime = LocalDateTime.now(clock);
+    feedCooldown.put(playerUuid, currentDateTime);
   }
 }

@@ -54,6 +54,13 @@ public class EssentialsMessage {
         resourceBundle.getString("fallenvaders.essentials.command.feed.you_have_been_fed"));
   }
 
+  public @NotNull Component remainingFeedCooldown(long nbRemainingSeconds) {
+    return miniMessage.deserialize(
+        resourceBundle.getString("fallenvaders.essentials.command.feed.remaining_cooldown"),
+        TagResolver.resolver(
+            Placeholder.unparsed("fv_nb_remaining_seconds", Long.toString(nbRemainingSeconds))));
+  }
+
   public @NotNull Component flyToggled(boolean isFlyActivated) {
     String stateKey = "fallenvaders.common.state.activated";
 

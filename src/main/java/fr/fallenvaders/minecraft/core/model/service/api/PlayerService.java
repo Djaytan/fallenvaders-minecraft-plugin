@@ -25,9 +25,28 @@ public interface PlayerService {
   Duration getRemainingHealCooldown(@NotNull UUID playerUuid);
 
   /**
+   * Gets and returns the remaining "feed" cooldown for the specified player.
+   *
+   * <p>A "feed" cooldown is considered as elapsed when the duration between the start cooldown time
+   * and now is higher than the implementation specific feed cooldown value.
+   *
+   * @param playerUuid The player's UUID.
+   * @return The remaining duration of the "feed" cooldown for the specified player.
+   */
+  @NotNull
+  Duration getRemainingFeedCooldown(@NotNull UUID playerUuid);
+
+  /**
    * Starts the "heal" cooldown for the given player.
    *
    * @param playerUuid The player's UUID.
    */
   void startHealCooldown(@NotNull UUID playerUuid);
+
+  /**
+   * Starts the "feed" cooldown for the given player.
+   *
+   * @param playerUuid The player's UUID.
+   */
+  void startFeedCooldown(@NotNull UUID playerUuid);
 }

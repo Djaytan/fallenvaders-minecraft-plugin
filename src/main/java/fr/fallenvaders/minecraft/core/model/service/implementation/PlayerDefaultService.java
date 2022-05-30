@@ -21,6 +21,8 @@ public class PlayerDefaultService implements PlayerService {
 
   /** The "heal" cooldown between each use. */
   private static final Duration HEAL_COOLDOWN = Duration.ofSeconds(300);
+  /** The "feed" cooldown between each use. */
+  private static final Duration FEED_COOLDOWN = Duration.ofSeconds(300);
 
   private final PlayerDao playerDao;
 
@@ -43,9 +45,29 @@ public class PlayerDefaultService implements PlayerService {
   }
 
   @Override
+  public @NotNull Duration getRemainingFeedCooldown(@NotNull UUID playerUuid) {
+    Preconditions.checkNotNull(playerUuid);
+
+    Optional<Duration> durationSinceLastFeed = playerDao.getDurationSinceLastFeed(playerUuid);
+
+    if (durationSinceLastFeed.isEmpty()) {
+      return Duration.ZERO;
+    }
+
+    return FEED_COOLDOWN.minus(durationSinceLastFeed.get());
+  }
+
+  @Override
   public void startHealCooldown(@NotNull UUID playerUuid) {
     Preconditions.checkNotNull(playerUuid);
 
     playerDao.startHealCooldown(playerUuid);
+  }
+
+  @Override
+  public void startFeedCooldown(@NotNull UUID playerUuid) {
+    Preconditions.checkNotNull(playerUuid);
+
+    playerDao.startFeedCooldown(playerUuid);
   }
 }
