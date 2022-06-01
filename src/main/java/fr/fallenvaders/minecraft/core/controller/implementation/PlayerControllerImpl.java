@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.core.controller.api.MessageController;
 import fr.fallenvaders.minecraft.core.controller.api.PlayerController;
 import fr.fallenvaders.minecraft.core.model.config.FallenVadersConfig;
-import fr.fallenvaders.minecraft.core.model.service.api.PlayerService;
+import fr.fallenvaders.minecraft.core.model.service.api.CooldownService;
 import fr.fallenvaders.minecraft.core.utils.GameAttribute;
 import fr.fallenvaders.minecraft.core.view.EssentialsMessage;
 import java.time.Duration;
@@ -30,7 +30,7 @@ public class PlayerControllerImpl implements PlayerController {
   private final FallenVadersConfig fallenVadersConfig;
   private final MessageController messageController;
   private final MiniMessage miniMessage;
-  private final PlayerService playerService;
+  private final CooldownService cooldownService;
   private final ResourceBundle resourceBundle;
   private final Server server;
 
@@ -40,14 +40,14 @@ public class PlayerControllerImpl implements PlayerController {
       @NotNull FallenVadersConfig fallenVadersConfig,
       @NotNull MessageController messageController,
       @NotNull MiniMessage miniMessage,
-      @NotNull PlayerService playerService,
+      @NotNull CooldownService cooldownService,
       @NotNull ResourceBundle resourceBundle,
       @NotNull Server server) {
     this.essentialsMessages = essentialsMessage;
     this.fallenVadersConfig = fallenVadersConfig;
     this.messageController = messageController;
     this.miniMessage = miniMessage;
-    this.playerService = playerService;
+    this.cooldownService = cooldownService;
     this.resourceBundle = resourceBundle;
     this.server = server;
   }
@@ -57,7 +57,7 @@ public class PlayerControllerImpl implements PlayerController {
     Preconditions.checkNotNull(targetedPlayer);
 
     Duration remainingHealCooldown =
-        playerService.getRemainingHealCooldown(targetedPlayer.getUniqueId());
+        cooldownService.getRemainingHealCooldown(targetedPlayer.getUniqueId());
 
     boolean isHealCooldownElapsed =
         remainingHealCooldown.isZero() || remainingHealCooldown.isNegative();
@@ -73,7 +73,7 @@ public class PlayerControllerImpl implements PlayerController {
         Objects.requireNonNull(targetedPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH));
     targetedPlayer.setHealth(maxHealthAttribute.getValue());
 
-    playerService.startHealCooldown(targetedPlayer.getUniqueId());
+    cooldownService.startHealCooldown(targetedPlayer.getUniqueId());
 
     messageController.sendSuccessMessage(targetedPlayer, essentialsMessages.youHaveBeenHealed());
   }
@@ -83,7 +83,7 @@ public class PlayerControllerImpl implements PlayerController {
     Preconditions.checkNotNull(targetedPlayer);
 
     Duration remainingFeedCooldown =
-        playerService.getRemainingFeedCooldown(targetedPlayer.getUniqueId());
+        cooldownService.getRemainingFeedCooldown(targetedPlayer.getUniqueId());
 
     boolean isFeedCooldownElapsed =
         remainingFeedCooldown.isZero() || remainingFeedCooldown.isNegative();
@@ -98,7 +98,7 @@ public class PlayerControllerImpl implements PlayerController {
     targetedPlayer.setFoodLevel(GameAttribute.MAX_FOOD_LEVEL);
     targetedPlayer.setSaturation(GameAttribute.MAX_SATURATION_LEVEL);
 
-    playerService.startFeedCooldown(targetedPlayer.getUniqueId());
+    cooldownService.startFeedCooldown(targetedPlayer.getUniqueId());
 
     messageController.sendSuccessMessage(targetedPlayer, essentialsMessages.youHaveBeenFed());
   }

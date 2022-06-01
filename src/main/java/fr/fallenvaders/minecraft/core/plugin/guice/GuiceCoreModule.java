@@ -23,10 +23,10 @@ import fr.fallenvaders.minecraft.core.controller.api.MessageController;
 import fr.fallenvaders.minecraft.core.controller.api.PlayerController;
 import fr.fallenvaders.minecraft.core.controller.implementation.MessageControllerImpl;
 import fr.fallenvaders.minecraft.core.controller.implementation.PlayerControllerImpl;
-import fr.fallenvaders.minecraft.core.model.dao.api.PlayerDao;
-import fr.fallenvaders.minecraft.core.model.dao.implementation.PlayerCacheDao;
-import fr.fallenvaders.minecraft.core.model.service.api.PlayerService;
-import fr.fallenvaders.minecraft.core.model.service.implementation.PlayerDefaultService;
+import fr.fallenvaders.minecraft.core.model.dao.api.CooldownDao;
+import fr.fallenvaders.minecraft.core.model.dao.implementation.CooldownCacheDao;
+import fr.fallenvaders.minecraft.core.model.service.api.CooldownService;
+import fr.fallenvaders.minecraft.core.model.service.implementation.CooldownDefaultService;
 import java.time.Clock;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -39,8 +39,8 @@ public class GuiceCoreModule extends AbstractModule {
   public void configure() {
     bind(MessageController.class).to(MessageControllerImpl.class);
     bind(PlayerController.class).to(PlayerControllerImpl.class);
-    bind(PlayerDao.class).to(PlayerCacheDao.class);
-    bind(PlayerService.class).to(PlayerDefaultService.class);
+    bind(CooldownDao.class).to(CooldownCacheDao.class);
+    bind(CooldownService.class).to(CooldownDefaultService.class);
   }
 
   @Provides
