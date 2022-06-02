@@ -36,15 +36,14 @@ public class CooldownFactory {
    *
    * @param cooldownType The cooldown type.
    * @param playerUuid The player's UUID associated to the cooldown to create.
-   * @param startCooldownDateTime The date-time when the cooldown start.
    * @param cooldownDuration The duration of the cooldown to create.
    * @return An instance of Cooldown according to the specified arguments.
    */
   public @NotNull Cooldown create(
       @NotNull CooldownType cooldownType,
       @NotNull UUID playerUuid,
-      @NotNull LocalDateTime startCooldownDateTime,
       @NotNull Duration cooldownDuration) {
+    LocalDateTime startCooldownDateTime = LocalDateTime.now(clock);
     return new Cooldown(clock, cooldownType, playerUuid, startCooldownDateTime, cooldownDuration);
   }
 }

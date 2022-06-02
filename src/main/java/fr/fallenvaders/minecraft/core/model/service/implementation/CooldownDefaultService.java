@@ -2,9 +2,10 @@ package fr.fallenvaders.minecraft.core.model.service.implementation;
 
 import com.google.common.base.Preconditions;
 import fr.fallenvaders.minecraft.core.model.dao.api.CooldownDao;
+import fr.fallenvaders.minecraft.core.model.entity.Cooldown;
+import fr.fallenvaders.minecraft.core.model.entity.factory.CooldownFactory;
 import fr.fallenvaders.minecraft.core.model.service.api.CooldownService;
 import fr.fallenvaders.minecraft.core.model.service.api.parameter.CooldownType;
-import java.time.Duration;
 import java.util.Optional;
 import java.util.UUID;
 import javax.inject.Inject;
@@ -20,36 +21,34 @@ import org.jetbrains.annotations.NotNull;
 @Singleton
 public class CooldownDefaultService implements CooldownService {
 
-  /** The "heal" cooldown between each use. */
-  private static final Duration HEAL_COOLDOWN = Duration.ofSeconds(300);
-  /** The "feed" cooldown between each use. */
-  private static final Duration FEED_COOLDOWN = Duration.ofSeconds(300);
-
   private final CooldownDao cooldownDao;
+  private final CooldownFactory cooldownFactory;
 
+  /**
+   * Constructor.
+   *
+   * @param cooldownDao The Cooldown DAO.
+   * @param cooldownFactory The Cooldown factory.
+   */
   @Inject
-  public CooldownDefaultService(@NotNull CooldownDao cooldownDao) {
+  public CooldownDefaultService(
+      @NotNull CooldownDao cooldownDao, @NotNull CooldownFactory cooldownFactory) {
     this.cooldownDao = cooldownDao;
+    this.cooldownFactory = cooldownFactory;
   }
 
   @Override
-  public @NotNull Duration getRemainingCooldown(
+  public @NotNull Optional<Cooldown> getCooldown(
       @NotNull CooldownType cooldownType, @NotNull UUID playerUuid) {
     Preconditions.checkNotNull(playerUuid);
-
-    Optional<Duration> durationSinceLastFeed = cooldownDao.getDurationSinceLastFeed(playerUuid);
-
-    if (durationSinceLastFeed.isEmpty()) {
-      return Duration.ZERO;
-    }
-
-    return FEED_COOLDOWN.minus(durationSinceLastFeed.get());
+    return cooldownDao.getCooldown(cooldownType, playerUuid);
   }
 
   @Override
   public void startCooldown(@NotNull CooldownType cooldownType, @NotNull UUID playerUuid) {
     Preconditions.checkNotNull(playerUuid);
-
-    cooldownDao.startFeedCooldown(playerUuid);
+    Cooldown cooldown =
+        cooldownFactory.create(cooldownType, playerUuid, cooldownType.getCooldownDuration());
+    cooldownDao.registerCooldown(cooldown);
   }
 }

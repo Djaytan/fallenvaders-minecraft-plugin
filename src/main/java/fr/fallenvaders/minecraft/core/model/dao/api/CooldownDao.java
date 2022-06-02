@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * An interface that represents the cooldown DAO.
+ * An interface that represents the {@link Cooldown} DAO.
  *
  * @author Djaytan
  * @since 0.3.0
@@ -17,5 +17,5 @@ public interface CooldownDao {
   @NotNull
   Optional<Cooldown> getCooldown(@NotNull CooldownType cooldownType, @NotNull UUID playerUuid);
 
-  void startCooldown(@NotNull CooldownType cooldownType, @NotNull UUID playerUuid);
+  void registerCooldown(@NotNull Cooldown cooldown);
 }

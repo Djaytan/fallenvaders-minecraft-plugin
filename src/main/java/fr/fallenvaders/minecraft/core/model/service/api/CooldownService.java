@@ -1,7 +1,8 @@
 package fr.fallenvaders.minecraft.core.model.service.api;
 
+import fr.fallenvaders.minecraft.core.model.entity.Cooldown;
 import fr.fallenvaders.minecraft.core.model.service.api.parameter.CooldownType;
-import java.time.Duration;
+import java.util.Optional;
 import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 public interface CooldownService {
 
   /**
-   * Gets and returns the remaining cooldown of the given type for the specified player.
+   * Gets and returns the cooldown of the given type for the specified player.
    *
    * <p>A cooldown is considered as elapsed when the duration between the start cooldown time and
    * <code>now</code> is higher than the implementation specific cooldown value for the given type.
@@ -24,7 +25,7 @@ public interface CooldownService {
    * @return The remaining duration of the cooldown of the given for the specified player.
    */
   @NotNull
-  Duration getRemainingCooldown(@NotNull CooldownType cooldownType, @NotNull UUID playerUuid);
+  Optional<Cooldown> getCooldown(@NotNull CooldownType cooldownType, @NotNull UUID playerUuid);
 
   /**
    * Starts the cooldown of the given type for the given player.

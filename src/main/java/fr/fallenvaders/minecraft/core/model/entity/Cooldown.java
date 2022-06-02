@@ -53,6 +53,10 @@ public class Cooldown {
 
   // ---------- GETTERS ----------
 
+  public @NotNull CooldownType getCooldownType() {
+    return cooldownType;
+  }
+
   public @NotNull UUID getPlayerUuid() {
     return playerUuid;
   }

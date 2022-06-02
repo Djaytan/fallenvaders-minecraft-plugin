@@ -1,13 +1,10 @@
 package fr.fallenvaders.minecraft.core.model.dao.implementation;
 
 import com.google.common.base.Preconditions;
+import fr.fallenvaders.minecraft.core.model.cache.CooldownRegister;
 import fr.fallenvaders.minecraft.core.model.dao.api.CooldownDao;
 import fr.fallenvaders.minecraft.core.model.entity.Cooldown;
 import fr.fallenvaders.minecraft.core.model.service.api.parameter.CooldownType;
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import javax.inject.Inject;
@@ -23,19 +20,29 @@ import org.jetbrains.annotations.NotNull;
 @Singleton
 public class CooldownCacheDao implements CooldownDao {
 
-  private final Map<UUID, Cooldown> cooldownMap = new HashMap<>();
+  private final CooldownRegister cooldownRegister;
 
-  @Override
-  public @NotNull Optional<Cooldown> getCooldown(@NotNull CooldownType cooldownType,
-    @NotNull UUID playerUuid) {
-    return Optional.empty();
+  /**
+   * Constructor.
+   *
+   * @param cooldownRegister The cooldown register.
+   */
+  @Inject
+  public CooldownCacheDao(@NotNull CooldownRegister cooldownRegister) {
+    this.cooldownRegister = cooldownRegister;
   }
 
   @Override
-  public void startCooldown(@NotNull CooldownType cooldownType, @NotNull UUID playerUuid) {
-    Preconditions.checkNotNull(playerUuid);
+  public @NotNull Optional<Cooldown> getCooldown(
+      @NotNull CooldownType cooldownType, @NotNull UUID playerUuid) {
+    return cooldownRegister.getCooldowns(playerUuid).stream()
+        .filter(cooldown -> cooldown.getCooldownType() == cooldownType)
+        .findFirst();
+  }
 
-    LocalDateTime currentDateTime = LocalDateTime.now(clock);
-    feedCooldown.put(playerUuid, currentDateTime);
+  @Override
+  public void registerCooldown(@NotNull Cooldown cooldown) {
+    Preconditions.checkNotNull(cooldown);
+    cooldownRegister.registerCooldown(cooldown);
   }
 }
