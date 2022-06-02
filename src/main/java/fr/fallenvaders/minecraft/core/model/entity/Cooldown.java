@@ -22,7 +22,6 @@ public class Cooldown {
   UUID playerUuid;
   LocalDateTime startCooldownDateTime;
   Duration cooldownDuration;
-  Duration remainingCooldown;
 
   public Cooldown(
       @NotNull Clock clock,
@@ -43,12 +42,9 @@ public class Cooldown {
   }
 
   public @NotNull Duration getRemainingCooldown() {
-    if (remainingCooldown == null) {
-      LocalDateTime finalDateTime = LocalDateTime.now(clock);
-      Duration timeElapsed = Duration.between(startCooldownDateTime, finalDateTime);
-      remainingCooldown = cooldownDuration.minus(timeElapsed);
-    }
-    return remainingCooldown;
+    LocalDateTime finalDateTime = LocalDateTime.now(clock);
+    Duration timeElapsed = Duration.between(startCooldownDateTime, finalDateTime);
+    return cooldownDuration.minus(timeElapsed);
   }
 
   // ---------- GETTERS ----------
